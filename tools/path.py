@@ -43,6 +43,7 @@ PATH_SCREENS = "screens/"
 # Path for the resources
 PATH_IMAGES = PATH_RESOURCES + "images/"
 PATH_ICONS = PATH_IMAGES + "icons/"
+PATH_CHARACTERS_IMAGES = PATH_IMAGES + "characters/"
 PATH_FONTS = PATH_RESOURCES + "fonts/"
 
 # Path for the fonts

@@ -1,0 +1,77 @@
+#:kivy 2.2.1
+#:set OFFSET_HORIZONTAL 0.025
+#:set WIDTH_HINT_TOP 0.6
+
+<DialogLayout>:
+
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        # Top rectangle
+        Rectangle:
+            pos: 0, 0.7*self.height
+            size: WIDTH_HINT_TOP*self.width, 0.3*self.height
+        # Image rectangle
+        Rectangle:
+            pos: OFFSET_HORIZONTAL*self.width, 0.725*self.height
+            size: 0.25*self.height, 0.25*self.height
+        # Bottom rectangle
+        Rectangle:
+            pos: 0, 0
+            size: self.width, 0.675*self.height
+
+    canvas.after:
+        # Frame around the image
+        Color:
+            rgba: self.frame_color
+        Line:
+            rectangle: self.x+OFFSET_HORIZONTAL*self.width, self.y+0.725*self.height, 0.25*self.height, 0.25*self.height
+            width: self.frame_width*self.font_ratio
+
+    # Image of the character
+    Image:
+        id: image
+        source: root.character_image
+        pos_hint: {"x": OFFSET_HORIZONTAL, "y": 0.725}
+        size_hint: (None, 0.25)
+        width: self.height
+    
+    # Name of the character
+    Label:
+        text: root.character_name
+        pos_hint: {"y": 0.825}
+        x: OFFSET_HORIZONTAL*root.width*2 + image.width
+        size_hint: (None, 0.15)
+        width: WIDTH_HINT_TOP*root.width - self.x - OFFSET_HORIZONTAL*root.width
+        font_name: root.font_name_title
+        font_size: root.font_ratio*root.font_size_title
+        color: root.font_color
+        text_size: self.size
+        halign: "left"
+        valign: "middle"
+
+    # Title of the character
+    Label:
+        text: root.character_title
+        pos_hint: {"y": 0.725}
+        x: OFFSET_HORIZONTAL*root.width*2 + image.width
+        size_hint: (None, 0.15)
+        width: WIDTH_HINT_TOP*root.width - self.x - OFFSET_HORIZONTAL*root.width
+        font_name: root.font_name_title
+        font_size: root.font_ratio*root.font_size_text
+        color: root.font_color
+        text_size: self.size
+        halign: "left"
+        valign: "middle"
+
+    # Dialog content
+    Label:
+        text: root.text
+        pos_hint: {"x": OFFSET_HORIZONTAL, "y": 0.025}
+        size_hint: (1 - 2*OFFSET_HORIZONTAL, 0.6)
+        font_name: root.font_name_text
+        font_size: root.font_ratio*root.font_size_text
+        color: root.font_color
+        text_size: self.size
+        halign: "left"
+        valign: "top"

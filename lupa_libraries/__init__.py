@@ -4,7 +4,10 @@
 
 ### Screens ###
 
-from lupa_libraries.olympe_screen import OlympeScreen
+from lupa_libraries.screen_manager import (
+    OlympeScreen,
+    ImprovedScreen
+)
 
 ### Custom widgets ###
 
@@ -13,3 +16,7 @@ from lupa_libraries.custom_widgets import (
 )
 
 ### Dialog generator ###
+
+from lupa_libraries.dialog_generator import (
+    DialogLayout
+)

@@ -98,7 +98,7 @@ class MainApp(App, Widget):
         -------
         None
         """
-        Window.clearcolor = (0, 0, 0, 1)
+        Window.clearcolor = (1, 1, 1, 1)
         self.icon = PATH_IMAGES + "logo.png"
 
     @mainthread

@@ -19,7 +19,9 @@ from kivy.properties import (
 
 ### Local imports ###
 
-from tools.kivy_tools import ImprovedScreen
+from lupa_libraries.screen_manager import (
+    ImprovedScreen
+)
 from tools.constants import (
     SCREEN_TITLE,
     SCREEN_BACK_ARROW

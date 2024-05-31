@@ -19,7 +19,7 @@ from kivy.uix.label import Label
 
 ### Local imports ###
 
-from tools.kivy_tools import (
+from lupa_libraries import (
     ImprovedScreen
 )
 from tools.path import (
