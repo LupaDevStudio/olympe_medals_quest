@@ -1,0 +1,117 @@
+{
+    "values": {
+        "Température": [
+            "Temp",
+            [
+                "degC"
+            ]
+        ],
+        "Débit": [
+            "Debit"
+        ],
+        "Pression": [
+            "Pression",
+            [
+                "Bar",
+                "PSI",
+                "MPa"
+            ]
+        ],
+        "Booléen": [
+            "Boolean"
+        ],
+        "Index": [
+            "Index"
+        ],
+        "Consommation": [
+            "Conso"
+        ],
+        "COP": [
+            "COP"
+        ],
+        "EER": [
+            "EER"
+        ],
+        "Intensité": [
+            "Intensite",
+            [
+                "A"
+            ]
+        ],
+        "Tension": [
+            "Tension",
+            [
+                "V",
+                "kV"
+            ]
+        ],
+        "Puissance thermique": [
+            "Pth"
+        ],
+        "Puissance électrique": [
+            "Pelec"
+        ],
+        "Enumération des valeurs": [
+            "Enum"
+        ],
+        "Economie": [
+            "Eco"
+        ],
+        "Energie": [
+            "Energie"
+        ],
+        "Hauteur mamométrique": [
+            "HMT"
+        ],
+        "Masse": [
+            "Masse"
+        ],
+        "Niveau": [
+            "Niveau"
+        ],
+        "Position": [
+            "Pos"
+        ],
+        "Production": [
+            "Prod"
+        ],
+        "Vitesse": [
+            "Vitesse"
+        ],
+        "Volume": [
+            "Vol",
+            [
+                "L",
+                "m3"
+            ]
+        ],
+        "Indicateur": [
+            "IPE"
+        ],
+        "Degré jour unifié": [
+            "DJU"
+        ],
+        "Taux": [
+            "Taux",
+            [
+                "%"
+            ]
+        ],
+        "Humidité": [
+            "Humidite"
+        ],
+        "Surconsommation": [
+            "Surconso"
+        ]
+    },
+    "timestep": [
+        "jour",
+        "heure",
+        "10min",
+        "min"
+    ],
+    "flux_direction": [
+        "Entrée",
+        "Sortie"
+    ]
+}

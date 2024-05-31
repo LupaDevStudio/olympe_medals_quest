@@ -1,0 +1,5 @@
+kivy==2.2.1
+zbarcam==2020.524
+azure-core==1.30.1
+azure-identity==1.16.0
+supabase==2.5.0
