@@ -2,10 +2,6 @@
 
 <HomeScreen>:
 
-    DialogLayout:
-        size_hint: (0.95, 0.4)
-        pos_hint: {"center_x": 0.5, "y": 0.05}
-        character_name: "Olympe"
-        character_title: "Présidente"
-        character_image: PATH_CHARACTERS_IMAGES + "Olympe/olympe_face_neutral.png"
-        text: "Je m'appelle Olympe.\n\nJe vais faire une très longue phrase pour que je puisse voir si cela loge bien dans le cadre, merci pour votre compréhension !"
+    Button:
+        text: "Go to dialog"
+        on_release: root.go_to_dialog()

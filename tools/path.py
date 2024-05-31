@@ -44,6 +44,7 @@ PATH_SCREENS = "screens/"
 PATH_IMAGES = PATH_RESOURCES + "images/"
 PATH_ICONS = PATH_IMAGES + "icons/"
 PATH_CHARACTERS_IMAGES = PATH_IMAGES + "characters/"
+PATH_BACKGROUNDS = PATH_IMAGES + "backgrounds/"
 PATH_FONTS = PATH_RESOURCES + "fonts/"
 
 # Path for the fonts
