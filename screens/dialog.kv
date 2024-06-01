@@ -3,9 +3,16 @@
 <DialogScreen>:
 
     DialogLayout:
-        size_hint: (0.95, 0.4)
-        pos_hint: {"center_x": 0.5, "y": 0.05}
+        size_hint: (0.9, 0.4)
+        pos_hint: {"center_x": 0.5, "y": 0.15}
         character_name: root.character_name
         character_title: root.character_title
         character_image: root.character_image
-        text: root.dialog_text
+        text: root.dialog_text_label
+
+    Button:
+        text: "Next"
+        size_hint: (None, 0.1)
+        width: self.height
+        pos_hint: {"right": 0.95, "y": 0.025}
+        on_release: root.go_to_next_frame()

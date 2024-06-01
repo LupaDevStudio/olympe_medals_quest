@@ -1,0 +1,18 @@
+{
+    "introduction": [
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "Bonjour.",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Je m'appelle Olympe.\n\nJe vais faire une très longue phrase pour que je puisse voir si cela loge bien dans le cadre, merci pour votre compréhension !",
+            "background": "office"
+        }
+    ]
+}

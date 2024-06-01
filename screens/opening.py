@@ -54,7 +54,7 @@ class OpeningScreen(ImprovedScreen):
             self.opacity_state = -self.opacity_state
 
     def on_enter(self, *args):
-        print("enter opening screen")
+        print("Enter opening screen")
         # Schedule the update for the text opacity effect
         Clock.schedule_interval(self.update, 1 / 60)
 
@@ -77,24 +77,16 @@ class OpeningScreen(ImprovedScreen):
         self.screens_class_dict = SCREENS_DICT
 
         files_to_load_list = [
-            "screens", "lupa_libraries", "lupa_libraries/custom_widgets", "lupa_libraries/dialog_generator"
+            "lupa_libraries/screen_manager/",
+            "lupa_libraries/custom_widgets/",
+            "lupa_libraries/dialog_generator/",
+            "screens/"
         ]
         for type_file in files_to_load_list:
             screen_files = [file for file in os.listdir(
                 type_file) if file.endswith(".kv")]
             for file in screen_files:
-                Builder.load_file(f"{type_file}/{file}", encoding="utf-8")
-
-        # screen_files = [file for file in os.listdir(
-        #     "screens") if file.endswith(".kv")]
-        # for file in screen_files:
-        #     Builder.load_file(f"screens/{file}", encoding="utf-8")
-        # widget_files = [file for file in os.listdir(
-        #     "lupa_libraries") if file.endswith(".kv")]
-        # for file in widget_files:
-        #     Builder.load_file(
-        #         f"custom_widgets/{file}", encoding="utf-8")
-
+                Builder.load_file(f"{type_file}{file}", encoding="utf-8")
 
         Clock.schedule_once(self.load_other_screens)
 

@@ -46,6 +46,7 @@ PATH_ICONS = PATH_IMAGES + "icons/"
 PATH_CHARACTERS_IMAGES = PATH_IMAGES + "characters/"
 PATH_BACKGROUNDS = PATH_IMAGES + "backgrounds/"
 PATH_FONTS = PATH_RESOURCES + "fonts/"
+PATH_DIALOGS_DICT = PATH_RESOURCES + "dialogs.json"
 
 # Path for the fonts
 PATH_TEXT_FONT = PATH_FONTS + "Oxanium-Bold.ttf"

@@ -26,6 +26,9 @@ from tools.constants import (
     SCREEN_TITLE,
     SCREEN_BACK_ARROW
 )
+from tools.path import (
+    PATH_BACKGROUNDS
+)
 from tools.graphics import (
     TOP_BAR_HEIGHT
 )
@@ -45,4 +48,6 @@ class OlympeScreen(ImprovedScreen):
     title_screen = StringProperty()
 
     def __init__(self, **kw):
-        super().__init__(**kw)
+        super().__init__(
+            back_image_path=PATH_BACKGROUNDS + "sport_complex.png",
+            **kw)

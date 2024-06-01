@@ -21,10 +21,12 @@ import os
 ### Local imports ###
 
 from tools.path import (
-    PATH_USER_DATA
+    PATH_USER_DATA,
+    PATH_DIALOGS_DICT
 )
 from tools.basic_tools import (
-    save_json_file
+    save_json_file,
+    load_json_file
 )
 from tools.data import (
     UserData
@@ -53,6 +55,15 @@ if not os.path.exists(PATH_USER_DATA):
 
 # Load the data of the user
 USER_DATA = UserData()
+
+### Game data ###
+
+DIALOGS_DICT = load_json_file(PATH_DIALOGS_DICT)
+CHARACTERS_DICT = {
+    "olympe": {
+        "title": "Présidente"
+    }
+}
 
 ### Screens ###
 

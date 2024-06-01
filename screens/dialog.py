@@ -8,6 +8,7 @@ Module to create the dialog screen.
 
 ### Kivy properties ###
 
+from kivy.clock import Clock
 from kivy.properties import (
     StringProperty
 )
@@ -16,6 +17,10 @@ from kivy.properties import (
 
 from lupa_libraries import (
     OlympeScreen
+)
+from tools.constants import (
+    DIALOGS_DICT,
+    CHARACTERS_DICT
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -32,33 +37,105 @@ class DialogScreen(OlympeScreen):
     Class to manage the screen of dialogs of the game.
     """
 
-    dialog_code = ""
-    dialog_frame_counter = 0
+    dialog_code: str
+    dialog_frame_counter: int
+    dialog_content_list: list
 
     ### Current dialog frame property ###
 
-    character_name = StringProperty("Olympe")
-    character_title = StringProperty("Présidente")
-    character_image = StringProperty(PATH_CHARACTERS_IMAGES + "Olympe/olympe_face_neutral.png")
-    dialog_text = StringProperty()
+    character_name = StringProperty()
+    character_title = StringProperty()
+    character_image = StringProperty()
+    dialog_text: str
+    index_label: int
+    dialog_text_label = StringProperty()
 
     def reload_kwargs(self, dict_kwargs):
         self.dialog_code = dict_kwargs["dialog_code"]
-        self.dialog_frame_counter = 0
-        # TODO update variables
-        self.set_back_image_path(
-            back_image_path=PATH_BACKGROUNDS + "sport_complex.png")
-        self.dialog_text = "Je m'appelle Olympe.\n\nJe vais faire une très longue phrase pour que je puisse voir si cela loge bien dans le cadre, merci pour votre compréhension !"
+        self.next_screen = dict_kwargs["next_screen"]
+        self.next_dict_kwargs = dict_kwargs["next_dict_kwargs"]
 
-    def next_dialog_frame(self):
+        # Reset the variables
+        self.dialog_frame_counter = -1
+        self.dialog_content_list = DIALOGS_DICT[self.dialog_code]
+        self.go_to_next_frame()
+
+    def go_to_next_frame(self):
         """
         Go to the next dialog, by setting again the character details and dialog text.
         
         Parameters
         ----------
+        None
         
         Returns
         -------
+        None
         """
         self.dialog_frame_counter += 1
-        # TODO update with the dictionary
+
+        # Change screen if the dialog is finished
+        if self.dialog_frame_counter == len(self.dialog_content_list):
+            self.go_to_next_screen(
+                screen_name=self.next_screen,
+                current_dict_kwargs={
+                    "dialog_code": self.dialog_code,
+                    "next_screen": self.next_screen,
+                    "next_dict_kwargs": self.next_dict_kwargs},
+                next_dict_kwargs=self.next_dict_kwargs
+            )
+            return
+
+        current_frame: dict = self.dialog_content_list[self.dialog_frame_counter]
+
+        # Set the background of the screen
+        # TODO faire une transition smooth entre les différents backgrounds
+        background: str = current_frame["background"]
+        if background == "sport_complex":
+            # TODO treat the different backgrounds
+            pass
+        self.set_back_image_path(
+            back_image_path=PATH_BACKGROUNDS + f"{background}.png")
+        
+        # Set the character details
+        character_id: str = current_frame["character"]
+        self.character_name = character_id.capitalize()
+        expression: str = current_frame["expression"]
+        self.character_image = PATH_CHARACTERS_IMAGES + \
+            f"{self.character_name}/{character_id}_face_{expression}.png"
+
+        # Hide the name and the title of the character if necessary
+        mystery: bool = current_frame["mystery"]
+        if mystery:
+            self.character_title = "???"
+            self.character_name = "???"
+        else:
+            self.character_title = CHARACTERS_DICT[character_id]["title"]
+
+        # Set the content of the defiling dialog
+        self.dialog_text = current_frame["text"]
+        self.dialog_text_label = ""
+        self.index_label = 0
+        Clock.schedule_interval(self.update_label, 0.05)
+
+    def update_label(self, *args):
+        """
+        Update the content of the dialog to make it defiling.
+        
+        Parameters
+        ----------
+        *args : optional
+        
+        Returns
+        -------
+        None
+        """
+        self.index_label += 1
+
+        # End condition
+        if self.index_label == len(self.dialog_text) + 1:
+            Clock.unschedule(self.update_label)
+            return
+
+        # Update the content of the label
+        self.dialog_text_label = self.dialog_text[0:self.index_label]

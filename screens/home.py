@@ -27,6 +27,8 @@ class HomeScreen(OlympeScreen):
             screen_name="dialog",
             current_dict_kwargs={},
             next_dict_kwargs={
-                "dialog_code": "test"
+                "dialog_code": "introduction",
+                "next_screen": "home",
+                "next_dict_kwargs": {}
             }
         )
