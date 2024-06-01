@@ -26,7 +26,10 @@ FONTS_SIZES = FontSize()
 
 class Colors():
     def __init__(self) -> None:
-        self.blue_olympe = (18 / 255, 56 / 255, 89 / 255, 1), # TODO
+        self.blue_olympe = (36 / 255, 122 / 255, 145 / 255, 1) # TODO
+        self.blue_pressed_olympe = (22 / 255, 74 / 255, 87 / 255, 1) # TODO
+        self.gray_disable = (128 / 255, 128 / 255, 128 / 255, 1) # TODO
+        self.gray_pressed_disable = (102 / 255, 102 / 255, 102 / 255, 1) # TODO
         self.white = (1, 1, 1, 1)
         self.black = (0, 0, 0, 1)
         self.transparent_black = (0, 0, 0, 0.5)
