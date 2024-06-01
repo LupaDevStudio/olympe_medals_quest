@@ -103,6 +103,7 @@ class IconPressedButton(ButtonBehavior, RelativeLayout):
     ### Icon settings ###
 
     icon_source = StringProperty()
+    size_hint_y_icon = NumericProperty(0.5)
 
     ### Colors ###
 

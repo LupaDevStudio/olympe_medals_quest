@@ -2,8 +2,18 @@
 
 <HomeScreen>:
 
-    Button:
+    PressedButton:
         text: "Go to dialog"
         size_hint: (0.5, 0.1)
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
-        on_release: root.go_to_dialog()
+        font_ratio: root.font_ratio
+        release_function: root.go_to_dialog
+
+    IconPressedButton:
+        icon_source: PATH_ICONS + "settings.png"
+        size_hint: (None, ICON_BUTTON_SIZE)
+        width: self.height
+        pos_hint: POS_HINT_RIGHT_BOTTOM_BUTTON
+        font_ratio: root.font_ratio
+        size_hint_y_icon: 0.6
+        release_function: root.go_to_settings

@@ -47,7 +47,12 @@ class OlympeScreen(ImprovedScreen):
     dict_type_screen: dict = {}
     title_screen = StringProperty()
 
-    def __init__(self, **kw):
-        super().__init__(
-            back_image_path=PATH_BACKGROUNDS + "sport_complex.png",
-            **kw)
+    def __init__(self, back_image_path=None, **kw):
+        if back_image_path is None:
+            super().__init__(
+                back_image_path=PATH_BACKGROUNDS + "sport_complex.png",
+                **kw)
+        else:
+            super().__init__(
+                back_image_path=back_image_path,
+                **kw)

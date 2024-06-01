@@ -47,7 +47,7 @@ class DialogScreen(OlympeScreen):
     character_title = StringProperty()
     character_image = StringProperty()
     dialog_text: str
-    index_label: int
+    index_scrolling_label: int
     dialog_text_label = StringProperty()
 
     def reload_kwargs(self, dict_kwargs):
@@ -55,10 +55,32 @@ class DialogScreen(OlympeScreen):
         self.next_screen = dict_kwargs["next_screen"]
         self.next_dict_kwargs = dict_kwargs["next_dict_kwargs"]
 
-        # Reset the variables
+        # Reset the variables and start the dialog
         self.dialog_frame_counter = -1
         self.dialog_content_list = DIALOGS_DICT[self.dialog_code]
         self.go_to_next_frame()
+
+    def pass_current_frame(self):
+        """
+        Finish the display of the current frame or go to the next frame of the dialog.
+        
+        Parameters
+        ----------
+        None
+        
+        Returns
+        -------
+        None
+        """
+        # Finish the display of the current frame if not finished
+        if self.index_scrolling_label < len(self.dialog_text) + 1:
+            Clock.unschedule(self.update_label)
+            self.dialog_text_label = self.dialog_text
+            self.index_scrolling_label = len(self.dialog_text) + 1
+        
+        # Go to the next frame if finished
+        else:
+            self.go_to_next_frame()
 
     def go_to_next_frame(self):
         """
@@ -71,7 +93,7 @@ class DialogScreen(OlympeScreen):
         Returns
         -------
         None
-        """
+        """       
         self.dialog_frame_counter += 1
 
         # Change screen if the dialog is finished
@@ -112,15 +134,15 @@ class DialogScreen(OlympeScreen):
         else:
             self.character_title = CHARACTERS_DICT[character_id]["title"]
 
-        # Set the content of the defiling dialog
+        # Set the content of the scrolling dialog
         self.dialog_text = current_frame["text"]
         self.dialog_text_label = ""
-        self.index_label = 0
+        self.index_scrolling_label = 0
         Clock.schedule_interval(self.update_label, 0.05)
 
     def update_label(self, *args):
         """
-        Update the content of the dialog to make it defiling.
+        Update the content of the dialog to make it scroll.
         
         Parameters
         ----------
@@ -130,12 +152,12 @@ class DialogScreen(OlympeScreen):
         -------
         None
         """
-        self.index_label += 1
+        self.index_scrolling_label += 1
 
         # End condition
-        if self.index_label == len(self.dialog_text) + 1:
+        if self.index_scrolling_label == len(self.dialog_text) + 1:
             Clock.unschedule(self.update_label)
             return
 
         # Update the content of the label
-        self.dialog_text_label = self.dialog_text[0:self.index_label]
+        self.dialog_text_label = self.dialog_text[0:self.index_scrolling_label]

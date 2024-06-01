@@ -12,8 +12,8 @@
 
     IconPressedButton:
         icon_source: PATH_ICONS + "right_arrow.png"
-        size_hint: (None, 0.1)
+        size_hint: (None, ICON_BUTTON_SIZE)
         width: self.height
-        pos_hint: {"right": 0.95, "y": 0.025}
+        pos_hint: POS_HINT_RIGHT_BOTTOM_BUTTON
         font_ratio: root.font_ratio
-        release_function: root.go_to_next_frame
+        release_function: root.pass_current_frame
