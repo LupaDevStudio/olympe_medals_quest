@@ -88,12 +88,15 @@ class PressedButton(ButtonBehavior, RelativeLayout):
         super().__init__(**kwargs)
 
     def on_press(self):
-        self.press_button = True
+        if not self.disable_button:
+            self.press_button = True
 
     def on_release(self):
-        if self.collide_point(self.last_touch.x, self.last_touch.y):
+        if self.collide_point(self.last_touch.x, self.last_touch.y) and not self.disable_button:
             self.release_function()
-        self.press_button = False
+        if not self.disable_button:
+            self.press_button = False
+
 
 class IconPressedButton(ButtonBehavior, RelativeLayout):
     """
@@ -128,9 +131,11 @@ class IconPressedButton(ButtonBehavior, RelativeLayout):
         super().__init__(**kwargs)
 
     def on_press(self):
-        self.press_button = True
+        if not self.disable_button:
+            self.press_button = True
 
     def on_release(self):
-        if self.collide_point(self.last_touch.x, self.last_touch.y):
+        if self.collide_point(self.last_touch.x, self.last_touch.y) and not self.disable_button:
             self.release_function()
-        self.press_button = False
+        if not self.disable_button:
+            self.press_button = False

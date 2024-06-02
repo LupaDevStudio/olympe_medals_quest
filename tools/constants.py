@@ -70,3 +70,7 @@ CHARACTERS_DICT = {
 SCREEN_TITLE = "title"
 SCREEN_MONEY_RIGHT = "money_right"
 SCREEN_BACK_ARROW = "back_arrow"
+
+### Game constants ###
+
+TEXT_SCROLLING_SPEED = 0.03
