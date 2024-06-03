@@ -36,6 +36,10 @@ PATH_RESOURCES = "resources/"
 
 # Path for the user data
 PATH_USER_DATA = PATH_APP_FOLDER + "data.json"
+PATH_ATHLETES_IMAGES = PATH_APP_FOLDER + "athletes/"
+# Create the directory if it does not exist
+if not os.path.exists(PATH_ATHLETES_IMAGES):
+    os.mkdir(PATH_ATHLETES_IMAGES)
 
 # Path for the screen
 PATH_SCREENS = "screens/"
@@ -45,7 +49,7 @@ PATH_IMAGES = PATH_RESOURCES + "images/"
 PATH_ICONS = PATH_IMAGES + "icons/"
 PATH_CHARACTERS_IMAGES = PATH_IMAGES + "characters/"
 PATH_BACKGROUNDS = PATH_IMAGES + "backgrounds/"
-PATH_MEDALS = PATH_IMAGES + "medals/"
+PATH_MEDALS_IMAGES = PATH_IMAGES + "medals/"
 PATH_FONTS = PATH_RESOURCES + "fonts/"
 PATH_DIALOGS_DICT = PATH_RESOURCES + "dialogs.json"
 

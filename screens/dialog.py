@@ -21,7 +21,7 @@ from lupa_libraries import (
 from tools.constants import (
     DIALOGS_DICT,
     CHARACTERS_DICT,
-    TEXT_SCROLLING_SPEED
+    USER_DATA
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -139,7 +139,7 @@ class DialogScreen(OlympeScreen):
         self.dialog_text = current_frame["text"]
         self.dialog_text_label = ""
         self.index_scrolling_label = 0
-        Clock.schedule_interval(self.update_label, TEXT_SCROLLING_SPEED)
+        Clock.schedule_interval(self.update_label, USER_DATA.settings["text_scrolling_speed"])
 
     def update_label(self, *args):
         """

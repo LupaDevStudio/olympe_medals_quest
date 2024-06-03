@@ -29,7 +29,8 @@ from tools.basic_tools import (
     load_json_file
 )
 from tools.data import (
-    UserData
+    UserData,
+    Game
 )
 
 #################
@@ -50,7 +51,16 @@ MSAA_LEVEL = 2
 
 # Create the user data json if it does not exist
 if not os.path.exists(PATH_USER_DATA):
-    default_user_data = {}
+    default_user_data = {
+        "settings": {
+            "sound_volume": 0.5,
+            "music_volume": 0.5,
+            "language": "english",
+            "text_scrolling_speed": 0.03
+        },
+        "tutorial": {},
+        "game": Game()
+    }
     save_json_file(PATH_USER_DATA, default_user_data)
 
 # Load the data of the user
@@ -70,7 +80,4 @@ CHARACTERS_DICT = {
 SCREEN_TITLE = "title"
 SCREEN_MONEY_RIGHT = "money_right"
 SCREEN_BACK_ARROW = "back_arrow"
-
-### Game constants ###
-
-TEXT_SCROLLING_SPEED = 0.03
+SCREEN_TOP_BAR = "top_bar"
