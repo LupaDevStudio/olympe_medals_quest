@@ -118,14 +118,13 @@ class DialogScreen(OlympeScreen):
             # TODO treat the different backgrounds
             pass
         self.set_back_image_path(
-            back_image_path=PATH_BACKGROUNDS + f"{background}.png")
+            back_image_path=PATH_BACKGROUNDS + f"{background}.jpg")
         
         # Set the character details
         character_id: str = current_frame["character"]
-        self.character_name = character_id.capitalize()
         expression: str = current_frame["expression"]
         self.character_image = PATH_CHARACTERS_IMAGES + \
-            f"{self.character_name}/{character_id}_face_{expression}.png"
+            f"{self.character_name}/{character_id}_face_{expression}.jpg"
 
         # Hide the name and the title of the character if necessary
         mystery: bool = current_frame["mystery"]
@@ -133,6 +132,7 @@ class DialogScreen(OlympeScreen):
             self.character_title = "???"
             self.character_name = "???"
         else:
+            self.character_name = CHARACTERS_DICT[character_id]["name"]
             self.character_title = CHARACTERS_DICT[character_id]["title"]
 
         # Set the content of the scrolling dialog

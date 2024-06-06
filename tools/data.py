@@ -120,7 +120,7 @@ class Athlete():
     def __init__(self, id: str, name: str, age: int, salary: int,
             recruit_price: int, strength: int, speed: int,
             technique: int, precision: int,
-            charisma: int, sports: dict[str, int]) -> None:
+            charm: int, sports: dict[str, int]) -> None:
         self.id = id
         self.name = name
         self.age = age
@@ -132,7 +132,7 @@ class Athlete():
         self.speed = speed
         self.technique = technique
         self.precision = precision
-        self.charisma = charisma
+        self.charm = charm
         self.sports: dict[str, int] = sports
         self.planning: list[Activity] = []
 
@@ -380,7 +380,7 @@ def generate_athlete() -> Athlete:
         speed=2,
         technique=15,
         precision=60,
-        charisma=29,
+        charm=29,
         sports=[]
     )
 
@@ -395,11 +395,11 @@ if __name__ == "__main__":
         speed=2,
         technique=70,
         precision=60,
-        charisma=29,
+        charm=29,
         sports=[]
     )
     assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.strength) == ["E", 0]
     assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.speed) == ["F", 2]
     assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.technique) == ["S", 10]
     assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.precision) == ["S", 0]
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.charisma) == ["D", 9]
+    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.charm) == ["D", 9]

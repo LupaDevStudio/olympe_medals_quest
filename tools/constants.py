@@ -59,7 +59,7 @@ if not os.path.exists(PATH_USER_DATA):
             "text_scrolling_speed": 0.03
         },
         "tutorial": {},
-        "game": Game()
+        "game": {}
     }
     save_json_file(PATH_USER_DATA, default_user_data)
 
@@ -71,7 +71,16 @@ USER_DATA = UserData()
 DIALOGS_DICT = load_json_file(PATH_DIALOGS_DICT)
 CHARACTERS_DICT = {
     "olympe": {
+        "name": "Olympe",
         "title": "Présidente"
+    },
+    "president_competition": {
+        "name": "Président",
+        "title": "Président de la compétition TODO"
+    },
+    "journalist": {
+        "name": "Journaliste",
+        "title": "Journaliste de NOM JOURNAL"
     }
 }
 
