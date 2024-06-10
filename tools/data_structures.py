@@ -38,6 +38,13 @@ DEFAULT_HEALTH_DICT = {
     "type_injury": "",
     "months_absent": 0
 }
+DEFAULT_STATS_DICT = {
+    "strength": 0,
+    "speed": 0,
+    "technique": 0,
+    "precision": 0,
+    "charm": 0,
+}
 TIER_RANK_DICT = {
     0: "F",
     1: "E",
@@ -87,9 +94,25 @@ GYMNASIUM_EVOLUTION_DICT = {
     }
 }
 
+NB_YEARS_BETWEEN_EDITION = 4
+
+
+#################
+### Functions ###
+#################
+
+def convert_characteristic_to_display(value_characteristic: int):
+    tier_rank = value_characteristic // 10
+    rest = value_characteristic - 10 * tier_rank
+    # Exception for S-10
+    if tier_rank == 7:
+        return ("S", 10)
+    return (TIER_RANK_DICT[tier_rank], rest)
+
 ###############
 ### Classes ###
 ###############
+
 
 class Activity():
     """
@@ -101,6 +124,8 @@ class Activity():
     category: str
     level_category: int
     price: int
+    gain: int
+
 
 class Sport():
     """
@@ -109,8 +134,10 @@ class Sport():
 
     id: str
     name: str
-    category: str
+    category: int  # between 1 and 3 for basic sports and olympic sports
+    stats_involved: tuple[str]
     mode_summer_winter: Literal["summer", "winter"]
+
 
 class Athlete():
     """
@@ -118,9 +145,7 @@ class Athlete():
     """
 
     def __init__(self, id: str, name: str, age: int, salary: int,
-            recruit_price: int, strength: int, speed: int,
-            technique: int, precision: int,
-            charm: int, sports: dict[str, int]) -> None:
+                 recruit_price: int, stats: dict[str, int], sports: dict[str, int]) -> None:
         self.id = id
         self.name = name
         self.age = age
@@ -128,24 +153,29 @@ class Athlete():
         self.recruit_price = recruit_price
         self.fatigue = 0
         self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
-        self.strength = strength
-        self.speed = speed
-        self.technique = technique
-        self.precision = precision
-        self.charm = charm
+        self.stats: dict[str, int] = stats
         self.sports: dict[str, int] = sports
-        self.planning: list[Activity] = []
+        self.current_planning: list[Activity] = []
 
-    def get_image(self) -> str:
+    @ property
+    def image(self) -> str:
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
-    def convert_characteristic_to_display(self, value_characteristic: int):
-        tier_rank = value_characteristic // 10
-        rest = value_characteristic - 10 * tier_rank
-        # Exception for S-10
-        if tier_rank == 7:
-            return ["S", 10]
-        return [TIER_RANK_DICT[tier_rank], rest]
+    def convert_stats_to_tier_rank(self):
+        tier_rank_dict = {}
+        for key in self.stats:
+            value = self.stats[key]
+            tier_rank_dict[key] = convert_characteristic_to_display(
+                value_characteristic=value)
+        return tier_rank_dict
+
+    def convert_sports_to_tier_rank(self):
+        tier_rank_dict = {}
+        for key in self.sports:
+            value = self.sports[key]
+            tier_rank_dict[key] = convert_characteristic_to_display(
+                value_characteristic=value)
+        return tier_rank_dict
 
     def update_monthly_performance(self):
         # TODO update performance with chosen activities avec plafond à 70
@@ -156,6 +186,7 @@ class Athlete():
             self.health["months_absent"] -= 1
             if self.health["months_absent"] == 0:
                 self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
+
 
 class Room():
     """
@@ -176,7 +207,8 @@ class Room():
         self.effects = []
         self.update_according_to_level()
 
-    def get_image(self) -> str:
+    @ property
+    def image(self) -> str:
         return PATH_BACKGROUNDS + f"{self.id}_{self.current_level}.png"
 
     def update_according_to_level(self):
@@ -189,15 +221,16 @@ class Room():
         self.current_level += 1
         self.update_according_to_level()
 
-class Gymnasium():
+
+class SportsComplex():
     """
-    A class to store the data of the gymnasium.
+    A class to store the data of the sports complex.
     """
 
     current_level: int
     max_number_athletes: int
-    rooms_unlocked: list[list[str, int]] # id room and level room
-    rooms_bought: dict[str, Room] # id room and associated Room
+    rooms_unlocked: list[list[str, int]]  # id room and level room
+    rooms_bought: dict[str, Room]  # id room and associated Room
 
     def __init__(self) -> None:
         self.current_level = 1
@@ -205,14 +238,15 @@ class Gymnasium():
         self.rooms_bought = {}
         self.update_according_to_level()
 
+    @property
+    def image(self) -> str:
+        return PATH_BACKGROUNDS + f"sport_complex_{self.current_level}.png"
+
     def update_according_to_level(self):
         self.max_number_athletes = GYMNASIUM_EVOLUTION_DICT[
             self.current_level]["max_number_athletes"]
         for element in GYMNASIUM_EVOLUTION_DICT[self.current_level]["rooms_unlocked"]:
             self.rooms_unlocked.append(element)
-
-    def get_image(self) -> str:
-        return PATH_BACKGROUNDS + f"sport_complex_{self.current_level}.png"
 
     def increase_level(self):
         self.current_level += 1
@@ -226,18 +260,25 @@ class Gymnasium():
             current_room = Room(id=room_id)
         return current_room
 
+
 class Medal():
     """
     A class to store the data of a medal.
     """
 
     type_medal: Literal["gold", "silver", "copper"]
-    year: int
+    edition: int
     athlete_id: str
     sport_id: str
 
-    def get_image(self) -> str:
+    @property
+    def image(self) -> str:
         return PATH_MEDALS_IMAGES + self.type_medal + ".png"
+
+    @property
+    def year(self) -> int:
+        return self.edition * NB_YEARS_BETWEEN_EDITION
+
 
 class Game():
     """
@@ -249,11 +290,23 @@ class Game():
         self.year: int = 1
         self.month: int = 3
         self.team: list[Athlete] = []
-        self.gymnasium: Gymnasium = Gymnasium()
+        self.gymnasium: SportsComplex = SportsComplex()
         self.medals: list[Medal] = []
-        self.sports: list[Sport] = []
-        self.selected_athletes_summer: dict[str, list[str]] = {} # sport id with athlete ids
-        self.selected_athletes_winter: dict[str, list[str]] = {} # sport id with athlete ids
+        self.sports: dict[str, Sport] = {}
+        self.sports_unlocking_progress: dict[str, float] = {}
+        # sport id with athlete ids
+        self.selected_athletes_summer: dict[str, list[str]] = {}
+        # sport id with athlete ids
+        self.selected_athletes_winter: dict[str, list[str]] = {}
+
+    @property
+    def sports_unlocked(self) -> list[Sport]:
+        sports_unlocked = []
+        for key in self.sports_unlocking_progress:
+            value = self.sports_unlocking_progress[key]
+            if value >= 1:
+                sports_unlocked.append(self.sports[key])
+        return sports_unlocked
 
     def get_monthly_salaries(self) -> int:
         monthly_salaries = 0
@@ -264,7 +317,7 @@ class Game():
     def get_monthly_activities_payment(self) -> int:
         monthly_payment = 0
         for athlete in self.team:
-            for activity in athlete.planning:
+            for activity in athlete.current_planning:
                 monthly_payment += activity.price
         return monthly_payment
 
@@ -326,7 +379,7 @@ class Game():
 
         # Update the amount of money
         self.money -= self.get_monthly_payment()
-        
+
         # Update the stats of the athletes according to their activities and age
         for athlete in self.team:
             athlete.update_monthly_performance()
@@ -334,6 +387,7 @@ class Game():
     def begin_new_year(self):
         for athlete in self.team:
             athlete.age += 1
+
 
 class UserData():
     """
@@ -369,6 +423,7 @@ class UserData():
 ### Functions ###
 #################
 
+
 def generate_athlete() -> Athlete:
     return Athlete(
         id="Ariel_1",
@@ -384,6 +439,7 @@ def generate_athlete() -> Athlete:
         sports=[]
     )
 
+
 if __name__ == "__main__":
     my_athlete_a = Athlete(
         id="Ariel_1",
@@ -398,8 +454,13 @@ if __name__ == "__main__":
         charm=29,
         sports=[]
     )
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.strength) == ["E", 0]
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.speed) == ["F", 2]
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.technique) == ["S", 10]
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.precision) == ["S", 0]
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.charm) == ["D", 9]
+    assert my_athlete_a.convert_characteristic_to_display(
+        my_athlete_a.strength) == ["E", 0]
+    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.speed) == [
+        "F", 2]
+    assert my_athlete_a.convert_characteristic_to_display(
+        my_athlete_a.technique) == ["S", 10]
+    assert my_athlete_a.convert_characteristic_to_display(
+        my_athlete_a.precision) == ["S", 0]
+    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.charm) == [
+        "D", 9]

@@ -28,7 +28,7 @@ from tools.basic_tools import (
     save_json_file,
     load_json_file
 )
-from tools.data import (
+from tools.data_structures import (
     UserData,
     Game
 )
