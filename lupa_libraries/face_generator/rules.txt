@@ -1,0 +1,20 @@
+Règles
+------
+
+Positions:
+
+- Visage parfaitement centré
+- Coupe de cheveux parfaitement centrée, hauteur variable
+- Nez, offset horizontal +-5px, hauteur variable
+- Bouche avec inclinaison légère, +- 5 deg, offset léger
+- Manches à inclinaison variable, entre 30 et 45 degrés, hauteur variable, jamais plus haute que le t-shirt
+
+Couleurs:
+
+- Deux couleurs de peau nécessaires
+- Deux couleurs de t-shirt nécessaires
+- 
+
+Ordre:
+
+Cou, manches, t-shirt, visage, sourcil, yeux, bouche, nez, cheveux
