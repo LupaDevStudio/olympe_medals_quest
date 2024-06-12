@@ -68,7 +68,7 @@ HAIRCUT_Y_MAX_OFFSET = 7
 HAIRCUT_MALE_FOLDER = os.path.join(RESOURCES_FOLDER, "men_hair")
 HAIRCUT_FEMALE_FOLDER = os.path.join(RESOURCES_FOLDER, "women_hair")
 
-HAIR_COLOR = [
+HAIR_COLOR = [ # TODO supprimer maintenant
     "#3c3c3c",
     "#d7bf94",
     "#d7bf94",
@@ -77,6 +77,50 @@ HAIR_COLOR = [
     "#d4946b",
     "#d4cbb9",
     "#e5e5e5"
+]
+HAIR_COLOR_FEMALE = [
+    "#3c3c3c", # gray
+    "#d7bf94", # light blond
+    "#d4946b", # light brown
+    "#160800", # black
+    "#160800", # black
+    "#160800", # black
+    "#370d00", # dark brown
+    "#370d00", # dark brown
+    "#370d00", # dark brown
+    "#ff5600", # ginger
+    "#ff5600", # ginger
+    "#ffab27", # blond
+    "#ffab27", # blond
+    "#ffab27", # blond
+    "#a30000", # red
+    "#e51364", # pink lupa
+    "#247a91", # blue lupa
+    "#7700db", # purple
+    "#080072", # dark blue
+    "#006e03", # green
+]
+HAIR_COLOR_MALE = [
+    "#3c3c3c", # gray
+    "#d7bf94", # light blond
+    "#d4946b", # light brown
+    "#160800", # black
+    "#160800", # black
+    "#160800", # black
+    "#370d00", # dark brown
+    "#370d00", # dark brown
+    "#370d00", # dark brown
+    "#612a00", # brown
+    "#612a00", # brown
+    "#ff5600", # ginger
+    "#ff5600", # ginger
+    "#ffab27", # blond
+    "#ffab27", # blond
+    "#ffab27", # blond
+    "#a30000", # red
+    "#247a91", # blue lupa
+    "#080072", # dark blue
+    "#006e03", # green
 ]
 
 HAIRCUT_MALE_SHAPES = [name.replace(".png", "")
@@ -128,11 +172,26 @@ EYES_Y_CENTER = HEIGHT * 120 / 250
 EYES_FOLDER = os.path.join(RESOURCES_FOLDER, "eye")
 
 EYES_COLORS = [
-    "#4d4743",
-    "#395269",
-    "#694c39",
-    "#4c6939",
-    "#396962"
+    # "#4d4743",
+    # "#395269",
+    # "#694c39",
+    # "#4c6939",
+    # "#396962"
+    "#612a00", # brown
+    "#612a00", # brown
+    "#612a00", # brown
+    "#03661e", # green
+    "#03661e", # green
+    "#2c1000", # dark brown
+    "#2c1000", # dark brown
+    "#2c1000", # dark brown
+    "#09005e", # dark blue
+    "#09005e", # dark blue
+    "#4e5141", # gray
+    "#005ebb", # light blue
+    "#006b40", # turquoise
+    "#160800", # black
+    "#160800" # black
 ]
 
 EYES_SHAPES = [name.replace(".png", "") for name in os.listdir(EYES_FOLDER)]
@@ -158,14 +217,17 @@ ARM_X_OFFSET = WIDTH * 77 / 250
 ARM_FILE = os.path.join(CLOTHES_FOLDER, "arm.png")
 
 CLOTHES_COLOR = [
-    ("#eeeeee", "#d2d2d2"),
-    ("#63b448", "#529c39"),
-    ("#16a085", "#108a72"),
-    ("#34495e", "#2a3c4f"),
-    ("#3498db", "#2a81bb"),
-    ("#e05848", "#bf493b"),
-    ("#95a5a6", "#7b8f91"),
-    ("#ffcc00", "#e7b900"),
+    ("#eeeeee", "#d2d2d2"), # white
+    ("#63b448", "#529c39"), # green
+    ("#16a085", "#108a72"), # turquoise
+    ("#00305f", "#001933"), # dark blue
+    ("#3498db", "#2a81bb"), # light blue
+    ("#e05848", "#bf493b"), # red
+    ("#95a5a6", "#7b8f91"), # grey
+    ("#ffcc00", "#e7b900"), # yellow
+    ("#ff9500", "#e77000"), # orange
+    ("#5e00ff", "#3d00a5"), # purple
+    ("#ff8ccc", "#ff63c2") # pink
 ]
 
 
@@ -713,7 +775,10 @@ class Portrait:
 
         # Set the hair color
         if hair_color is None:
-            hair_color = random_select(HAIR_COLOR)
+            if self.gender == "male":
+                hair_color = random_select(HAIR_COLOR_MALE)
+            else:
+                hair_color = random_select(HAIR_COLOR_FEMALE)
         self.hair_color = hair_color
 
         # Set the haircut position
