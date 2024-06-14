@@ -15,6 +15,7 @@ if __name__ == "__main__":
     sys.path.append("../")
     sys.path.append("./")
 from typing import Literal
+import uuid
 
 ### Local imports ###
 
@@ -101,6 +102,10 @@ NB_YEARS_BETWEEN_EDITION = 4
 ### Functions ###
 #################
 
+def generate_id() -> str:
+    unique_id = uuid.uuid4()
+    return str(unique_id)
+
 def convert_characteristic_to_display(value_characteristic: int):
     tier_rank = value_characteristic // 10
     rest = value_characteristic - 10 * tier_rank
@@ -134,19 +139,21 @@ class Sport():
 
     id: str
     name: str
-    category: int  # between 1 and 3 for basic sports and olympic sports
-    stats_involved: tuple[str]
+    skills: tuple[str]
     mode_summer_winter: Literal["summer", "winter"]
 
+    @ property
+    def category(self) -> int:
+        return len(self.skills)
 
 class Athlete():
     """
     A class to store the data of an athlete.
     """
 
-    def __init__(self, id: str, name: str, age: int, salary: int,
+    def __init__(self, name: str, age: int, salary: int,
                  recruit_price: int, stats: dict[str, int], sports: dict[str, int]) -> None:
-        self.id = id
+        self.id = generate_id()
         self.name = name
         self.age = age
         self.salary = salary
@@ -287,8 +294,8 @@ class Game():
 
     def __init__(self) -> None:
         self.money: int = 0
-        self.year: int = 1
-        self.month: int = 3
+        self.year: int = 3
+        self.trimester: int = 1
         self.team: list[Athlete] = []
         self.gymnasium: SportsComplex = SportsComplex()
         self.medals: list[Medal] = []
@@ -370,10 +377,10 @@ class Game():
         return list_medals
 
     def go_to_next_month(self):
-        if self.month != 6:
-            self.month += 1
+        if self.trimester != 4:
+            self.trimester += 1
         else:
-            self.month = 0
+            self.trimester = 0
             self.year += 1
             self.begin_new_year()
 
@@ -442,7 +449,6 @@ def generate_athlete() -> Athlete:
 
 if __name__ == "__main__":
     my_athlete_a = Athlete(
-        id="Ariel_1",
         name="A",
         age=20,
         salary=1200,

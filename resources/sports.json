@@ -1,0 +1,22 @@
+{
+    "cheese_rolling": {
+        "skills": ["speed"],
+        "requirements": []
+    },
+    "buoy_racing": {
+        "skills": ["speed"],
+        "requirements": []
+    },
+    "treadmill_choregraphy": {
+        "skills": ["charm"],
+        "requirements": []
+    },
+    "aqua_jogging": {
+        "skills": ["strength", "speed"],
+        "requirements": ["cheese_rolling", "buoy_racing"]
+    },
+    "mermaid_swimming": {
+        "skills": ["speed", "charm"],
+        "requirements": ["buoy_racing", "treadmill_choregraphy"]
+    }
+}

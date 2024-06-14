@@ -21,7 +21,8 @@ from lupa_libraries import (
 from tools.constants import (
     DIALOGS_DICT,
     CHARACTERS_DICT,
-    USER_DATA
+    USER_DATA,
+    TEXT
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -58,7 +59,7 @@ class DialogScreen(OlympeScreen):
 
         # Reset the variables and start the dialog
         self.dialog_frame_counter = -1
-        self.dialog_content_list = DIALOGS_DICT[self.dialog_code]
+        self.dialog_content_list = DIALOGS_DICT[TEXT.language][self.dialog_code]
         self.go_to_next_frame()
 
     def pass_current_frame(self):
@@ -115,7 +116,7 @@ class DialogScreen(OlympeScreen):
         # TODO faire une transition smooth entre les différents backgrounds
         background: str = current_frame["background"]
         if background == "sport_complex":
-            # TODO treat the different backgrounds
+            # TODO treat the different backgrounds for the sport complex
             pass
         self.set_back_image_path(
             back_image_path=PATH_BACKGROUNDS + f"{background}.jpg")

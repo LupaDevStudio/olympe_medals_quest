@@ -1,0 +1,17 @@
+#:kivy 2.2.1
+
+<SettingsScreen>:
+
+    PressedButton:
+        text: "change"
+        size_hint: (0.5, 0.1)
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        font_ratio: root.font_ratio
+        release_function: root.change_language
+
+    PressedButton:
+        text: "retour"
+        size_hint: (0.5, 0.1)
+        pos_hint: {"center_x": 0.5, "center_y": 0.8}
+        font_ratio: root.font_ratio
+        release_function: root.go_backwards

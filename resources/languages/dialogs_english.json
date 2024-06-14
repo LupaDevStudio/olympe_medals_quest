@@ -1,0 +1,81 @@
+{
+    "introduction": [
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "[ENGLISH VERSION] Mesdames et Messieurs, honorables invités, athlètes exceptionnels, et fans passionnés du monde entier !",
+            "background": "president_speech"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "En tant que président de METTRE LE NOM DE LA COMPETITION, c'est un immense honneur pour moi de prendre la parole aujourd'hui. Je tiens à remercier tous les participants, les organisateurs, et les fans qui ont rendu possible cet événement exceptionnel.",
+            "background": "president_speech"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Sans oublier tous nos extraordinaires sponsors : Choco-Cola, Toy-Yoda, Samsquash, Fauxsa, Alphamega, Hairbnb, Intelephant, Alligagator, McDuck et Poopsy !",
+            "background": "president_speech"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Il est maintenant temps de dévoiler le programme de cette vingt-et-unième édition exceptionnelle de NOM ! Vous allez être témoins de performances incroyables, de exploits inoubliables, de suspense insoutenable, d'échecs cuisants aussi et de blessures atroces comme à chaque édition !",
+            "background": "president_speech"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "D'abord, auront lieu les traditionnels concours d'athlétisme, où les plus rapides et les plus forts se mesureront dans des épreuves depuis si longtemps connues du 100 mètres, le saut en hauteur, et le lancer de javelot.",
+            "background": "president_speech"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Ensuite, nous passerons à la gymnastique et à la danse, où les participants mettront en valeur leur charme et agilité à travers des chorégraphies hors du commun !",
+            "background": "president_speech"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Cela ne s'arrêtera pas là ! Les athlètes pourront démontrer leur force, leur précision et leur vigueur à travers les épreuves de tir à l'arc, escalade, boxe, escrime, natation et [NEW_SPORT]... Hein ? Comment ? Mais, CASSIE !",
+            "background": "president_speech"
+        },
+        {
+            "character": "journalist",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Le [NEW_SPORT] !",
+            "background": "president_speech_sheet"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Non, hum, c'est...",
+            "background": "president_speech_sheet"
+        },
+        {
+            "character": "journalist",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Le [NEW_SPORT] sera présent pour la vingt-et-unième édition de COMPETITION ! C'est incroyable, quelle annonce inattendue !",
+            "background": "president_speech"
+        },
+        {
+            "character": "president_competition",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Je... Oui vous avez raison ! Soyons disruptifs et introduisons ce sport si populaire !",
+            "background": "president_speech"
+        }
+    ]
+}

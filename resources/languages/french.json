@@ -1,0 +1,14 @@
+{
+    "home": {
+        "play": "Jouer"
+    },
+    "sports": {
+        "cheese_rolling": {
+            "name": "Cheese Rolling",
+            "description": ""
+        }
+    },
+    "activities": {},
+    "tutorial": {},
+    "popup": {}
+}

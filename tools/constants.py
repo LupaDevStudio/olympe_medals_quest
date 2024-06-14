@@ -22,7 +22,7 @@ import os
 
 from tools.path import (
     PATH_USER_DATA,
-    PATH_DIALOGS_DICT
+    PATH_LANGUAGE
 )
 from tools.basic_tools import (
     save_json_file,
@@ -31,6 +31,9 @@ from tools.basic_tools import (
 from tools.data_structures import (
     UserData,
     Game
+)
+from tools.language import (
+    Text
 )
 
 #################
@@ -66,13 +69,30 @@ if not os.path.exists(PATH_USER_DATA):
 # Load the data of the user
 USER_DATA = UserData()
 
+### Language ###
+
+DICT_LANGUAGE_CORRESPONDANCE = {
+    "french": "Français",
+    "english": "English"
+}
+DICT_LANGUAGE_NAME_TO_CODE = {
+    "Français": "french",
+    "English": "english"
+}
+LANGUAGES_LIST = tuple(DICT_LANGUAGE_CORRESPONDANCE.values())
+TEXT = Text(language=USER_DATA.settings["language"])
+
 ### Game data ###
 
-DIALOGS_DICT = load_json_file(PATH_DIALOGS_DICT)
+DIALOGS_DICT = {}
+for language_code in DICT_LANGUAGE_CORRESPONDANCE:
+    DIALOGS_DICT[language_code] = load_json_file(
+        PATH_LANGUAGE + "dialogs_" + TEXT.language + ".json")
+
 CHARACTERS_DICT = {
     "olympe": {
         "name": "Olympe",
-        "title": "Présidente"
+        "title": "Présidente de NOM PAYS"
     },
     "president_competition": {
         "name": "Président",

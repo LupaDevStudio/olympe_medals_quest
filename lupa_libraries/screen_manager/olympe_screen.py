@@ -56,3 +56,7 @@ class OlympeScreen(ImprovedScreen):
             super().__init__(
                 back_image_path=back_image_path,
                 **kw)
+            
+        if self.dict_type_screen != {}:
+
+            pass
