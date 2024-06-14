@@ -45,8 +45,10 @@ class Text():
 
         # Split the text contained in the screens
         self.home = data["home"]
+        self.game = data["game"]
 
         self.sports = data["sports"]
+        self.rooms = data["rooms"]
         self.activities = data["activities"]
 
         self.tutorial = data["tutorial"]

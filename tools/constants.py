@@ -106,7 +106,6 @@ CHARACTERS_DICT = {
 
 ### Screens ###
 
-SCREEN_TITLE = "title"
+SCREEN_TITLE_YEAR = "title_year"
 SCREEN_MONEY_RIGHT = "money_right"
 SCREEN_BACK_ARROW = "back_arrow"
-SCREEN_TOP_BAR = "top_bar"

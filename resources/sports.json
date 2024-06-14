@@ -11,6 +11,34 @@
         "skills": ["charm"],
         "requirements": []
     },
+    "iron_toe": {
+        "skills": ["precision"],
+        "requirements": []
+    },
+    "donuts_throwing": {
+        "skills": ["precision"],
+        "requirements": []
+    },
+    "chess_boxing": {
+        "skills": ["strength"],
+        "requirements": []
+    },
+    "hopscotch": {
+        "skills": ["strength"],
+        "requirements": []
+    },
+    "TODO_HAMAC_GYM": {
+        "skills": ["charm"],
+        "requirements": []
+    },
+    "zipline_bow": {
+        "skills": ["technique"],
+        "requirements": []
+    },
+    "TODO_SPIDER": {
+        "skills": ["technique"],
+        "requirements": []
+    },
     "aqua_jogging": {
         "skills": ["strength", "speed"],
         "requirements": ["cheese_rolling", "buoy_racing"]
@@ -18,5 +46,77 @@
     "mermaid_swimming": {
         "skills": ["speed", "charm"],
         "requirements": ["buoy_racing", "treadmill_choregraphy"]
+    },
+    "musical_fencing": {
+        "skills": ["precision", "charm"],
+        "requirements": ["treadmill_choregraphy", "iron_toe"]
+    },
+    "umbrella_fight": {
+        "skills": ["speed", "precision"],
+        "requirements": ["iron_toe", "donuts_throwing"]
+    },
+    "tree_throwing": {
+        "skills": ["strength", "precision"],
+        "requirements": ["donuts_throwing", "chess_boxing"]
+    },
+    "jump_boxing": {
+        "skills": ["strength", "technique"],
+        "requirements": ["chess_boxing", "hopscotch"]
+    },
+    "slackline_gym": {
+        "skills": ["strength", "charm"],
+        "requirements": ["hopscotch", "TODO_HAMAC_GYM"]
+    },
+    "acrobatic_bow": {
+        "skills": ["technique", "charm"],
+        "requirements": ["TODO_HAMAC_GYM", "zipline_bow"]
+    },
+    "arc_escalation": {
+        "skills": ["technique", "precision"],
+        "requirements": ["zipline_bow", "TODO_SPIDER"]
+    },
+    "parkour": {
+        "skills": ["speed", "technique"],
+        "requirements": ["TODO_SPIDER", "cheese_rolling"]
+    },
+    "100m": {
+        "skills": ["strength", "speed", "technique"],
+        "requirements": ["parkour", "aqua_jogging"]
+    },
+    "swim_100m": {
+        "skills": ["strength", "speed", "precision"],
+        "requirements": ["aqua_jogging", "mermaid_swimming"]
+    },
+    "dance": {
+        "skills": ["speed", "precision", "charm"],
+        "requirements": ["mermaid_swimming", "musical_fencing"]
+    },
+    "fencing": {
+        "skills": ["speed", "technique", "precision"],
+        "requirements": ["musical_fencing", "umbrella_fight"]
+    },
+    "javelin_throwing": {
+        "skills": ["strength", "speed", "precision"],
+        "requirements": ["umbrella_fight", "tree_throwing"]
+    },
+    "boxing": {
+        "skills": ["strength", "technique", "precision"],
+        "requirements": ["tree_throwing", "jump_boxing"]
+    },
+    "high_jump": {
+        "skills": ["strength", "speed", "technique"],
+        "requirements": ["jump_boxing", "slackline_gym"]
+    },
+    "gymnastics": {
+        "skills": ["strength", "technique", "charm"],
+        "requirements": ["slackline_gym", "acrobatic_bow"]
+    },
+    "archery": {
+        "skills": ["strength", "technique", "precision"],
+        "requirements": ["acrobatic_bow", "arc_escalation"]
+    },
+    "escalation": {
+        "skills": ["speed", "technique", "precision"],
+        "requirements": ["arc_escalation", "parkour"]
     }
 }

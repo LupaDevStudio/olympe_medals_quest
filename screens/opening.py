@@ -85,7 +85,12 @@ class OpeningScreen(ImprovedScreen):
         for type_file in files_to_load_list:
             screen_files = [file for file in os.listdir(
                 type_file) if file.endswith(".kv")]
+            # Force the load of the screen first
+            if "screen.kv" in screen_files:
+                screen_files.remove("screen.kv")
+                screen_files.insert(0, "screen.kv")
             for file in screen_files:
+                print(file)
                 Builder.load_file(f"{type_file}{file}", encoding="utf-8")
 
         Clock.schedule_once(self.load_other_screens)

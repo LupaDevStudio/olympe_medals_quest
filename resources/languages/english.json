@@ -2,8 +2,20 @@
     "home": {
         "play": "Play"
     },
+    "game": {},
+    "sports_complex": {},
+    "planification": {},
+    "team": {},
+    "athlete": {},
+    "settings": {},
+    "sports_menu": {},
+    "activities_menu": {},
+    "competition_results": {},
+    "competition_inscription": {},
+    "recruitment": {},
     "sports": {},
     "activities": {},
+    "rooms": {},
     "tutorial": {},
     "popup": {}
 }

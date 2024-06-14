@@ -8,14 +8,14 @@
         Color:
             rgba: self.pressed_color if not self.disable_button else self.pressed_disabled_color
         RoundedRectangle:
-            pos: (0, -OFFSET_PRESSED*self.font_ratio)
+            pos: (0, -OFFSET_PRESSED//2*self.font_ratio)
             size: self.size
             radius: [self.radius*self.font_ratio]
         # Rounded rectangle above
         Color:
             rgba: self.background_color if not self.disable_button else self.background_disabled_color
         RoundedRectangle:
-            pos: (0, 0) if not self.press_button else (0, -OFFSET_PRESSED*self.font_ratio)
+            pos: (0, OFFSET_PRESSED//2*self.font_ratio) if not self.press_button else (0, -OFFSET_PRESSED//2*self.font_ratio)
             size: self.size
             radius: [self.radius*self.font_ratio]
 

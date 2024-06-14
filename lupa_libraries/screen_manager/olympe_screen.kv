@@ -1,3 +1,48 @@
 #:kivy 2.2.1
 
 <OlympeScreen>:
+
+    # Top bar
+    RelativeLayout:
+        id: top_bar
+        size_hint: (1, TOP_BAR_HEIGHT)
+        pos_hint: {"center_x": 0.5, "top": 1}
+
+        canvas.before:
+            Color:
+                rgba: COLORS.transparent_black
+            Rectangle:
+                pos: 0, 0
+                size: self.size
+            Color:
+                rgba: COLORS.white
+            Line:
+                points: [0, 0, self.width, 0]
+                width: 1*root.font_ratio
+
+        Label:
+            id: title
+            text: root.title_screen
+            font_name: PATH_TITLE_FONT
+            font_size: FONTS_SIZES.title * root.font_ratio
+            pos_hint: {"center_x":0.5, "center_y":0.5}
+            color: COLORS.white
+
+        IconPressedButton:
+            id: back_arrow
+            icon_source: PATH_ICONS + "left_arrow.png"
+            size_hint: (None, 0.7)
+            width: self.height
+            pos_hint: {"x":0.05, "center_y":0.5}
+            font_ratio: root.font_ratio
+            size_hint_y_icon: 0.6
+            release_function: root.go_backwards
+
+        IconPressedButton:
+            id: money_frame
+            icon_source: PATH_ICONS + "left_arrow.png"
+            size_hint: (None, 0.7)
+            width: self.height
+            pos_hint: {"right":0.95, "center_y":0.5}
+            font_ratio: root.font_ratio
+            size_hint_y_icon: 0.6

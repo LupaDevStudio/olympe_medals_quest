@@ -23,14 +23,13 @@ from lupa_libraries.screen_manager import (
     ImprovedScreen
 )
 from tools.constants import (
-    SCREEN_TITLE,
-    SCREEN_BACK_ARROW
+    SCREEN_MONEY_RIGHT,
+    SCREEN_TITLE_YEAR,
+    SCREEN_BACK_ARROW,
+    TEXT
 )
 from tools.path import (
     PATH_BACKGROUNDS
-)
-from tools.graphics import (
-    TOP_BAR_HEIGHT
 )
 
 #############
@@ -56,7 +55,37 @@ class OlympeScreen(ImprovedScreen):
             super().__init__(
                 back_image_path=back_image_path,
                 **kw)
-            
+
+        # Display the top bar
         if self.dict_type_screen != {}:
 
-            pass
+            top_bar = self.ids.top_bar
+
+            # Display the title or not
+            if not SCREEN_TITLE_YEAR in self.dict_type_screen:
+                top_bar.remove_widget(self.ids.title)
+            else:
+                self.title_screen = self.get_title_year()
+
+            # Display the back arrow or not
+            if not SCREEN_BACK_ARROW in self.dict_type_screen:
+                top_bar.remove_widget(self.ids.back_arrow)
+
+            # Display the money frame or not
+            if not SCREEN_MONEY_RIGHT in self.dict_type_screen:
+                top_bar.remove_widget(self.ids.money_frame)
+
+        else:
+            self.remove_widget(self.ids.top_bar)
+
+    def on_pre_enter(self, *args):
+        super().on_pre_enter(*args)
+        # TODO update money frame
+
+    def get_title_year(self):
+        # TODO GET THE DATE and the language
+        return "Année 3\nTrimestre 1"
+
+    def reload_language(self):
+        if SCREEN_TITLE_YEAR in self.dict_type_screen:
+            self.title_screen = self.get_title_year()
