@@ -15,7 +15,10 @@ from tools.path import (
     PATH_BACKGROUNDS
 )
 from tools.constants import (
-    TEXT
+    TEXT,
+    USER_DATA,
+    SCREEN_CUSTOM_TITLE,
+    SCREEN_BACK_ARROW
 )
 
 #############
@@ -28,6 +31,11 @@ class SettingsScreen(OlympeScreen):
     Class to manage the settings screen of the game.
     """
 
+    dict_type_screen = {
+        SCREEN_CUSTOM_TITLE : "settings",
+        SCREEN_BACK_ARROW : True
+    }
+
     def __init__(self, **kw):
         super().__init__(
             back_image_path=PATH_BACKGROUNDS + "office.png",
@@ -35,4 +43,12 @@ class SettingsScreen(OlympeScreen):
 
     def change_language(self):
         # TODO
-        TEXT.change_language("french")
+        code_language = "french"
+
+        # Change the language and save it
+        TEXT.change_language(code_language)
+        USER_DATA.settings["language"] = code_language
+        USER_DATA.save_changes()
+
+        # Update the labels of the screen
+        self.reload_language()

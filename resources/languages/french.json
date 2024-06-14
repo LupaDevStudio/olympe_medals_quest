@@ -1,4 +1,9 @@
 {
+    "general": {
+        "year": "Année",
+        "trimester": "Trimestre",
+        "settings": "Paramètres"
+    },
     "home": {
         "play": "Jouer"
     },

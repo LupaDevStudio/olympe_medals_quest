@@ -27,6 +27,11 @@
             font_size: FONTS_SIZES.title * root.font_ratio
             pos_hint: {"center_x":0.5, "center_y":0.5}
             color: COLORS.white
+            shorten: False
+            text_size: (root.width,None)
+            halign: "center"
+            valign: "center"
+            line_height: 1
 
         IconPressedButton:
             id: back_arrow

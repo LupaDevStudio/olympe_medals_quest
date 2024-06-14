@@ -1,4 +1,9 @@
 {
+    "general": {
+        "year": "Year",
+        "trimester": "Trimester",
+        "settings": "Settings"
+    },
     "home": {
         "play": "Play"
     },

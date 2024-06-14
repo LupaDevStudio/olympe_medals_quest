@@ -43,10 +43,6 @@ class GameScreen(OlympeScreen):
         SCREEN_MONEY_RIGHT : True
     }
 
-    def on_pre_enter(self, *args):
-        super().on_pre_enter(*args)
-        self.reload_language()
-
     def reload_language(self):
         super().reload_language()
         my_text = TEXT.game

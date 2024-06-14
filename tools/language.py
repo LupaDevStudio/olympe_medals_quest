@@ -46,7 +46,18 @@ class Text():
         # Split the text contained in the screens
         self.home = data["home"]
         self.game = data["game"]
+        self.sports_complex = data["sports_complex"]
+        self.planification = data["planification"]
+        self.team = data["team"]
+        self.athlete = data["athlete"]
+        self.settings = data["settings"]
+        self.sports_menu = data["sports_menu"]
+        self.activities_menu = data["activities_menu"]
+        self.competition_results = data["competition_results"]
+        self.competition_inscription = data["competition_inscription"]
+        self.recruitment = data["recruitment"]
 
+        self.general = data["general"]
         self.sports = data["sports"]
         self.rooms = data["rooms"]
         self.activities = data["activities"]

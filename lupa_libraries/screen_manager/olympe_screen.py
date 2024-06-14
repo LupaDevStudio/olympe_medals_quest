@@ -26,6 +26,7 @@ from tools.constants import (
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_YEAR,
     SCREEN_BACK_ARROW,
+    SCREEN_CUSTOM_TITLE,
     TEXT
 )
 from tools.path import (
@@ -62,10 +63,14 @@ class OlympeScreen(ImprovedScreen):
             top_bar = self.ids.top_bar
 
             # Display the title or not
-            if not SCREEN_TITLE_YEAR in self.dict_type_screen:
-                top_bar.remove_widget(self.ids.title)
-            else:
+            if SCREEN_TITLE_YEAR in self.dict_type_screen:
                 self.title_screen = self.get_title_year()
+            elif SCREEN_CUSTOM_TITLE in self.dict_type_screen:
+                code = self.dict_type_screen[SCREEN_CUSTOM_TITLE]
+                self.title_screen = TEXT.general[code]
+            else:
+                top_bar.remove_widget(self.ids.title)
+                
 
             # Display the back arrow or not
             if not SCREEN_BACK_ARROW in self.dict_type_screen:
@@ -80,12 +85,19 @@ class OlympeScreen(ImprovedScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
+        self.reload_language()
         # TODO update money frame
 
     def get_title_year(self):
-        # TODO GET THE DATE and the language
-        return "Année 3\nTrimestre 1"
+        year = TEXT.general["year"] + " "
+        trimester = TEXT.general["trimester"] + " "
+        # TODO Get current date
+        return year + "3" + "\n" + trimester + "1"
 
     def reload_language(self):
         if SCREEN_TITLE_YEAR in self.dict_type_screen:
             self.title_screen = self.get_title_year()
+
+        if SCREEN_CUSTOM_TITLE in self.dict_type_screen:
+            code = self.dict_type_screen[SCREEN_CUSTOM_TITLE]
+            self.title_screen = TEXT.general[code]
