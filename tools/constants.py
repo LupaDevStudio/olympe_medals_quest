@@ -87,7 +87,7 @@ TEXT = Text(language=USER_DATA.settings["language"])
 DIALOGS_DICT = {}
 for language_code in DICT_LANGUAGE_CORRESPONDANCE:
     DIALOGS_DICT[language_code] = load_json_file(
-        PATH_LANGUAGE + "dialogs_" + TEXT.language + ".json")
+        PATH_LANGUAGE + "dialogs_" + language_code + ".json")
 
 CHARACTERS_DICT = {
     "olympe": {

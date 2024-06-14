@@ -48,7 +48,8 @@ class SettingsScreen(OlympeScreen):
         # Change the language and save it
         TEXT.change_language(code_language)
         USER_DATA.settings["language"] = code_language
-        USER_DATA.save_changes()
+        # TODO uncomment when function implemented
+        # USER_DATA.save_changes()
 
         # Update the labels of the screen
         self.reload_language()
