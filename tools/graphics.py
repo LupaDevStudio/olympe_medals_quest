@@ -20,6 +20,8 @@ class FontSize():
 
         self.button = 16
 
+        self.coins_count = 15
+
 FONTS_SIZES = FontSize()
 
 ### Colors ###
@@ -50,6 +52,11 @@ COLORS = Colors()
 
 ICON_BUTTON_SIZE = 0.1
 TOP_BAR_HEIGHT = 0.09
+RADIUS_SMALL = 12
+
+### Outlines ###
+
+BUTTON_OUTLINE_WIDTH = 1
 
 ### Positions ###
 

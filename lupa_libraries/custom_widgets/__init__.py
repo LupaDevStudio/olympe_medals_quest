@@ -9,6 +9,10 @@ from lupa_libraries.custom_widgets.pressed_buttons import (
     IconPressedButton
 )
 
+### Layouts ###
+
+from lupa_libraries.custom_widgets.money_layout import MoneyLayout
+
 ### Popups ###
 
 from lupa_libraries.custom_widgets.custom_popup import CustomPopup

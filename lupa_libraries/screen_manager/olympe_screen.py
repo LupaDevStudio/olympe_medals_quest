@@ -14,7 +14,7 @@ from functools import partial
 
 from kivy.properties import (
     StringProperty,
-    BooleanProperty
+    NumericProperty
 )
 
 ### Local imports ###
@@ -27,7 +27,8 @@ from tools.constants import (
     SCREEN_TITLE_YEAR,
     SCREEN_BACK_ARROW,
     SCREEN_CUSTOM_TITLE,
-    TEXT
+    TEXT,
+    USER_DATA
 )
 from tools.path import (
     PATH_BACKGROUNDS
@@ -46,6 +47,7 @@ class OlympeScreen(ImprovedScreen):
     # Configuration of the main widgets
     dict_type_screen: dict = {}
     title_screen = StringProperty()
+    money_amount = NumericProperty()
 
     def __init__(self, back_image_path=None, **kw):
         if back_image_path is None:
@@ -79,6 +81,8 @@ class OlympeScreen(ImprovedScreen):
             # Display the money frame or not
             if not SCREEN_MONEY_RIGHT in self.dict_type_screen:
                 top_bar.remove_widget(self.ids.money_frame)
+            else:
+                self.money_amount = USER_DATA.game.money
 
         else:
             self.remove_widget(self.ids.top_bar)
@@ -86,7 +90,7 @@ class OlympeScreen(ImprovedScreen):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
         self.reload_language()
-        # TODO update money frame
+        self.money_amount = USER_DATA.game.money
 
     def get_title_year(self):
         year = TEXT.general["year"] + " "

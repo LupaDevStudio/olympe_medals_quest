@@ -43,11 +43,9 @@
             size_hint_y_icon: 0.6
             release_function: root.go_backwards
 
-        IconPressedButton:
+        MoneyLayout:
             id: money_frame
-            icon_source: PATH_ICONS + "left_arrow.png"
-            size_hint: (None, 0.7)
-            width: self.height
-            pos_hint: {"right":0.95, "center_y":0.5}
+            coins_count: root.money_amount
             font_ratio: root.font_ratio
-            size_hint_y_icon: 0.6
+            size_hint: (0.25, 0.7)
+            pos_hint: {"right": 0.95,"center_y":0.5}

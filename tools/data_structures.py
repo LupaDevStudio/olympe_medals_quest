@@ -292,19 +292,22 @@ class Game():
     A class to store the data of the game.
     """
 
-    def __init__(self) -> None:
-        self.money: int = 0
-        self.year: int = 3
-        self.trimester: int = 1
-        self.team: list[Athlete] = []
-        self.gymnasium: SportsComplex = SportsComplex()
-        self.medals: list[Medal] = []
-        self.sports: dict[str, Sport] = {}
-        self.sports_unlocking_progress: dict[str, float] = {}
-        # sport id with athlete ids
-        self.selected_athletes_summer: dict[str, list[str]] = {}
-        # sport id with athlete ids
-        self.selected_athletes_winter: dict[str, list[str]] = {}
+    def __init__(self, dict_to_load = None) -> None:
+        if not dict_to_load is None:
+            self.load_dict(dict_to_load = dict_to_load)
+        else:
+            self.money: int = 0
+            self.year: int = 3
+            self.trimester: int = 1
+            self.team: list[Athlete] = []
+            self.gymnasium: SportsComplex = SportsComplex()
+            self.medals: list[Medal] = []
+            self.sports: dict[str, Sport] = {}
+            self.sports_unlocking_progress: dict[str, float] = {}
+            # Sport id with athlete ids
+            self.selected_athletes_summer: dict[str, list[str]] = {}
+            # Sport id with athlete ids
+            self.selected_athletes_winter: dict[str, list[str]] = {}
 
     @property
     def sports_unlocked(self) -> list[Sport]:
@@ -395,6 +398,35 @@ class Game():
         for athlete in self.team:
             athlete.age += 1
 
+    def load_dict(self, dict_to_load):
+        # TODO finish function by loading the other classes
+        self.money = dict_to_load["money"]
+        self.year = dict_to_load["year"]
+        self.trimester = dict_to_load["trimester"]
+        self.team = dict_to_load["team"]
+        self.gymnasium = dict_to_load["gymnasium"]
+        self.medals = dict_to_load["medals"]
+        self.sports = dict_to_load["sports"]
+        self.sports_unlocking_progress = dict_to_load["sports_unlocking_progress"]
+        self.selected_athletes_summer = dict_to_load["selected_athletes_summer"]
+        self.selected_athletes_winter = dict_to_load["selected_athletes_winter"]
+
+    def export_dict(self):
+        # TODO finish function
+        dict_to_export = {
+            "money": self.money,
+            "year": self.year,
+            "trimester": self.trimester,
+            "team": [],
+            "gymnasium": [],
+            "medals": [],
+            "sports": [],
+            "sports_unlocking_progress": [],
+            "selected_athletes_summer": [],
+            "selected_athletes_winter": []
+        }
+        return dict_to_export
+
 
 class UserData():
     """
@@ -404,6 +436,12 @@ class UserData():
     def __init__(self) -> None:
         data = load_json_file(PATH_USER_DATA)
         self.settings = data["settings"]
+        self.tutorial = data["tutorial"]
+        if not "game" in data:
+            self.game = Game()
+        else:
+            self.game = Game(dict_to_load=data["game"])
+        self.save_changes()
 
     def save_changes(self) -> None:
         """
@@ -420,6 +458,10 @@ class UserData():
 
         # Create the dictionary of data
         data = {}
+
+        data["settings"] = self.settings
+        data["tutorial"] = self.tutorial
+        data["game"] = self.game.export_dict()
 
         # Save this dictionary
         save_json_file(
