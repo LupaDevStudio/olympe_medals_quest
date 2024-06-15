@@ -73,7 +73,6 @@ class OlympeScreen(ImprovedScreen):
             else:
                 top_bar.remove_widget(self.ids.title)
                 
-
             # Display the back arrow or not
             if not SCREEN_BACK_ARROW in self.dict_type_screen:
                 top_bar.remove_widget(self.ids.back_arrow)
@@ -95,8 +94,7 @@ class OlympeScreen(ImprovedScreen):
     def get_title_year(self):
         year = TEXT.general["year"] + " "
         trimester = TEXT.general["trimester"] + " "
-        # TODO Get current date
-        return year + "3" + "\n" + trimester + "1"
+        return year + str(USER_DATA.game.year) + "\n" + trimester + str(USER_DATA.game.trimester)
 
     def reload_language(self):
         if SCREEN_TITLE_YEAR in self.dict_type_screen:
