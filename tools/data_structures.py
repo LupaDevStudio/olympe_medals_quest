@@ -131,6 +131,24 @@ class Activity():
     price: int
     gain: int
 
+    def __init__(self, dict_to_load: dict):
+        self.id = dict_to_load.get("id", "")
+        self.name = dict_to_load.get("name", "")
+        self.category = dict_to_load.get("category", "")
+        self.level_category = dict_to_load.get("level_category", 0)
+        self.price = dict_to_load.get("price", 0)
+        self.gain = dict_to_load.get("gain", 0)
+
+    def export_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "category": self.category,
+            "level_category": self.level_category,
+            "price": self.price,
+            "gain": self.gain,
+        }
+
 
 class Sport():
     """
@@ -146,27 +164,54 @@ class Sport():
     def category(self) -> int:
         return len(self.skills)
 
+    def __init__(self, dict_to_load: dict):
+        self.id = dict_to_load.get("id", "")
+        self.name = dict_to_load.get("name", "")
+        self.skills = tuple(dict_to_load.get("skills", ()))
+        self.mode_summer_winter = dict_to_load.get("mode_summer_winter", "summer")
+
+    def export_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "skills": list(self.skills),
+            "mode_summer_winter": self.mode_summer_winter,
+        }
+
 class Athlete():
     """
     A class to store the data of an athlete.
     """
 
-    def __init__(self, name: str, age: int, salary: int,
-                 recruit_price: int, stats: dict[str, int], sports: dict[str, int]) -> None:
-        self.id = generate_id()
-        self.name = name
-        self.age = age
-        self.salary = salary
-        self.recruit_price = recruit_price
-        self.fatigue = 0
-        self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
-        self.stats: dict[str, int] = stats
-        self.sports: dict[str, int] = sports
-        self.current_planning: list[Activity] = []
+    id: str
+    name: str
+    first_name: str
+    age: int
+    salary: int
+    recruit_price: int
+    fatigue: int
+    health: dict
+    stats: dict[str, int]
+    sports: dict[str, int]
+    current_planning: list[Activity]
 
     @ property
     def image(self) -> str:
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
+
+    def __init__(self, dict_to_load: dict) -> None:
+        self.id = dict_to_load.get("id", generate_id())
+        self.name = dict_to_load.get("name", "")
+        self.first_name = dict_to_load.get("first_name", "")
+        self.age = dict_to_load.get("age", 0)
+        self.salary = dict_to_load.get("salary", 0)
+        self.recruit_price = dict_to_load.get("recruit_price", 0)
+        self.fatigue = dict_to_load.get("fatigue", 0)
+        self.health = dict_to_load.get("health", copy.deepcopy(DEFAULT_HEALTH_DICT))
+        self.stats = dict_to_load.get("stats", {})
+        self.sports = dict_to_load.get("sports", {})
+        self.current_planning = [
+            Activity(activity) for activity in dict_to_load.get("current_planning", [])]
 
     def convert_stats_to_tier_rank(self):
         tier_rank_dict = {}
@@ -194,6 +239,21 @@ class Athlete():
             if self.health["months_absent"] == 0:
                 self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
 
+    def export_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "first_name": self.first_name,
+            "age": self.age,
+            "salary": self.salary,
+            "recruit_price": self.recruit_price,
+            "fatigue": self.fatigue,
+            "health": self.health,
+            "stats": self.stats,
+            "sports": self.sports,
+            "current_planning": [activity.export_dict() for activity in self.current_planning],
+        }
+
 
 class Room():
     """
@@ -206,27 +266,37 @@ class Room():
     activities_unlocked: list[Activity]
     effects: list
 
-    def __init__(self, id: str) -> None:
-        self.id = id
-        self.name = ROOMS_EVOLUTION_DICT[self.id]
-        self.current_level = 1
-        self.activities_unlocked = []
-        self.effects = []
-        self.update_according_to_level()
-
     @ property
     def image(self) -> str:
         return PATH_BACKGROUNDS + f"{self.id}_{self.current_level}.png"
 
-    def update_according_to_level(self):
+    def __init__(self, dict_to_load: dict) -> None:
+        self.id = dict_to_load.get("id", "")
+        self.name = dict_to_load.get("name", ROOMS_EVOLUTION_DICT[self.id])
+        self.current_level = dict_to_load.get("current_level", 1)
+        self.activities_unlocked = [
+            Activity(activity) for activity in dict_to_load.get("activities_unlocked", [])]
+        self.effects = dict_to_load.get("effects", [])
+
+    def update_according_to_level(self) -> None:
         self.activities_unlocked = ROOMS_EVOLUTION_DICT[self.id]["levels"][
             self.current_level]["activities_unlocked"]
         self.effects = ROOMS_EVOLUTION_DICT[self.id]["levels"][
             self.current_level]["effects"]
 
-    def increase_level(self):
+    def increase_level(self) -> None:
         self.current_level += 1
         self.update_according_to_level()
+
+    def export_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "current_level": self.current_level,
+            "activities_unlocked": [
+                activity.export_dict() for activity in self.activities_unlocked],
+            "effects": self.effects
+        }
 
 
 class SportsComplex():
@@ -235,29 +305,31 @@ class SportsComplex():
     """
 
     current_level: int
-    max_number_athletes: int
-    rooms_unlocked: list[list[str, int]]  # id room and level room
     rooms_bought: dict[str, Room]  # id room and associated Room
 
-    def __init__(self) -> None:
-        self.current_level = 1
-        self.rooms_unlocked = []
-        self.rooms_bought = {}
-        self.update_according_to_level()
+    @property
+    def max_number_athletes(self):
+        return GYMNASIUM_EVOLUTION_DICT[
+            self.current_level]["max_number_athletes"]
+    
+    @property
+    def rooms_unlocked(self):
+        list_rooms = []
+        for element in GYMNASIUM_EVOLUTION_DICT[self.current_level]["rooms_unlocked"]:
+            list_rooms.append(element)
+        return list_rooms
+
+    def __init__(self, dict_to_load: dict) -> None:
+        self.current_level = dict_to_load.get('current_level', 1)
+        self.rooms_bought = {
+            room_id: Room(dict_to_load=room_dict) for room_id, room_dict in dict_to_load.get('rooms_bought', {}).items()}
 
     @property
     def image(self) -> str:
         return PATH_BACKGROUNDS + f"sport_complex_{self.current_level}.png"
 
-    def update_according_to_level(self):
-        self.max_number_athletes = GYMNASIUM_EVOLUTION_DICT[
-            self.current_level]["max_number_athletes"]
-        for element in GYMNASIUM_EVOLUTION_DICT[self.current_level]["rooms_unlocked"]:
-            self.rooms_unlocked.append(element)
-
     def increase_level(self):
         self.current_level += 1
-        self.update_according_to_level()
 
     def buy_room(self, room_id: str) -> Room:
         if room_id in self.rooms_bought:
@@ -266,6 +338,13 @@ class SportsComplex():
         else:
             current_room = Room(id=room_id)
         return current_room
+
+    def export_dict(self):
+        return {
+            "current_level": self.current_level,
+            "rooms_bought": {
+                room_id: room.export_dict() for room_id, room in self.rooms_bought.items()},
+        }
 
 
 class Medal():
@@ -286,28 +365,69 @@ class Medal():
     def year(self) -> int:
         return self.edition * NB_YEARS_BETWEEN_EDITION
 
+    def __init__(self, dict_to_load: dict) -> None:
+        self.type_medal = dict_to_load.get("type_medal", "gold")
+        self.edition = dict_to_load.get("edition", 0)
+        self.athlete_id = dict_to_load.get("athlete_id", "")
+        self.sport_id = dict_to_load.get("sport_id", "")
+
+    def export_dict(self):
+        return {
+            "type_medal": self.type_medal,
+            "edition": self.edition,
+            "athlete_id": self.athlete_id,
+            "sport_id": self.sport_id,
+        }
+
+
+class Country():
+
+    id: str
+    name: str
+    team: list[Athlete]
+    medals: list[Medal]
+
+    @property
+    def flag(self):
+        # TODO
+        return ...
+
+    def __init__(self, dict_to_load: dict) -> None:
+        self.id = dict_to_load.get("id", "")
+        self.name = dict_to_load.get("name", "")
+        self.team = [
+            Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("team", [])]
+        self.medals = [
+            Medal(dict_to_load=medal_dict) for medal_dict in dict_to_load.get("medals", [])]
+
+    def export_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "team": [athlete.export_dict() for athlete in self.team],
+            "medals": [medal.export_dict() for medal in self.medals],
+        }
+
 
 class Game():
     """
     A class to store the data of the game.
     """
 
-    def __init__(self, dict_to_load = None) -> None:
-        if not dict_to_load is None:
-            self.load_dict(dict_to_load = dict_to_load)
-        else:
-            self.money: int = 0
-            self.year: int = 3
-            self.trimester: int = 1
-            self.team: list[Athlete] = []
-            self.gymnasium: SportsComplex = SportsComplex()
-            self.medals: list[Medal] = []
-            self.sports: dict[str, Sport] = {}
-            self.sports_unlocking_progress: dict[str, float] = {}
-            # Sport id with athlete ids
-            self.selected_athletes_summer: dict[str, list[str]] = {}
-            # Sport id with athlete ids
-            self.selected_athletes_winter: dict[str, list[str]] = {}
+    money: int
+    year: int
+    trimester: int
+    team: list[Athlete]
+    # Fired athletes (we still need them for the display of medals)
+    fired_team: list[Athlete]
+    countries: dict[str, Country]
+    gymnasium: SportsComplex
+    medals: list[Medal]
+    sports: dict[str, Sport]
+    sports_unlocking_progress: dict[str, float]
+    # Sport id with athlete ids
+    selected_athletes_summer: dict[str, list[str]]
+    selected_athletes_winter: dict[str, list[str]]
 
     @property
     def sports_unlocked(self) -> list[Sport]:
@@ -317,6 +437,26 @@ class Game():
             if value >= 1:
                 sports_unlocked.append(self.sports[key])
         return sports_unlocked
+
+    def __init__(self, dict_to_load: dict) -> None:
+
+        self.money = dict_to_load.get("money", 0)
+        self.year = dict_to_load.get("year", 3)
+        self.trimester = dict_to_load.get("trimester", 1)
+        self.team = [
+            Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("team", [])]
+        self.fired_team = [
+            Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("fired_team", [])]
+        self.countries = {
+            country_id: Country(dict_to_load=country_dict) for country_id, country_dict in dict_to_load.get("countries", {}).items()}
+        self.gymnasium = SportsComplex(dict_to_load=dict_to_load.get("gymnasium", {}))
+        self.medals = [
+            Medal(dict_to_load=medal_dict) for medal_dict in dict_to_load.get("medals", [])]
+        self.sports = {
+            sport_id: Sport(dict_to_load=sport_dict) for sport_id, sport_dict in dict_to_load.get("sports", {}).items()}
+        self.sports_unlocking_progress = dict_to_load.get("sports_unlocking_progress", {})
+        self.selected_athletes_summer = dict_to_load.get("selected_athletes_summer", {})
+        self.selected_athletes_winter = dict_to_load.get("selected_athletes_winter", {})
 
     def get_monthly_salaries(self) -> int:
         monthly_salaries = 0
@@ -352,10 +492,10 @@ class Game():
         for athlete in self.team:
             if athlete.id == athlete_id:
                 break
-        # Remove the image of the athlete
-        athlete_image = athlete.get_image()
-        os.remove(athlete_image)
+
+        # Remove the athlete from the current team and put it in the fired team
         self.team.remove(athlete)
+        self.fired_team.append(athlete)
 
     def buy_sport_complex(self, room_id: str):
         if room_id == "gymnasium":
@@ -398,34 +538,26 @@ class Game():
         for athlete in self.team:
             athlete.age += 1
 
-    def load_dict(self, dict_to_load):
-        # TODO finish function by loading the other classes
-        self.money = dict_to_load["money"]
-        self.year = dict_to_load["year"]
-        self.trimester = dict_to_load["trimester"]
-        self.team = dict_to_load["team"]
-        self.gymnasium = dict_to_load["gymnasium"]
-        self.medals = dict_to_load["medals"]
-        self.sports = dict_to_load["sports"]
-        self.sports_unlocking_progress = dict_to_load["sports_unlocking_progress"]
-        self.selected_athletes_summer = dict_to_load["selected_athletes_summer"]
-        self.selected_athletes_winter = dict_to_load["selected_athletes_winter"]
-
     def export_dict(self):
-        # TODO finish function
-        dict_to_export = {
+        return {
             "money": self.money,
             "year": self.year,
             "trimester": self.trimester,
-            "team": [],
-            "gymnasium": [],
-            "medals": [],
-            "sports": [],
-            "sports_unlocking_progress": [],
-            "selected_athletes_summer": [],
-            "selected_athletes_winter": []
+            "team": [
+                athlete.export_dict() for athlete in self.team],
+            "fired_team": [
+                athlete.export_dict() for athlete in self.fired_team],
+            "countries": {
+                country_id: country.export_dict() for country_id, country in self.countries.items()},
+            "gymnasium": self.gymnasium.export_dict(),
+            "medals": [
+                medal.export_dict() for medal in self.medals],
+            "sports": {
+                sport_id: sport.export_dict() for sport_id, sport in self.sports.items()},
+            "sports_unlocking_progress": self.sports_unlocking_progress,
+            "selected_athletes_summer": self.selected_athletes_summer,
+            "selected_athletes_winter": self.selected_athletes_winter,
         }
-        return dict_to_export
 
 
 class UserData():
@@ -437,10 +569,7 @@ class UserData():
         data = load_json_file(PATH_USER_DATA)
         self.settings = data["settings"]
         self.tutorial = data["tutorial"]
-        if not "game" in data:
-            self.game = Game()
-        else:
-            self.game = Game(dict_to_load=data["game"])
+        self.game = Game(dict_to_load=data["game"]) if "game" in data else Game()
         self.save_changes()
 
     def save_changes(self) -> None:
@@ -457,11 +586,11 @@ class UserData():
         """
 
         # Create the dictionary of data
-        data = {}
-
-        data["settings"] = self.settings
-        data["tutorial"] = self.tutorial
-        data["game"] = self.game.export_dict()
+        data = {
+            "settings": self.settings,
+            "tutorial": self.tutorial,
+            "game": self.game.export_dict(),
+        }
 
         # Save this dictionary
         save_json_file(
@@ -477,6 +606,7 @@ def generate_athlete() -> Athlete:
     return Athlete(
         id="Ariel_1",
         name="A",
+        first_name="a",
         age=20,
         salary=1200,
         recruit_price=20000,
