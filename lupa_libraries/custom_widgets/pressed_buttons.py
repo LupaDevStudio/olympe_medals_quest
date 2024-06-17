@@ -22,9 +22,9 @@ from kivy.properties import (
 ### Local imports ###
 
 from tools.graphics import (
-    OPACITY_ON_BUTTON_PRESS,
     COLORS,
-    FONTS_SIZES
+    FONTS_SIZES,
+    RADIUS_SMALL
 )
 from tools.path import (
     PATH_TITLE_FONT
@@ -49,7 +49,7 @@ class PressedThemeBackground(Widget):
     press_button = BooleanProperty(False)
     disable_button = BooleanProperty(False)
     
-    radius = NumericProperty(12)
+    radius = NumericProperty(RADIUS_SMALL)
     font_ratio = NumericProperty(1)
 
 
@@ -81,7 +81,7 @@ class PressedButton(ButtonBehavior, RelativeLayout):
     press_button = BooleanProperty(False)
 
     font_ratio = NumericProperty(1)
-    radius = NumericProperty(12)
+    radius = NumericProperty(RADIUS_SMALL)
 
     def __init__(self, **kwargs):
         self.always_release = True
@@ -124,7 +124,58 @@ class IconPressedButton(ButtonBehavior, RelativeLayout):
     press_button = BooleanProperty(False)
 
     font_ratio = NumericProperty(1)
-    radius = NumericProperty(12)
+    radius = NumericProperty(RADIUS_SMALL)
+
+    def __init__(self, **kwargs):
+        self.always_release = True
+        super().__init__(**kwargs)
+
+    def on_press(self):
+        if not self.disable_button:
+            self.press_button = True
+
+    def on_release(self):
+        if self.collide_point(self.last_touch.x, self.last_touch.y) and not self.disable_button:
+            self.release_function()
+        if not self.disable_button:
+            self.press_button = False
+
+
+class PressedWithIconButton(ButtonBehavior, RelativeLayout):
+    """
+    A customizable button with a text and an icon on the left on the Pressed theme.
+    """
+
+    ### Icon settings ###
+
+    icon_source = StringProperty()
+    size_hint_y_icon = NumericProperty(0.5)
+
+    ### Label settings ###
+
+    text = StringProperty()
+    font_size = NumericProperty(FONTS_SIZES.button)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+
+    ### Colors ###
+
+    icon_color = ColorProperty(COLORS.white)
+    disabled_icon_color = ColorProperty(COLORS.white)
+    font_color = ColorProperty(COLORS.white)
+    disabled_font_color = ColorProperty(COLORS.white)
+    background_color = ColorProperty(COLORS.blue_olympe)
+    pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
+    background_disabled_color = ColorProperty(COLORS.gray_disable)
+    pressed_disabled_color = ColorProperty(COLORS.gray_pressed_disable)
+
+    ### Button behavior ###
+
+    release_function = ObjectProperty(lambda: 1 + 1)
+    disable_button = BooleanProperty(False)
+    press_button = BooleanProperty(False)
+
+    font_ratio = NumericProperty(1)
+    radius = NumericProperty(RADIUS_SMALL)
 
     def __init__(self, **kwargs):
         self.always_release = True

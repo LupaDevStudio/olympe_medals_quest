@@ -1,5 +1,6 @@
 #:kivy 2.2.1
 #:set OFFSET_PRESSED 5
+#:set OFFSET_HORIZONTAL_ICON 0.1
 
 <PressedThemeBackground>:
     # Background
@@ -68,3 +69,42 @@
         y: root.height/2 - self.height/2 if not root.press_button else root.height/2 - self.height/2 - OFFSET_PRESSED*root.font_ratio
         size_hint: (None, root.size_hint_y_icon)
         width: self.height
+
+<PressedWithIconButton>:
+    # Background
+    PressedThemeBackground:
+        pos: root.pos
+        size: root.size
+        background_color: root.background_color
+        background_disabled_color: root.background_disabled_color
+        pressed_color: root.pressed_color
+        pressed_disabled_color: root.pressed_disabled_color
+        radius: root.radius
+        font_ratio: root.font_ratio
+        disable_button: root.disable_button
+        press_button: root.press_button
+
+    # Main text
+    Image:
+        id: icon
+        source: root.icon_source
+        color: root.icon_color if not root.disable_button else root.disabled_icon_color
+        pos_hint: {"x": OFFSET_HORIZONTAL_ICON}
+        y: root.height/2 - self.height/2 if not root.press_button else root.height/2 - self.height/2 - OFFSET_PRESSED*root.font_ratio
+        size_hint: (None, root.size_hint_y_icon)
+        width: self.height
+
+    # Main text
+    Label:
+        id: label
+        text: root.text
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        x: OFFSET_HORIZONTAL_ICON*2*root.width + icon.width
+        y: 0 if not root.press_button else -OFFSET_PRESSED*root.font_ratio
+        shorten: False
+        size_hint: (None, 1)
+        size: self.texture_size
+        halign: "left"
+        valign: "middle"
+        color: root.font_color if not root.disable_button else root.disabled_font_color

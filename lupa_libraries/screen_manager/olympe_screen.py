@@ -86,10 +86,16 @@ class OlympeScreen(ImprovedScreen):
         else:
             self.remove_widget(self.ids.top_bar)
 
+        self.reload_language()
+
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
         self.reload_language()
         self.money_amount = USER_DATA.game.money
+
+        # Fill scrollview if it exists
+        if "scrollview_layout" in self.ids:
+            self.fill_scrollview()
 
     def get_title_year(self):
         year = TEXT.general["year"] + " "
@@ -103,3 +109,10 @@ class OlympeScreen(ImprovedScreen):
         if SCREEN_CUSTOM_TITLE in self.dict_type_screen:
             code = self.dict_type_screen[SCREEN_CUSTOM_TITLE]
             self.title_screen = TEXT.general[code]
+
+    def on_leave(self, *args):
+        super().on_leave(*args)
+
+        # Reset scrollview if it exists
+        if "scrollview_layout" in self.ids:
+            self.ids.scrollview_layout.reset_scrollview()

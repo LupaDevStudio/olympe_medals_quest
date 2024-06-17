@@ -12,6 +12,7 @@ from screens.home import HomeScreen
 from screens.dialog import DialogScreen
 from screens.settings import SettingsScreen
 from screens.game import GameScreen
+from screens.team import TeamScreen
 
 ### Reference dict to create the screens ###
 
@@ -19,5 +20,6 @@ SCREENS_DICT = {
     "home": HomeScreen,
     "dialog": DialogScreen,
     "settings": SettingsScreen,
-    "game": GameScreen
+    "game": GameScreen,
+    "team": TeamScreen
 }

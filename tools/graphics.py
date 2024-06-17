@@ -53,6 +53,7 @@ COLORS = Colors()
 ICON_BUTTON_SIZE = 0.1
 TOP_BAR_HEIGHT = 0.09
 RADIUS_SMALL = 12
+SCROLLVIEW_WIDTH = 0.96
 
 ### Outlines ###
 
@@ -64,7 +65,3 @@ POS_HINT_LEFT_TOP_BUTTON = {"x": 0.05, "top": 0.975}
 POS_HINT_LEFT_BOTTOM_BUTTON = {"x": 0.05, "y": 0.025}
 POS_HINT_RIGHT_TOP_BUTTON = {"right": 0.95, "top": 0.975}
 POS_HINT_RIGHT_BOTTOM_BUTTON = {"right": 0.95, "y": 0.025}
-
-### Opacity ###
-
-OPACITY_ON_BUTTON_PRESS = 0.8

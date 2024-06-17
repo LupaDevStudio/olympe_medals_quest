@@ -1,0 +1,14 @@
+#:kivy 2.2.1
+
+<CustomScrollview>:
+
+    bar_margin: 0
+    scroll_type:['bars', 'content']
+    scroll_distance: 10
+
+    canvas.before:
+        Color:
+            rgba: COLORS.very_transparent_black
+        Rectangle:
+            pos: (self.pos[0], self.pos[1])
+            size: (self.size[0], self.size[1])

@@ -1,3 +1,18 @@
 #:kivy 2.2.1
 
 <GameScreen>:
+
+    GridLayout:
+
+        canvas.before:
+            Color:
+                rgba: COLORS.very_transparent_black
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        id: grid_layout
+        cols: 2
+        pos_hint: {"x": 0.05, "y": 0.3}
+        size_hint: (0.9, 0.5)
+        spacing: 20*root.font_ratio

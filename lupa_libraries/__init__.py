@@ -14,7 +14,8 @@ from lupa_libraries.screen_manager import (
 from lupa_libraries.custom_widgets import (
     LoadingPopup,
     PressedButton,
-    IconPressedButton
+    IconPressedButton,
+    PressedWithIconButton
 )
 
 ### Dialog generator ###

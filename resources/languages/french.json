@@ -7,7 +7,15 @@
     "home": {
         "play": "Jouer"
     },
-    "game": {},
+    "game": {
+        "team": "Équipe",
+        "recruit": "Recruter",
+        "sports_complex": "Locaux",
+        "sports_menu": "Sports",
+        "activities_menu": "Activités",
+        "medals": "Médailles",
+        "shop": "Boutique"
+    },
     "sports_complex": {},
     "planification": {},
     "team": {},
@@ -15,6 +23,8 @@
     "settings": {},
     "sports_menu": {},
     "activities_menu": {},
+    "medals": {},
+    "shop": {},
     "competition_results": {},
     "competition_inscription": {},
     "recruitment": {},

@@ -1,0 +1,18 @@
+#:kivy 2.2.1
+
+<TeamScreen>:
+
+    # Campaigns scrollview
+    CustomScrollview:
+        id: scrollview
+        pos_hint: {"center_x":0.5, "y": 0}
+        size_hint: (SCROLLVIEW_WIDTH, 0.99 - TOP_BAR_HEIGHT)
+        bar_width: 5*root.font_ratio
+        bar_color: COLORS.white
+        bar_inactive_color: COLORS.gray_disable
+
+        MyScrollViewLayout:
+            id: scrollview_layout
+            cols: 1
+            spacing: 20*root.font_ratio
+            padding: (0.05*root.width, 5*root.font_ratio, 0.05*root.width, 40*root.font_ratio)
