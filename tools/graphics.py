@@ -59,6 +59,7 @@ SCROLLVIEW_WIDTH = 0.96
 ### Outlines ###
 
 BUTTON_OUTLINE_WIDTH = 1
+LARGE_OUTLINE_WIDTH = 1.5
 
 ### Positions ###
 

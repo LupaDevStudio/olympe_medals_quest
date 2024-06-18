@@ -51,13 +51,19 @@ class GameScreen(OlympeScreen):
     }
     launch_main_action_label = StringProperty()
     main_action = "plan" # can be "plan" or "begin_competition"
-    has_notifications = BooleanProperty(False)
+    has_notifications_olympe = BooleanProperty(True)
+    has_notifications_minister = BooleanProperty(False)
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
 
         # TODO update the has_notifications depending if Olympe or the minister has notifications
         # TODO update main_action
+
+        if self.has_notifications_olympe:
+            self.ids.olympe_button.trigger_icon_flashing()
+        if self.has_notifications_minister:
+            self.ids.minister_button.trigger_icon_flashing()
 
     def on_enter(self, *args):
         super().on_enter(*args)
@@ -108,6 +114,12 @@ class GameScreen(OlympeScreen):
             ...
             # TODO go to competition
 
+    def launch_dialog_olympe(self):
+        print("TODO olympe")
+
+    def launch_dialog_minister(self):
+        print("TODO minister")
+
     def on_leave(self, *args):
         super().on_leave(*args)
 
@@ -115,3 +127,8 @@ class GameScreen(OlympeScreen):
         list_widgets = self.ids.grid_layout.children[:]
         for element in list_widgets:
             self.ids.grid_layout.remove_widget(element)
+
+        if self.has_notifications_olympe:
+            self.ids.olympe_button.stop_icon_flashing()
+        if self.has_notifications_minister:
+            self.ids.minister_button.stop_icon_flashing()

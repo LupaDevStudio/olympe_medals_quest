@@ -24,7 +24,8 @@ from tools.path import (
 )
 from tools.graphics import (
     COLORS,
-    FONTS_SIZES
+    FONTS_SIZES,
+    BUTTON_OUTLINE_WIDTH
 )
 
 #############
@@ -56,7 +57,7 @@ class DialogLayout(RelativeLayout):
     background_color = ColorProperty(COLORS.transparent_black)
     frame_color = ColorProperty(COLORS.white)
     
-    frame_width = NumericProperty(1)
+    frame_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

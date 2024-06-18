@@ -31,6 +31,32 @@
         pos_hint: {"center_x": 0.5, "y": 0.325}
         spacing: 20*root.font_ratio
 
+    ### Characters ###
+
+    CharacterButton:
+        id: olympe_button
+        image_source: PATH_CHARACTERS_IMAGES + "olympe/olympe_face_neutral.png"
+        icon_source: PATH_ICONS + "idea.png"
+        icon_mode: root.has_notifications_olympe
+        icon_flashing_mode: root.has_notifications_olympe
+        size_hint: (None, 0.15)
+        width: self.height
+        pos_hint: {"x": 0.1, "y": 0.15}
+        font_ratio: root.font_ratio
+        release_function: root.launch_dialog_olympe
+
+    CharacterButton:
+        id: minister_button
+        image_source: PATH_CHARACTERS_IMAGES + "olympe/olympe_face_neutral.png" # TODO
+        icon_source: PATH_ICONS + "idea.png"
+        icon_mode: root.has_notifications_minister
+        icon_flashing_mode: root.has_notifications_minister
+        size_hint: (None, 0.15)
+        width: self.height
+        pos_hint: {"right": 0.9, "y": 0.15}
+        font_ratio: root.font_ratio
+        release_function: root.launch_dialog_minister
+
     ### Main action button ###
 
     PressedButton:
@@ -39,5 +65,5 @@
         pos_hint: {"center_x": 0.5, "y": 0.04}
         font_ratio: root.font_ratio
         font_size: FONTS_SIZES.big_button
-        disable_button: root.has_notifications
+        disable_button: root.has_notifications_olympe or root.has_notifications_minister
         release_function: root.launch_main_action
