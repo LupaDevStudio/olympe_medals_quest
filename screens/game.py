@@ -13,7 +13,8 @@ from functools import partial
 ### Kivy imports ###
 
 from kivy.properties import (
-    StringProperty
+    StringProperty,
+    BooleanProperty
 )
 
 ### Local imports ###
@@ -48,6 +49,15 @@ class GameScreen(OlympeScreen):
         SCREEN_BACK_ARROW : True,
         SCREEN_MONEY_RIGHT : True
     }
+    launch_main_action_label = StringProperty()
+    main_action = "plan" # can be "plan" or "begin_competition"
+    has_notifications = BooleanProperty(False)
+
+    def on_pre_enter(self, *args):
+        super().on_pre_enter(*args)
+
+        # TODO update the has_notifications depending if Olympe or the minister has notifications
+        # TODO update main_action
 
     def on_enter(self, *args):
         super().on_enter(*args)
@@ -57,6 +67,7 @@ class GameScreen(OlympeScreen):
     def reload_language(self):
         super().reload_language()
         self.my_text = TEXT.game
+        self.launch_main_action_label = self.my_text[self.main_action]
 
     def fill_grid_layout(self):
         # TODO insert in this list only the buttons unlocked depending on tutorial
@@ -71,10 +82,11 @@ class GameScreen(OlympeScreen):
         ]
 
         grid_layout = self.ids["grid_layout"]
+        grid_layout.size_hint = (0.9, 0.45)
         grid_layout.padding = (0.05*self.width, 20*self.font_ratio)
         grid_layout.spacing = 20*self.font_ratio
         height_button = (
-            0.5*self.height - grid_layout.padding[1]*2 - 3*grid_layout.spacing[1]) // 4
+            grid_layout.size_hint[1]*self.height - grid_layout.padding[1]*2 - 3*grid_layout.spacing[1]) // 4
         for element in list_buttons:
 
             pressed_button = PressedWithIconButton(
@@ -87,6 +99,14 @@ class GameScreen(OlympeScreen):
             )
 
             grid_layout.add_widget(pressed_button)
+
+    def launch_main_action(self):
+        if self.main_action == "plan":
+            ...
+            # TODO go to planning screen
+        elif self.main_action == "begin_competition":
+            ...
+            # TODO go to competition
 
     def on_leave(self, *args):
         super().on_leave(*args)

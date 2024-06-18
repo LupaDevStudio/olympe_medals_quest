@@ -2,8 +2,23 @@
 
 <GameScreen>:
 
-    GridLayout:
+    ### Name of the country ###
 
+    RelativeLayout:
+        canvas.before:
+            Color:
+                rgba: COLORS.very_transparent_black
+            Rectangle:
+                pos: (0, 0)
+                size: self.size
+
+        pos_hint: {"center_x": 0.5, "y": 0.8}
+        size_hint: (0.7, 0.08)
+
+
+    ### List of actions allowed ###
+
+    GridLayout:
         canvas.before:
             Color:
                 rgba: COLORS.very_transparent_black
@@ -13,6 +28,16 @@
 
         id: grid_layout
         cols: 2
-        pos_hint: {"x": 0.05, "y": 0.3}
-        size_hint: (0.9, 0.5)
+        pos_hint: {"center_x": 0.5, "y": 0.325}
         spacing: 20*root.font_ratio
+
+    ### Main action button ###
+
+    PressedButton:
+        text: root.launch_main_action_label
+        size_hint: (0.7, 0.07)
+        pos_hint: {"center_x": 0.5, "y": 0.04}
+        font_ratio: root.font_ratio
+        font_size: FONTS_SIZES.big_button
+        disable_button: root.has_notifications
+        release_function: root.launch_main_action

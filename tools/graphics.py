@@ -18,6 +18,7 @@ class FontSize():
         self.small_label = 12
         self.label = 15
 
+        self.big_button = 18
         self.button = 16
 
         self.coins_count = 15

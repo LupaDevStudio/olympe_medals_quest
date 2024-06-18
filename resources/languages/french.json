@@ -14,7 +14,9 @@
         "sports_menu": "Sports",
         "activities_menu": "Activités",
         "medals": "Médailles",
-        "shop": "Boutique"
+        "shop": "Boutique",
+        "plan": "Planifier",
+        "begin_competition": "Commencer COMPETITION"
     },
     "sports_complex": {},
     "planification": {},
