@@ -31,7 +31,12 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_YEAR
+    SCREEN_TITLE_YEAR,
+    GAME,
+    USER_DATA
+)
+from tools.olympe import (
+    create_athlete
 )
 
 #############
@@ -64,6 +69,12 @@ class GameScreen(OlympeScreen):
             self.ids.olympe_button.trigger_icon_flashing()
         if self.has_notifications_minister:
             self.ids.minister_button.trigger_icon_flashing()
+
+        # TODO TEMP
+        if GAME.team == []:
+            first_athlete = create_athlete()
+            GAME.recruit_athlete(athlete=first_athlete)
+            USER_DATA.save_changes()
 
     def on_enter(self, *args):
         super().on_enter(*args)

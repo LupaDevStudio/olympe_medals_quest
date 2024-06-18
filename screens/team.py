@@ -30,7 +30,11 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_YEAR
+    SCREEN_TITLE_YEAR,
+    GAME
+)
+from tools.data_structures import (
+    Athlete
 )
 
 #############
@@ -59,20 +63,18 @@ class TeamScreen(OlympeScreen):
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
-        # TODO
-        athletes_list = ["Agathe", "Babou", "Gatho", "D", "E", "Miamour", "Paul", "B", "C", "A", "B", "C", "A", "B", "C", "A", "B", "C", "A", "B", "C", "A", "B", "C", "A", "B", "C"]
-
-        for athlete in athletes_list:
+        athlete: Athlete
+        for athlete in GAME.team:
             athlete_button = CharacterLayout(
-                image_source=PATH_CHARACTERS_IMAGES + "olympe/olympe_face_neutral.png", # TODO
-                is_hurt=False, # TODO
-                character_name=athlete, # TODO
+                image_source=athlete.image,
+                is_hurt=athlete.is_hurt,
+                character_name=athlete.first_name,
                 size_hint=(1/3, None),
                 height=120*self.font_ratio,
                 font_ratio=self.font_ratio,
-                release_function=partial(self.go_to_athlete, athlete) # TODO id of the athlete
+                release_function=partial(self.go_to_athlete, athlete)
             )
             scrollview_layout.add_widget(athlete_button)
 
-    def go_to_athlete(self, athlete_id: str):
-        print(athlete_id)
+    def go_to_athlete(self, athlete: Athlete):
+        print(athlete)

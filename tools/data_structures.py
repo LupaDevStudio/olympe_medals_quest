@@ -199,6 +199,10 @@ class Athlete():
     def image(self) -> str:
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
+    @ property
+    def is_hurt(self) -> str:
+        return self.health["is_hurt"]
+
     def __init__(self, dict_to_load: dict) -> None:
         self.id = dict_to_load.get("id", generate_id())
         self.name = dict_to_load.get("name", "")
@@ -212,6 +216,14 @@ class Athlete():
         self.sports = dict_to_load.get("sports", {})
         self.current_planning = [
             Activity(activity) for activity in dict_to_load.get("current_planning", [])]
+
+    def __str__(self):
+        return f"Athlete {self.id}: {self.name} {self.first_name}\n" \
+               f"Age: {self.age}, Salary: {self.salary}, Recruit Price: {self.recruit_price}\n" \
+               f"Fatigue: {self.fatigue}, Health: {self.health}\n" \
+               f"Stats: {self.stats}\n" \
+               f"Sports: {self.sports}\n" \
+               f"Current Planning: {', '.join(str(activity) for activity in self.current_planning)}"
 
     def convert_stats_to_tier_rank(self):
         tier_rank_dict = {}

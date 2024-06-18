@@ -68,6 +68,7 @@ if not os.path.exists(PATH_USER_DATA):
 
 # Load the data of the user
 USER_DATA = UserData()
+GAME = USER_DATA.game
 
 ### Language ###
 
