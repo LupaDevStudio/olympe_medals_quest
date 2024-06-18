@@ -7,7 +7,7 @@
     RelativeLayout:
         canvas.before:
             Color:
-                rgba: COLORS.very_transparent_black
+                rgba: COLORS.transparent_black
             Rectangle:
                 pos: (0, 0)
                 size: self.size
@@ -21,7 +21,7 @@
     GridLayout:
         canvas.before:
             Color:
-                rgba: COLORS.very_transparent_black
+                rgba: COLORS.transparent_black
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -36,7 +36,6 @@
     CharacterButton:
         id: olympe_button
         image_source: PATH_CHARACTERS_IMAGES + "olympe/olympe_face_neutral.png"
-        icon_source: PATH_ICONS + "idea.png"
         icon_mode: root.has_notifications_olympe
         icon_flashing_mode: root.has_notifications_olympe
         size_hint: (None, 0.15)
@@ -48,7 +47,6 @@
     CharacterButton:
         id: minister_button
         image_source: PATH_CHARACTERS_IMAGES + "olympe/olympe_face_neutral.png" # TODO
-        icon_source: PATH_ICONS + "idea.png"
         icon_mode: root.has_notifications_minister
         icon_flashing_mode: root.has_notifications_minister
         size_hint: (None, 0.15)

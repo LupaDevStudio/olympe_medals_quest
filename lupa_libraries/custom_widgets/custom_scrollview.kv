@@ -1,4 +1,5 @@
 #:kivy 2.2.1
+#:set BACKGROUND_MARGIN 16
 
 <CustomScrollview>:
 
@@ -6,9 +7,31 @@
     scroll_type:['bars', 'content']
     scroll_distance: 10
 
+<OlympeScrollView>:
+
     canvas.before:
         Color:
-            rgba: COLORS.very_transparent_black
+            rgba: COLORS.transparent_black
         Rectangle:
-            pos: (self.pos[0], self.pos[1])
-            size: (self.size[0], self.size[1])
+            pos: (-BACKGROUND_MARGIN//2*self.font_ratio, 0)
+            size: (BACKGROUND_MARGIN*self.font_ratio + self.size[0], self.size[1])
+
+        Color:
+            rgba: COLORS.white if self.header_mode else COLORS.transparent
+        Line:
+            points: [0, self.height - self.header_height*self.font_ratio, self.width, self.height - self.font_ratio * self.header_height]
+            width: LARGE_OUTLINE_WIDTH*root.font_ratio
+
+    Label:
+        id: label
+        text: root.header_text
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        pos_hint: {"x": 0.05}
+        y: root.height - root.header_height//2*root.font_ratio - self.height//2
+        shorten: False
+        size_hint: (None, None)
+        size: self.texture_size
+        halign: "left"
+        valign: "middle"
+        color: root.font_color

@@ -2,17 +2,22 @@
 
 <TeamScreen>:
 
-    # Campaigns scrollview
-    CustomScrollview:
-        id: scrollview
+    OlympeScrollView:
+        header_mode: True
+        header_text: root.team_title
         pos_hint: {"center_x":0.5, "y": 0}
-        size_hint: (SCROLLVIEW_WIDTH, 0.99 - TOP_BAR_HEIGHT)
-        bar_width: 5*root.font_ratio
-        bar_color: COLORS.white
-        bar_inactive_color: COLORS.gray_disable
+        size_hint: (SCROLLVIEW_WIDTH, 0.95 - TOP_BAR_HEIGHT)
 
-        MyScrollViewLayout:
-            id: scrollview_layout
-            cols: 1
-            spacing: 20*root.font_ratio
-            padding: (0.05*root.width, 5*root.font_ratio, 0.05*root.width, 40*root.font_ratio)
+        CustomScrollview:
+            id: scrollview
+            bar_width: 5*root.font_ratio
+            bar_color: COLORS.blue_olympe
+            bar_inactive_color: COLORS.blue_pressed_olympe
+            size_hint: (1, None)
+            height: self.parent.height - SCROLL_VIEW_HEADER_HEIGHT*root.font_ratio - SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio
+
+            MyScrollViewLayout:
+                id: scrollview_layout
+                cols: 3
+                spacing: 20*root.font_ratio
+                padding: (0.05*root.width, 5*root.font_ratio, 0.05*root.width, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)

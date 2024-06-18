@@ -20,7 +20,9 @@
     },
     "sports_complex": {},
     "planification": {},
-    "team": {},
+    "team": {
+        "team_title": "Athlètes"
+    },
     "athlete": {},
     "settings": {},
     "sports_menu": {},

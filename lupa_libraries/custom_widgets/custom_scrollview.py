@@ -10,8 +10,19 @@ Module to create a custom scrollview with appropriate colors and size.
 
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.properties import (
-    BooleanProperty
+    BooleanProperty,
+    StringProperty,
+    NumericProperty
+)
+from tools.graphics import(
+    FONTS_SIZES,
+    COLORS,
+    SCROLL_VIEW_HEADER_HEIGHT
+)
+from tools.path import (
+    PATH_TITLE_FONT
 )
 
 #############
@@ -38,5 +49,15 @@ class MyScrollViewLayout(GridLayout):
 
 
 class CustomScrollview(ScrollView):
-    
+    pass
+
+
+class OlympeScrollView(RelativeLayout):
+
     header_mode = BooleanProperty(False)
+    header_height = NumericProperty(SCROLL_VIEW_HEADER_HEIGHT)
+    header_text = StringProperty()
+    font_ratio = NumericProperty(1)
+    font_size = NumericProperty(FONTS_SIZES.subtitle)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+    font_color = StringProperty(COLORS.white)

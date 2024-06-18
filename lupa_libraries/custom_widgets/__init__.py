@@ -17,6 +17,7 @@ from lupa_libraries.custom_widgets.character_button import (
 
 from lupa_libraries.custom_widgets.money_layout import MoneyLayout
 from lupa_libraries.custom_widgets.custom_scrollview import (
+    OlympeScrollView,
     CustomScrollview,
     MyScrollViewLayout
 )

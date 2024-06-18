@@ -36,6 +36,7 @@ class Colors():
 
         self.white = (1, 1, 1, 1)
         self.black = (0, 0, 0, 1)
+        self.transparent = (0, 0, 0, 0)
         self.transparent_black = (0, 0, 0, 0.5)
         self.very_transparent_black = (0, 0, 0, 0.3)
 
@@ -54,7 +55,12 @@ COLORS = Colors()
 ICON_BUTTON_SIZE = 0.1
 TOP_BAR_HEIGHT = 0.09
 RADIUS_SMALL = 12
-SCROLLVIEW_WIDTH = 0.96
+
+### Scrollview ###
+
+SCROLLVIEW_WIDTH = 0.9
+SCROLL_VIEW_HEADER_HEIGHT = 50
+SCROLL_VIEW_SPACING_VERTICAL = 20
 
 ### Outlines ###
 
