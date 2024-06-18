@@ -16,7 +16,8 @@ from lupa_libraries.custom_widgets import (
     PressedButton,
     IconPressedButton,
     PressedWithIconButton,
-    CharacterButton
+    CharacterButton,
+    CharacterLayout
 )
 
 ### Dialog generator ###

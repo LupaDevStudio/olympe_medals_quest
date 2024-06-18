@@ -1,0 +1,77 @@
+#:kivy 2.2.1
+#:set CHARACTER_LINE_OFFSET_HORIZONTAL 10
+
+<CharacterButton>:
+    # Background
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: (0, 0)
+            size: self.size
+
+    # Line
+    canvas.after:
+        Color:
+            rgba: self.line_color
+        Line:
+            rectangle: (self.x, self.y, self.width, self.height)
+            width: self.outline_width * self.font_ratio
+
+    # Character image
+    Image:
+        id: image
+        source: root.image_source
+        pos_hint: {"center_x": 0.5, "y": 0}
+        size_hint: (None, 0.9)
+        width: self.height
+
+    # Icon
+    Image:
+        id: icon
+        source: root.icon_source
+        color: root.icon_color
+        pos_hint: root.icon_position
+        size_hint: (None, 0.3)
+        width: self.height
+        opacity: 1 if root.icon_mode else 0
+
+<CharacterLayout>:
+
+    # Background
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: (0, 0)
+            size: self.size
+        Color:
+            rgba: self.line_color
+        Line:
+            points: [CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8, self.width-CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8]
+            width: self.line_width*root.font_ratio
+
+    Label:
+        text: root.character_name
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        x: CHARACTER_LINE_OFFSET_HORIZONTAL*root.font_ratio
+        y: root.height*0.9 - self.height//2
+        shorten: False
+        size_hint: (None, None)
+        size: self.texture_size
+        halign: "left"
+        valign: "middle"
+        color: root.font_color
+
+    CharacterButton:
+        image_source: root.image_source
+        # TODO mettre la bonne icône source
+        icon_mode: root.is_hurt
+        icon_position: {"right": 0.95, "y": 0.05}
+        size_hint: (None, 0.6)
+        width: self.height
+        pos_hint: {"center_x": 0.5, "y": 0.075}
+        font_ratio: root.font_ratio
+        release_function: root.release_function
+        outline_width: root.line_width
