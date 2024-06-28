@@ -450,6 +450,14 @@ class Game():
                 sports_unlocked.append(self.sports[key])
         return sports_unlocked
 
+    @property
+    def number_athletes(self) -> int:
+        return len(self.team)
+    
+    @property
+    def max_athletes(self) -> int:
+        return self.gymnasium.max_number_athletes
+
     def __init__(self, dict_to_load: dict) -> None:
 
         self.money = dict_to_load.get("money", 0)

@@ -14,7 +14,9 @@ from kivy.uix.relativelayout import RelativeLayout
 from kivy.properties import (
     BooleanProperty,
     StringProperty,
-    NumericProperty
+    NumericProperty,
+    ColorProperty,
+    ObjectProperty
 )
 from tools.graphics import(
     FONTS_SIZES,
@@ -55,9 +57,16 @@ class CustomScrollview(ScrollView):
 class OlympeScrollView(RelativeLayout):
 
     header_mode = BooleanProperty(False)
+    icon_mode = BooleanProperty(False)
+
     header_height = NumericProperty(SCROLL_VIEW_HEADER_HEIGHT)
     header_text = StringProperty()
+
+    icon_source = StringProperty()
+    icon_function = ObjectProperty(lambda: 1 + 1)
+
     font_ratio = NumericProperty(1)
+
     font_size = NumericProperty(FONTS_SIZES.subtitle)
     text_font_name = StringProperty(PATH_TITLE_FONT)
-    font_color = StringProperty(COLORS.white)
+    font_color = ColorProperty(COLORS.white)

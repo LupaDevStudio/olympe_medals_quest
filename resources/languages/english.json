@@ -21,7 +21,8 @@
     "sports_complex": {},
     "planification": {},
     "team": {
-        "team_title": "Athletes"
+        "athlete": " athlete",
+        "athletes": " athletes"
     },
     "athlete": {},
     "settings": {},

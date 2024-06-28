@@ -97,13 +97,16 @@ class GameScreen(OlympeScreen):
             "medals",
             "shop"
         ]
+        max_icons = 7
+        max_lines = (max_icons // 2) + 1
 
         grid_layout = self.ids["grid_layout"]
         grid_layout.size_hint = (0.9, 0.45)
         grid_layout.padding = (0.05*self.width, 20*self.font_ratio)
         grid_layout.spacing = 20*self.font_ratio
         height_button = (
-            grid_layout.size_hint[1]*self.height - grid_layout.padding[1]*2 - 3*grid_layout.spacing[1]) // 4
+            grid_layout.size_hint[1]*self.height - grid_layout.padding[1]*2 - (max_lines-1)*grid_layout.spacing[1]) // max_lines
+        
         for element in list_buttons:
 
             pressed_button = PressedWithIconButton(
@@ -112,7 +115,7 @@ class GameScreen(OlympeScreen):
                 font_ratio=self.font_ratio,
                 release_function=partial(self.go_to_next_screen, element),
                 size_hint=(0.45, None),
-                height=height_button*self.font_ratio,
+                height=height_button,
             )
 
             grid_layout.add_widget(pressed_button)
