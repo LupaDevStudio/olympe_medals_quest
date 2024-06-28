@@ -40,7 +40,7 @@ from tools.path import (
 #############
 
 
-class CharacterButton(ButtonBehavior, RelativeLayout):
+class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
     """
     A button with a character on it.
     """
@@ -112,7 +112,7 @@ class CharacterButton(ButtonBehavior, RelativeLayout):
             self.stop_icon_flashing()
             self.release_function()
 
-class CharacterLayout(RelativeLayout):
+class CharacterWithNameLayout(RelativeLayout):
 
     is_hurt = BooleanProperty(False)
     image_source = StringProperty()
@@ -131,4 +131,28 @@ class CharacterLayout(RelativeLayout):
 
     line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     release_function = ObjectProperty(lambda: 1 + 1)
+    font_ratio = NumericProperty(1)
+
+class CharacterWithMainInfoFireLayout(RelativeLayout):
+
+    is_hurt = BooleanProperty(False)
+    image_source = StringProperty()
+
+    ### Information on the character ###
+
+    salary = StringProperty()
+    age = StringProperty()
+    fire_text = StringProperty()
+    fatigue = StringProperty()
+    health = StringProperty()
+    font_size = NumericProperty(FONTS_SIZES.small_label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     font_ratio = NumericProperty(1)

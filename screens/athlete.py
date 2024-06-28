@@ -1,5 +1,5 @@
 """
-Module to create the recruit screen.
+Module to create the athlete screen.
 """
 
 ###############
@@ -47,32 +47,26 @@ from tools.data_structures import (
 #############
 
 
-class RecruitScreen(OlympeScreen):
+class AthleteScreen(OlympeScreen):
     """
-    Class to manage the recruit screen of the game.
+    Class to manage the athlete screen of the game.
     """
 
     dict_type_screen = {
-        SCREEN_TITLE_ICON : "recruit",
-        SCREEN_BACK_ARROW : "game",
+        SCREEN_TITLE_ICON : "team",
+        SCREEN_BACK_ARROW : "backwards",
         SCREEN_MONEY_RIGHT : True
     }
-    recruit_title = StringProperty()
+    athlete_title = StringProperty()
     team_label = StringProperty()
+
+    def reload_kwargs(self, dict_kwargs):
+        self.athlete: Athlete = dict_kwargs["athlete"]
+        self.athlete_title = self.athlete.first_name + " " + self.athlete.name
 
     def reload_language(self):
         super().reload_language()
-        my_text = TEXT.recruit
-
-        self.team_label = my_text["team"]
-
-        number_athletes_current = GAME.number_athletes
-        if number_athletes_current <= 1:
-            self.recruit_title = str(number_athletes_current) + " / " + str(
-                GAME.max_athletes) + my_text["athlete"]
-        else:
-            self.recruit_title = str(number_athletes_current) + " / " + str(
-                GAME.max_athletes) + my_text["athletes"]
+        my_text = TEXT.athlete
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]

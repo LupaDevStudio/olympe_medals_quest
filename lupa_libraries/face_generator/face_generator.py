@@ -24,7 +24,7 @@ from PIL import Image, ImageOps
 ### Local imports ###
 
 sys.path.append("./")
-from image import get_image_size
+from lupa_libraries.face_generator.image import get_image_size
 
 #################
 ### Constants ###

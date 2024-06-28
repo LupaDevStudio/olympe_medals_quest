@@ -10,8 +10,9 @@ from lupa_libraries.custom_widgets.pressed_buttons import (
     PressedWithIconButton
 )
 from lupa_libraries.custom_widgets.character_widgets import (
-    CharacterButton,
-    CharacterLayout
+    CharacterButtonWithIcon,
+    CharacterWithNameLayout,
+    CharacterWithMainInfoFireLayout
 )
 
 ### Layouts ###

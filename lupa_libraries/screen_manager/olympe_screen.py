@@ -87,9 +87,12 @@ class OlympeScreen(ImprovedScreen):
             if not SCREEN_BACK_ARROW in self.dict_type_screen:
                 top_bar.remove_widget(self.ids.back_arrow)
             else:
-                self.ids.back_arrow.release_function = partial(
-                    self.go_to_next_screen,
-                    self.dict_type_screen[SCREEN_BACK_ARROW])
+                if self.dict_type_screen[SCREEN_BACK_ARROW] != "backwards":
+                    self.ids.back_arrow.release_function = partial(
+                        self.go_to_next_screen,
+                        self.dict_type_screen[SCREEN_BACK_ARROW])
+                else:
+                    self.ids.back_arrow.release_function = self.go_backwards
 
             # Display the money frame or not
             if not SCREEN_MONEY_RIGHT in self.dict_type_screen:

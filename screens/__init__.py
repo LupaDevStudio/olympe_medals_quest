@@ -14,6 +14,7 @@ from screens.settings import SettingsScreen
 from screens.game import GameScreen
 from screens.team import TeamScreen
 from screens.recruit import RecruitScreen
+from screens.athlete import AthleteScreen
 
 ### Reference dict to create the screens ###
 
@@ -23,5 +24,6 @@ SCREENS_DICT = {
     "settings": SettingsScreen,
     "game": GameScreen,
     "team": TeamScreen,
-    "recruit": RecruitScreen
+    "recruit": RecruitScreen,
+    "athlete": AthleteScreen
 }
