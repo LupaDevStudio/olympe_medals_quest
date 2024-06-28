@@ -51,7 +51,7 @@ class GameScreen(OlympeScreen):
 
     dict_type_screen = {
         SCREEN_TITLE_YEAR : True,
-        SCREEN_BACK_ARROW : True,
+        SCREEN_BACK_ARROW : "home",
         SCREEN_MONEY_RIGHT : True
     }
     launch_main_action_label = StringProperty()

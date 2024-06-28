@@ -1,5 +1,5 @@
 """
-Module to create the game screen.
+Module to create the team screen.
 """
 
 ###############
@@ -54,18 +54,20 @@ class TeamScreen(OlympeScreen):
 
     dict_type_screen = {
         SCREEN_TITLE_YEAR : True,
-        SCREEN_BACK_ARROW : True,
+        SCREEN_BACK_ARROW : "game",
         SCREEN_MONEY_RIGHT : True
     }
     team_title = StringProperty()
     grid_view = BooleanProperty(True) # TODO change to False
+    recruit_label = StringProperty()
 
     def reload_language(self):
         super().reload_language()
         my_text = TEXT.team
 
-        number_athletes_current = GAME.number_athletes
+        self.recruit_label = my_text["recruit"]
 
+        number_athletes_current = GAME.number_athletes
         if number_athletes_current <= 1:
             self.team_title = str(number_athletes_current) + " / " + str(
                 GAME.max_athletes) + my_text["athlete"]
@@ -98,13 +100,18 @@ class TeamScreen(OlympeScreen):
 
             # Display the characters in a list
             else:
+                # TODO
                 ...
 
     def change_view_mode(self):
         self.grid_view = not self.grid_view
 
-        # TODO reset scrollview
+        # Reset scrollview
+        self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
 
     def go_to_athlete(self, athlete: Athlete):
         print(athlete)
+
+    def go_to_recruit(self):
+        self.go_to_next_screen(screen_name="recruit")

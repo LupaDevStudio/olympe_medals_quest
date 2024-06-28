@@ -33,7 +33,7 @@ class SettingsScreen(OlympeScreen):
 
     dict_type_screen = {
         SCREEN_CUSTOM_TITLE : "settings",
-        SCREEN_BACK_ARROW : True
+        SCREEN_BACK_ARROW : "home"
     }
 
     def __init__(self, **kw):

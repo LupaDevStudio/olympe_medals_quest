@@ -22,7 +22,13 @@
     "planification": {},
     "team": {
         "athlete": " athlète",
-        "athletes": " athlètes"
+        "athletes": " athlètes",
+        "recruit": "Recruter"
+    },
+    "recruit": {
+        "athlete": " athlète",
+        "athletes": " athlètes",
+        "team": "Équipe"
     },
     "athlete": {},
     "settings": {},
@@ -32,7 +38,6 @@
     "shop": {},
     "competition_results": {},
     "competition_inscription": {},
-    "recruitment": {},
     "sports": {
         "cheese_rolling": {
             "name": "Cheese Rolling",

@@ -37,7 +37,7 @@ from tools.basic_tools import (
 DEFAULT_HEALTH_DICT = {
     "is_hurt": False,
     "type_injury": "",
-    "months_absent": 0
+    "time_absent": 0
 }
 DEFAULT_STATS_DICT = {
     "strength": 0,
@@ -247,8 +247,8 @@ class Athlete():
 
         # Heal athletes
         if self.health["is_hurt"]:
-            self.health["months_absent"] -= 1
-            if self.health["months_absent"] == 0:
+            self.health["time_absent"] -= 1
+            if self.health["time_absent"] == 0:
                 self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
 
     def export_dict(self) -> dict:
