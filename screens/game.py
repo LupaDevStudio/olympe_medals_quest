@@ -36,7 +36,7 @@ from tools.constants import (
     USER_DATA
 )
 from tools.olympe import (
-    create_athlete
+    generate_athlete
 )
 
 #############
@@ -72,7 +72,7 @@ class GameScreen(OlympeScreen):
 
         # TODO TEMP
         if GAME.team == []:
-            first_athlete = create_athlete()
+            first_athlete = generate_athlete()
             GAME.recruit_athlete(athlete=first_athlete)
             USER_DATA.save_changes()
 

@@ -109,5 +109,6 @@ CHARACTERS_DICT = {
 
 SCREEN_CUSTOM_TITLE = "custom_title"
 SCREEN_TITLE_YEAR = "title_year"
+SCREEN_TITLE_ICON = "title_icon"
 SCREEN_MONEY_RIGHT = "money_right"
 SCREEN_BACK_ARROW = "back_arrow"

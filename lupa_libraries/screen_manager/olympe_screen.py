@@ -25,13 +25,15 @@ from lupa_libraries.screen_manager import (
 from tools.constants import (
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_YEAR,
+    SCREEN_TITLE_ICON,
     SCREEN_BACK_ARROW,
     SCREEN_CUSTOM_TITLE,
     TEXT,
     USER_DATA
 )
 from tools.path import (
-    PATH_BACKGROUNDS
+    PATH_BACKGROUNDS,
+    PATH_ICONS
 )
 
 #############
@@ -47,6 +49,7 @@ class OlympeScreen(ImprovedScreen):
     # Configuration of the main widgets
     dict_type_screen: dict = {}
     title_screen = StringProperty()
+    title_icon_source = StringProperty()
     money_amount = NumericProperty()
 
     def __init__(self, back_image_path=None, **kw):
@@ -72,6 +75,13 @@ class OlympeScreen(ImprovedScreen):
                 self.title_screen = TEXT.general[code]
             else:
                 top_bar.remove_widget(self.ids.title)
+
+            # Display the title in shape of icon or not
+            if SCREEN_TITLE_ICON in self.dict_type_screen:
+                self.title_icon_source = PATH_ICONS + self.dict_type_screen[
+                    SCREEN_TITLE_ICON] + ".png"
+            else:
+                top_bar.remove_widget(self.ids.title_icon)
                 
             # Display the back arrow or not
             if not SCREEN_BACK_ARROW in self.dict_type_screen:

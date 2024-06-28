@@ -32,7 +32,7 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_YEAR,
+    SCREEN_TITLE_ICON,
     GAME
 )
 from tools.graphics import (
@@ -53,7 +53,7 @@ class TeamScreen(OlympeScreen):
     """
 
     dict_type_screen = {
-        SCREEN_TITLE_YEAR : True,
+        SCREEN_TITLE_ICON : "team",
         SCREEN_BACK_ARROW : "game",
         SCREEN_MONEY_RIGHT : True
     }

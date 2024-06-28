@@ -37,8 +37,8 @@ class Colors():
         self.white = (1, 1, 1, 1)
         self.black = (0, 0, 0, 1)
         self.transparent = (0, 0, 0, 0)
+        self.dark_transparent_black = (0, 0, 0, 0.6)
         self.transparent_black = (0, 0, 0, 0.5)
-        self.very_transparent_black = (0, 0, 0, 0.3)
 
         self.tier_rank_s = (255 / 255, 126 / 255, 126 / 255, 1)
         self.tier_rank_a = (254 / 255, 191 / 255, 127 / 255, 1)

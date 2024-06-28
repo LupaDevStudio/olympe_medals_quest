@@ -908,6 +908,7 @@ class Portrait:
         dict
             Dictionary representing the portrait.
         """
+        # TODO Paul please <3
 
     def export_as_png(self, export_path: str):
         """

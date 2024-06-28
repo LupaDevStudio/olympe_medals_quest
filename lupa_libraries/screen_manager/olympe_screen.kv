@@ -10,7 +10,7 @@
 
         canvas.before:
             Color:
-                rgba: COLORS.transparent_black
+                rgba: COLORS.dark_transparent_black
             Rectangle:
                 pos: 0, 0
                 size: self.size
@@ -32,6 +32,14 @@
             halign: "center"
             valign: "center"
             line_height: 1
+
+        Image:
+            id: title_icon
+            source: root.title_icon_source
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            size_hint: (None, 0.7)
+            width: self.height
+            color: COLORS.white
 
         IconPressedButton:
             id: back_arrow

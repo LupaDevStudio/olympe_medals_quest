@@ -59,7 +59,7 @@ class CharacterButton(ButtonBehavior, RelativeLayout):
     ### Colors ###
 
     icon_color = ColorProperty(COLORS.white)
-    background_color = ColorProperty(COLORS.very_transparent_black)
+    background_color = ColorProperty(COLORS.transparent_black)
     line_color = ColorProperty(COLORS.white)
 
     ### Button behavior ###

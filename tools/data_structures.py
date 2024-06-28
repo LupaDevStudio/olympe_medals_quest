@@ -39,12 +39,16 @@ DEFAULT_HEALTH_DICT = {
     "type_injury": "",
     "time_absent": 0
 }
+DEFAULT_STAT_DICT = {
+    "points": 0,
+    "learning_rate": 1
+}
 DEFAULT_STATS_DICT = {
-    "strength": 0,
-    "speed": 0,
-    "technique": 0,
-    "precision": 0,
-    "charm": 0,
+    "strength": copy.deepcopy(DEFAULT_STAT_DICT),
+    "speed": copy.deepcopy(DEFAULT_STAT_DICT),
+    "technique": copy.deepcopy(DEFAULT_STAT_DICT),
+    "precision": copy.deepcopy(DEFAULT_STAT_DICT),
+    "charm": copy.deepcopy(DEFAULT_STAT_DICT)
 }
 TIER_RANK_DICT = {
     0: "F",
@@ -106,13 +110,21 @@ def generate_id() -> str:
     unique_id = uuid.uuid4()
     return str(unique_id)
 
-def convert_characteristic_to_display(value_characteristic: int):
+def convert_characteristic_to_display(stat_dict: dict) -> dict:
+    value_characteristic = stat_dict["points"]
+    learning_rate = stat_dict["learning_rate"]
     tier_rank = value_characteristic // 10
     rest = value_characteristic - 10 * tier_rank
     # Exception for S-10
     if tier_rank == 7:
-        return ("S", 10)
-    return (TIER_RANK_DICT[tier_rank], rest)
+        return {
+            "rank": "S",
+            "level": 10,
+            "learning_rate": learning_rate}
+    return {
+        "rank": TIER_RANK_DICT[tier_rank],
+        "level": rest,
+        "learning_rate": learning_rate} 
 
 ###############
 ### Classes ###
@@ -191,8 +203,10 @@ class Athlete():
     recruit_price: int
     fatigue: int
     health: dict
+    reputation: int
     stats: dict[str, int]
     sports: dict[str, int]
+    previous_planning: list[Activity]
     current_planning: list[Activity]
 
     @ property
@@ -212,8 +226,11 @@ class Athlete():
         self.recruit_price = dict_to_load.get("recruit_price", 0)
         self.fatigue = dict_to_load.get("fatigue", 0)
         self.health = dict_to_load.get("health", copy.deepcopy(DEFAULT_HEALTH_DICT))
+        self.reputation = dict_to_load("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
+        self.previous_planning = [
+            Activity(activity) for activity in dict_to_load.get("previous_planning", [])]
         self.current_planning = [
             Activity(activity) for activity in dict_to_load.get("current_planning", [])]
 
@@ -221,6 +238,7 @@ class Athlete():
         return f"Athlete {self.id}: {self.name} {self.first_name}\n" \
                f"Age: {self.age}, Salary: {self.salary}, Recruit Price: {self.recruit_price}\n" \
                f"Fatigue: {self.fatigue}, Health: {self.health}\n" \
+               f"Reputation: {self.reputation}\n" \
                f"Stats: {self.stats}\n" \
                f"Sports: {self.sports}\n" \
                f"Current Planning: {', '.join(str(activity) for activity in self.current_planning)}"
@@ -230,7 +248,7 @@ class Athlete():
         for key in self.stats:
             value = self.stats[key]
             tier_rank_dict[key] = convert_characteristic_to_display(
-                value_characteristic=value)
+                stat_dict=value)
         return tier_rank_dict
 
     def convert_sports_to_tier_rank(self):
@@ -238,7 +256,7 @@ class Athlete():
         for key in self.sports:
             value = self.sports[key]
             tier_rank_dict[key] = convert_characteristic_to_display(
-                value_characteristic=value)
+                stat_dict=value)
         return tier_rank_dict
 
     def update_monthly_performance(self):
@@ -261,8 +279,10 @@ class Athlete():
             "recruit_price": self.recruit_price,
             "fatigue": self.fatigue,
             "health": self.health,
+            "reputation": self.reputation,
             "stats": self.stats,
             "sports": self.sports,
+            "previous_planning": [activity.export_dict() for activity in self.previous_planning],
             "current_planning": [activity.export_dict() for activity in self.current_planning],
         }
 
@@ -616,49 +636,3 @@ class UserData():
         save_json_file(
             file_path=PATH_USER_DATA,
             dict_to_save=data)
-
-#################
-### Functions ###
-#################
-
-
-def generate_athlete() -> Athlete:
-    return Athlete(
-        id="Ariel_1",
-        name="A",
-        first_name="a",
-        age=20,
-        salary=1200,
-        recruit_price=20000,
-        strength=10,
-        speed=2,
-        technique=15,
-        precision=60,
-        charm=29,
-        sports=[]
-    )
-
-
-if __name__ == "__main__":
-    my_athlete_a = Athlete(
-        name="A",
-        age=20,
-        salary=1200,
-        recruit_price=20000,
-        strength=10,
-        speed=2,
-        technique=70,
-        precision=60,
-        charm=29,
-        sports=[]
-    )
-    assert my_athlete_a.convert_characteristic_to_display(
-        my_athlete_a.strength) == ["E", 0]
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.speed) == [
-        "F", 2]
-    assert my_athlete_a.convert_characteristic_to_display(
-        my_athlete_a.technique) == ["S", 10]
-    assert my_athlete_a.convert_characteristic_to_display(
-        my_athlete_a.precision) == ["S", 0]
-    assert my_athlete_a.convert_characteristic_to_display(my_athlete_a.charm) == [
-        "D", 9]
