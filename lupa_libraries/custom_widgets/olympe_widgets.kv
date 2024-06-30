@@ -11,7 +11,7 @@
             size: (BACKGROUND_MARGIN*self.font_ratio + self.size[0], self.size[1])
 
         Color:
-            rgba: COLORS.white if self.header_mode else COLORS.transparent
+            rgba: COLORS.white if self.header_mode and not self.is_folded else COLORS.transparent
         Line:
             points: [0, self.height - self.header_height*self.font_ratio, self.width, self.height - self.font_ratio * self.header_height]
             width: LARGE_OUTLINE_WIDTH*root.font_ratio
