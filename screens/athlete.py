@@ -55,9 +55,9 @@ class AthleteScreen(OlympeScreen):
     """
 
     dict_type_screen = {
-        SCREEN_TITLE_ICON : "team",
-        SCREEN_BACK_ARROW : "backwards",
-        SCREEN_MONEY_RIGHT : True
+        SCREEN_TITLE_ICON: "team",
+        SCREEN_BACK_ARROW: "backwards",
+        SCREEN_MONEY_RIGHT: True
     }
     athlete_title = StringProperty()
     team_label = StringProperty()
@@ -81,33 +81,38 @@ class AthleteScreen(OlympeScreen):
         if is_hurt:
             time_absent = self.athlete.health["time_absent"]
             if time_absent > 1:
-                health += " - " + time_absent + " " + TEXT.general["trimesters"].lower()
+                health += " - " + time_absent + " " + \
+                    TEXT.general["trimesters"].lower()
             else:
-                health += " - " + time_absent + " " + TEXT.general["trimester"].lower()
+                health += " - " + time_absent + " " + \
+                    TEXT.general["trimester"].lower()
 
         self.main_info_card = CharacterWithMainInfoFireLayout(
             image_source=self.athlete.image,
             salary=self.athlete.salary,
             age=self.my_text["age"].replace("@", str(self.athlete.age)),
-            fatigue=self.my_text["fatigue"].replace("@", str(self.athlete.fatigue)),
+            fatigue=self.my_text["fatigue"].replace(
+                "@", str(self.athlete.fatigue)),
             health=health,
             font_ratio=self.font_ratio,
             fire_text=self.my_text["fire"],
             is_hurt=is_hurt,
             fire_athlete_function=self.ask_fire_athlete,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=200*self.font_ratio
+            height=200 * self.font_ratio
         )
         scrollview_layout.add_widget(self.main_info_card)
 
         ### Medals ###
 
         if not self.is_folded:
-            athlete_medals = GAME.get_medals_from_athlete(athlete_id=self.athlete.id)
-            height = self.font_ratio*(HEADER_HEIGHT*2) + 100*len(athlete_medals)
+            athlete_medals = GAME.get_medals_from_athlete(
+                athlete_id=self.athlete.id)
+            height = self.font_ratio * \
+                (HEADER_HEIGHT * 2) + 100 * len(athlete_medals)
         else:
             athlete_medals = {}
-            height = self.font_ratio*HEADER_HEIGHT
+            height = self.font_ratio * HEADER_HEIGHT
 
         self.medals_card = MedalsCard(
             font_ratio=self.font_ratio,
@@ -128,7 +133,8 @@ class AthleteScreen(OlympeScreen):
         self.skills_card = SkillsCard(
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=self.font_ratio*(HEADER_HEIGHT*2) + 70*len(athlete_skills),
+            height=self.font_ratio *
+            (HEADER_HEIGHT * 2) + 35 * len(athlete_skills),
             skills_dict=athlete_skills
         )
         scrollview_layout.add_widget(self.skills_card)
