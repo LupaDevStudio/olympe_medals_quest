@@ -33,10 +33,11 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    TEXT
+    GAME
 )
 from tools.graphics import (
-    SCROLLVIEW_WIDTH
+    SCROLLVIEW_WIDTH,
+    HEADER_HEIGHT
 )
 from tools.data_structures import (
     Athlete
@@ -99,21 +100,30 @@ class AthleteScreen(OlympeScreen):
 
         ### Medals ###
 
+        athlete_medals = GAME.get_medals_from_athlete(athlete_id=self.athlete.id)
+
         self.medals_card = MedalsCard(
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=200*self.font_ratio # TODO depending the number of medals
+            height=self.font_ratio*(HEADER_HEIGHT*2) + 100*len(athlete_medals),
+            medals_dict=athlete_medals
         )
         scrollview_layout.add_widget(self.medals_card)
 
         ### Skills ###
 
-        self.skills_cars = SkillsCard(
+        stats_dict = self.athlete.stats
+        sports_dict = self.athlete.sports
+        athlete_skills = dict(stats_dict)
+        athlete_skills.update(sports_dict)
+
+        self.skills_card = SkillsCard(
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=200*self.font_ratio # TODO depending the number of skills
+            height=self.font_ratio*(HEADER_HEIGHT*2) + 70*len(athlete_skills),
+            skills_dict=athlete_skills
         )
-        scrollview_layout.add_widget(self.skills_cars)
+        scrollview_layout.add_widget(self.skills_card)
 
     def ask_fire_athlete(self):
         print("TODO")

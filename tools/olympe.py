@@ -206,7 +206,7 @@ def generate_athlete(
     # Create the athlete and its associated image
     athlete = Athlete(dict_to_load=dict_to_load)
     portrait.export_as_png(os.path.join(
-        PATH_ATHLETES_IMAGES, f"draft/{athlete.id}.png"))
+        PATH_ATHLETES_IMAGES, f"{athlete.id}.png"))
 
     return athlete
 

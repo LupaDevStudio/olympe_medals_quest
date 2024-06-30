@@ -218,7 +218,7 @@ class MedalsCard(RelativeLayout):
     
     ### Information on the skills ###
 
-    skills_dict = ObjectProperty([])
+    medals_dict = ObjectProperty({})
     title_card = StringProperty(TEXT.general["medals"])
 
     font_size = NumericProperty(FONTS_SIZES.label)
@@ -237,7 +237,7 @@ class SkillsCard(RelativeLayout):
 
     ### Information on the skills ###
 
-    skills_dict = ObjectProperty([])
+    skills_dict = ObjectProperty({})
     title_card = StringProperty(TEXT.general["skills"])
 
     font_size = NumericProperty(FONTS_SIZES.label)
