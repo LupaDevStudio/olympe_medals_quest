@@ -76,53 +76,7 @@
         release_function: root.release_function
         outline_width: root.line_width
 
-<CharacterStats>:
 
-    height: self.width / 7.9 # Set the ratio of the bar
-
-    # Learning flame 1
-    Image:
-        id: learning_flame_1
-        source: PATH_ICONS + "flame.png"
-        pos_hint: {"x":0,"center_y":0.5}
-        size_hint: (0.1, 1)
-        fit_mode: "contain"
-        opacity: 1 if root.learning_rate == 2 else 0
-    
-    # Learning flame 2
-    Image:
-        id: learning_flame_2
-        source: PATH_ICONS + "flame.png"
-        pos_hint: {"x":0.1,"center_y":0.5}
-        size_hint: (0.1, 1)
-        fit_mode: "contain"
-        opacity: 1 if root.learning_rate >= 1 else 0
-    
-    # Rank indicator
-    Label:
-        id: rank_indicator
-        text: root.rank_letter
-        pos_hint: {"x":0.2,"center_y":0.5}
-        size_hint: (0.1, 1)
-        font_size: root.font_ratio * FONT_SIZES.small_label
-        font_name: PATH_TITLE_FONT
-
-        canvas.before:
-            Color:
-                rgba: root.rank_color
-            RoundedRectangle:
-                pos: (0, 0)
-                size: self.size
-                radius: [20*root.font_ratio,20*root.font_ratio,20*root.font_ratio,20*root.font_ratio]
-    
-    # Level up image
-    Image:
-        id: level_up
-        source: PATH_ICONS + "level_up.png"
-        pos_hint: {"x":0.9,"center_y":0.5}
-        size_hint: (0.1, 1)
-        fit_mode: "contain"
-        opacity: 1 if root.will_level_up else 0
     
 <CharacterWithMainInfoFireLayout>:
 
@@ -192,6 +146,53 @@
         pos_hint: {"y": 0.05}
         x: root.width * 0.05 * 2 + character.width
 
+<CharacterStats>:
+
+    height: self.width / 7.9 # Set the ratio of the bar
+
+    # Learning flame 1
+    Image:
+        id: learning_flame_1
+        source: PATH_ICONS + "flame.png"
+        pos_hint: {"x":0,"center_y":0.5}
+        size_hint: (0.1, 1)
+        fit_mode: "contain"
+        opacity: 1 if root.learning_rate == 2 else 0
+    
+    # Learning flame 2
+    Image:
+        id: learning_flame_2
+        source: PATH_ICONS + "flame.png"
+        pos_hint: {"x":0.1,"center_y":0.5}
+        size_hint: (0.1, 1)
+        fit_mode: "contain"
+        opacity: 1 if root.learning_rate >= 1 else 0
+    
+    # Rank indicator
+    Label:
+        id: rank_indicator
+        text: root.rank_letter
+        pos_hint: {"x":0.2,"center_y":0.5}
+        size_hint: (0.1, 1)
+        font_size: root.font_ratio * FONTS_SIZES.small_label
+        font_name: PATH_TITLE_FONT
+
+        canvas.before:
+            Color:
+                rgba: root.rank_color
+            RoundedRectangle:
+                pos: (0, 0)
+                size: self.size
+                radius: [20*root.font_ratio,20*root.font_ratio,20*root.font_ratio,20*root.font_ratio]
+    
+    # Level up image
+    Image:
+        id: level_up
+        source: PATH_ICONS + "level_up.png"
+        pos_hint: {"x":0.9,"center_y":0.5}
+        size_hint: (0.1, 1)
+        fit_mode: "contain"
+        opacity: 1 if root.will_level_up else 0
 
 <SkillsCard>:
 
@@ -220,3 +221,8 @@
         halign: "left"
         valign: "middle"
         color: root.font_color
+
+    # CharacterStats:
+    #     id: strength
+    #     width: root.width*0.8
+    #     pos_hint: {"center_x": 0.5, "y": 0.5}

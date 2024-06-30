@@ -50,12 +50,12 @@ class GameScreen(OlympeScreen):
     """
 
     dict_type_screen = {
-        SCREEN_TITLE_YEAR : True,
-        SCREEN_BACK_ARROW : "home",
-        SCREEN_MONEY_RIGHT : True
+        SCREEN_TITLE_YEAR: True,
+        SCREEN_BACK_ARROW: "home",
+        SCREEN_MONEY_RIGHT: True
     }
     launch_main_action_label = StringProperty()
-    main_action = "plan" # can be "plan" or "begin_competition"
+    main_action = "plan"  # can be "plan" or "begin_competition"
     has_notifications_olympe = BooleanProperty(True)
     has_notifications_minister = BooleanProperty(False)
 
@@ -102,15 +102,15 @@ class GameScreen(OlympeScreen):
 
         grid_layout = self.ids["grid_layout"]
         grid_layout.size_hint = (0.9, 0.45)
-        grid_layout.padding = (0.05*self.width, 20*self.font_ratio)
-        grid_layout.spacing = 20*self.font_ratio
+        grid_layout.padding = (0.05 * self.width, 20 * self.font_ratio)
+        grid_layout.spacing = 20 * self.font_ratio
         height_button = (
-            grid_layout.size_hint[1]*self.height - grid_layout.padding[1]*2 - (max_lines-1)*grid_layout.spacing[1]) // max_lines
-        
+            grid_layout.size_hint[1] * self.height - grid_layout.padding[1] * 2 - (max_lines - 1) * grid_layout.spacing[1]) // max_lines
+
         for element in list_buttons:
 
             pressed_button = PressedWithIconButton(
-                icon_source = PATH_ICONS + element + ".png",
+                icon_source=PATH_ICONS + element + ".png",
                 text=self.my_text[element],
                 font_ratio=self.font_ratio,
                 release_function=partial(self.go_to_next_screen, element),

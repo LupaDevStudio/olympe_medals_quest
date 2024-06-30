@@ -143,12 +143,39 @@ class CharacterWithNameLayout(RelativeLayout):
     font_ratio = NumericProperty(1)
 
 
+class CharacterWithMainInfoFireLayout(RelativeLayout):
+
+    is_hurt = BooleanProperty(False)
+    image_source = StringProperty()
+
+    ### Information on the character ###
+
+    salary = NumericProperty()
+    age = StringProperty()
+    fire_text = StringProperty()
+    fatigue = StringProperty()
+    health = StringProperty()
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    ### Function ###
+    fire_athlete_function = ObjectProperty(lambda: 1 + 1)
+
+
 class CharacterStats(RelativeLayout):
 
     learning_rate = NumericProperty()
     will_level_up = BooleanProperty()
     rank_letter = StringProperty()
     rank_color = ColorProperty()
+    font_ratio = NumericProperty()
 
     def __init__(
             self,
@@ -186,33 +213,7 @@ class CharacterStats(RelativeLayout):
                 else:
                     Color(0, 0, 0, 1)
                 RoundedRectangle(
-                    pos=(self.width * (0.35 + i * 0.5)), radius=(20, 20, 20, 20), size=(0.05 * self.width, self.width / 7.9))
-
-
-class CharacterWithMainInfoFireLayout(RelativeLayout):
-
-    is_hurt = BooleanProperty(False)
-    image_source = StringProperty()
-
-    ### Information on the character ###
-
-    salary = NumericProperty()
-    age = StringProperty()
-    fire_text = StringProperty()
-    fatigue = StringProperty()
-    health = StringProperty()
-
-    ### Colors ###
-
-    background_color = ColorProperty(COLORS.transparent_black)
-    font_color = ColorProperty(COLORS.white)
-    line_color = ColorProperty(COLORS.white)
-
-    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
-    font_ratio = NumericProperty(1)
-
-    ### Function ###
-    fire_athlete_function = ObjectProperty(lambda: 1 + 1)
+                    pos=(self.width * (0.35 + i * 0.5), self.y), radius=(20, 20, 20, 20), size=(0.05 * self.width, self.width / 7.9))
 
 
 class SkillsCard(RelativeLayout):
@@ -233,3 +234,13 @@ class SkillsCard(RelativeLayout):
 
     line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     font_ratio = NumericProperty(1)
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        strength = CharacterStats(
+            stat_dict={"points": 20, "learning_rate": 1},
+            width=self.width * 0.8,
+            pos_hint={"center_x": 0.5, "y": 0.5},
+            font_ratio=self.font_ratio
+        )
