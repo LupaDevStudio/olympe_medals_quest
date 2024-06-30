@@ -213,8 +213,8 @@ class Athlete():
     fatigue: int
     health: dict
     reputation: int
-    stats: dict[str, int]
-    sports: dict[str, int]
+    stats: dict[str, dict]
+    sports: dict[str, dict]
     previous_planning: list[Activity]
     current_planning: list[Activity]
 

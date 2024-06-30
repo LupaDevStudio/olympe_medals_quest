@@ -215,12 +215,30 @@ class CharacterStats(RelativeLayout):
                 RoundedRectangle(
                     pos=(self.width * (0.35 + i * 0.5), self.y), radius=(20, 20, 20, 20), size=(0.05 * self.width, self.width / 7.9))
 
+class MedalsCard(RelativeLayout):
+    
+    ### Information on the skills ###
+
+    medals_dict = ObjectProperty({})
+    title_card = StringProperty(TEXT.general["medals"])
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    font_ratio = NumericProperty(1)
 
 class SkillsCard(RelativeLayout):
 
     ### Information on the skills ###
 
-    skills_dict = ObjectProperty([])
+    skills_dict = ObjectProperty({})
     title_card = StringProperty(TEXT.general["skills"])
 
     font_size = NumericProperty(FONTS_SIZES.label)

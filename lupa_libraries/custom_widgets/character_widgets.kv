@@ -81,12 +81,9 @@
 <CharacterWithMainInfoFireLayout>:
 
     # Background
-    canvas.before:
-        Color:
-            rgba: self.background_color
-        Rectangle:
-            pos: (0, 0)
-            size: self.size
+    OlympeCard:
+        pos: (0, 0)
+        size_hint: (CARD_WIDTH, 1)
 
     CharacterButtonWithIcon:
         id: character
@@ -194,35 +191,20 @@
         fit_mode: "contain"
         opacity: 1 if root.will_level_up else 0
 
+<MedalsCard>:
+
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        pos: (0, 0)
+        size_hint: (CARD_WIDTH, 1)
+
 <SkillsCard>:
 
-    # Background
-    canvas.before:
-        Color:
-            rgba: self.background_color
-        Rectangle:
-            pos: (0, 0)
-            size: self.size
-        Color:
-            rgba: self.line_color
-        Line:
-            points: [CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8, self.width-CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8]
-            width: self.line_width*root.font_ratio
-
-    Label:
-        id: label
-        text: root.title_card
-        font_size: root.font_ratio * root.font_size
-        font_name: root.text_font_name
-        pos_hint: {"x": 0.025, "y": 0.8}
-        shorten: False
-        size_hint: (None, 0.2)
-        size: self.texture_size
-        halign: "left"
-        valign: "middle"
-        color: root.font_color
-
-    # CharacterStats:
-    #     id: strength
-    #     width: root.width*0.8
-    #     pos_hint: {"center_x": 0.5, "y": 0.5}
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        pos: (0, 0)
+        size_hint: (CARD_WIDTH, 1)
