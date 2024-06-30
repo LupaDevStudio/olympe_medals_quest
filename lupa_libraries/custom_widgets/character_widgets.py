@@ -144,6 +144,10 @@ class CharacterWithNameLayout(RelativeLayout):
     font_ratio = NumericProperty(1)
 
 
+class StatBar(RelativeLayout):
+    color = ColorProperty((0, 0, 0, 1))
+
+
 class CharacterWithMainInfoFireLayout(RelativeLayout):
 
     is_hurt = BooleanProperty(False)
@@ -206,27 +210,42 @@ class CharacterStats(RelativeLayout):
         self.rank_letter = self.expected_rank
         self.rank_color = COLORS.tier_ranks[self.expected_rank]
 
-        self.bind(size=self.update)
-
-    def update(self, *_):
-
-        print(self.x, self.y)
-
-        self.canvas.after.clear()
-
-        with self.canvas.after:
-            Color(0, 0, 0, 1)
+        for i in range(1, 11):
             for i in range(1, 11):
                 if i <= self.current_level and not self.will_level_up:
-                    Color(1, 1, 1, 1)
+                    color = COLORS.white
                 elif i <= self.expected_level:
-                    Color(22 / 255, 74 / 255, 87 / 255, 1)
+                    color = COLORS.blue_pressed_olympe
                 else:
-                    Color(0, 0, 0, 1)
-                RoundedRectangle(
-                    pos=(self.width * (0.3 + i * 0.05), 0.05 * self.height),
-                    radius=(4, 4, 4, 4),
-                    size=(0.025 * self.width, self.height * 0.9))
+                    color = COLORS.black
+                current_bar = StatBar(
+                    pos_hint={"center_x": 0.35 + 0.05 * i, "center_y": 0.5},
+                    size_hint=(0.1, 1),
+                    color=color
+                )
+                self.add_widget(current_bar)
+
+    #     self.bind(size=self.update)
+
+    # def update(self, *_):
+
+    #     print(self.x, self.y)
+
+    #     self.canvas.after.clear()
+
+    #     with self.canvas.after:
+    #         Color(0, 0, 0, 1)
+    #         for i in range(1, 11):
+    #             if i <= self.current_level and not self.will_level_up:
+    #                 Color(1, 1, 1, 1)
+    #             elif i <= self.expected_level:
+    #                 Color(22 / 255, 74 / 255, 87 / 255, 1)
+    #             else:
+    #                 Color(0, 0, 0, 1)
+    #             RoundedRectangle(
+    #                 pos=(self.width * (0.3 + i * 0.05), 0.05 * self.height),
+    #                 radius=(4, 4, 4, 4),
+    #                 size=(0.025 * self.width, self.height * 0.9))
 
 
 class MedalsCard(RelativeLayout):

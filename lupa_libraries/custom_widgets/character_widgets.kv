@@ -143,6 +143,18 @@
         pos_hint: {"y": 0.05}
         x: root.width * 0.05 * 2 + character.width
 
+# TODO stat bar and then add it to the character stats
+
+<StatBar>:
+
+    canvas.after:
+        Color:
+            rgba: root.color
+        RoundedRectangle:
+            size: (self.width*0.3,self.height*0.9)
+            pos: (self.x,self.y+self.height*0.05)
+            radius: (4, 4, 4, 4)
+
 <CharacterStats>:
 
     height: self.width / 7.9 # Set the ratio of the bar
