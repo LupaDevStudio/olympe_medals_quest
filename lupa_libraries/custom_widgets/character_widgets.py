@@ -254,6 +254,7 @@ class MedalsCard(RelativeLayout):
 
     medals_dict = ObjectProperty({})
     title_card = StringProperty(TEXT.general["medals"])
+    is_folded = BooleanProperty(False)
 
     font_size = NumericProperty(FONTS_SIZES.label)
     text_font_name = StringProperty(PATH_TEXT_FONT)

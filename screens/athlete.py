@@ -13,7 +13,8 @@ from functools import partial
 ### Kivy imports ###
 
 from kivy.properties import (
-    StringProperty
+    StringProperty,
+    BooleanProperty
 )
 
 ### Local imports ###
@@ -60,6 +61,7 @@ class AthleteScreen(OlympeScreen):
     }
     athlete_title = StringProperty()
     team_label = StringProperty()
+    is_folded = BooleanProperty()
 
     def reload_kwargs(self, dict_kwargs):
         self.athlete: Athlete = dict_kwargs["athlete"]
@@ -100,13 +102,19 @@ class AthleteScreen(OlympeScreen):
 
         ### Medals ###
 
-        athlete_medals = GAME.get_medals_from_athlete(athlete_id=self.athlete.id)
+        if not self.is_folded:
+            athlete_medals = GAME.get_medals_from_athlete(athlete_id=self.athlete.id)
+            height = self.font_ratio*(HEADER_HEIGHT*2) + 100*len(athlete_medals)
+        else:
+            athlete_medals = {}
+            height = self.font_ratio*HEADER_HEIGHT
 
         self.medals_card = MedalsCard(
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=self.font_ratio*(HEADER_HEIGHT*2) + 100*len(athlete_medals),
-            medals_dict=athlete_medals
+            height=height,
+            medals_dict=athlete_medals,
+            is_folded=self.is_folded
         )
         scrollview_layout.add_widget(self.medals_card)
 
@@ -127,6 +135,12 @@ class AthleteScreen(OlympeScreen):
 
     def ask_fire_athlete(self):
         print("TODO")
+
+    def ask_redraw(self, widget):
+        self.is_folded = not self.is_folded
+        # Reset scrollview
+        self.ids.scrollview_layout.reset_scrollview()
+        self.fill_scrollview()
 
     def go_to_team(self):
         self.go_to_next_screen(screen_name="team")
