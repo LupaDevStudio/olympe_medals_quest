@@ -213,13 +213,13 @@ class ImprovedScreen(Screen):
         # Update the back image size
         self.update_back_image_size()
 
+        # Bind to update attributes when the size of the window is changed
+        Window.bind(on_resize=self.on_resize)
+
     def on_enter(self, *args):
         """
         Initialize the screen when it is opened.
         """
-
-        # Bind to update attributes when the size of the window is changed
-        Window.bind(on_resize=self.on_resize)
 
         # Update the back image size
         self.update_back_image_size()
