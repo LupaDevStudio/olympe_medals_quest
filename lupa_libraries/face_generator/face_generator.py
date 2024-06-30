@@ -16,6 +16,7 @@ from typing import Literal
 from functools import partial
 from random import random, randrange
 from math import sin, cos, pi
+import json
 
 ### Pillow imports ###
 
@@ -68,59 +69,35 @@ HAIRCUT_Y_MAX_OFFSET = 7
 HAIRCUT_MALE_FOLDER = os.path.join(RESOURCES_FOLDER, "men_hair")
 HAIRCUT_FEMALE_FOLDER = os.path.join(RESOURCES_FOLDER, "women_hair")
 
-HAIR_COLOR = [ # TODO supprimer maintenant
-    "#3c3c3c",
-    "#d7bf94",
-    "#d7bf94",
-    "#d7bf94",
-    "#989898",
-    "#d4946b",
-    "#d4cbb9",
-    "#e5e5e5"
-]
+
 HAIR_COLOR_FEMALE = [
-    "#3c3c3c", # gray
-    "#d7bf94", # light blond
-    "#d4946b", # light brown
-    "#160800", # black
-    "#160800", # black
-    "#160800", # black
-    "#370d00", # dark brown
-    "#370d00", # dark brown
-    "#370d00", # dark brown
-    "#ff5600", # ginger
-    "#ff5600", # ginger
-    "#ffab27", # blond
-    "#ffab27", # blond
-    "#ffab27", # blond
-    "#a30000", # red
-    "#e51364", # pink lupa
-    "#247a91", # blue lupa
-    "#7700db", # purple
-    "#080072", # dark blue
-    "#006e03", # green
+    "#3c3c3c",  # gray
+    "#d7bf94",  # light blond
+    "#d4946b",  # light brown
+    "#160800",  # black
+    "#370d00",  # dark brown
+    "#ff5600",  # ginger
+    "#ffab27",  # blond
+    "#a30000",  # red
+    "#e51364",  # pink lupa
+    "#247a91",  # blue lupa
+    "#7700db",  # purple
+    "#080072",  # dark blue
+    "#006e03",  # green
 ]
 HAIR_COLOR_MALE = [
-    "#3c3c3c", # gray
-    "#d7bf94", # light blond
-    "#d4946b", # light brown
-    "#160800", # black
-    "#160800", # black
-    "#160800", # black
-    "#370d00", # dark brown
-    "#370d00", # dark brown
-    "#370d00", # dark brown
-    "#612a00", # brown
-    "#612a00", # brown
-    "#ff5600", # ginger
-    "#ff5600", # ginger
-    "#ffab27", # blond
-    "#ffab27", # blond
-    "#ffab27", # blond
-    "#a30000", # red
-    "#247a91", # blue lupa
-    "#080072", # dark blue
-    "#006e03", # green
+    "#3c3c3c",  # gray
+    "#d7bf94",  # light blond
+    "#d4946b",  # light brown
+    "#160800",  # black
+    "#370d00",  # dark brown
+    "#612a00",  # brown
+    "#ff5600",  # ginger
+    "#ffab27",  # blond
+    "#a30000",  # red
+    "#247a91",  # blue lupa
+    "#080072",  # dark blue
+    "#006e03",  # green
 ]
 
 HAIRCUT_MALE_SHAPES = [name.replace(".png", "")
@@ -177,21 +154,14 @@ EYES_COLORS = [
     # "#694c39",
     # "#4c6939",
     # "#396962"
-    "#612a00", # brown
-    "#612a00", # brown
-    "#612a00", # brown
-    "#03661e", # green
-    "#03661e", # green
-    "#2c1000", # dark brown
-    "#2c1000", # dark brown
-    "#2c1000", # dark brown
-    "#09005e", # dark blue
-    "#09005e", # dark blue
-    "#4e5141", # gray
-    "#005ebb", # light blue
-    "#006b40", # turquoise
-    "#160800", # black
-    "#160800" # black
+    "#612a00",  # brown
+    "#03661e",  # green
+    "#2c1000",  # dark brown
+    "#09005e",  # dark blue
+    "#4e5141",  # gray
+    "#005ebb",  # light blue
+    "#006b40",  # turquoise
+    "#160800",  # black
 ]
 
 EYES_SHAPES = [name.replace(".png", "") for name in os.listdir(EYES_FOLDER)]
@@ -217,23 +187,165 @@ ARM_X_OFFSET = WIDTH * 77 / 250
 ARM_FILE = os.path.join(CLOTHES_FOLDER, "arm.png")
 
 CLOTHES_COLOR = [
-    ("#eeeeee", "#d2d2d2"), # white
-    ("#63b448", "#529c39"), # green
-    ("#16a085", "#108a72"), # turquoise
-    ("#00305f", "#001933"), # dark blue
-    ("#3498db", "#2a81bb"), # light blue
-    ("#e05848", "#bf493b"), # red
-    ("#95a5a6", "#7b8f91"), # grey
-    ("#ffcc00", "#e7b900"), # yellow
-    ("#ff9500", "#e77000"), # orange
-    ("#5e00ff", "#3d00a5"), # purple
-    ("#ff8ccc", "#ff63c2") # pink
+    ("#eeeeee", "#d2d2d2"),  # white
+    ("#63b448", "#529c39"),  # green
+    ("#16a085", "#108a72"),  # turquoise
+    ("#00305f", "#001933"),  # dark blue
+    ("#3498db", "#2a81bb"),  # light blue
+    ("#e05848", "#bf493b"),  # red
+    ("#95a5a6", "#7b8f91"),  # grey
+    ("#ffcc00", "#e7b900"),  # yellow
+    ("#ff9500", "#e77000"),  # orange
+    ("#5e00ff", "#3d00a5"),  # purple
+    ("#ff8ccc", "#ff63c2")  # pink
 ]
 
 
 #################
 ### Functions ###
 #################
+
+def convert_html_color_to_tuple(html_color: str):
+    """
+    Convert the given html color into a tuple.
+
+    Parameters
+    ----------
+    html_color : str
+        HTML color code.
+
+    Returns
+    -------
+    tuple[int]
+        Color in tuple format.
+    """
+
+    red = int(html_color[1:3], base=16)
+    green = int(html_color[3:5], base=16)
+    blue = int(html_color[5:7], base=16)
+
+    return (red, green, blue)
+
+
+def re_apply_boundary_color_tuple(tuple_color: tuple[int]):
+    """
+    Re apply the limit to a tuple color to make sure it is valid.
+
+    Parameters
+    ----------
+    tuple_color : tuple[int]
+        Tuple color.
+    """
+
+    new_color = []
+
+    for i in range(3):
+        if tuple_color[i] > 255:
+            new_color.append(255)
+        elif tuple_color[i] < 0:
+            new_color.append(0)
+        else:
+            new_color.append(tuple_color[i])
+
+    return tuple(new_color)
+
+
+def change_brigthness_tuple_color(tuple_color: tuple[int], brightness_diff: int):
+    """
+    Modify the brigthness of a tuple color.
+
+    Parameters
+    ----------
+    tuple_color : tuple[int]
+        Tuple color.
+    brightness_diff : int
+        Difference to apply.
+
+    Returns
+    -------
+    tuple[int]
+        Modified tuple color.
+    """
+
+    new_color = []
+
+    for i in range(3):
+        new_color.append(tuple_color[i] + brightness_diff)
+
+    return re_apply_boundary_color_tuple(new_color)
+
+
+def hex_with_fixed_length(number: int, fixed_length: int):
+    """
+    Convert a number into hex string with fixed length.
+
+    Parameters
+    ----------
+    number : int
+        Number to convert.
+    fixed_length : int
+        Length to apply.
+
+    Returns
+    -------
+    str
+        Hex string with fixed length.
+    """
+
+    hex_str = hex(number).replace("0x", "")
+
+    len_diff = fixed_length - len(hex_str)
+    if len_diff > 0:
+        hex_str = "0" * len_diff + hex_str
+
+    return hex_str
+
+
+def convert_tuple_color_to_html(tuple_color: tuple[int]):
+    """
+    Convert a tuple color to html color.
+
+    Parameters
+    ----------
+    tuple_color : tuple[int]
+        Tuple color
+
+    Returns
+    -------
+    str
+        HTML color.
+    """
+
+    red = hex_with_fixed_length(tuple_color[0], 2)
+    green = hex_with_fixed_length(tuple_color[1], 2)
+    blue = hex_with_fixed_length(tuple_color[2], 2)
+
+    return "#" + red + green + blue
+
+
+def change_brightness_html_color(html_color: str, brightness_diff: int):
+    """
+    Change the brightness of an html color.
+
+    Parameters
+    ----------
+    html_color : str
+        HTML color.
+    brightness_diff : int
+        Brigthness difference to apply.
+
+    Returns
+    -------
+    str
+        Modified html color.
+    """
+
+    tuple_color = convert_html_color_to_tuple(html_color)
+    new_tuple_color = change_brigthness_tuple_color(
+        tuple_color, brightness_diff)
+    new_html_color = convert_tuple_color_to_html(new_tuple_color)
+
+    return new_html_color
 
 
 def random_interval(min_value: float, max_value: float):
@@ -488,9 +600,10 @@ class Eyebrow(Part):
         #     self.angle = -angle
         # else:
         #     self.angle = angle
+        new_color = change_brightness_html_color(color, -20)
         self.angle = angle
-        self.primary_color = color
-        self.secondary_color = color
+        self.primary_color = new_color
+        self.secondary_color = new_color
         self.image_src = os.path.join(
             EYEBROW_FOLDER, shape + ".png")
 
@@ -736,7 +849,7 @@ class Body:
 
 class LowerFace(Face):
 
-    image_src = FACE_FILE
+    image_src = LOWER_FACE_FILE
 
 
 class Portrait:
@@ -766,7 +879,8 @@ class Portrait:
             body_y_offset: float | None = None,
             clothes_color: tuple[tuple[int]] | tuple[str] | None = None,
             shirt_shape: str | None = None,
-            skin_color: tuple[tuple[int]] | tuple[str] | None = None) -> None:
+            skin_color: tuple[tuple[int]] | tuple[str] | None = None,
+            hairs_behind_face: bool | None = None) -> None:
 
         # Set the gender
         if gender is None:
@@ -899,7 +1013,12 @@ class Portrait:
             shirt_shape = random_select(SHIRT_SHAPES)
         self.shirt_shape = shirt_shape
 
-    def export_as_dict(self) -> dict:
+        # Set the position of the hairs
+        if hairs_behind_face is None:
+            hairs_behind_face = bool(randrange(0, 2))
+        self.hairs_behind_face = hairs_behind_face
+
+    def get_dict(self) -> dict:
         """
         Export the portrait as a dictionary.
 
@@ -908,7 +1027,29 @@ class Portrait:
         dict
             Dictionary representing the portrait.
         """
-        # TODO Paul please <3
+
+        attributes_list = [a for a in dir(self) if not a.startswith(
+            '__') and not callable(getattr(self, a))]
+        export_dict = {}
+        for attribute in attributes_list:
+            export_dict[attribute] = self.__getattribute__(attribute)
+
+        return export_dict
+
+    def export_as_json(self, export_path: str):
+        """
+        Export the portrait as a json file.
+
+        Parameters
+        ----------
+        export_path : str
+            Path to export the json.
+        """
+
+        export_dict = self.get_dict()
+
+        with open(export_path, "w", encoding="utf-8") as file:
+            json.dump(export_dict, file, indent=4)
 
     def export_as_png(self, export_path: str):
         """
@@ -927,7 +1068,6 @@ class Portrait:
         face = Face(
             primary_color=self.skin_color[0],
             secondary_color=self.skin_color[1])
-        face.paste_on_image(image)
 
         # Add the haircut
         haircut = HairCut(
@@ -935,7 +1075,13 @@ class Portrait:
             shape=self.hair_shape,
             color=self.hair_color,
             gender=self.gender)
-        haircut.paste_on_image(image)
+
+        if self.hairs_behind_face:
+            haircut.paste_on_image(image)
+            face.paste_on_image(image)
+        else:
+            face.paste_on_image(image)
+            haircut.paste_on_image(image)
 
         # Add the body
         body = Body(
@@ -1005,3 +1151,5 @@ if __name__ == "__main__":
     for i in range(100):
         portrait = Portrait()
         portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/{i}.png"))
+        portrait.export_as_json(os.path.join(
+            CURRENT_FOLDER, f"draft/{i}.json"))
