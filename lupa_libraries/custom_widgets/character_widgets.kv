@@ -1,7 +1,7 @@
 #:kivy 2.2.1
 #:set CHARACTER_LINE_OFFSET_HORIZONTAL 10
 
-<CharacterButton>:
+<CharacterButtonWithIcon>:
     # Background
     canvas.before:
         Color:
@@ -36,7 +36,7 @@
         width: self.height
         opacity: 1 if root.icon_mode else 0
 
-<CharacterLayout>:
+<CharacterWithNameLayout>:
 
     # Background
     canvas.before:
@@ -64,7 +64,7 @@
         valign: "middle"
         color: root.font_color
 
-    CharacterButton:
+    CharacterButtonWithIcon:
         image_source: root.image_source
         icon_source: PATH_ICONS + "hurt.png"
         icon_mode: root.is_hurt
@@ -124,3 +124,99 @@
         fit_mode: "contain"
         opacity: 1 if root.will_level_up else 0
     
+<CharacterWithMainInfoFireLayout>:
+
+    # Background
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: (0, 0)
+            size: self.size
+
+    CharacterButtonWithIcon:
+        id: character
+        image_source: root.image_source
+        icon_source: PATH_ICONS + "hurt.png"
+        icon_mode: root.is_hurt
+        icon_position: {"right": 0.95, "y": 0.05}
+        size_hint: (None, 0.55)
+        width: self.height
+        pos_hint: {"x": 0.05, "y": 0.35}
+        font_ratio: root.font_ratio
+        outline_width: root.line_width
+        disable_button: True
+
+    PressedButton:
+        text: root.fire_text
+        size_hint: (None, 0.15)
+        width: character.width
+        pos_hint: {"x": 0.05, "y": 0.1}
+        font_ratio: root.font_ratio
+        pressed_color: COLORS.red_pressed
+        background_color: COLORS.red
+        release_function: root.fire_athlete_function
+
+    ### Information ###
+    
+    MoneyLayout:
+        coins_count: root.salary
+        salary_mode: True
+        font_ratio: root.font_ratio
+        size_hint: (None, 0.1875)
+        width: root.width * (1 - 0.05*3) - character.width
+        pos_hint: {"y": 0.05*4 + 3*0.1875}
+        x: root.width * 0.05 * 2 + character.width
+
+    SurroundedLabel:
+        text: root.age
+        font_ratio: root.font_ratio
+        size_hint: (None, 0.1875)
+        width: root.width * (1 - 0.05*3) - character.width
+        pos_hint: {"y": 0.05*3 + 2*0.1875}
+        x: root.width * 0.05 * 2 + character.width
+
+    SurroundedLabel:
+        text: root.fatigue
+        font_ratio: root.font_ratio
+        size_hint: (None, 0.1875)
+        width: root.width * (1 - 0.05*3) - character.width
+        pos_hint: {"y": 0.05*2 + 0.1875}
+        x: root.width * 0.05 * 2 + character.width
+
+    SurroundedLabel:
+        text: root.health
+        font_ratio: root.font_ratio
+        size_hint: (None, 0.1875)
+        width: root.width * (1 - 0.05*3) - character.width
+        pos_hint: {"y": 0.05}
+        x: root.width * 0.05 * 2 + character.width
+
+
+<SkillsCard>:
+
+    # Background
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        Rectangle:
+            pos: (0, 0)
+            size: self.size
+        Color:
+            rgba: self.line_color
+        Line:
+            points: [CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8, self.width-CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8]
+            width: self.line_width*root.font_ratio
+
+    Label:
+        id: label
+        text: root.title_card
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        pos_hint: {"x": 0.025, "y": 0.8}
+        shorten: False
+        size_hint: (None, 0.2)
+        size: self.texture_size
+        halign: "left"
+        valign: "middle"
+        color: root.font_color

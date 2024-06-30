@@ -1,7 +1,7 @@
 {
     "country_1": {
         "name": "Country 1",
-        "atheletes_first_names": {
+        "athletes_first_names": {
             "male": ["Paul", "Nathaël", "Louis", "Pierre"],
             "female": ["Agathe", "Laure", "Emilie", "Marie"]
         },
@@ -9,7 +9,7 @@
     },
     "country_2": {
         "name": "Country 2",
-        "atheletes_first_names": {
+        "athletes_first_names": {
             "male": ["Paul2", "Nathaël2", "Louis2", "Pierre2"],
             "female": ["Agathe2", "Laure2", "Emilie2", "Marie2"]
         },

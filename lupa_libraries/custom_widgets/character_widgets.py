@@ -26,7 +26,8 @@ from kivy.properties import (
 ### Local imports ###
 
 from tools.constants import (
-    FPS
+    FPS,
+    TEXT
 )
 from tools.graphics import (
     COLORS,
@@ -47,7 +48,7 @@ from tools.data_structures import (
 #############
 
 
-class CharacterButton(ButtonBehavior, RelativeLayout):
+class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
     """
     A button with a character on it.
     """
@@ -120,7 +121,7 @@ class CharacterButton(ButtonBehavior, RelativeLayout):
             self.release_function()
 
 
-class CharacterLayout(RelativeLayout):
+class CharacterWithNameLayout(RelativeLayout):
 
     is_hurt = BooleanProperty(False)
     image_source = StringProperty()
@@ -186,3 +187,49 @@ class CharacterStats(RelativeLayout):
                     Color(0, 0, 0, 1)
                 RoundedRectangle(
                     pos=(self.width * (0.35 + i * 0.5)), radius=(20, 20, 20, 20), size=(0.05 * self.width, self.width / 7.9))
+
+
+class CharacterWithMainInfoFireLayout(RelativeLayout):
+
+    is_hurt = BooleanProperty(False)
+    image_source = StringProperty()
+
+    ### Information on the character ###
+
+    salary = NumericProperty()
+    age = StringProperty()
+    fire_text = StringProperty()
+    fatigue = StringProperty()
+    health = StringProperty()
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    ### Function ###
+    fire_athlete_function = ObjectProperty(lambda: 1 + 1)
+
+
+class SkillsCard(RelativeLayout):
+
+    ### Information on the skills ###
+
+    skills_dict = ObjectProperty([])
+    title_card = StringProperty(TEXT.general["skills"])
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    font_ratio = NumericProperty(1)

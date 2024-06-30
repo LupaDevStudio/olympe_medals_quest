@@ -1,0 +1,25 @@
+#:kivy 2.2.1
+
+<SurroundedLabel>:
+
+    # Background
+    canvas.before:
+        # Border
+        Color:
+            rgba: self.color
+        Line:
+            rounded_rectangle: [0,0,self.size[0],self.size[1],self.radius*self.font_ratio]
+            width: BUTTON_OUTLINE_WIDTH*self.font_ratio
+
+    # Text
+    Label:
+        text: root.text
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        pos_hint: {"center_y":0.5}
+        size_hint: (1, 1)
+        size: self.texture_size
+        line_height: 1
+        color: root.color
+        halign: "center"
+        valign: "middle"

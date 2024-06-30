@@ -22,7 +22,7 @@ from kivy.core.window import Window
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterLayout
+    CharacterWithNameLayout
 )
 from tools.path import (
     PATH_BACKGROUNDS,

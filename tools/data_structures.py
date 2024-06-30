@@ -236,7 +236,7 @@ class Athlete():
         self.fatigue = dict_to_load.get("fatigue", 0)
         self.health = dict_to_load.get(
             "health", copy.deepcopy(DEFAULT_HEALTH_DICT))
-        self.reputation = dict_to_load("reputation", 0)
+        self.reputation = dict_to_load.get("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
         self.previous_planning = [

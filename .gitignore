@@ -1,6 +1,8 @@
 # Ignore Xara files
 *.xar
 
+./athletes/
+
 # Ignore the reports folder
 reports
 report.html

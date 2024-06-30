@@ -22,7 +22,7 @@ from kivy.core.window import Window
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterLayout
+    CharacterWithNameLayout
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -86,7 +86,7 @@ class TeamScreen(OlympeScreen):
                 width = (Window.size[0]*SCROLLVIEW_WIDTH - \
                     2*scrollview_layout.spacing[0] - \
                     2*scrollview_layout.padding[0]) / 3
-                athlete_button = CharacterLayout(
+                athlete_button = CharacterWithNameLayout(
                     image_source=athlete.image,
                     is_hurt=athlete.is_hurt,
                     character_name=athlete.first_name,
@@ -111,7 +111,10 @@ class TeamScreen(OlympeScreen):
         self.fill_scrollview()
 
     def go_to_athlete(self, athlete: Athlete):
-        print(athlete)
+        self.go_to_next_screen(
+            screen_name="athlete",
+            next_dict_kwargs={"athlete": athlete}
+        )
 
     def go_to_recruit(self):
         self.go_to_next_screen(screen_name="recruit")
