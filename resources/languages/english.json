@@ -4,7 +4,8 @@
         "trimester": "Trimestre",
         "trimesters": "trimestres",
         "settings": "Paramètres",
-        "salary": "Salaire - "
+        "salary": "Salaire - ",
+        "skills": "Compétences"
     },
     "home": {
         "play": "Play"

@@ -19,7 +19,8 @@ from lupa_libraries.custom_widgets import (
     CharacterButtonWithIcon,
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,
-    SurroundedLabel
+    SurroundedLabel,
+    SkillsCard
 )
 
 ### Dialog generator ###

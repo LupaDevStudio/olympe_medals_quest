@@ -22,7 +22,8 @@ from kivy.core.window import Window
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterWithMainInfoFireLayout
+    CharacterWithMainInfoFireLayout,
+    SkillsCard
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -96,6 +97,19 @@ class AthleteScreen(OlympeScreen):
             height=200*self.font_ratio
         )
         scrollview_layout.add_widget(self.main_info_card)
+
+        ### Medals ###
+
+        # TODO
+
+        ### Skills ###
+
+        self.skills_cars = SkillsCard(
+            font_ratio=self.font_ratio,
+            size_hint=(SCROLLVIEW_WIDTH, None),
+            height=200*self.font_ratio # TODO depending the number of skills
+        )
+        scrollview_layout.add_widget(self.skills_cars)
 
     def ask_fire_athlete(self):
         print("TODO")

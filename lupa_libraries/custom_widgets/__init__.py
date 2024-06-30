@@ -18,7 +18,8 @@ from lupa_libraries.custom_widgets.pressed_buttons import (
 from lupa_libraries.custom_widgets.character_widgets import (
     CharacterButtonWithIcon,
     CharacterWithNameLayout,
-    CharacterWithMainInfoFireLayout
+    CharacterWithMainInfoFireLayout,
+    SkillsCard
 )
 
 ### Layouts ###

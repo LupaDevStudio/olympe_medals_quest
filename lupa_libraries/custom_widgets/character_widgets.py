@@ -22,7 +22,8 @@ from kivy.properties import (
 ### Local imports ###
 
 from tools.constants import (
-    FPS
+    FPS,
+    TEXT
 )
 from tools.graphics import (
     COLORS,
@@ -145,8 +146,6 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     fire_text = StringProperty()
     fatigue = StringProperty()
     health = StringProperty()
-    font_size = NumericProperty(FONTS_SIZES.small_label)
-    text_font_name = StringProperty(PATH_TEXT_FONT)
 
     ### Colors ###
 
@@ -159,3 +158,22 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
 
     ### Function ###
     fire_athlete_function = ObjectProperty(lambda: 1 + 1)
+
+class SkillsCard(RelativeLayout):
+    
+    ### Information on the skills ###
+
+    skills_dict = ObjectProperty([])
+    title_card = StringProperty(TEXT.general["skills"])
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    font_ratio = NumericProperty(1)
