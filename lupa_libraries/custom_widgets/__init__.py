@@ -19,14 +19,17 @@ from lupa_libraries.custom_widgets.character_widgets import (
     CharacterButtonWithIcon,
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,
+    MedalsCard,
     SkillsCard
 )
 
 ### Layouts ###
 
 from lupa_libraries.custom_widgets.money_layout import MoneyLayout
+from lupa_libraries.custom_widgets.olympe_widgets import (
+    OlympeCard
+)
 from lupa_libraries.custom_widgets.custom_scrollview import (
-    OlympeScrollView,
     CustomScrollview,
     MyScrollViewLayout
 )

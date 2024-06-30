@@ -31,24 +31,19 @@ from tools.path import (
 ### Class ###
 #############
 
-class MyScrollViewLayout(GridLayout):
-    """
-    Class corresponding to the layout inside the scroll view
-    """
+class OlympeCard(RelativeLayout):
 
-    def __init__(self, **kwargs):
-        super(MyScrollViewLayout, self).__init__(**kwargs)
-        self.size_hint_y = (None)
-        self.bind(minimum_height=self.setter('height'))
+    header_mode = BooleanProperty(False)
+    icon_mode = BooleanProperty(False)
 
-    def refill(self):
-        self.setter("height")
+    header_height = NumericProperty(HEADER_HEIGHT)
+    header_text = StringProperty()
 
-    def reset_scrollview(self):
-        list_widgets = self.children[:]
-        for element in list_widgets:
-            self.remove_widget(element)
+    icon_source = StringProperty()
+    icon_function = ObjectProperty(lambda: 1 + 1)
 
+    font_ratio = NumericProperty(1)
 
-class CustomScrollview(ScrollView):
-    pass
+    font_size = NumericProperty(FONTS_SIZES.subtitle)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+    font_color = ColorProperty(COLORS.white)

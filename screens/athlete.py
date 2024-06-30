@@ -13,17 +13,16 @@ from functools import partial
 ### Kivy imports ###
 
 from kivy.properties import (
-    StringProperty,
-    BooleanProperty
+    StringProperty
 )
-from kivy.core.window import Window
 
 ### Local imports ###
 
 from lupa_libraries import (
     OlympeScreen,
     CharacterWithMainInfoFireLayout,
-    SkillsCard
+    SkillsCard,
+    MedalsCard
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -100,7 +99,12 @@ class AthleteScreen(OlympeScreen):
 
         ### Medals ###
 
-        # TODO
+        self.medals_card = MedalsCard(
+            font_ratio=self.font_ratio,
+            size_hint=(SCROLLVIEW_WIDTH, None),
+            height=200*self.font_ratio # TODO depending the number of medals
+        )
+        scrollview_layout.add_widget(self.medals_card)
 
         ### Skills ###
 

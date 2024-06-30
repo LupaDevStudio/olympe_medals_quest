@@ -20,7 +20,8 @@ from lupa_libraries.custom_widgets import (
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,
     SurroundedLabel,
-    SkillsCard
+    SkillsCard,
+    MedalsCard
 )
 
 ### Dialog generator ###
