@@ -11,6 +11,7 @@ Constants
 
 ### Font sizes ###
 
+
 class FontSize():
     def __init__(self) -> None:
         self.title = 21
@@ -23,9 +24,11 @@ class FontSize():
 
         self.coins_count = 15
 
+
 FONTS_SIZES = FontSize()
 
 ### Colors ###
+
 
 class Colors():
     def __init__(self) -> None:
@@ -47,6 +50,17 @@ class Colors():
         self.tier_rank_d = (125 / 255, 254 / 255, 130 / 255, 1)
         self.tier_rank_e = (126 / 255, 254 / 255, 255 / 255, 1)
         self.tier_rank_f = (127 / 255, 191 / 255, 253 / 255, 1)
+
+        self.tier_ranks = {
+            "S": self.tier_rank_s,
+            "A": self.tier_rank_a,
+            "B": self.tier_rank_b,
+            "C": self.tier_rank_c,
+            "D": self.tier_rank_d,
+            "E": self.tier_rank_e,
+            "F": self.tier_rank_f,
+        }
+
 
 COLORS = Colors()
 
