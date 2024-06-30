@@ -147,6 +147,13 @@
 
     height: self.width / 7.9 # Set the ratio of the bar
 
+    canvas.before:
+        Color:
+            rgba: (1,0,0,1)
+        Rectangle:
+            size: self.size
+            pos: (0,0)
+
     # Learning flame 1
     Image:
         id: learning_flame_1
@@ -171,16 +178,16 @@
         text: root.rank_letter
         pos_hint: {"x":0.2,"center_y":0.5}
         size_hint: (0.1, 1)
-        font_size: root.font_ratio * FONTS_SIZES.small_label
+        font_size: root.font_ratio * FONTS_SIZES.title
         font_name: PATH_TITLE_FONT
 
         canvas.before:
             Color:
                 rgba: root.rank_color
             RoundedRectangle:
-                pos: (0, 0)
+                pos: self.pos
                 size: self.size
-                radius: [20*root.font_ratio,20*root.font_ratio,20*root.font_ratio,20*root.font_ratio]
+                radius: [10*root.font_ratio,10*root.font_ratio,10*root.font_ratio,10*root.font_ratio]
     
     # Level up image
     Image:

@@ -10,7 +10,8 @@ Module to create widgets with the pressed style.
 
 from kivy.graphics import (
     Color,
-    RoundedRectangle
+    RoundedRectangle,
+    Rectangle
 )
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.behaviors import ButtonBehavior
@@ -188,35 +189,48 @@ class CharacterStats(RelativeLayout):
         self.learning_rate = stat_dict["learning_rate"]
 
         # Determine if the athlete will level up
-        current_rank, current_level = convert_points_to_tier_rank(
+        self.current_rank, self.current_level = convert_points_to_tier_rank(
             stat_dict["points"])
         if expected_points_after_training is not None:
-            expected_rank, expected_level = convert_points_to_tier_rank(
+            self.expected_rank, self.expected_level = convert_points_to_tier_rank(
                 expected_points_after_training)
         else:
-            expected_rank = current_rank
-            expected_level = current_level
-        if expected_rank != current_rank:
+            self.expected_rank = self.current_rank
+            self.expected_level = self.current_level
+        if self.expected_rank != self.current_rank:
             self.will_level_up = True
+        else:
+            self.will_level_up = False
 
         # Set the rank color and letter
-        self.rank_letter = expected_rank
-        self.rank_color = COLORS.tier_ranks[expected_rank]
+        self.rank_letter = self.expected_rank
+        self.rank_color = COLORS.tier_ranks[self.expected_rank]
 
-        with self.canvas:
+        self.bind(size=self.update)
+
+    def update(self, *_):
+
+        print(self.x, self.y)
+
+        self.canvas.after.clear()
+
+        with self.canvas.after:
             Color(0, 0, 0, 1)
             for i in range(1, 11):
-                if i <= current_level and not self.will_level_up:
+                if i <= self.current_level and not self.will_level_up:
                     Color(1, 1, 1, 1)
-                elif i <= expected_level:
+                elif i <= self.expected_level:
                     Color(22 / 255, 74 / 255, 87 / 255, 1)
                 else:
                     Color(0, 0, 0, 1)
                 RoundedRectangle(
-                    pos=(self.width * (0.35 + i * 0.5), self.y), radius=(20, 20, 20, 20), size=(0.05 * self.width, self.width / 7.9))
+                    pos=(self.width * (0.3 + i * 0.05), 0.05 * self.height),
+                    radius=(4, 4, 4, 4),
+                    size=(0.025 * self.width, self.height * 0.9))
+
 
 class MedalsCard(RelativeLayout):
-    
+
     ### Information on the skills ###
 
     medals_dict = ObjectProperty({})
@@ -233,6 +247,7 @@ class MedalsCard(RelativeLayout):
 
     line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     font_ratio = NumericProperty(1)
+
 
 class SkillsCard(RelativeLayout):
 
@@ -256,9 +271,20 @@ class SkillsCard(RelativeLayout):
     def __init__(self, **kw):
         super().__init__(**kw)
 
-        strength = CharacterStats(
-            stat_dict={"points": 20, "learning_rate": 1},
-            width=self.width * 0.8,
-            pos_hint={"center_x": 0.5, "y": 0.5},
-            font_ratio=self.font_ratio
-        )
+        idx = 0
+        skill_widget_dict = {}
+
+        for skill in self.skills_dict:
+
+            skill_widget = CharacterStats(
+                stat_dict=self.skills_dict[skill],
+                size_hint=(0.8, None),
+                pos_hint={"center_x": 0.5, "center_y": 0.8 - 0.1 * idx},
+                font_ratio=self.font_ratio
+            )
+            self.add_widget(skill_widget)
+            skill_widget_dict[skill] = skill_widget
+            if idx == 1:
+                break
+            idx += 1
+            print(idx)
