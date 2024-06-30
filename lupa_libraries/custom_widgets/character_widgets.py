@@ -140,7 +140,7 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
 
     ### Information on the character ###
 
-    salary = StringProperty()
+    salary = NumericProperty()
     age = StringProperty()
     fire_text = StringProperty()
     fatigue = StringProperty()
@@ -156,3 +156,6 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
 
     line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     font_ratio = NumericProperty(1)
+
+    ### Function ###
+    fire_athlete_function = ObjectProperty(lambda: 1 + 1)

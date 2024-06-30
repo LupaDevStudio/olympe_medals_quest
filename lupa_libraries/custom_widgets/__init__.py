@@ -2,6 +2,12 @@
 ### Imports ###
 ###############
 
+### Labels ###
+
+from lupa_libraries.custom_widgets.surronded_label import (
+    SurroundedLabel
+)
+
 ### Buttons ###
 
 from lupa_libraries.custom_widgets.pressed_buttons import (

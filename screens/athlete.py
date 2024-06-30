@@ -22,7 +22,7 @@ from kivy.core.window import Window
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterWithNameLayout
+    CharacterWithMainInfoFireLayout
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -33,7 +33,7 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    GAME
+    TEXT
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH
@@ -66,12 +66,39 @@ class AthleteScreen(OlympeScreen):
 
     def reload_language(self):
         super().reload_language()
-        my_text = TEXT.athlete
+        self.my_text = TEXT.athlete
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
-        print("TODO fill scrollview")
+        ### Main information card ###
+
+        is_hurt = self.athlete.is_hurt
+        health = TEXT.injuries[self.athlete.health["type_injury"]]
+        if is_hurt:
+            time_absent = self.athlete.health["time_absent"]
+            if time_absent > 1:
+                health += " - " + time_absent + " " + TEXT.general["trimesters"].lower()
+            else:
+                health += " - " + time_absent + " " + TEXT.general["trimester"].lower()
+
+        self.main_info_card = CharacterWithMainInfoFireLayout(
+            image_source=self.athlete.image,
+            salary=self.athlete.salary,
+            age=self.my_text["age"].replace("@", str(self.athlete.age)),
+            fatigue=self.my_text["fatigue"].replace("@", str(self.athlete.fatigue)),
+            health=health,
+            font_ratio=self.font_ratio,
+            fire_text=self.my_text["fire"],
+            is_hurt=is_hurt,
+            fire_athlete_function=self.ask_fire_athlete,
+            size_hint=(SCROLLVIEW_WIDTH, None),
+            height=200*self.font_ratio
+        )
+        scrollview_layout.add_widget(self.main_info_card)
+
+    def ask_fire_athlete(self):
+        print("TODO")
 
     def go_to_team(self):
         self.go_to_next_screen(screen_name="team")

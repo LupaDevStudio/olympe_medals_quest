@@ -2,7 +2,9 @@
     "general": {
         "year": "Année",
         "trimester": "Trimestre",
-        "settings": "Paramètres"
+        "trimesters": "trimestres",
+        "settings": "Paramètres",
+        "salary": "Salaire - "
     },
     "home": {
         "play": "Jouer"
@@ -30,7 +32,11 @@
         "athletes": " athlètes",
         "team": "Équipe"
     },
-    "athlete": {},
+    "athlete": {
+        "fire": "Licencier",
+        "age": "Âge - @ ans",
+        "fatigue": "Fatigue - @ %"
+    },
     "settings": {},
     "sports_menu": {},
     "activities_menu": {},
@@ -47,5 +53,8 @@
     "rooms": {},
     "activities": {},
     "tutorial": {},
-    "popup": {}
+    "popup": {},
+    "injuries": {
+        "": "En forme"
+    }
 }
