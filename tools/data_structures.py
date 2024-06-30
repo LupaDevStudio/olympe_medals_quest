@@ -110,21 +110,28 @@ def generate_id() -> str:
     unique_id = uuid.uuid4()
     return str(unique_id)
 
+
+def convert_points_to_tier_rank(points):
+    tier_rank = points // 10
+    rest = points - 10 * tier_rank
+    if tier_rank == 7:
+        level = 10
+        rank = "S"
+    else:
+        level = rest
+        rank = TIER_RANK_DICT[tier_rank]
+    return rank, level
+
+
 def convert_characteristic_to_display(stat_dict: dict) -> dict:
     value_characteristic = stat_dict["points"]
     learning_rate = stat_dict["learning_rate"]
-    tier_rank = value_characteristic // 10
-    rest = value_characteristic - 10 * tier_rank
-    # Exception for S-10
-    if tier_rank == 7:
-        return {
-            "rank": "S",
-            "level": 10,
-            "learning_rate": learning_rate}
+    tier_rank, level = convert_points_to_tier_rank(value_characteristic)
+
     return {
-        "rank": TIER_RANK_DICT[tier_rank],
-        "level": rest,
-        "learning_rate": learning_rate} 
+        "rank": tier_rank,
+        "level": level,
+        "learning_rate": learning_rate}
 
 ###############
 ### Classes ###
@@ -180,7 +187,8 @@ class Sport():
         self.id = dict_to_load.get("id", "")
         self.name = dict_to_load.get("name", "")
         self.skills = tuple(dict_to_load.get("skills", ()))
-        self.mode_summer_winter = dict_to_load.get("mode_summer_winter", "summer")
+        self.mode_summer_winter = dict_to_load.get(
+            "mode_summer_winter", "summer")
 
     def export_dict(self) -> dict:
         return {
@@ -189,6 +197,7 @@ class Sport():
             "skills": list(self.skills),
             "mode_summer_winter": self.mode_summer_winter,
         }
+
 
 class Athlete():
     """
@@ -225,7 +234,8 @@ class Athlete():
         self.salary = dict_to_load.get("salary", 0)
         self.recruit_price = dict_to_load.get("recruit_price", 0)
         self.fatigue = dict_to_load.get("fatigue", 0)
-        self.health = dict_to_load.get("health", copy.deepcopy(DEFAULT_HEALTH_DICT))
+        self.health = dict_to_load.get(
+            "health", copy.deepcopy(DEFAULT_HEALTH_DICT))
         self.reputation = dict_to_load.get("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
@@ -343,7 +353,7 @@ class SportsComplex():
     def max_number_athletes(self):
         return GYMNASIUM_EVOLUTION_DICT[
             self.current_level]["max_number_athletes"]
-    
+
     @property
     def rooms_unlocked(self):
         list_rooms = []
@@ -473,7 +483,7 @@ class Game():
     @property
     def number_athletes(self) -> int:
         return len(self.team)
-    
+
     @property
     def max_athletes(self) -> int:
         return self.gymnasium.max_number_athletes
@@ -489,14 +499,18 @@ class Game():
             Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("fired_team", [])]
         self.countries = {
             country_id: Country(dict_to_load=country_dict) for country_id, country_dict in dict_to_load.get("countries", {}).items()}
-        self.gymnasium = SportsComplex(dict_to_load=dict_to_load.get("gymnasium", {}))
+        self.gymnasium = SportsComplex(
+            dict_to_load=dict_to_load.get("gymnasium", {}))
         self.medals = [
             Medal(dict_to_load=medal_dict) for medal_dict in dict_to_load.get("medals", [])]
         self.sports = {
             sport_id: Sport(dict_to_load=sport_dict) for sport_id, sport_dict in dict_to_load.get("sports", {}).items()}
-        self.sports_unlocking_progress = dict_to_load.get("sports_unlocking_progress", {})
-        self.selected_athletes_summer = dict_to_load.get("selected_athletes_summer", {})
-        self.selected_athletes_winter = dict_to_load.get("selected_athletes_winter", {})
+        self.sports_unlocking_progress = dict_to_load.get(
+            "sports_unlocking_progress", {})
+        self.selected_athletes_summer = dict_to_load.get(
+            "selected_athletes_summer", {})
+        self.selected_athletes_winter = dict_to_load.get(
+            "selected_athletes_winter", {})
 
     def get_monthly_salaries(self) -> int:
         monthly_salaries = 0
@@ -609,7 +623,8 @@ class UserData():
         data = load_json_file(PATH_USER_DATA)
         self.settings = data["settings"]
         self.tutorial = data["tutorial"]
-        self.game = Game(dict_to_load=data["game"]) if "game" in data else Game()
+        self.game = Game(
+            dict_to_load=data["game"]) if "game" in data else Game()
         self.save_changes()
 
     def save_changes(self) -> None:

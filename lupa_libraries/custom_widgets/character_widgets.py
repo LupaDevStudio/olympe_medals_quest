@@ -8,6 +8,10 @@ Module to create widgets with the pressed style.
 
 ### Kivy imports ###
 
+from kivy.graphics import (
+    Color,
+    RoundedRectangle
+)
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.clock import Clock
@@ -34,6 +38,9 @@ from tools.graphics import (
 from tools.path import (
     PATH_ICONS,
     PATH_TEXT_FONT
+)
+from tools.data_structures import (
+    convert_points_to_tier_rank
 )
 
 #############
@@ -113,6 +120,7 @@ class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
             self.stop_icon_flashing()
             self.release_function()
 
+
 class CharacterWithNameLayout(RelativeLayout):
 
     is_hurt = BooleanProperty(False)
@@ -133,6 +141,53 @@ class CharacterWithNameLayout(RelativeLayout):
     line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     release_function = ObjectProperty(lambda: 1 + 1)
     font_ratio = NumericProperty(1)
+
+
+class CharacterStats(RelativeLayout):
+
+    learning_rate = NumericProperty()
+    will_level_up = BooleanProperty()
+    rank_letter = StringProperty()
+    rank_color = ColorProperty()
+
+    def __init__(
+            self,
+            stat_dict: dict,
+            expected_points_after_training: float | None = None,
+            ** kw):
+        super().__init__(**kw)
+
+        # Store the parameters
+        self.learning_rate = stat_dict["learning_rate"]
+
+        # Determine if the athlete will level up
+        current_rank, current_level = convert_points_to_tier_rank(
+            stat_dict["points"])
+        if expected_points_after_training is not None:
+            expected_rank, expected_level = convert_points_to_tier_rank(
+                expected_points_after_training)
+        else:
+            expected_rank = current_rank
+            expected_level = current_level
+        if expected_rank != current_rank:
+            self.will_level_up = True
+
+        # Set the rank color and letter
+        self.rank_letter = expected_rank
+        self.rank_color = COLORS.tier_ranks[expected_rank]
+
+        with self.canvas:
+            Color(0, 0, 0, 1)
+            for i in range(1, 11):
+                if i <= current_level and not self.will_level_up:
+                    Color(1, 1, 1, 1)
+                elif i <= expected_level:
+                    Color(22 / 255, 74 / 255, 87 / 255, 1)
+                else:
+                    Color(0, 0, 0, 1)
+                RoundedRectangle(
+                    pos=(self.width * (0.35 + i * 0.5)), radius=(20, 20, 20, 20), size=(0.05 * self.width, self.width / 7.9))
+
 
 class CharacterWithMainInfoFireLayout(RelativeLayout):
 
@@ -179,7 +234,7 @@ class MedalsCard(RelativeLayout):
     font_ratio = NumericProperty(1)
 
 class SkillsCard(RelativeLayout):
-    
+
     ### Information on the skills ###
 
     skills_dict = ObjectProperty([])

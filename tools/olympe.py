@@ -54,7 +54,7 @@ names_dict = {}
 for country in countries_dict:
     first_names_dict[country] = countries_dict[country]["athletes_first_names"]
     names_dict[country] = countries_dict[country]["athletes_names"]
-    
+
 first_names_dict[COUNTRY_NAME] = {
     "male": [],
     "female": []
@@ -76,6 +76,7 @@ for key in first_names_dict:
 ### Functions ###
 #################
 
+
 def compute_salary(stats, reputation) -> int:
     # TODO
     return 1200
@@ -84,20 +85,23 @@ def compute_salary(stats, reputation) -> int:
 ### Athlete generation ###
 ##########################
 
+
 def generate_age() -> int:
     # Probabilities for each age 16-19 / 20-24 / 25-29 / 30-35 / 36-40
     weights = [1, 1.5, 2, 3] + [4, 5, 5, 5, 4] + [3.5, 3, 2.5, 2, 1.5] + [
-        1]*6 + [0.75, 0.75, 0.5, 0.5, 0.25]
+        1] * 6 + [0.75, 0.75, 0.5, 0.5, 0.25]
     age = rd.choices(range(16, 41), weights=weights)
     return age[0]
 
-def generate_learning_rates(double_proba = 0.15, simple_proba = 0.4):
+
+def generate_learning_rates(double_proba=0.15, simple_proba=0.4):
     random_number = rd.random()
     if random_number < double_proba:
         return 2
     elif random_number < simple_proba:
         return 1.5
     return 1
+
 
 def generate_stats(level) -> dict:
     stats = copy.deepcopy(DEFAULT_STATS_DICT)
@@ -109,8 +113,9 @@ def generate_stats(level) -> dict:
         # TODO
     return stats
 
-def generate_sports(main_sport: str|None, second_sport: str|None, level) -> dict:
-    # TODO choisir un principal sport parmi les sports débloqués 
+
+def generate_sports(main_sport: str | None, second_sport: str | None, level) -> dict:
+    # TODO choisir un principal sport parmi les sports débloqués
     if main_sport is None:
         main_sport = ...
     if second_sport is None:
@@ -125,13 +130,15 @@ def generate_sports(main_sport: str|None, second_sport: str|None, level) -> dict
     sports_dict[main_sport]["learning_rate"] = generate_learning_rates(
         double_proba=0.2, simple_proba=0.5)
     sports_dict[second_sport]["learning_rate"] = generate_learning_rates()
-    
+
     # Choose randomly the values (points) according to level
     # TODO
 
     return sports_dict
 
-def generate_reputation(charm: int):
+
+def generate_reputation(charm_dict: dict):
+    charm = charm_dict["points"]
     basis_reputation = charm * 100 / 70
     random_number = rd.random() * 5
     plus_mode = rd.randint(0, 1) == 1
@@ -145,9 +152,11 @@ def generate_reputation(charm: int):
         return 100
     return reputation
 
+
 def generate_recruit_price(salary: int):
     # TODO
     return 0
+
 
 def generate_athlete(
         country: str = "our_country",
@@ -204,6 +213,7 @@ def generate_athlete(
 #################
 ### Main code ###
 #################
+
 
 if __name__ == "__main__":
     dict_age = {}
