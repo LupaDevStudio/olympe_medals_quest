@@ -15,6 +15,7 @@ from kivy.graphics import (
 )
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.properties import (
     StringProperty,
@@ -38,7 +39,8 @@ from tools.graphics import (
 )
 from tools.path import (
     PATH_ICONS,
-    PATH_TEXT_FONT
+    PATH_TEXT_FONT,
+    PATH_TITLE_FONT,
 )
 from tools.data_structures import (
     convert_points_to_tier_rank
@@ -144,6 +146,10 @@ class CharacterWithNameLayout(RelativeLayout):
     font_ratio = NumericProperty(1)
 
 
+class StatBar(RelativeLayout):
+    color = ColorProperty((0, 0, 0, 1))
+
+
 class CharacterWithMainInfoFireLayout(RelativeLayout):
 
     is_hurt = BooleanProperty(False)
@@ -206,27 +212,20 @@ class CharacterStats(RelativeLayout):
         self.rank_letter = self.expected_rank
         self.rank_color = COLORS.tier_ranks[self.expected_rank]
 
-        self.bind(size=self.update)
-
-    def update(self, *_):
-
-        print(self.x, self.y)
-
-        self.canvas.after.clear()
-
-        with self.canvas.after:
-            Color(0, 0, 0, 1)
+        for i in range(1, 11):
             for i in range(1, 11):
                 if i <= self.current_level and not self.will_level_up:
-                    Color(1, 1, 1, 1)
+                    color = COLORS.white
                 elif i <= self.expected_level:
-                    Color(22 / 255, 74 / 255, 87 / 255, 1)
+                    color = COLORS.blue_pressed_olympe
                 else:
-                    Color(0, 0, 0, 1)
-                RoundedRectangle(
-                    pos=(self.width * (0.3 + i * 0.05), 0.05 * self.height),
-                    radius=(4, 4, 4, 4),
-                    size=(0.025 * self.width, self.height * 0.9))
+                    color = COLORS.black
+                current_bar = StatBar(
+                    pos_hint={"center_x": 0.35 + 0.05 * i, "center_y": 0.5},
+                    size_hint=(0.1, 1),
+                    color=color
+                )
+                self.add_widget(current_bar)
 
 
 class MedalsCard(RelativeLayout):
@@ -273,19 +272,27 @@ class SkillsCard(RelativeLayout):
         super().__init__(**kw)
 
         idx = 0
-        skill_widget_dict = {}
 
         for skill in self.skills_dict:
 
+            skill_label = Label(
+                text=skill.capitalize(),
+                font_size=FONTS_SIZES.label * self.font_ratio,
+                font_name=PATH_TITLE_FONT,
+                color=COLORS.white,
+                size_hint=(0.5, 0.07),
+                pos_hint={"x": 0.1, "center_y": 0.72 - 0.15 * idx},
+                halign="left",
+                valign="middle"
+            )
+            skill_label.bind(size=skill_label.setter('text_size'))
+            self.add_widget(skill_label)
+
             skill_widget = CharacterStats(
                 stat_dict=self.skills_dict[skill],
-                size_hint=(0.8, None),
-                pos_hint={"center_x": 0.5, "center_y": 0.8 - 0.1 * idx},
+                size_hint=(0.6, None),
+                pos_hint={"center_x": 0.7, "center_y": 0.72 - 0.15 * idx},
                 font_ratio=self.font_ratio
             )
             self.add_widget(skill_widget)
-            skill_widget_dict[skill] = skill_widget
-            if idx == 1:
-                break
             idx += 1
-            print(idx)
