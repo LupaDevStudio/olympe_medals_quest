@@ -16,9 +16,9 @@ from lupa_libraries.custom_widgets.pressed_buttons import (
     PressedWithIconButton
 )
 from lupa_libraries.custom_widgets.character_widgets import (
-    CharacterButtonWithIcon,
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,
+    CharacterInfoWithMainSportsLayout,
     MedalsCard,
     SkillsCard
 )
@@ -27,6 +27,7 @@ from lupa_libraries.custom_widgets.character_widgets import (
 
 from lupa_libraries.custom_widgets.money_layout import MoneyLayout
 from lupa_libraries.custom_widgets.olympe_widgets import (
+    CharacterButtonWithIcon,
     OlympeCard
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (

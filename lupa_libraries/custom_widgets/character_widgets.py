@@ -9,10 +9,8 @@ Module to create widgets with the pressed style.
 ### Kivy imports ###
 
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.label import Label
 from kivy.uix.image import Image
-from kivy.clock import Clock
 from kivy.properties import (
     StringProperty,
     ObjectProperty,
@@ -25,7 +23,6 @@ from kivy.properties import (
 ### Local imports ###
 
 from tools.constants import (
-    FPS,
     TEXT
 )
 from tools.data_structures import (
@@ -33,16 +30,16 @@ from tools.data_structures import (
 )
 from tools.graphics import (
     COLORS,
-    LARGE_OUTLINE_WIDTH,
-    BUTTON_OUTLINE_WIDTH,
+    BUTTON_LINE_WIDTH,
+    LARGE_LINE_WIDTH,
     FONTS_SIZES,
     SKILL_HEIGHT,
     MARGIN_HEIGHT,
     HEADER_HEIGHT,
-    MEDAL_HEIGHT
+    MEDAL_HEIGHT,
+    BIG_HEADER_HEIGHT
 )
 from tools.path import (
-    PATH_ICONS,
     PATH_TEXT_FONT,
     PATH_TITLE_FONT,
 )
@@ -53,80 +50,6 @@ from tools.data_structures import (
 #############
 ### Class ###
 #############
-
-
-class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
-    """
-    A button with a character on it.
-    """
-
-    ### Image settings ###
-
-    image_source = StringProperty()
-
-    ### Icon settings ###
-
-    icon_mode = BooleanProperty(False)
-    icon_flashing_mode = BooleanProperty(False)
-    icon_position = ObjectProperty({"x": 0.05, "top": 0.95})
-    icon_source = StringProperty(PATH_ICONS + "idea.png")
-
-    ### Colors ###
-
-    icon_color = ColorProperty(COLORS.white)
-    background_color = ColorProperty(COLORS.transparent_black)
-    line_color = ColorProperty(COLORS.white)
-
-    ### Button behavior ###
-
-    release_function = ObjectProperty(lambda: 1 + 1)
-    disable_button = BooleanProperty(False)
-
-    outline_width = NumericProperty(LARGE_OUTLINE_WIDTH)
-    font_ratio = NumericProperty(1)
-
-    def __init__(self, **kwargs):
-        self.always_release = True
-        super().__init__(**kwargs)
-
-    def trigger_icon_flashing(self):
-        if not self.icon_mode:
-            self.ids.icon.opacity = 0
-        else:
-            self.ids.icon.opacity = 1
-
-        if self.icon_flashing_mode:
-            self.opacity_state = -1
-            self.opacity_rate = 0.05
-
-            self.stop_icon_flashing()
-            # Schedule the update for the text opacity effect
-            Clock.schedule_interval(self.update_icon_opacity, 1 / FPS)
-
-    def stop_icon_flashing(self):
-        try:
-            # Unschedule the clock update
-            Clock.unschedule(self.update_icon_opacity, 1 / FPS)
-            if self.icon_mode:
-                self.ids.icon.opacity = 1
-            else:
-                self.ids.icon.opacity = 0
-        except:
-            pass
-
-    def update_icon_opacity(self, *args):
-        self.ids.icon.opacity += self.opacity_state * self.opacity_rate
-        if self.ids.icon.opacity < 0 or self.ids.icon.opacity > 1:
-            self.opacity_state = -self.opacity_state
-
-    def on_press(self):
-        pass
-
-    def on_release(self):
-        if self.collide_point(self.last_touch.x, self.last_touch.y) and not self.disable_button:
-            self.stop_icon_flashing()
-            self.release_function()
-
 
 class CharacterWithNameLayout(RelativeLayout):
 
@@ -145,7 +68,7 @@ class CharacterWithNameLayout(RelativeLayout):
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
 
-    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
     release_function = ObjectProperty(lambda: 1 + 1)
     font_ratio = NumericProperty(1)
 
@@ -175,7 +98,7 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
 
-    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
     ### Function ###
@@ -235,6 +158,75 @@ class CharacterStats(RelativeLayout):
                 )
                 self.add_widget(current_bar)
 
+class CharacterInfoWithMainSportsLayout(RelativeLayout):
+
+    ### Information on the athlete ###
+
+    skills_dict = ObjectProperty({})
+    title_card = StringProperty()
+    foldable_mode = BooleanProperty(False)
+    is_folded = BooleanProperty(False)
+    is_hurt = BooleanProperty(False)
+    image_source = StringProperty()
+    image_release_function = ObjectProperty(lambda: 1 + 1)
+    salary = NumericProperty()
+    header_height = NumericProperty(BIG_HEADER_HEIGHT)
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        if not self.is_folded:
+            idx = 0
+            total_height = (MARGIN_HEIGHT + self.header_height + len(
+                self.skills_dict) * SKILL_HEIGHT) * self.font_ratio
+
+            for skill in self.skills_dict:
+                pos_y = (MARGIN_HEIGHT/2 + (idx+0.5) * SKILL_HEIGHT)*self.font_ratio / total_height
+                if skill in TEXT.stats:
+                    text = TEXT.stats[skill]
+                elif skill in TEXT.sports:
+                    text = TEXT.sports[skill]["name"]
+
+                skill_label = Label(
+                    text=text,
+                    font_size=FONTS_SIZES.label * self.font_ratio,
+                    font_name=PATH_TITLE_FONT,
+                    color=COLORS.white,
+                    size_hint=(0.5, None),
+                    height=(SKILL_HEIGHT-5)*self.font_ratio,
+                    pos_hint={"x": 0.03, "center_y": pos_y},
+                    halign="left",
+                    valign="middle"
+                )
+                skill_label.bind(size=skill_label.setter('text_size'))
+                self.add_widget(skill_label)
+
+                skill_widget = CharacterStats(
+                    stat_dict=self.skills_dict[skill],
+                    size_hint=(0.6, None),
+                    height=(SKILL_HEIGHT-5)*self.font_ratio,
+                    pos_hint={"center_x": 0.7, "center_y": pos_y},
+                    font_ratio=self.font_ratio
+                )
+                self.add_widget(skill_widget)
+                idx += 1
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
 
 class MedalsCard(RelativeLayout):
 
@@ -253,7 +245,7 @@ class MedalsCard(RelativeLayout):
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
 
-    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
     def __init__(self, **kw):
@@ -262,7 +254,7 @@ class MedalsCard(RelativeLayout):
         if not self.is_folded:
 
             idx = 0
-            total_height = (MARGIN_HEIGHT + HEADER_HEIGHT + len(
+            total_height = (MARGIN_HEIGHT + self.header_height + len(
                 self.medals_list) * MEDAL_HEIGHT) * self.font_ratio
 
             medal: Medal
@@ -322,7 +314,7 @@ class SkillsCard(RelativeLayout):
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
 
-    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
     def __init__(self, **kw):

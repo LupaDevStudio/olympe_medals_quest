@@ -22,11 +22,8 @@ from kivy.core.window import Window
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterWithNameLayout
-)
-from tools.path import (
-    PATH_BACKGROUNDS,
-    PATH_CHARACTERS_IMAGES
+    CharacterWithNameLayout,
+    CharacterInfoWithMainSportsLayout
 )
 from tools.constants import (
     TEXT,
@@ -36,7 +33,10 @@ from tools.constants import (
     GAME
 )
 from tools.graphics import (
-    SCROLLVIEW_WIDTH
+    SCROLLVIEW_WIDTH,
+    BIG_HEADER_HEIGHT,
+    SKILL_HEIGHT,
+    MARGIN_HEIGHT
 )
 from tools.data_structures import (
     Athlete
@@ -58,7 +58,7 @@ class TeamScreen(OlympeScreen):
         SCREEN_MONEY_RIGHT : True
     }
     team_title = StringProperty()
-    grid_view = BooleanProperty(True) # TODO change to False
+    grid_view = BooleanProperty(False) # detailed view by default
     recruit_label = StringProperty()
 
     def reload_language(self):
@@ -96,12 +96,26 @@ class TeamScreen(OlympeScreen):
                     font_ratio=self.font_ratio,
                     release_function=partial(self.go_to_athlete, athlete)
                 )
-                scrollview_layout.add_widget(athlete_button)
 
             # Display the characters in a list
             else:
-                # TODO
-                ...
+                skills_dict = athlete.get_best_sports()
+                height = self.font_ratio * (
+                    BIG_HEADER_HEIGHT + len(skills_dict) * SKILL_HEIGHT + MARGIN_HEIGHT) 
+
+                athlete_button = CharacterInfoWithMainSportsLayout(
+                    image_source=athlete.image,
+                    is_hurt=athlete.is_hurt,
+                    title_card=athlete.first_name + "\n" + athlete.name,
+                    salary=athlete.salary,
+                    skills_dict=skills_dict,
+                    font_ratio=self.font_ratio,
+                    size_hint=(0.9, None),
+                    height=height,
+                    image_release_function=partial(self.go_to_athlete, athlete)
+                )
+            
+            scrollview_layout.add_widget(athlete_button)
 
     def change_view_mode(self):
         self.grid_view = not self.grid_view

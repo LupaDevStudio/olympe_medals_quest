@@ -32,7 +32,8 @@ from tools.path import (
 from tools.graphics import (
     FONTS_SIZES,
     COLORS,
-    RADIUS
+    RADIUS,
+    BUTTON_LINE_WIDTH
 )
 
 #############
@@ -60,6 +61,7 @@ class MoneyLayout(RelativeLayout):
 
     color = ColorProperty(COLORS.white)
     radius = NumericProperty(RADIUS)
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

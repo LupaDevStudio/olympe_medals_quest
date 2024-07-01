@@ -244,6 +244,15 @@ class Athlete():
         self.current_planning = [
             Activity(activity) for activity in dict_to_load.get("current_planning", [])]
 
+    def get_best_sports(self, number_sports: int = 2):
+        # Sort the sports by decreasing points
+        sorted_sports = sorted(
+            self.sports.items(), key=lambda x: x[1]['points'], reverse=True)
+
+        # Extract the first sports
+        best_sports = dict(sorted_sports[:number_sports])
+        return dict(reversed(best_sports.items()))
+         
     def __str__(self):
         return f"Athlete {self.id}: {self.name} {self.first_name}\n" \
                f"Age: {self.age}, Salary: {self.salary}, Recruit Price: {self.recruit_price}\n" \
