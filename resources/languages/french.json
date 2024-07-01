@@ -46,9 +46,20 @@
     "shop": {},
     "competition_results": {},
     "competition_inscription": {},
+    "stats": {
+        "strength": "Strength",
+        "speed": "Speed",
+        "technique": "Technique",
+        "precision": "Precision",
+        "charm": "Charm"
+    },
     "sports": {
         "cheese_rolling": {
             "name": "Cheese Rolling",
+            "description": ""
+        },
+        "buoy_racing": {
+            "name": "Buoy Racing",
             "description": ""
         }
     },

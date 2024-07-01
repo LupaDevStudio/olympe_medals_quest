@@ -16,8 +16,8 @@ class FontSize():
     def __init__(self) -> None:
         self.title = 21
         self.subtitle = 18
-        self.small_label = 12
         self.label = 15
+        self.small_label = 12
 
         self.big_button = 18
         self.button = 16
@@ -75,6 +75,8 @@ BUTTON_BOTTOM_BAR_HEIGHT = 0.85
 RADIUS = 12
 RADIUS_SMALL = 6
 HEADER_HEIGHT = 50
+MARGIN_HEIGHT = 20
+SKILL_HEIGHT = 35
 CARD_WIDTH = 0.95
 
 ### Scrollview ###

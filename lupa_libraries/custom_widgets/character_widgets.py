@@ -35,7 +35,10 @@ from tools.graphics import (
     COLORS,
     LARGE_OUTLINE_WIDTH,
     BUTTON_OUTLINE_WIDTH,
-    FONTS_SIZES
+    FONTS_SIZES,
+    SKILL_HEIGHT,
+    MARGIN_HEIGHT,
+    HEADER_HEIGHT
 )
 from tools.path import (
     PATH_ICONS,
@@ -148,6 +151,8 @@ class CharacterWithNameLayout(RelativeLayout):
 
 class StatBar(RelativeLayout):
     color = ColorProperty((0, 0, 0, 1))
+    font_ratio = NumericProperty(1)
+    radius = NumericProperty(2)
 
 
 class CharacterWithMainInfoFireLayout(RelativeLayout):
@@ -182,7 +187,8 @@ class CharacterStats(RelativeLayout):
     will_level_up = BooleanProperty()
     rank_letter = StringProperty()
     rank_color = ColorProperty()
-    font_ratio = NumericProperty()
+    font_ratio = NumericProperty(1)
+    radius = NumericProperty(2)
 
     def __init__(
             self,
@@ -223,7 +229,8 @@ class CharacterStats(RelativeLayout):
                 current_bar = StatBar(
                     pos_hint={"center_x": 0.35 + 0.05 * i, "center_y": 0.5},
                     size_hint=(0.1, 1),
-                    color=color
+                    color=color,
+                    font_ratio=self.font_ratio
                 )
                 self.add_widget(current_bar)
 
@@ -265,23 +272,30 @@ class SkillsCard(RelativeLayout):
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
 
-    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     font_ratio = NumericProperty(1)
 
     def __init__(self, **kw):
         super().__init__(**kw)
 
         idx = 0
+        total_height = (MARGIN_HEIGHT + HEADER_HEIGHT + len(
+            self.skills_dict) * SKILL_HEIGHT) * self.font_ratio
 
         for skill in self.skills_dict:
+            pos_y = (MARGIN_HEIGHT/2 + (idx+0.5) * SKILL_HEIGHT)*self.font_ratio / total_height
+            if skill in TEXT.stats:
+                text = TEXT.stats[skill]
+            elif skill in TEXT.sports:
+                text = TEXT.sports[skill]["name"]
 
             skill_label = Label(
-                text=skill.capitalize(),
+                text=text,
                 font_size=FONTS_SIZES.label * self.font_ratio,
                 font_name=PATH_TITLE_FONT,
                 color=COLORS.white,
-                size_hint=(0.5, 0.07),
-                pos_hint={"x": 0.1, "center_y": 0.72 - 0.15 * idx},
+                size_hint=(0.5, None),
+                height=(SKILL_HEIGHT-5)*self.font_ratio,
+                pos_hint={"x": 0.03, "center_y": pos_y},
                 halign="left",
                 valign="middle"
             )
@@ -291,7 +305,8 @@ class SkillsCard(RelativeLayout):
             skill_widget = CharacterStats(
                 stat_dict=self.skills_dict[skill],
                 size_hint=(0.6, None),
-                pos_hint={"center_x": 0.7, "center_y": 0.72 - 0.15 * idx},
+                height=(SKILL_HEIGHT-5)*self.font_ratio,
+                pos_hint={"center_x": 0.7, "center_y": pos_y},
                 font_ratio=self.font_ratio
             )
             self.add_widget(skill_widget)

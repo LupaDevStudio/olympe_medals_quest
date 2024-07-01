@@ -38,7 +38,9 @@ from tools.constants import (
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
-    HEADER_HEIGHT
+    HEADER_HEIGHT,
+    MARGIN_HEIGHT,
+    SKILL_HEIGHT
 )
 from tools.data_structures import (
     Athlete
@@ -130,11 +132,14 @@ class AthleteScreen(OlympeScreen):
         athlete_skills = dict(stats_dict)
         athlete_skills.update(sports_dict)
 
+        # Sort reverse
+        athlete_skills = dict(reversed(athlete_skills.items()))
+
         self.skills_card = SkillsCard(
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
             height=self.font_ratio *
-            (HEADER_HEIGHT * 2) + 35 * len(athlete_skills),
+            (HEADER_HEIGHT + MARGIN_HEIGHT + SKILL_HEIGHT * len(athlete_skills)),
             skills_dict=athlete_skills
         )
         scrollview_layout.add_widget(self.skills_card)

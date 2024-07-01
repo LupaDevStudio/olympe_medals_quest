@@ -151,9 +151,9 @@
         Color:
             rgba: root.color
         RoundedRectangle:
-            size: (self.width*0.3,self.height*0.9)
+            size: (self.width*0.25,self.height*0.9)
             pos: (self.x,self.y+self.height*0.05)
-            radius: (4, 4, 4, 4)
+            radius: [self.radius*self.font_ratio]
 
 <CharacterStats>:
 
@@ -171,7 +171,7 @@
         id: learning_flame_1
         source: PATH_ICONS + "flame.png"
         pos_hint: {"x":0,"center_y":0.5}
-        size_hint: (0.1, 1)
+        size_hint: (0.09, 1)
         fit_mode: "contain"
         opacity: 1 if root.learning_rate == 2 else 0
     
@@ -179,8 +179,8 @@
     Image:
         id: learning_flame_2
         source: PATH_ICONS + "flame.png"
-        pos_hint: {"x":0.1,"center_y":0.5}
-        size_hint: (0.1, 1)
+        pos_hint: {"x":0.09,"center_y":0.5}
+        size_hint: (0.09, 1)
         fit_mode: "contain"
         opacity: 1 if root.learning_rate >= 1.5 else 0
     
@@ -200,7 +200,7 @@
             RoundedRectangle:
                 pos: self.pos
                 size: self.size
-                radius: [5*root.font_ratio,5*root.font_ratio,5*root.font_ratio,5*root.font_ratio]
+                radius: [root.radius*root.font_ratio]
     
     # Level up image
     Image:
