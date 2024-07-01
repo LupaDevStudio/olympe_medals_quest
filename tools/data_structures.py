@@ -396,6 +396,7 @@ class Medal():
 
     type_medal: Literal["gold", "silver", "copper"]
     edition: int
+    type_edition: Literal["summer", "winter"]
     athlete_id: str
     sport_id: str
 
@@ -405,12 +406,16 @@ class Medal():
 
     @property
     def year(self) -> int:
-        return self.edition * NB_YEARS_BETWEEN_EDITION
+        if self.type_edition == "summer":
+            return self.edition * NB_YEARS_BETWEEN_EDITION
+        elif self.type_edition == "winter":
+            return self.edition * NB_YEARS_BETWEEN_EDITION - NB_YEARS_BETWEEN_EDITION//2
 
     def __init__(self, dict_to_load: dict) -> None:
         self.type_medal = dict_to_load.get("type_medal", "gold")
         self.edition = dict_to_load.get("edition", 0)
         self.athlete_id = dict_to_load.get("athlete_id", "")
+        self.type_edition = dict_to_load.get("type_edition", "summer")
         self.sport_id = dict_to_load.get("sport_id", "")
 
     def export_dict(self):
@@ -419,6 +424,7 @@ class Medal():
             "edition": self.edition,
             "athlete_id": self.athlete_id,
             "sport_id": self.sport_id,
+            "type_edition": self.type_edition
         }
 
 
@@ -564,6 +570,10 @@ class Game():
         for medal in self.medals:
             if medal.athlete_id == athlete_id:
                 list_medals.append(medal)
+
+        # Sort the list of medals first by sport_id and then by edition
+        list_medals.sort(key=lambda medal: (medal.sport_id, medal.edition), reverse=True)
+
         return list_medals
 
     def get_medals_from_sport(self, sport_id: str) -> Medal:
@@ -571,7 +581,23 @@ class Game():
         for medal in self.medals:
             if medal.sport_id == sport_id:
                 list_medals.append(medal)
+
+        # Sort the list of medals first by athlete_id and then by edition
+        list_medals.sort(key=lambda medal: (medal.athlete_id, medal.edition), reverse=True)
+
         return list_medals
+
+    def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "copper"], edition: int, type_edition: Literal["summer", "winter"]="summer"):
+        new_medal = Medal(
+            dict_to_load={
+                "sport_id": sport_id,
+                "athlete_id": athlete_id,
+                "type": type,
+                "edition": edition,
+                "type_edition": type_edition
+            }
+        )
+        self.medals.append(new_medal)
 
     def go_to_next_month(self):
         if self.trimester != 4:

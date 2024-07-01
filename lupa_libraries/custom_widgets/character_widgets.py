@@ -8,21 +8,18 @@ Module to create widgets with the pressed style.
 
 ### Kivy imports ###
 
-from kivy.graphics import (
-    Color,
-    RoundedRectangle,
-    Rectangle
-)
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.label import Label
+from kivy.uix.image import Image
 from kivy.clock import Clock
 from kivy.properties import (
     StringProperty,
     ObjectProperty,
     ColorProperty,
     NumericProperty,
-    BooleanProperty
+    BooleanProperty,
+    ListProperty
 )
 
 ### Local imports ###
@@ -31,6 +28,9 @@ from tools.constants import (
     FPS,
     TEXT
 )
+from tools.data_structures import (
+    Medal
+)
 from tools.graphics import (
     COLORS,
     LARGE_OUTLINE_WIDTH,
@@ -38,7 +38,8 @@ from tools.graphics import (
     FONTS_SIZES,
     SKILL_HEIGHT,
     MARGIN_HEIGHT,
-    HEADER_HEIGHT
+    HEADER_HEIGHT,
+    MEDAL_HEIGHT
 )
 from tools.path import (
     PATH_ICONS,
@@ -239,7 +240,7 @@ class MedalsCard(RelativeLayout):
 
     ### Information on the skills ###
 
-    medals_dict = ObjectProperty({})
+    medals_list = ListProperty([])
     title_card = StringProperty(TEXT.general["medals"])
     is_folded = BooleanProperty(False)
 
@@ -255,6 +256,54 @@ class MedalsCard(RelativeLayout):
     line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     font_ratio = NumericProperty(1)
 
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        if not self.is_folded:
+
+            idx = 0
+            total_height = (MARGIN_HEIGHT + HEADER_HEIGHT + len(
+                self.medals_list) * MEDAL_HEIGHT) * self.font_ratio
+
+            medal: Medal
+            for medal in self.medals_list:
+                pos_y = (MARGIN_HEIGHT/2 + (idx+0.5) * MEDAL_HEIGHT)*self.font_ratio / total_height
+                
+                year: str = TEXT.general["year"]
+                sport: str = TEXT.sports[medal.sport_id]["name"]
+                text = sport + " - " + year.capitalize() + " " + str(medal.year)
+
+                width = (MEDAL_HEIGHT-5)*self.font_ratio
+                medal_image = Image(
+                    source=medal.image,
+                    size_hint=(None, None),
+                    height=width,
+                    width=width,
+                    pos_hint={"x": 0.03, "center_y": pos_y}
+                )
+                self.add_widget(medal_image)
+
+                medal_label = Label(
+                    text=text,
+                    font_size=FONTS_SIZES.label * self.font_ratio,
+                    font_name=PATH_TITLE_FONT,
+                    color=COLORS.white,
+                    size_hint=(0.5, None),
+                    height=(MEDAL_HEIGHT-5)*self.font_ratio,
+                    pos_hint={"center_y": pos_y},
+                    x=width+10*self.font_ratio*2,
+                    halign="left",
+                    valign="middle"
+                )
+                medal_label.bind(size=medal_label.setter('text_size'))
+                self.add_widget(medal_label)
+
+                idx += 1
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
 
 class SkillsCard(RelativeLayout):
 
@@ -262,6 +311,7 @@ class SkillsCard(RelativeLayout):
 
     skills_dict = ObjectProperty({})
     title_card = StringProperty(TEXT.general["skills"])
+    is_folded = BooleanProperty(False)
 
     font_size = NumericProperty(FONTS_SIZES.label)
     text_font_name = StringProperty(PATH_TEXT_FONT)
@@ -272,42 +322,49 @@ class SkillsCard(RelativeLayout):
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
 
+    line_width = NumericProperty(BUTTON_OUTLINE_WIDTH)
     font_ratio = NumericProperty(1)
 
     def __init__(self, **kw):
         super().__init__(**kw)
 
-        idx = 0
-        total_height = (MARGIN_HEIGHT + HEADER_HEIGHT + len(
-            self.skills_dict) * SKILL_HEIGHT) * self.font_ratio
+        if not self.is_folded:
+            idx = 0
+            total_height = (MARGIN_HEIGHT + HEADER_HEIGHT + len(
+                self.skills_dict) * SKILL_HEIGHT) * self.font_ratio
 
-        for skill in self.skills_dict:
-            pos_y = (MARGIN_HEIGHT/2 + (idx+0.5) * SKILL_HEIGHT)*self.font_ratio / total_height
-            if skill in TEXT.stats:
-                text = TEXT.stats[skill]
-            elif skill in TEXT.sports:
-                text = TEXT.sports[skill]["name"]
+            for skill in self.skills_dict:
+                pos_y = (MARGIN_HEIGHT/2 + (idx+0.5) * SKILL_HEIGHT)*self.font_ratio / total_height
+                if skill in TEXT.stats:
+                    text = TEXT.stats[skill]
+                elif skill in TEXT.sports:
+                    text = TEXT.sports[skill]["name"]
 
-            skill_label = Label(
-                text=text,
-                font_size=FONTS_SIZES.label * self.font_ratio,
-                font_name=PATH_TITLE_FONT,
-                color=COLORS.white,
-                size_hint=(0.5, None),
-                height=(SKILL_HEIGHT-5)*self.font_ratio,
-                pos_hint={"x": 0.03, "center_y": pos_y},
-                halign="left",
-                valign="middle"
-            )
-            skill_label.bind(size=skill_label.setter('text_size'))
-            self.add_widget(skill_label)
+                skill_label = Label(
+                    text=text,
+                    font_size=FONTS_SIZES.label * self.font_ratio,
+                    font_name=PATH_TITLE_FONT,
+                    color=COLORS.white,
+                    size_hint=(0.5, None),
+                    height=(SKILL_HEIGHT-5)*self.font_ratio,
+                    pos_hint={"x": 0.03, "center_y": pos_y},
+                    halign="left",
+                    valign="middle"
+                )
+                skill_label.bind(size=skill_label.setter('text_size'))
+                self.add_widget(skill_label)
 
-            skill_widget = CharacterStats(
-                stat_dict=self.skills_dict[skill],
-                size_hint=(0.6, None),
-                height=(SKILL_HEIGHT-5)*self.font_ratio,
-                pos_hint={"center_x": 0.7, "center_y": pos_y},
-                font_ratio=self.font_ratio
-            )
-            self.add_widget(skill_widget)
-            idx += 1
+                skill_widget = CharacterStats(
+                    stat_dict=self.skills_dict[skill],
+                    size_hint=(0.6, None),
+                    height=(SKILL_HEIGHT-5)*self.font_ratio,
+                    pos_hint={"center_x": 0.7, "center_y": pos_y},
+                    font_ratio=self.font_ratio
+                )
+                self.add_widget(skill_widget)
+                idx += 1
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)

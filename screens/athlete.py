@@ -40,6 +40,7 @@ from tools.graphics import (
     SCROLLVIEW_WIDTH,
     HEADER_HEIGHT,
     MARGIN_HEIGHT,
+    MEDAL_HEIGHT,
     SKILL_HEIGHT
 )
 from tools.data_structures import (
@@ -63,7 +64,8 @@ class AthleteScreen(OlympeScreen):
     }
     athlete_title = StringProperty()
     team_label = StringProperty()
-    is_folded = BooleanProperty()
+    medals_folded = BooleanProperty(False)
+    skills_folded = BooleanProperty(False)
 
     def reload_kwargs(self, dict_kwargs):
         self.athlete: Athlete = dict_kwargs["athlete"]
@@ -107,30 +109,42 @@ class AthleteScreen(OlympeScreen):
 
         ### Medals ###
 
-        if not self.is_folded:
+        if not self.medals_folded:
             athlete_medals = GAME.get_medals_from_athlete(
                 athlete_id=self.athlete.id)
-            height = self.font_ratio * \
-                (HEADER_HEIGHT * 2) + 100 * len(athlete_medals)
+            if len(athlete_medals) > 0:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + MARGIN_HEIGHT + MEDAL_HEIGHT * len(athlete_medals))
+            else:
+                height = self.font_ratio * HEADER_HEIGHT * 2
         else:
-            athlete_medals = {}
+            athlete_medals = []
             height = self.font_ratio * HEADER_HEIGHT
 
         self.medals_card = MedalsCard(
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
             height=height,
-            medals_dict=athlete_medals,
-            is_folded=self.is_folded
+            medals_list=athlete_medals,
+            is_folded=self.medals_folded
         )
         scrollview_layout.add_widget(self.medals_card)
 
         ### Skills ###
 
-        stats_dict = self.athlete.stats
-        sports_dict = self.athlete.sports
-        athlete_skills = dict(stats_dict)
-        athlete_skills.update(sports_dict)
+        if not self.skills_folded:
+            stats_dict = self.athlete.stats
+            sports_dict = self.athlete.sports
+            athlete_skills = dict(stats_dict)
+            athlete_skills.update(sports_dict)
+            if len(athlete_skills) > 0:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + MARGIN_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+            else:
+                height = self.font_ratio * HEADER_HEIGHT * 2
+        else:
+            athlete_skills = {}
+            height = self.font_ratio * HEADER_HEIGHT
 
         # Sort reverse
         athlete_skills = dict(reversed(athlete_skills.items()))
@@ -138,9 +152,9 @@ class AthleteScreen(OlympeScreen):
         self.skills_card = SkillsCard(
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=self.font_ratio *
-            (HEADER_HEIGHT + MARGIN_HEIGHT + SKILL_HEIGHT * len(athlete_skills)),
-            skills_dict=athlete_skills
+            height=height,
+            skills_dict=athlete_skills,
+            is_folded=self.skills_folded
         )
         scrollview_layout.add_widget(self.skills_card)
 
@@ -148,7 +162,11 @@ class AthleteScreen(OlympeScreen):
         print("TODO")
 
     def ask_redraw(self, widget):
-        self.is_folded = not self.is_folded
+        if widget == self.medals_card:
+            self.medals_folded = not self.medals_folded
+        elif widget == self.skills_card:
+            self.skills_folded = not self.skills_folded
+
         # Reset scrollview
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()

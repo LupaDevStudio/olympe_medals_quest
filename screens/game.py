@@ -75,6 +75,15 @@ class GameScreen(OlympeScreen):
             first_athlete = generate_athlete()
             GAME.recruit_athlete(athlete=first_athlete)
             USER_DATA.save_changes()
+        # TODO TEMP
+        if GAME.medals == []:
+            GAME.win_medal(
+                sport_id="cheese_rolling",
+                athlete_id=GAME.team[0].id,
+                type="gold",
+                edition=1
+            )
+            USER_DATA.save_changes()
 
     def on_enter(self, *args):
         super().on_enter(*args)

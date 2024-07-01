@@ -68,9 +68,7 @@ class OlympeCard(RelativeLayout):
             else:
                 self.icon_source = PATH_ICONS + "minus.png"
                 self.size_hint_y_icon = 0.5
-            self.icon_function = self.ask_redraw
+            self.icon_function = self.parent.ask_redraw
     
-    def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
-        screen.ask_redraw(self)
+    # def ask_redraw(self):
+    #     self.parent.
