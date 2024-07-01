@@ -29,7 +29,7 @@ from tools.path import (
 from tools.graphics import (
     FONTS_SIZES,
     COLORS,
-    RADIUS_SMALL
+    RADIUS
 )
 
 #############
@@ -49,4 +49,4 @@ class SurroundedLabel(RelativeLayout):
     font_ratio = NumericProperty(1)
 
     color = ColorProperty(COLORS.white)
-    radius = NumericProperty(RADIUS_SMALL)
+    radius = NumericProperty(RADIUS)

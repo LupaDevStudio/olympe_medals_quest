@@ -32,12 +32,13 @@
 
     IconPressedButton:
         icon_source: root.icon_source
+        size_hint_y_icon: root.size_hint_y_icon
         size_hint: (None, None)
         height: root.header_height * 0.65
         width: self.height
         pos_hint: {"right": 0.975}
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         font_ratio: root.font_ratio
-        size_hint_y_icon: 0.6
         release_function: root.icon_function
         opacity: 1 if root.icon_mode else 0
+        radius: RADIUS_SMALL

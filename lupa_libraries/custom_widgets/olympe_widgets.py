@@ -44,6 +44,7 @@ class OlympeCard(RelativeLayout):
 
     icon_source = StringProperty()
     icon_function = ObjectProperty(lambda: 1 + 1)
+    size_hint_y_icon = NumericProperty(0.6)
 
     font_ratio = NumericProperty(1)
     background_size = ObjectProperty()
@@ -63,8 +64,10 @@ class OlympeCard(RelativeLayout):
             self.icon_mode = True
             if self.is_folded:
                 self.icon_source = PATH_ICONS + "plus.png"
+                self.size_hint_y_icon = 0.5
             else:
                 self.icon_source = PATH_ICONS + "minus.png"
+                self.size_hint_y_icon = 0.5
             self.icon_function = self.ask_redraw
     
     def ask_redraw(self):

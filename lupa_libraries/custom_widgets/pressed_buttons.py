@@ -24,7 +24,7 @@ from kivy.properties import (
 from tools.graphics import (
     COLORS,
     FONTS_SIZES,
-    RADIUS_SMALL
+    RADIUS
 )
 from tools.path import (
     PATH_TITLE_FONT
@@ -49,7 +49,7 @@ class PressedThemeBackground(Widget):
     press_button = BooleanProperty(False)
     disable_button = BooleanProperty(False)
     
-    radius = NumericProperty(RADIUS_SMALL)
+    radius = NumericProperty(RADIUS)
     font_ratio = NumericProperty(1)
 
 
@@ -81,7 +81,7 @@ class PressedButton(ButtonBehavior, RelativeLayout):
     press_button = BooleanProperty(False)
 
     font_ratio = NumericProperty(1)
-    radius = NumericProperty(RADIUS_SMALL)
+    radius = NumericProperty(RADIUS)
 
     def __init__(self, **kwargs):
         self.always_release = True
@@ -124,7 +124,7 @@ class IconPressedButton(ButtonBehavior, RelativeLayout):
     press_button = BooleanProperty(False)
 
     font_ratio = NumericProperty(1)
-    radius = NumericProperty(RADIUS_SMALL)
+    radius = NumericProperty(RADIUS)
 
     def __init__(self, **kwargs):
         self.always_release = True
@@ -175,7 +175,7 @@ class PressedWithIconButton(ButtonBehavior, RelativeLayout):
     press_button = BooleanProperty(False)
 
     font_ratio = NumericProperty(1)
-    radius = NumericProperty(RADIUS_SMALL)
+    radius = NumericProperty(RADIUS)
 
     def __init__(self, **kwargs):
         self.always_release = True
