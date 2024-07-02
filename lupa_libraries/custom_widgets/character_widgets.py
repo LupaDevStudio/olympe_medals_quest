@@ -89,6 +89,7 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
 
     salary = NumericProperty()
     age = StringProperty()
+    reputation = StringProperty()
     fire_text = StringProperty()
     fatigue = StringProperty()
     health = StringProperty()
@@ -376,6 +377,7 @@ class CompleteRecruitCard(RelativeLayout):
     title_card = StringProperty()
     image_source = StringProperty()
     age = StringProperty()
+    reputation = StringProperty()
     salary = NumericProperty()
     recruit_price = NumericProperty()
 

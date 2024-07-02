@@ -96,7 +96,6 @@ class RecruitScreen(OlympeScreen):
 
         athlete: Athlete
         for athlete in GAME.recrutable_athletes:
-            print(self.folded_dict[athlete.id][0])
 
             if self.folded_dict[athlete.id][0]:
                 athlete_skills = athlete.get_best_sports()
@@ -140,6 +139,7 @@ class RecruitScreen(OlympeScreen):
                     title_card=athlete.first_name + " " + athlete.name,
                     salary=athlete.salary,
                     age=TEXT.general["age"].replace("@", str(athlete.age)),
+                    reputation=TEXT.general["reputation"].replace("@", str(athlete.reputation)),
                     recruit_price=athlete.recruit_price,
                     disable_button=not(GAME.can_recruit_athlete(athlete=athlete)),
                     recruit_release_function=partial(self.recruit_athlete, athlete)

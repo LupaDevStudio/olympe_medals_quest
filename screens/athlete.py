@@ -95,6 +95,7 @@ class AthleteScreen(OlympeScreen):
             image_source=self.athlete.image,
             salary=self.athlete.salary,
             age=TEXT.general["age"].replace("@", str(self.athlete.age)),
+            reputation=TEXT.general["reputation"].replace("@", str(self.athlete.reputation)),
             fatigue=self.my_text["fatigue"].replace(
                 "@", str(self.athlete.fatigue)),
             health=health,
@@ -103,7 +104,7 @@ class AthleteScreen(OlympeScreen):
             is_hurt=is_hurt,
             fire_athlete_function=self.ask_fire_athlete,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=200 * self.font_ratio
+            height=250 * self.font_ratio
         )
         scrollview_layout.add_widget(self.main_info_card)
 

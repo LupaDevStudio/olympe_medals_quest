@@ -77,6 +77,8 @@ class MoneyLayout(RelativeLayout):
 
     def update_coins_count(self, *args):
         self.coins_count_text = ""
+
+        # Text before the amount of money
         if self.minus_mode:
             self.coins_count_text += "- "
         elif self.plus_mode:
@@ -85,8 +87,14 @@ class MoneyLayout(RelativeLayout):
             self.coins_count_text += TEXT.general["salary"]
         elif self.recruit_mode:
             self.coins_count_text += TEXT.general["recruit"]
-        if self.coins_count >= 1000:
+
+        if self.coins_count >= 1000000:
             round_thousands = math.floor(self.coins_count / 1000)
+            self.coins_count_text += str(round_thousands) + " k"
+        elif self.coins_count >= 1000:
+            round_thousands = str(round(self.coins_count / 1000, ndigits=1))
+            if round_thousands[-1] == "0":
+                round_thousands = round_thousands[:-2]
             self.coins_count_text += str(round_thousands) + " k"
         else:
             self.coins_count_text += str(self.coins_count)
