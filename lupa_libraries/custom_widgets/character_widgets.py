@@ -377,6 +377,7 @@ class CompleteRecruitCard(RelativeLayout):
     image_source = StringProperty()
     age = StringProperty()
     salary = NumericProperty()
+    recruit_price = NumericProperty()
 
     font_size = NumericProperty(FONTS_SIZES.label)
     text_font_name = StringProperty(PATH_TEXT_FONT)
@@ -391,6 +392,9 @@ class CompleteRecruitCard(RelativeLayout):
 
     recruit_button_height = NumericProperty(BUTTON_HEIGHT)
     character_height = NumericProperty(CHARACTER_HEIGHT)
+
+    disable_button = BooleanProperty(False)
+    recruit_release_function = ObjectProperty(lambda: 1 + 1)
 
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)

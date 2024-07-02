@@ -190,3 +190,46 @@ class PressedWithIconButton(ButtonBehavior, RelativeLayout):
             self.release_function()
         if not self.disable_button:
             self.press_button = False
+
+class TextMoneyLayoutPressedButton(ButtonBehavior, RelativeLayout):
+    """
+    A customizable button with a text and the money layout on the right on the Pressed theme.
+    """
+
+    ### Money layout settings ###
+
+    coins_amount = NumericProperty()
+
+    ### Colors ###
+
+    icon_color = ColorProperty(COLORS.white)
+    disabled_icon_color = ColorProperty(COLORS.white)
+    font_color = ColorProperty(COLORS.white)
+    disabled_font_color = ColorProperty(COLORS.white)
+    background_color = ColorProperty(COLORS.blue_olympe)
+    pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
+    background_disabled_color = ColorProperty(COLORS.gray_disable)
+    pressed_disabled_color = ColorProperty(COLORS.gray_pressed_disable)
+
+    ### Button behavior ###
+
+    release_function = ObjectProperty(lambda: 1 + 1)
+    disable_button = BooleanProperty(False)
+    press_button = BooleanProperty(False)
+
+    font_ratio = NumericProperty(1)
+    radius = NumericProperty(RADIUS)
+
+    def __init__(self, **kwargs):
+        self.always_release = True
+        super().__init__(**kwargs)
+
+    def on_press(self):
+        if not self.disable_button:
+            self.press_button = True
+
+    def on_release(self):
+        if self.collide_point(self.last_touch.x, self.last_touch.y) and not self.disable_button:
+            self.release_function()
+        if not self.disable_button:
+            self.press_button = False

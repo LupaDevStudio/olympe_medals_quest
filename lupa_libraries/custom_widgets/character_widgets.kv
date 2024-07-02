@@ -258,3 +258,14 @@
         width: root.width * (1 - 0.05*4) - character.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
+
+    # Recruit button
+    TextMoneyLayoutPressedButton:
+        coins_amount: root.recruit_price
+        size_hint: (0.5, None)
+        height: root.recruit_button_height*root.font_ratio
+        font_ratio: root.font_ratio
+        y: MARGIN_HEIGHT*root.font_ratio
+        pos_hint: {"center_x": 0.5}
+        release_function: root.recruit_release_function
+        disable_button: root.disable_button

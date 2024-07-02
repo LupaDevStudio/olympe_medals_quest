@@ -84,7 +84,7 @@
         disable_button: root.disable_button
         press_button: root.press_button
 
-    # Main text
+    # Icon
     Image:
         id: icon
         source: root.icon_source
@@ -108,3 +108,27 @@
         halign: "left"
         valign: "middle"
         color: root.font_color if not root.disable_button else root.disabled_font_color
+
+<TextMoneyLayoutPressedButton>:
+    # Background
+    PressedThemeBackground:
+        pos: root.pos
+        size: root.size
+        background_color: root.background_color
+        background_disabled_color: root.background_disabled_color
+        pressed_color: root.pressed_color
+        pressed_disabled_color: root.pressed_disabled_color
+        radius: root.radius
+        font_ratio: root.font_ratio
+        disable_button: root.disable_button
+        press_button: root.press_button
+
+    # Money Layout
+    MoneyLayout:
+        coins_count: root.coins_amount
+        recruit_mode: True
+        font_ratio: root.font_ratio
+        size_hint: (1, 1)
+        pos_hint: {"center_x": 0.5}
+        y: 0 if not root.press_button else -OFFSET_PRESSED*root.font_ratio
+        line_mode: False
