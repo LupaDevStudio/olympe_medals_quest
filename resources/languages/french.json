@@ -57,12 +57,124 @@
     },
     "sports": {
         "cheese_rolling": {
-            "name": "Cheese Rolling",
-            "description": ""
+            "name": "Cheese-Rolling",
+            "description": "L'événement où des âmes courageuses poursuivent une roue de fromage dévalant une colline, risquant bosses, contusions et une sérieuse envie de cheddar."
         },
         "buoy_racing": {
-            "name": "Buoy Racing",
-            "description": ""
+            "name": "Course de Bouées",
+            "description": "Parce que courir sur l'eau, c'est trop banal. Les concurrents se précipitent autour de bouées flottantes dans une course aquatique frénétique vers la victoire."
+        },
+        "treadmill_choregraphy": {
+            "name": "Chorégraphie sur Tapis Roulant",
+            "description": "L'art de danser sur un tapis roulant en mouvement. C'est presque comme de la natation synchronisée, mais avec moins de éclaboussures et plus de groove."
+        },
+        "iron_toe": {
+            "name": "Orteil de Fer",
+            "description": "Comme le bras de fer mais avec les orteils. Les participants montrent leur précision dans des duels intenses orteil contre orteil, prouvant que la finesse l'emporte sur la force brute."
+        },
+        "donuts_throwing": {
+            "name": "Lancer de Donuts",
+            "description": "Le sport où la précision rencontre la gourmandise. Visez vos torpilles sucrées à travers des cerceaux et regardez les éclats de sucre voler !"
+        },
+        "chess_boxing": {
+            "name": "Chess-Boxing",
+            "description": "Le test ultime de cerveau et de muscles. Stratégisez comme Kasparov, frappez comme Tyson et n'oubliez pas de respirer entre les rounds."
+        },
+        "hopscotch": {
+            "name": "Marelle",
+            "description": "Où les adultes se souviennent de la joie de l'enfance. Sautez à travers des carrés numérotés et essayez de ne pas perdre l'équilibre - ou votre dignité."
+        },
+        "acrobatic_cup_and_ball": {
+            "name": "Bilboquet Acrobatique",
+            "description": "Jonglez, flippez et équilibrez tout en gardant une balle sur une coupe. C'est comme le Cirque du Soleil rencontre la fête foraine - sans les clowns."
+        },
+        "zipline_bow": {
+            "name": "Tir à l'Arc en Tyrolienne",
+            "description": "Où le tir à l'arc rencontre l'adrénaline. Visez les cibles tout en dévalant une tyrolienne. C'est Robin des Bois qui rencontre Tarzan, avec une touche de technique."
+        },
+        "jelly_wall_climbing": {
+            "name": "Escalade de Mur de Gelée",
+            "description": "Grimpez des murs recouverts de gelée tremblante qui rend chaque ascension aussi glissante que périlleuse. C'est comme escalader un dessert géant, mais prudence à ne pas le dévorer trop tôt !"
+        },
+        "aqua_jogging": {
+            "name": "Aqua Jogging",
+            "description": "Quand vous voulez courir mais que la natation est votre truc. Glissez à travers l'eau comme un ninja, laissant des éclaboussures dans votre sillage."
+        },
+        "mermaid_swimming": {
+            "name": "Nage de Sirène",
+            "description": "Où les jambes se transforment en nageoires et les rêves deviennent réalité. Canalisez votre Ariel intérieure avec des plongeons gracieux et des tours sous l'eau."
+        },
+        "musical_fencing": {
+            "name": "Escrime Musicale",
+            "description": "Duel au rythme de la musique. En garde au rythme et parez avec panache. Points bonus pour les combats d'épée chorégraphiés et les mouvements jazz."
+        },
+        "umbrella_fight": {
+            "name": "Combat de Parapluies",
+            "description": "Qu'il pleuve ou qu'il fasse beau, c'est l'heure du combat ! Attrapez votre parapluie, libérez votre Mary Poppins intérieure et combattez en dansant vers la victoire."
+        },
+        "tree_throwing": {
+            "name": "Lancer de Tronc",
+            "description": "Parce que lancer des bûches, c'est comment les géants restent en forme. Lancez des arbres pour la distance et la précision, prouvant que des bras forts et des pouces verts vont de pair."
+        },
+        "jump_boxing": {
+            "name": "Boxe Sautée",
+            "description": "Où la boxe rencontre les exercices de saut. Frayez-vous un chemin vers la forme physique avec des sauts explosifs et des combos rapides. Flottez comme un papillon, piquez comme un kangourou."
+        },
+        "slackline_gym": {
+            "name": "Slackline Gym",
+            "description": "Équilibrez-vous, sautez et émerveillez les esprits. Marchez, flippez et posez-vous sur une ligne instable - parce que la vie est plus amusante quand vous êtes à un faux pas de voler."
+        },
+        "acrobatic_bow": {
+            "name": "Arc Acrobatique",
+            "description": "Le tir à l'arc à la limite. Effectuez des flips, des rotations et des tirs en l'air tout en visant les cibles. Cupidon rencontre le Cirque du Soleil avec un carquois plein de style."
+        },
+        "arc_escalation": {
+            "name": "Arc-Escalade",
+            "description": "Un mélange audacieux de tir à l'arc et d'escalade. Grimpez des parois et des obstacles tout en visant des cibles avec précision. C'est comme être un Spider-Man archer en mission."
+        },
+        "parkour": {
+            "name": "Parkour",
+            "description": "L'art de transformer votre trajet du matin en sport extrême. Sautez, roulez et franchissez les obstacles urbains comme un ninja sous caféine."
+        },
+        "100m": {
+            "name": "100 mètres Sprint",
+            "description": "Une course où si vous clignez des yeux, vous la ratez. Les athlètes dévalent la piste plus vite que vous ne pouvez dire 'Où est le feu ?'"
+        },
+        "swim_100m": {
+            "name": "100 mètres Nage",
+            "description": "Une course effrénée à travers la piscine où les démons de la vitesse nagent jusqu'à la ligne d'arrivée comme s'ils échappaient à un banc de requins affamés."
+        },
+        "dance": {
+            "name": "Danse",
+            "description": "Où vous bougez, vous vous déhanchez et dansez au rythme, prouvant que même si vous avez deux pieds gauches, vous pouvez toujours avoir fière allure."
+        },
+        "fencing": {
+            "name": "Escrime",
+            "description": "Un duel de cape et d'épée où vous essayez de toucher votre adversaire avec une épée, tout en ressemblant à un Zorro élégant avec un masque brillant."
+        },
+        "javelin_throwing": {
+            "name": "Lancer de Javelot",
+            "description": "Où les athlètes canalisent leur guerrier intérieur armé de lances et voient jusqu'où ils peuvent lancer un bâton pointu sans empaler l'équipe d'en face."
+        },
+        "boxing": {
+            "name": "Boxe",
+            "description": "Où deux personnes se frappent tout en dansant autour du ring, visant le KO et espérant que leur visage ne ressemble pas à une peinture de Picasso après."
+        },
+        "high_jump": {
+            "name": "Saut en Hauteur",
+            "description": "Le sport de sauter par-dessus une barre placée de plus en plus haut, comme jouer au limbo à l'envers mais avec plus de cabrioles et moins de musique."
+        },
+        "gymnastics": {
+            "name": "Gymnastique",
+            "description": "Où les athlètes tournent, flipent et contorsionnent leur corps de manière à défier la gravité et à faire haleter d'admiration (et de douleur par empathie) les simples mortels."
+        },
+        "archery": {
+            "name": "Tir à l'Arc",
+            "description": "L'art de tirer des flèches sur des cibles, vous faisant sentir comme un Robin des Bois moderne ou Katniss Everdeen, sans les vêtements médiévaux ou le drame dystopique."
+        },
+        "escalation": {
+            "name": "Escalade",
+            "description": "Le frisson de grimper des routes difficiles ou des parcours d'obstacles, luttant contre la gravité et canalisant votre Spider-Man intérieur."
         }
     },
     "rooms": {},

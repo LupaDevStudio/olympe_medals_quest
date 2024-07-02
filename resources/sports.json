@@ -27,7 +27,7 @@
         "skills": ["strength"],
         "requirements": []
     },
-    "TODO_HAMAC_GYM": {
+    "acrobatic_cup_and_ball": {
         "skills": ["charm"],
         "requirements": []
     },
@@ -35,7 +35,7 @@
         "skills": ["technique"],
         "requirements": []
     },
-    "TODO_SPIDER": {
+    "jelly_wall_climbing": {
         "skills": ["technique"],
         "requirements": []
     },
@@ -65,19 +65,19 @@
     },
     "slackline_gym": {
         "skills": ["strength", "charm"],
-        "requirements": ["hopscotch", "TODO_HAMAC_GYM"]
+        "requirements": ["hopscotch", "acrobatic_cup_and_ball"]
     },
     "acrobatic_bow": {
         "skills": ["technique", "charm"],
-        "requirements": ["TODO_HAMAC_GYM", "zipline_bow"]
+        "requirements": ["acrobatic_cup_and_ball", "zipline_bow"]
     },
     "arc_escalation": {
         "skills": ["technique", "precision"],
-        "requirements": ["zipline_bow", "TODO_SPIDER"]
+        "requirements": ["zipline_bow", "jelly_wall_climbing"]
     },
     "parkour": {
         "skills": ["speed", "technique"],
-        "requirements": ["TODO_SPIDER", "cheese_rolling"]
+        "requirements": ["jelly_wall_climbing", "cheese_rolling"]
     },
     "100m": {
         "skills": ["strength", "speed", "technique"],
