@@ -22,7 +22,8 @@ from tools.constants import (
     DIALOGS_DICT,
     CHARACTERS_DICT,
     USER_DATA,
-    TEXT
+    TEXT,
+    GAME
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -115,17 +116,18 @@ class DialogScreen(OlympeScreen):
         # Set the background of the screen
         # TODO faire une transition smooth entre les différents backgrounds
         background: str = current_frame["background"]
-        if background == "sport_complex":
-            # TODO treat the different backgrounds for the sport complex
-            pass
+        if background == "sports_complex":
+            path_background = GAME.get_background_image()
+        else:
+            path_background = PATH_BACKGROUNDS + f"{background}.jpg"
         self.set_back_image_path(
-            back_image_path=PATH_BACKGROUNDS + f"{background}.jpg")
+            back_image_path=path_background)
         
         # Set the character details
         character_id: str = current_frame["character"]
         expression: str = current_frame["expression"]
         self.character_image = PATH_CHARACTERS_IMAGES + \
-            f"{self.character_name}/{character_id}_face_{expression}.jpg"
+            f"{character_id}/{character_id}_face_{expression}.jpg"
 
         # Hide the name and the title of the character if necessary
         mystery: bool = current_frame["mystery"]
@@ -133,8 +135,8 @@ class DialogScreen(OlympeScreen):
             self.character_title = "???"
             self.character_name = "???"
         else:
-            self.character_name = CHARACTERS_DICT[character_id]["name"]
-            self.character_title = CHARACTERS_DICT[character_id]["title"]
+            self.character_name = CHARACTERS_DICT[TEXT.language][character_id]["name"]
+            self.character_title = CHARACTERS_DICT[TEXT.language][character_id]["title"]
 
         # Set the content of the scrolling dialog
         self.dialog_text = current_frame["text"]

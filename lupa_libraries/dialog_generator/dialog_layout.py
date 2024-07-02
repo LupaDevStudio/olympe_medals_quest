@@ -54,7 +54,7 @@ class DialogLayout(RelativeLayout):
     ### Colors ###
 
     font_color = ColorProperty(COLORS.white)
-    background_color = ColorProperty(COLORS.transparent_black)
+    background_color = ColorProperty(COLORS.dark_transparent_black)
     frame_color = ColorProperty(COLORS.white)
     
     frame_width = NumericProperty(BUTTON_LINE_WIDTH)

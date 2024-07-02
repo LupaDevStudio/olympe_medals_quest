@@ -90,20 +90,10 @@ for language_code in DICT_LANGUAGE_CORRESPONDANCE:
     DIALOGS_DICT[language_code] = load_json_file(
         PATH_LANGUAGE + "dialogs_" + language_code + ".json")
 
-CHARACTERS_DICT = {
-    "olympe": {
-        "name": "Olympe",
-        "title": "Présidente de NOM PAYS"
-    },
-    "president_competition": {
-        "name": "Président",
-        "title": "Président de la compétition TODO"
-    },
-    "journalist": {
-        "name": "Journaliste",
-        "title": "Journaliste de NOM JOURNAL"
-    }
-}
+CHARACTERS_DICT = {}
+for language_code in DICT_LANGUAGE_CORRESPONDANCE:
+    CHARACTERS_DICT[language_code] = load_json_file(
+        PATH_LANGUAGE + "characters_" + language_code + ".json")
 
 ### Screens ###
 

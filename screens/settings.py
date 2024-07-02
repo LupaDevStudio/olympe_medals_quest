@@ -38,7 +38,7 @@ class SettingsScreen(OlympeScreen):
 
     def __init__(self, **kw):
         super().__init__(
-            back_image_path=PATH_BACKGROUNDS + "office.png",
+            back_image_path=PATH_BACKGROUNDS + "office.jpg",
             **kw)
 
     def change_language(self):

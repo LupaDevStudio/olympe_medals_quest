@@ -4,14 +4,14 @@
             "character": "president_competition",
             "expression": "neutral",
             "mystery": true,
-            "text": "[ENGLISH VERSION] Mesdames et Messieurs, honorables invités, athlètes exceptionnels, et fans passionnés du monde entier !",
+            "text": "Mesdames et Messieurs, honorables invités, athlètes exceptionnels, et fans passionnés du monde entier !",
             "background": "president_speech"
         },
         {
             "character": "president_competition",
             "expression": "neutral",
             "mystery": false,
-            "text": "En tant que président de METTRE LE NOM DE LA COMPETITION, c'est un immense honneur pour moi de prendre la parole aujourd'hui. Je tiens à remercier tous les participants, les organisateurs, et les fans qui ont rendu possible cet événement exceptionnel.",
+            "text": "En tant que président de [COMPETITION_NAME], c'est un immense honneur pour moi de prendre la parole aujourd'hui. Je tiens à remercier tous les participants, les organisateurs, et les fans qui ont rendu possible cet événement exceptionnel.",
             "background": "president_speech"
         },
         {
@@ -25,7 +25,7 @@
             "character": "president_competition",
             "expression": "neutral",
             "mystery": false,
-            "text": "Il est maintenant temps de dévoiler le programme de cette vingt-et-unième édition exceptionnelle de NOM ! Vous allez être témoins de performances incroyables, de exploits inoubliables, de suspense insoutenable, d'échecs cuisants aussi et de blessures atroces comme à chaque édition !",
+            "text": "Il est maintenant temps de dévoiler le programme de cette vingt-et-unième édition exceptionnelle de [COMPETITION_NAME] ! Vous allez être témoins de performances incroyables, de exploits inoubliables, de suspense insoutenable, d'échecs cuisants aussi et de blessures atroces comme à chaque édition !",
             "background": "president_speech"
         },
         {
@@ -76,6 +76,139 @@
             "mystery": false,
             "text": "Je... Oui vous avez raison ! Soyons disruptifs et introduisons ce sport si populaire !",
             "background": "president_speech"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "...",
+            "background": "olympe_tv"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "...",
+            "background": "olympe_phone"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "Oui, allo ?",
+            "background": "olympe_phone"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "Dans mon bureau, tout de suite.",
+            "background": "olympe_phone"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "Madame la présidente, euh, comment... ?",
+            "background": "olympe_phone"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Tout de suite.",
+            "background": "olympe_phone"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "Madame la présidente ?",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "[NAME_MINISTER], je t'ai attendu ! Mais ce n'est pas grave, tu es là maintenant ! Tu as écouté le discours du président de [NAME_COMPETITION] ?",
+            "background": "office"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Euh, non... En quoi cela nous concerne-t-il cette...",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Quel piètre ministre des sports tu fais ! Heureusement que je suis là pour prendre en main la situation : je l'ai regardé et c'est notre chance ! Nous allons remporter une médaille cette année",
+            "background": "office"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Comment vous...",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "C'était dans la présentation officielle délivrée par le président ; le [NEW_SPORT] était dans la liste, je t'assure ! Il fera partie de la compétition, c'est acté désormais ! C'est notre chance ou jamais d'exister dans cette compétition !",
+            "background": "office"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Mais comment...",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Je te charge de trouver un coach sportif qui constituera une incroyable équipe d'athlètes ! Et qui nous rapportera cette belle médaille qui nous tend les bras cette année !",
+            "background": "office"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Mais je...",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "File, trouve-moi ce coach sportif et ramène-le ici !",
+            "background": "office"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Nous n'avons pas de...",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Un coach sportif, je veux. Et pas n'importe lequel : le meilleur des meilleurs ! Ramène-le ici et vite !",
+            "background": "office"
+        },
+        {
+            "character": "minister",
+            "expression": "neutral",
+            "mystery": false,
+            "text": "Euh... oui, Madame la Présidente !",
+            "background": "office"
         }
     ]
 }

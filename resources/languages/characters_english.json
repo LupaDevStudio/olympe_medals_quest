@@ -1,0 +1,18 @@
+{
+    "olympe": {
+        "name": "Olympe",
+        "title": "Présidente de NOM PAYS"
+    },
+    "minister": {
+        "name": "[NAME_MINISTER]",
+        "title": "Ministre des sports"
+    },
+    "president_competition": {
+        "name": "Président",
+        "title": "Président de la compétition [NAME_COMPETITION]"
+    },
+    "journalist": {
+        "name": "Journalist",
+        "title": "Journalist of Champions Voice"
+    }
+}

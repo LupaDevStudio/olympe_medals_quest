@@ -377,7 +377,7 @@ class SportsComplex():
 
     @property
     def image(self) -> str:
-        return PATH_BACKGROUNDS + f"sport_complex_{self.current_level}.png"
+        return PATH_BACKGROUNDS + f"sport_complex_{self.current_level}.jpg"
 
     def increase_level(self):
         self.current_level += 1
@@ -482,7 +482,7 @@ class Game():
     # Recrutable athletes for the current trimester
     recrutable_athletes: list[Athlete]
     countries: dict[str, Country]
-    gymnasium: SportsComplex
+    sports_complex: SportsComplex
     medals: list[Medal]
     sports: dict[str, Sport]
     sports_unlocking_progress: dict[str, float]
@@ -505,7 +505,7 @@ class Game():
 
     @property
     def max_athletes(self) -> int:
-        return self.gymnasium.max_number_athletes
+        return self.sports_complex.max_number_athletes
 
     def __init__(self, dict_to_load: dict) -> None:
 
@@ -522,8 +522,8 @@ class Game():
             Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("recrutable_athletes", [])]
         self.countries = {
             country_id: Country(dict_to_load=country_dict) for country_id, country_dict in dict_to_load.get("countries", {}).items()}
-        self.gymnasium = SportsComplex(
-            dict_to_load=dict_to_load.get("gymnasium", {}))
+        self.sports_complex = SportsComplex(
+            dict_to_load=dict_to_load.get("sports_complex", {}))
         self.medals = [
             Medal(dict_to_load=medal_dict) for medal_dict in dict_to_load.get("medals", [])]
         self.sports = {
@@ -534,6 +534,9 @@ class Game():
             "selected_athletes_summer", {})
         self.selected_athletes_winter = dict_to_load.get(
             "selected_athletes_winter", {})
+
+    def get_background_image(self) -> int:
+        return self.sports_complex.image
 
     def get_monthly_salaries(self) -> int:
         monthly_salaries = 0
@@ -557,7 +560,7 @@ class Game():
         # If the user has enough money
         if self.money >= athlete.recruit_price:
             # If the user has still place in its gymnasium
-            if self.gymnasium.max_number_athletes > len(self.team):
+            if self.sports_complex.max_number_athletes > len(self.team):
                 return True
         return False
 
@@ -575,11 +578,11 @@ class Game():
         self.fired_team.append(athlete)
 
     def buy_sport_complex(self, room_id: str):
-        if room_id == "gymnasium":
-            self.gymnasium.increase_level()
-            self.money -= GYMNASIUM_EVOLUTION_DICT[self.gymnasium.current_level]["price"]
+        if room_id == "sports_complex":
+            self.sports_complex.increase_level()
+            self.money -= GYMNASIUM_EVOLUTION_DICT[self.sports_complex.current_level]["price"]
         else:
-            bought_room: Room = self.gymnasium.buy_room(room_id=room_id)
+            bought_room: Room = self.sports_complex.buy_room(room_id=room_id)
             self.money -= ROOMS_EVOLUTION_DICT[room_id][bought_room.current_level]["price"]
 
     def get_medals_from_athlete(self, athlete_id: str) -> Medal:
@@ -650,7 +653,7 @@ class Game():
                 athlete.export_dict() for athlete in self.recrutable_athletes],
             "countries": {
                 country_id: country.export_dict() for country_id, country in self.countries.items()},
-            "gymnasium": self.gymnasium.export_dict(),
+            "sports_complex": self.sports_complex.export_dict(),
             "medals": [
                 medal.export_dict() for medal in self.medals],
             "sports": {

@@ -29,7 +29,8 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_CUSTOM_TITLE,
     TEXT,
-    USER_DATA
+    USER_DATA,
+    GAME
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -54,8 +55,9 @@ class OlympeScreen(ImprovedScreen):
 
     def __init__(self, back_image_path=None, **kw):
         if back_image_path is None:
+            path_sports_complex = GAME.get_background_image()
             super().__init__(
-                back_image_path=PATH_BACKGROUNDS + "sport_complex.png",
+                back_image_path=path_sports_complex,
                 **kw)
         else:
             super().__init__(
