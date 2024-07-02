@@ -477,6 +477,10 @@ class Game():
     team: list[Athlete]
     # Fired athletes (we still need them for the display of medals)
     fired_team: list[Athlete]
+    # Retired athletes (we still need them for the display of medals)
+    retired_team: list[Athlete]
+    # Recrutable athletes for the current trimester
+    recrutable_athletes: list[Athlete]
     countries: dict[str, Country]
     gymnasium: SportsComplex
     medals: list[Medal]
@@ -512,6 +516,10 @@ class Game():
             Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("team", [])]
         self.fired_team = [
             Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("fired_team", [])]
+        self.retired_team = [
+            Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("retired_team", [])]
+        self.recrutable_athletes = [
+            Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("recrutable_athletes", [])]
         self.countries = {
             country_id: Country(dict_to_load=country_dict) for country_id, country_dict in dict_to_load.get("countries", {}).items()}
         self.gymnasium = SportsComplex(
@@ -636,6 +644,10 @@ class Game():
                 athlete.export_dict() for athlete in self.team],
             "fired_team": [
                 athlete.export_dict() for athlete in self.fired_team],
+            "retired_team": [
+                athlete.export_dict() for athlete in self.retired_team],
+            "recrutable_athletes": [
+                athlete.export_dict() for athlete in self.recrutable_athletes],
             "countries": {
                 country_id: country.export_dict() for country_id, country in self.countries.items()},
             "gymnasium": self.gymnasium.export_dict(),

@@ -128,6 +128,7 @@ class OlympeCard(RelativeLayout):
     size_hint_y_icon = NumericProperty(0.6)
 
     is_folded = BooleanProperty(False)
+    keep_line_folded = BooleanProperty(False)
 
     image_source = StringProperty()
     is_hurt = BooleanProperty(False)

@@ -101,7 +101,7 @@ class TeamScreen(OlympeScreen):
             else:
                 skills_dict = athlete.get_best_sports()
                 height = self.font_ratio * (
-                    BIG_HEADER_HEIGHT + len(skills_dict) * SKILL_HEIGHT + MARGIN_HEIGHT) 
+                    BIG_HEADER_HEIGHT + len(skills_dict) * SKILL_HEIGHT + MARGIN_HEIGHT*2) 
 
                 athlete_button = CharacterInfoWithMainSportsLayout(
                     image_source=athlete.image,

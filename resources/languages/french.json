@@ -5,6 +5,7 @@
         "trimesters": "trimestres",
         "settings": "Paramètres",
         "salary": "Salaire - ",
+        "age": "Âge - @ ans",
         "skills": "Compétences",
         "medals": "Médailles"
     },
@@ -36,7 +37,6 @@
     },
     "athlete": {
         "fire": "Licencier",
-        "age": "Âge - @ ans",
         "fatigue": "Fatigue - @ %"
     },
     "settings": {},

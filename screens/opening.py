@@ -90,7 +90,6 @@ class OpeningScreen(ImprovedScreen):
                 screen_files.remove("screen.kv")
                 screen_files.insert(0, "screen.kv")
             for file in screen_files:
-                print(file)
                 Builder.load_file(f"{type_file}{file}", encoding="utf-8")
 
         Clock.schedule_once(self.load_other_screens)

@@ -94,7 +94,7 @@ class AthleteScreen(OlympeScreen):
         self.main_info_card = CharacterWithMainInfoFireLayout(
             image_source=self.athlete.image,
             salary=self.athlete.salary,
-            age=self.my_text["age"].replace("@", str(self.athlete.age)),
+            age=TEXT.general["age"].replace("@", str(self.athlete.age)),
             fatigue=self.my_text["fatigue"].replace(
                 "@", str(self.athlete.fatigue)),
             health=health,
@@ -114,7 +114,7 @@ class AthleteScreen(OlympeScreen):
                 athlete_id=self.athlete.id)
             if len(athlete_medals) > 0:
                 height = self.font_ratio * (
-                    HEADER_HEIGHT + MARGIN_HEIGHT + MEDAL_HEIGHT * len(athlete_medals))
+                    HEADER_HEIGHT + MARGIN_HEIGHT*2 + MEDAL_HEIGHT * len(athlete_medals))
             else:
                 height = self.font_ratio * HEADER_HEIGHT * 2
         else:
@@ -139,7 +139,7 @@ class AthleteScreen(OlympeScreen):
             athlete_skills.update(sports_dict)
             if len(athlete_skills) > 0:
                 height = self.font_ratio * (
-                    HEADER_HEIGHT + MARGIN_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+                    HEADER_HEIGHT + MARGIN_HEIGHT*2 + SKILL_HEIGHT * len(athlete_skills))
             else:
                 height = self.font_ratio * HEADER_HEIGHT * 2
         else:
@@ -159,7 +159,7 @@ class AthleteScreen(OlympeScreen):
         scrollview_layout.add_widget(self.skills_card)
 
     def ask_fire_athlete(self):
-        print("TODO")
+        print("TODO fire athlete")
 
     def ask_redraw(self, widget):
         if widget == self.medals_card:

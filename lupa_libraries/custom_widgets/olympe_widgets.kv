@@ -46,7 +46,7 @@
             size: (BACKGROUND_MARGIN*self.font_ratio + self.size[0], self.size[1])
 
         Color:
-            rgba: COLORS.white if self.header_mode and not self.is_folded else COLORS.transparent
+            rgba: COLORS.white if self.header_mode and (not self.is_folded or self.keep_line_folded) else COLORS.transparent
         Line:
             points: [0, self.height - self.header_height*self.font_ratio, self.width, self.height - self.font_ratio * self.header_height]
             width: LARGE_LINE_WIDTH*root.font_ratio
@@ -86,7 +86,7 @@
         size_hint: (0.25, None)
         height: 0.5*root.header_height
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
-        pos_hint: {"right": 0.975 - icon.width/(root.width+1)}
+        pos_hint: {"right": 0.95 - icon.width/(root.width+1)}
         opacity: 1 if root.money_mode else 0
         line_width: root.line_width
 
@@ -95,7 +95,7 @@
         icon_source: root.icon_source
         size_hint_y_icon: root.size_hint_y_icon
         size_hint: (None, None)
-        height: root.header_height * 0.65
+        height: HEADER_HEIGHT * 0.65
         width: self.height
         pos_hint: {"right": 0.975}
         y: root.height - root.header_height//2*root.font_ratio - self.height//2

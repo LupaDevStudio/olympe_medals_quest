@@ -22,7 +22,8 @@ from lupa_libraries.custom_widgets import (
     CharacterInfoWithMainSportsLayout,
     SurroundedLabel,
     SkillsCard,
-    MedalsCard
+    MedalsCard,
+    CompleteRecruitCard
 )
 
 ### Dialog generator ###

@@ -20,7 +20,8 @@ from lupa_libraries.custom_widgets.character_widgets import (
     CharacterWithMainInfoFireLayout,
     CharacterInfoWithMainSportsLayout,
     MedalsCard,
-    SkillsCard
+    SkillsCard,
+    CompleteRecruitCard
 )
 
 ### Layouts ###
