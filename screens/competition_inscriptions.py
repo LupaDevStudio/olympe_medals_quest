@@ -73,6 +73,19 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         self.next_label = TEXT.general["next"]
         self.validate_label = TEXT.general["validate"]
 
+        self.change_previous_next_buttons_text()
+
+    def change_previous_next_buttons_text(self):
+        if self.selected_sport_id == 0:
+            self.ids.previous_button.text = self.cancel_label
+        else:
+            self.ids.previous_button.text = self.previous_label
+
+        if self.selected_sport_id == len(self.list_sports) - 1:
+            self.ids.next_button.text = self.validate_label
+        else:
+            self.ids.next_button.text = self.next_label
+
     def on_pre_enter(self, *args):
         # TODO take the GAME.unlocked_sports
         self.list_sports = ["Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6", "Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6"]
@@ -100,6 +113,9 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                 release_function=partial(self.select_sport, counter_sport)
             )
 
+            if counter_sport == self.selected_sport_id:
+                self.ids.scrollview_vertical.scroll_to(sport_button)
+
             scrollview_layout.add_widget(sport_button)
 
     def fill_scrollview(self):
@@ -115,17 +131,23 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         # Rebuild scrollviews
         self.fill_scrollview_vertical()
         self.fill_scrollview()
-
-        # TODO il faut scroll dans la scrollview de sports au sport sélectionné sinon ça fait bizarre
     
     def select_sport(self, sport_counter):
         self.selected_sport_id = sport_counter
         self.reset_screen()
 
     def go_to_previous_sport(self):
-        self.selected_sport_id -= 1
-        self.reset_screen()
+        if self.selected_sport_id != 0:
+            self.selected_sport_id -= 1
+            self.change_previous_next_buttons_text()
+            self.reset_screen()
+        else:
+            self.go_to_next_screen(screen_name="game")
 
     def go_to_next_sport(self):
-        self.selected_sport_id += 1
-        self.reset_screen()
+        if self.selected_sport_id != len(self.list_sports) - 1:
+            self.selected_sport_id += 1
+            self.change_previous_next_buttons_text()
+            self.reset_screen()
+        else:
+            ... # TODO validate
