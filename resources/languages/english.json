@@ -178,6 +178,9 @@
             "description": "The thrill of climbing up challenging routes or obstacle courses, battling gravity and channeling your inner Spider-Man."
         }
     },
+    "countries": {
+        "our_country": "Notre pays"
+    },
     "rooms": {},
     "activities": {},
     "tutorial": {},

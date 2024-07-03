@@ -177,6 +177,9 @@
             "description": "Le frisson de grimper des routes difficiles ou des parcours d'obstacles, luttant contre la gravité et canalisant votre Spider-Man intérieur."
         }
     },
+    "countries": {
+        "our_country": "Notre pays"
+    },
     "rooms": {},
     "activities": {},
     "tutorial": {},
