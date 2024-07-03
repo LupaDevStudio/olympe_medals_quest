@@ -74,7 +74,11 @@ class OlympeScreen(ImprovedScreen):
                 self.title_screen = self.get_title_year()
             elif SCREEN_CUSTOM_TITLE in self.dict_type_screen:
                 code = self.dict_type_screen[SCREEN_CUSTOM_TITLE]
-                self.title_screen = TEXT.general[code]
+                if code == "edition":
+                    self.title_screen = TEXT.general["edition"].replace(
+                        "@", str(GAME.current_edition))
+                else:
+                    self.title_screen = TEXT.general[code]
             else:
                 top_bar.remove_widget(self.ids.title)
 
@@ -125,9 +129,13 @@ class OlympeScreen(ImprovedScreen):
         if SCREEN_TITLE_YEAR in self.dict_type_screen:
             self.title_screen = self.get_title_year()
 
-        if SCREEN_CUSTOM_TITLE in self.dict_type_screen:
+        elif SCREEN_CUSTOM_TITLE in self.dict_type_screen:
             code = self.dict_type_screen[SCREEN_CUSTOM_TITLE]
-            self.title_screen = TEXT.general[code]
+            if code == "edition":
+                self.title_screen = TEXT.general["edition"].replace(
+                    "@", str(GAME.current_edition))
+            else:
+                self.title_screen = TEXT.general[code]
 
     def on_leave(self, *args):
         super().on_leave(*args)

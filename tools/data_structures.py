@@ -507,6 +507,17 @@ class Game():
     def max_athletes(self) -> int:
         return self.sports_complex.max_number_athletes
 
+    @property
+    def current_edition(self, type_edition: Literal["summer", "winter"] = "summer") -> int:
+        if type_edition == "summer":
+            if self.year % NB_YEARS_BETWEEN_EDITION == 0:
+                return self.year // NB_YEARS_BETWEEN_EDITION
+            return self.year // NB_YEARS_BETWEEN_EDITION + 1
+        elif type_edition == "winter":
+            if self.year % NB_YEARS_BETWEEN_EDITION == NB_YEARS_BETWEEN_EDITION//2:
+                return self.year // NB_YEARS_BETWEEN_EDITION
+            return (self.year + NB_YEARS_BETWEEN_EDITION//2) // NB_YEARS_BETWEEN_EDITION
+
     def __init__(self, dict_to_load: dict) -> None:
 
         self.money = dict_to_load.get("money", 0)
