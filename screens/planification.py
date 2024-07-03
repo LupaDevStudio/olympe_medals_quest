@@ -1,5 +1,5 @@
 """
-Module to create the competition inscription screen.
+Module to create the planification screen.
 """
 
 ###############
@@ -47,28 +47,21 @@ from tools.data_structures import (
 #############
 
 
-class CompetitionInscriptionsScreen(OlympeScreen):
+class PlanificationScreen(OlympeScreen):
     """
-    Class to manage the competition inscriptions screen of the game.
+    Class to manage the planification screen of the game.
     """
 
     dict_type_screen = {
-        SCREEN_CUSTOM_TITLE: "edition",
         SCREEN_BACK_ARROW : "game",
         SCREEN_SPEND_MONEY_RIGHT : True
     }
-    cancel_label = StringProperty()
-    previous_label = StringProperty()
-    next_label = StringProperty()
     validate_label = StringProperty()
     spent_coins = NumericProperty()
 
     def reload_language(self):
         super().reload_language()
-        my_text = TEXT.competition_inscription
-        self.cancel_label = TEXT.general["cancel"]
-        self.previous_label = TEXT.general["previous"]
-        self.next_label = TEXT.general["next"]
+        my_text = TEXT.planification
         self.validate_label = TEXT.general["validate"]
 
     def fill_scrollview(self):
@@ -76,8 +69,8 @@ class CompetitionInscriptionsScreen(OlympeScreen):
 
         print("TODO fill scrollview")
 
-    def go_to_previous_sport(self):
-        print("TODO")
+    def ask_validate_planning(self):
+        print("TODO ask validation planing")
 
-    def go_to_next_sport(self):
-        print("TODO")
+    def validate_planning(self):
+        print("TODO validate planning")

@@ -61,6 +61,9 @@ class HomeScreen(OlympeScreen):
             }
         )
 
+    def go_to_planification(self):
+        self.go_to_next_screen(screen_name="planification")
+
     def go_to_competition_inscriptions(self):
         self.go_to_next_screen(screen_name="competition_inscriptions")
 

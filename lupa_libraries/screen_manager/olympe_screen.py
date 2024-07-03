@@ -24,6 +24,7 @@ from lupa_libraries.screen_manager import (
 )
 from tools.constants import (
     SCREEN_MONEY_RIGHT,
+    SCREEN_SPEND_MONEY_RIGHT,
     SCREEN_TITLE_YEAR,
     SCREEN_TITLE_ICON,
     SCREEN_BACK_ARROW,
@@ -101,10 +102,22 @@ class OlympeScreen(ImprovedScreen):
                     self.ids.back_arrow.release_function = self.go_backwards
 
             # Display the money frame or not
-            if not SCREEN_MONEY_RIGHT in self.dict_type_screen:
-                top_bar.remove_widget(self.ids.money_frame)
-            else:
+            if SCREEN_MONEY_RIGHT in self.dict_type_screen:
                 self.money_amount = USER_DATA.game.money
+                self.ids.money_frame.spend_mode = False
+                self.ids.money_frame.size_hint = (0.25, 0.7)
+            elif SCREEN_SPEND_MONEY_RIGHT in self.dict_type_screen:
+                self.money_amount = USER_DATA.game.money
+                self.ids.money_frame.spend_mode = True
+                self.ids.money_frame.size_hint = (0.35, 0.7)
+                self.ids.money_frame.spent_coins_count = self.spent_coins
+
+                if SCREEN_CUSTOM_TITLE or SCREEN_TITLE_YEAR in self.dict_type_screen:
+                    self.ids.title.pos_hint = {"center_x":0.375, "center_y":0.5}
+                elif SCREEN_TITLE_ICON in self.dict_type_screen:
+                    self.ids.title_icon.pos_hint = {"center_x":0.375, "center_y":0.5}
+            else:
+                top_bar.remove_widget(self.ids.money_frame)
 
         else:
             self.remove_widget(self.ids.top_bar)

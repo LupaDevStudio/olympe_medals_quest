@@ -1,6 +1,6 @@
 #:kivy 2.2.1
 
-<CompetitionInscriptionsScreen>:
+<PlanificationScreen>:
 
     OlympeCard:
         pos_hint: {"center_x":0.5, "y": BOTTOM_BAR_HEIGHT + 0.025}
@@ -21,15 +21,8 @@
                 padding: (10*root.font_ratio, 5*root.font_ratio, 10*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
 
     PressedButton:
-        id: previous_button
-        size_hint: ((SCROLLVIEW_WIDTH-(1-SCROLLVIEW_WIDTH)/2)/2, BUTTON_BOTTOM_BAR_HEIGHT*BOTTOM_BAR_HEIGHT)
-        pos_hint: {"x": (1-SCROLLVIEW_WIDTH)/2, "y": 0.025/2+(1-BUTTON_BOTTOM_BAR_HEIGHT)/2*BOTTOM_BAR_HEIGHT}
+        text: root.validate_label
+        size_hint: (0.4, BUTTON_BOTTOM_BAR_HEIGHT*BOTTOM_BAR_HEIGHT)
+        pos_hint: {"center_x": 0.5, "y": 0.025/2+(1-BUTTON_BOTTOM_BAR_HEIGHT)/2*BOTTOM_BAR_HEIGHT}
         font_ratio: root.font_ratio
-        release_function: root.go_to_previous_sport
-
-    PressedButton:
-        id: next_button
-        size_hint: ((SCROLLVIEW_WIDTH-(1-SCROLLVIEW_WIDTH)/2)/2, BUTTON_BOTTOM_BAR_HEIGHT*BOTTOM_BAR_HEIGHT)
-        pos_hint: {"right": 1-(1-SCROLLVIEW_WIDTH)/2, "y": 0.025/2+(1-BUTTON_BOTTOM_BAR_HEIGHT)/2*BOTTOM_BAR_HEIGHT}
-        font_ratio: root.font_ratio
-        release_function: root.go_to_next_sport
+        release_function: root.ask_validate_planning

@@ -10,7 +10,11 @@
         "age": "Âge - @ ans",
         "reputation": "Réputation - @",
         "skills": "Compétences",
-        "medals": "Médailles"
+        "medals": "Médailles",
+        "validate": "Valider",
+        "cancel": "Annuler",
+        "next": "Suivant",
+        "previous": "Précédent"
     },
     "home": {
         "play": "Jouer"
