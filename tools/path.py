@@ -47,6 +47,8 @@ PATH_SCREENS = "screens/"
 # Path for the resources
 PATH_IMAGES = PATH_RESOURCES + "images/"
 PATH_ICONS = PATH_IMAGES + "icons/"
+PATH_SPORTS_ICONS = PATH_ICONS + "sports/"
+PATH_ACTIVITIES_ICONS = PATH_ICONS + "activities/"
 PATH_CHARACTERS_IMAGES = PATH_IMAGES + "characters/"
 PATH_BACKGROUNDS = PATH_IMAGES + "backgrounds/"
 PATH_MEDALS_IMAGES = PATH_IMAGES + "medals/"
