@@ -24,7 +24,8 @@ from lupa_libraries.custom_widgets import (
     SurroundedLabel,
     SkillsCard,
     MedalsCard,
-    CompleteRecruitCard
+    CompleteRecruitCard,
+    SportLabelButton
 )
 
 ### Dialog generator ###

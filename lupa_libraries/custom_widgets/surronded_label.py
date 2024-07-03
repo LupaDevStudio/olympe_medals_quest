@@ -23,13 +23,13 @@ from kivy.properties import (
 ### Local imports ###
 
 from tools.path import (
-    PATH_TEXT_FONT,
-    PATH_ICONS
+    PATH_TEXT_FONT
 )
 from tools.graphics import (
     FONTS_SIZES,
     COLORS,
-    RADIUS
+    RADIUS,
+    BUTTON_LINE_WIDTH
 )
 
 #############
@@ -42,6 +42,8 @@ class SurroundedLabel(RelativeLayout):
     A layout to display a label with a rounded rectangle line around.
     """
 
+    outline_mode = BooleanProperty(True)
+
     text = StringProperty()
 
     font_size = NumericProperty(FONTS_SIZES.coins_count)
@@ -50,3 +52,5 @@ class SurroundedLabel(RelativeLayout):
 
     color = ColorProperty(COLORS.white)
     radius = NumericProperty(RADIUS)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)

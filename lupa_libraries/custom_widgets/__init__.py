@@ -30,11 +30,13 @@ from lupa_libraries.custom_widgets.character_widgets import (
 from lupa_libraries.custom_widgets.money_layout import MoneyLayout
 from lupa_libraries.custom_widgets.olympe_widgets import (
     CharacterButtonWithIcon,
-    OlympeCard
+    OlympeCard,
+    SportLabelButton
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,
-    MyScrollViewLayout
+    MyScrollViewLayout,
+    MyScrollViewVerticalLayout
 )
 
 ### Popups ###

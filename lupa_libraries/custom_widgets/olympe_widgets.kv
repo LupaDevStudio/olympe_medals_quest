@@ -40,7 +40,7 @@
 
     canvas.before:
         Color:
-            rgba: COLORS.transparent_black
+            rgba: self.background_color
         Rectangle:
             pos: (-BACKGROUND_MARGIN//2*self.font_ratio, 0)
             size: (BACKGROUND_MARGIN*self.font_ratio + self.size[0], self.size[1])
@@ -103,3 +103,16 @@
         release_function: root.icon_function
         opacity: 1 if root.icon_mode else 0
         radius: RADIUS_SMALL
+
+<SportLabelButton>:
+
+    SurroundedLabel:
+        text: root.text
+        font_ratio: root.font_ratio
+        size_hint: (1, 0.7)
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        color: root.line_color
+        line_width: root.line_width
+        outline_mode: root.is_selected
+        font_size: root.font_size
+        text_font_name: root.text_font_name

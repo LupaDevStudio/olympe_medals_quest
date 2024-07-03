@@ -129,6 +129,10 @@ class OlympeScreen(ImprovedScreen):
         self.reload_language()
         self.money_amount = USER_DATA.game.money
 
+        # Fill vertical scrollview if it exists
+        if "scrollview_layout_vertical" in self.ids:
+            self.fill_scrollview_vertical()
+
         # Fill scrollview if it exists
         if "scrollview_layout" in self.ids:
             self.fill_scrollview()
@@ -156,3 +160,7 @@ class OlympeScreen(ImprovedScreen):
         # Reset scrollview if it exists
         if "scrollview_layout" in self.ids:
             self.ids.scrollview_layout.reset_scrollview()
+
+        # Reset vertical scrollview if it exists
+        if "scrollview_layout_vertical" in self.ids:
+            self.ids.scrollview_layout_vertical.reset_scrollview()

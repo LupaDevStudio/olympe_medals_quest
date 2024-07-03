@@ -49,6 +49,23 @@ class MyScrollViewLayout(GridLayout):
         for element in list_widgets:
             self.remove_widget(element)
 
+class MyScrollViewVerticalLayout(GridLayout):
+    """
+    Class corresponding to the layout inside the scroll view
+    """
+
+    def __init__(self, **kwargs):
+        super(MyScrollViewVerticalLayout, self).__init__(**kwargs)
+        self.size_hint_x = (None)
+        self.bind(minimum_width=self.setter('width'))
+
+    def refill(self):
+        self.setter("width")
+
+    def reset_scrollview(self):
+        list_widgets = self.children[:]
+        for element in list_widgets:
+            self.remove_widget(element)
 
 class CustomScrollview(ScrollView):
     pass

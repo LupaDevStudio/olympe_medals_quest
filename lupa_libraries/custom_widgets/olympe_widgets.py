@@ -139,6 +139,7 @@ class OlympeCard(RelativeLayout):
     font_ratio = NumericProperty(1)
 
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    background_color = ColorProperty(COLORS.transparent_black)
 
     font_size = NumericProperty(FONTS_SIZES.subtitle)
     text_font_name = StringProperty(PATH_TITLE_FONT)
@@ -160,4 +161,23 @@ class OlympeCard(RelativeLayout):
                 self.icon_source = PATH_ICONS + "minus.png"
                 self.size_hint_y_icon = 0.5
             self.icon_function = self.parent.ask_redraw
-    
+
+class SportLabelButton(ButtonBehavior, RelativeLayout):
+
+    is_selected = BooleanProperty(False)
+
+    text = StringProperty()
+    font_ratio = NumericProperty(1)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    line_color = ColorProperty(COLORS.white)
+
+    font_size = NumericProperty(FONTS_SIZES.subtitle)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    release_function = ObjectProperty(lambda: 1 + 1)
+
+    def on_release(self):
+        if self.collide_point(self.last_touch.x, self.last_touch.y):
+            self.release_function()

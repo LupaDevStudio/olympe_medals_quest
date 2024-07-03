@@ -14,16 +14,15 @@ from functools import partial
 
 from kivy.properties import (
     StringProperty,
-    NumericProperty
+    NumericProperty,
+    ListProperty
 )
-from kivy.core.window import Window
 
 ### Local imports ###
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterWithNameLayout,
-    CharacterInfoWithMainSportsLayout
+    SportLabelButton
 )
 from tools.constants import (
     TEXT,
@@ -33,13 +32,14 @@ from tools.constants import (
     GAME
 )
 from tools.graphics import (
-    SCROLLVIEW_WIDTH,
-    BIG_HEADER_HEIGHT,
-    SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    FONTS_SIZES,
+    COLORS
 )
 from tools.data_structures import (
     Athlete
+)
+from tools.path import (
+    PATH_TITLE_FONT
 )
 
 #############
@@ -61,6 +61,8 @@ class CompetitionInscriptionsScreen(OlympeScreen):
     previous_label = StringProperty()
     next_label = StringProperty()
     validate_label = StringProperty()
+    list_sports = ListProperty([])
+    selected_sport_id = NumericProperty(0)
     spent_coins = NumericProperty()
 
     def reload_language(self):
@@ -71,13 +73,59 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         self.next_label = TEXT.general["next"]
         self.validate_label = TEXT.general["validate"]
 
+    def on_pre_enter(self, *args):
+        # TODO take the GAME.unlocked_sports
+        self.list_sports = ["Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6", "Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6"]
+
+        super().on_pre_enter(*args)
+
+    def fill_scrollview_vertical(self):
+        scrollview_layout = self.ids["scrollview_layout_vertical"]
+        width_label = 100
+        margin_label = 10
+
+        for counter_sport in range(len(self.list_sports)):
+            sport_name = self.list_sports[counter_sport]
+            pos_x = self.font_ratio * (
+                width_label*counter_sport + margin_label * (counter_sport+1))
+            
+            sport_button = SportLabelButton(
+                text=sport_name,
+                size_hint=(None, 1),
+                width=width_label*self.font_ratio,
+                x=pos_x,
+                pos_hint={"center_y": 0.5},
+                font_ratio=self.font_ratio,
+                is_selected=counter_sport == self.selected_sport_id,
+                release_function=partial(self.select_sport, counter_sport)
+            )
+
+            scrollview_layout.add_widget(sport_button)
+
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
         print("TODO fill scrollview")
 
+    def reset_screen(self):
+        # Reset scrollviews
+        self.ids.scrollview_layout.reset_scrollview()
+        self.ids.scrollview_layout_vertical.reset_scrollview()
+
+        # Rebuild scrollviews
+        self.fill_scrollview_vertical()
+        self.fill_scrollview()
+
+        # TODO il faut scroll dans la scrollview de sports au sport sélectionné sinon ça fait bizarre
+    
+    def select_sport(self, sport_counter):
+        self.selected_sport_id = sport_counter
+        self.reset_screen()
+
     def go_to_previous_sport(self):
-        print("TODO")
+        self.selected_sport_id -= 1
+        self.reset_screen()
 
     def go_to_next_sport(self):
-        print("TODO")
+        self.selected_sport_id += 1
+        self.reset_screen()
