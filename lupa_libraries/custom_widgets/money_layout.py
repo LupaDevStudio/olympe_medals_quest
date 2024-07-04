@@ -77,6 +77,7 @@ class MoneyLayout(RelativeLayout):
         self.bind(salary_mode=self.update_coins_count)
         self.bind(recruit_mode=self.update_coins_count)
         self.bind(spend_mode=self.update_coins_count)
+        self.bind(spent_coins_count=self.update_coins_count)
 
     def update_coins_count(self, *args):
         self.coins_count_text = ""
@@ -101,7 +102,7 @@ class MoneyLayout(RelativeLayout):
 
             next_count = self.coins_count - self.spent_coins_count
             if next_count >= 1000:
-                round_thousands = math.floor(self.coins_count / 1000)
+                round_thousands = math.floor(next_count / 1000)
                 next_text = str(round_thousands) + " k"
             else:
                 next_text = str(next_count)

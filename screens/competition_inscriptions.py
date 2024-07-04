@@ -190,7 +190,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         font_ratio=self.font_ratio,
                         best_medal_source=best_medal_source,
                         disable_button=disable_button,
-                        release_function=partial(self.send_athlete, athlete),
+                        release_function=partial(self.select_athlete, athlete),
                         button_text=button_text,
                         button_color=button_color,
                         button_pressed_color=button_pressed_color,
@@ -222,18 +222,20 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         button_pressed_color=button_pressed_color,
                         best_medal_source=best_medal_source,
                         disable_button=disable_button,
-                        release_function=partial(self.send_athlete, athlete)
+                        release_function=partial(self.select_athlete, athlete)
                     )
 
                 self.athlete_folded_dict[athlete.id][1] = inscription_card
                 scrollview_layout.add_widget(inscription_card)
 
-    def send_athlete(self, athlete: Athlete):
+    def select_athlete(self, athlete: Athlete):
         GAME.select_unselect_athlete(
             athlete_id=athlete.id,
             sport_id=self.list_sports[self.selected_sport_counter]
         )
         # TODO update the counter and price
+        self.spent_coins = GAME.compute_total_spent_money_selection()
+        self.ids.money_frame.spent_coins_count = self.spent_coins
 
         # Rebuild scrollview
         self.ids.scrollview_layout.reset_scrollview()
