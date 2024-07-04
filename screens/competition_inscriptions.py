@@ -47,7 +47,8 @@ from tools.graphics import (
 from tools.data_structures import (
     Athlete,
     Sport,
-    SPORTS
+    SPORTS,
+    MAX_ATHLETES_TO_SELECT
 )
 from tools.olympe import (
     get_health_string
@@ -76,6 +77,8 @@ class CompetitionInscriptionsScreen(OlympeScreen):
     selected_sport_counter = NumericProperty(0)
     athlete_folded_dict = ObjectProperty({})
     spent_coins = NumericProperty()
+    spent_coins_in_current_sport = NumericProperty(0)
+    left_label = StringProperty()
 
     def reload_language(self):
         super().reload_language()
@@ -149,6 +152,13 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         selected_sport_id = self.list_sports[self.selected_sport_counter]
         sport: Sport = SPORTS[selected_sport_id]
         sport_stats = sport.stats
+
+        self.left_label = TEXT.competition_inscriptions["number_athletes"].replace(
+            "@", str(GAME.get_number_athletes_selected_for_sport(sport_id=selected_sport_id))).replace(
+                "€", str(MAX_ATHLETES_TO_SELECT))
+        self.spent_coins_in_current_sport = GAME.get_price_selection_for_sport(
+            sport_id=selected_sport_id
+        )
 
         if self.athlete_folded_dict == {}:
             for athlete in GAME.team:
@@ -233,7 +243,6 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             athlete_id=athlete.id,
             sport_id=self.list_sports[self.selected_sport_counter]
         )
-        # TODO update the counter and price
         self.spent_coins = GAME.compute_total_spent_money_selection()
         self.ids.money_frame.spent_coins_count = self.spent_coins
 

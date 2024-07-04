@@ -120,6 +120,7 @@ class OlympeCard(RelativeLayout):
     image_mode = BooleanProperty(False)
     money_mode = BooleanProperty(False)
     button_mode = BooleanProperty(False)
+    left_surrounded_label_mode = BooleanProperty(False)
 
     header_height = NumericProperty(HEADER_HEIGHT)
     header_text = StringProperty()
@@ -138,12 +139,15 @@ class OlympeCard(RelativeLayout):
     image_release_function = ObjectProperty(lambda: 1 + 1)
 
     money_amount = NumericProperty()
+    money_size_hint = ObjectProperty((0.25, 0.5))
 
     button_text = StringProperty()
     button_release_function = ObjectProperty(lambda: 1 + 1)
     button_disable_button = BooleanProperty(False)
     button_color = ColorProperty(COLORS.blue_olympe)
     button_pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
+
+    left_label = StringProperty()
 
     font_ratio = NumericProperty(1)
 

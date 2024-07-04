@@ -678,6 +678,18 @@ class Game():
         
         return total_money_spent
 
+    def get_price_selection_for_sport(self, sport_id: str, mode: Literal["summer", "winter"] = "summer") -> int:
+        number_athletes_selected = self.get_number_athletes_selected_for_sport(
+            sport_id=sport_id, mode=mode
+        )
+        sport: Sport = SPORTS[sport_id]
+        return number_athletes_selected*PRICES_SELECTION[sport.category]
+
+    def get_number_athletes_selected_for_sport(self, sport_id: str, mode: Literal["summer", "winter"] = "summer") -> int:
+        if mode == "summer":
+            return len(self.selected_athletes_summer[sport_id])
+        return len(self.selected_athletes_winter[sport_id])
+
     def can_select_athlete(self, athlete: Athlete, sport_id: str, mode: Literal["summer", "winter"] = "summer") -> dict[str, bool]:
         dict_return = {
             "already_selected": False,
@@ -690,6 +702,9 @@ class Game():
             sport: Sport = SPORTS[sport_id]
             total_spends = self.compute_total_spent_money_selection(mode=mode)
             price_sport = PRICES_SELECTION[sport.category]
+            number_athletes_selected = self.get_number_athletes_selected_for_sport(
+                sport_id=sport_id, mode=mode
+            )
 
             # If the number of athletes to select is not reached for summer
             if mode == "summer":
@@ -697,9 +712,7 @@ class Game():
                     dict_return["already_selected"] = True
                     dict_return["can_select"] = True
                 else:
-                    number_athletes_selected = len(self.selected_athletes_summer[sport_id])
                     if number_athletes_selected < MAX_ATHLETES_TO_SELECT:
-
                         # If enough money to select another athlete
                         if self.money - total_spends - price_sport >= 0:
                             dict_return["can_select"] = True
@@ -710,8 +723,6 @@ class Game():
                     dict_return["already_selected"] = True
                     dict_return["can_select"] = True
                 else:
-                    number_athletes_selected = len(self.selected_athletes_winter[sport_id])
-
                     if number_athletes_selected < MAX_ATHLETES_TO_SELECT:
                         # If enough money to select another athlete
                         if self.money - total_spends - price_sport >= 0:

@@ -54,7 +54,8 @@
     "competition_results": {},
     "competition_inscriptions": {
         "select": "Inscrire",
-        "unselect": "Désinscrire"
+        "unselect": "Désinscrire",
+        "number_athletes": "@ / € athlètes"
     },
     "stats": {
         "strength": "Strength",
