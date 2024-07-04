@@ -54,7 +54,7 @@ class Text():
         self.sports_menu = data["sports_menu"]
         self.activities_menu = data["activities_menu"]
         self.competition_results = data["competition_results"]
-        self.competition_inscription = data["competition_inscriptions"]
+        self.competition_inscriptions = data["competition_inscriptions"]
         self.recruit = data["recruit"]
 
         self.general = data["general"]

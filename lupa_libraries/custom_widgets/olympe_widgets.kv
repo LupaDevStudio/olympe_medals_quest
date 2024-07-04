@@ -95,7 +95,7 @@
     PressedButton:
         id: button
         text: root.button_text
-        size_hint: (0.25, None)
+        size_hint: (0.35, None)
         font_ratio: root.font_ratio
         height: 0.5*root.header_height
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
@@ -103,6 +103,8 @@
         disable_button: root.button_disable_button and root.button_mode
         release_function: root.button_release_function
         opacity: 1 if root.button_mode else 0
+        background_color: root.button_color
+        pressed_color: root.button_pressed_color
 
     IconPressedButton:
         id: icon

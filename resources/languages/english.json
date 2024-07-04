@@ -52,7 +52,10 @@
     "medals": {},
     "shop": {},
     "competition_results": {},
-    "competition_inscriptions": {},
+    "competition_inscriptions": {
+        "select": "Select",
+        "unselect": "Unselect"
+    },
     "stats": {
         "strength": "Strength",
         "speed": "Speed",

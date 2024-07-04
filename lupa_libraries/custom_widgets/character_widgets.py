@@ -442,6 +442,8 @@ class CompleteInscriptionCard(RelativeLayout):
     background_color = ColorProperty(COLORS.transparent_black)
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
+    button_color = ColorProperty(COLORS.blue_olympe)
+    button_pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
 
     ### Sizes ###
 
@@ -491,6 +493,8 @@ class SmallInscriptionCard(RelativeLayout):
     background_color = ColorProperty(COLORS.transparent_black)
     font_color = ColorProperty(COLORS.white)
     line_color = ColorProperty(COLORS.white)
+    button_color = ColorProperty(COLORS.blue_olympe)
+    button_pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
 
     ### Sizes ###
 

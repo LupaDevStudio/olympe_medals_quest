@@ -353,6 +353,8 @@
         pos_hint: {"center_x": 0.5}
         release_function: root.release_function
         disable_button: root.disable_button
+        background_color: root.button_color
+        pressed_color: root.button_pressed_color
 
 <SmallInscriptionCard>:
 
@@ -371,6 +373,8 @@
         button_text: root.button_text
         button_disable_button: root.disable_button
         button_release_function: root.release_function
+        button_color: root.button_color
+        button_pressed_color: root.button_pressed_color
         foldable_mode: True
         is_folded: True
         pos: (0, 0)

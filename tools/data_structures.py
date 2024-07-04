@@ -23,7 +23,8 @@ from tools.path import (
     PATH_USER_DATA,
     PATH_MEDALS_IMAGES,
     PATH_BACKGROUNDS,
-    PATH_ATHLETES_IMAGES
+    PATH_ATHLETES_IMAGES,
+    PATH_SPORTS
 )
 from tools.basic_tools import (
     load_json_file,
@@ -34,6 +35,12 @@ from tools.basic_tools import (
 ### Constants ###
 #################
 
+MAX_ATHLETES_TO_SELECT = 3
+PRICES_SELECTION = {
+    1: 5000,
+    2: 10000,
+    3: 15000
+}
 DEFAULT_HEALTH_DICT = {
     "is_hurt": False,
     "type_injury": "",
@@ -652,6 +659,78 @@ class Game():
         for athlete in self.team:
             athlete.age += 1
 
+    def compute_total_spent_money_selection(self, mode: Literal["summer", "winter"] = "summer") -> int:
+        total_money_spent = 0
+
+        if mode == "summer":
+            for sport_id in self.selected_athletes_summer:
+                sport: Sport = SPORTS[sport_id]
+                sport_category = sport.category
+                price_sport = PRICES_SELECTION[sport_category]
+                total_money_spent += price_sport * len(self.selected_athletes_summer[sport_id])
+
+        elif mode == "winter":
+            for sport_id in self.selected_athletes_winter:
+                sport: Sport = SPORTS[sport_id]
+                sport_category = sport.category
+                price_sport = PRICES_SELECTION[sport_category]
+                total_money_spent += price_sport * len(self.selected_athletes_winter[sport_id])
+        
+        return total_money_spent
+
+    def can_select_athlete(self, athlete: Athlete, sport_id: str, mode: Literal["summer", "winter"] = "summer") -> dict[str, bool]:
+        dict_return = {
+            "already_selected": False,
+            "can_select": False
+        }
+        
+        # If the athlete is not hurt
+        if not athlete.is_hurt:
+            athlete_id = athlete.id
+            sport: Sport = SPORTS[sport_id]
+            total_spends = self.compute_total_spent_money_selection(mode=mode)
+            price_sport = PRICES_SELECTION[sport.category]
+
+            # If the number of athletes to select is not reached for summer
+            if mode == "summer":
+                if athlete_id in self.selected_athletes_summer[sport_id]:
+                    dict_return["already_selected"] = True
+                    dict_return["can_select"] = True
+                else:
+                    number_athletes_selected = len(self.selected_athletes_summer[sport_id])
+                    if number_athletes_selected < MAX_ATHLETES_TO_SELECT:
+
+                        # If enough money to select another athlete
+                        if self.money - total_spends - price_sport >= 0:
+                            dict_return["can_select"] = True
+
+            # If the number of athletes to select is not reached for winter
+            if mode == "winter":
+                if athlete_id in self.selected_athletes_winter[sport_id]:
+                    dict_return["already_selected"] = True
+                    dict_return["can_select"] = True
+                else:
+                    number_athletes_selected = len(self.selected_athletes_winter[sport_id])
+
+                    if number_athletes_selected < MAX_ATHLETES_TO_SELECT:
+                        # If enough money to select another athlete
+                        if self.money - total_spends - price_sport >= 0:
+                            dict_return["can_select"] = True
+
+        return dict_return
+
+    def select_unselect_athlete(self, athlete_id: str, sport_id: str, mode: Literal["summer", "winter"] = "summer"):
+        if mode == "summer":
+            if athlete_id in self.selected_athletes_summer[sport_id]:
+                self.selected_athletes_summer[sport_id].remove(athlete_id)
+            else:
+                self.selected_athletes_summer[sport_id].append(athlete_id)
+        if mode == "winter":
+            if athlete_id in self.selected_athletes_winter[sport_id]:
+                self.selected_athletes_winter[sport_id].remove(athlete_id)
+            else:
+                self.selected_athletes_winter[sport_id].append(athlete_id)
+
     def export_dict(self):
         return {
             "money": self.money,
@@ -713,3 +792,13 @@ class UserData():
         save_json_file(
             file_path=PATH_USER_DATA,
             dict_to_save=data)
+
+SPORTS = load_json_file(PATH_SPORTS)
+for sport_id in SPORTS:
+    SPORTS[sport_id] = Sport(
+        dict_to_load={
+            "id": sport_id,
+            "stats": SPORTS[sport_id]["stats"],
+            "requirements": SPORTS[sport_id]["requirements"]
+        }
+    ) 

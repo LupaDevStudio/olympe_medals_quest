@@ -22,16 +22,14 @@ import os
 
 from tools.path import (
     PATH_USER_DATA,
-    PATH_LANGUAGE,
-    PATH_SPORTS
+    PATH_LANGUAGE
 )
 from tools.basic_tools import (
     save_json_file,
     load_json_file
 )
 from tools.data_structures import (
-    UserData,
-    Sport
+    UserData
 )
 from tools.language import (
     Text
@@ -95,16 +93,6 @@ CHARACTERS_DICT = {}
 for language_code in DICT_LANGUAGE_CORRESPONDANCE:
     CHARACTERS_DICT[language_code] = load_json_file(
         PATH_LANGUAGE + "characters_" + language_code + ".json")
-
-SPORTS = load_json_file(PATH_SPORTS)
-for sport_id in SPORTS:
-    SPORTS[sport_id] = Sport(
-        dict_to_load={
-            "id": sport_id,
-            "stats": SPORTS[sport_id]["stats"],
-            "requirements": SPORTS[sport_id]["requirements"]
-        }
-    ) 
 
 ### Screens ###
 

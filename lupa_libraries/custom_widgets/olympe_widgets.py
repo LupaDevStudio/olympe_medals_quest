@@ -142,6 +142,8 @@ class OlympeCard(RelativeLayout):
     button_text = StringProperty()
     button_release_function = ObjectProperty(lambda: 1 + 1)
     button_disable_button = BooleanProperty(False)
+    button_color = ColorProperty(COLORS.blue_olympe)
+    button_pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
 
     font_ratio = NumericProperty(1)
 

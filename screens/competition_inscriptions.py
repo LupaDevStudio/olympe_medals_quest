@@ -32,8 +32,7 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_SPEND_MONEY_RIGHT,
     SCREEN_CUSTOM_TITLE,
-    GAME,
-    SPORTS
+    GAME
 )
 from tools.graphics import (
     HEADER_HEIGHT,
@@ -42,11 +41,13 @@ from tools.graphics import (
     BUTTON_HEIGHT,
     SKILL_HEIGHT,
     SCROLLVIEW_WIDTH,
-    BIG_HEADER_HEIGHT
+    BIG_HEADER_HEIGHT,
+    COLORS
 )
 from tools.data_structures import (
     Athlete,
-    Sport
+    Sport,
+    SPORTS
 )
 from tools.olympe import (
     get_health_string
@@ -72,13 +73,12 @@ class CompetitionInscriptionsScreen(OlympeScreen):
     next_label = StringProperty()
     validate_label = StringProperty()
     list_sports = ListProperty([])
-    selected_sport_id = NumericProperty(0)
+    selected_sport_counter = NumericProperty(0)
     athlete_folded_dict = ObjectProperty({})
     spent_coins = NumericProperty()
 
     def reload_language(self):
         super().reload_language()
-        my_text = TEXT.competition_inscription
         self.cancel_label = TEXT.general["cancel"]
         self.previous_label = TEXT.general["previous"]
         self.next_label = TEXT.general["next"]
@@ -87,12 +87,12 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         self.change_previous_next_buttons_text()
 
     def change_previous_next_buttons_text(self):
-        if self.selected_sport_id == 0:
+        if self.selected_sport_counter == 0:
             self.ids.previous_button.text = self.cancel_label
         else:
             self.ids.previous_button.text = self.previous_label
 
-        if self.selected_sport_id == len(self.list_sports) - 1:
+        if self.selected_sport_counter == len(self.list_sports) - 1:
             self.ids.next_button.text = self.validate_label
         else:
             self.ids.next_button.text = self.next_label
@@ -135,18 +135,18 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                 width=width_label*self.font_ratio,
                 pos_hint={"center_y": 0.5},
                 font_ratio=self.font_ratio,
-                is_selected=counter_sport == self.selected_sport_id,
+                is_selected=counter_sport == self.selected_sport_counter,
                 release_function=partial(self.select_sport, counter_sport)
             )
 
-            if counter_sport == self.selected_sport_id:
+            if counter_sport == self.selected_sport_counter:
                 self.ids.scrollview_vertical.scroll_to(sport_button)
 
             scrollview_layout.add_widget(sport_button)
 
     def fill_scrollview(self):
 
-        selected_sport_id = self.list_sports[self.selected_sport_id]
+        selected_sport_id = self.list_sports[self.selected_sport_counter]
         sport: Sport = SPORTS[selected_sport_id]
         sport_stats = sport.stats
 
@@ -166,20 +166,34 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                 for stat in sport_stats:
                     athlete_skills[stat] = athlete.stats[stat]
 
-                title_card = athlete.first_name + " " + athlete.name
                 best_medal_source = GAME.get_best_medal_source_from_athlete_in_sport(
                             athlete_id=athlete.id, sport_id=selected_sport_id)
-                disable_button = athlete.is_hurt # TODO aussi s'il y a trop d'athlètes envoyés et si on n'a pas asssez d'argent => le faire dans GAME
+                
+                selection_information = GAME.can_select_athlete(
+                    athlete=athlete,
+                    sport_id=selected_sport_id
+                )
+                if selection_information["already_selected"]:
+                    button_text = TEXT.competition_inscriptions["unselect"]
+                    button_color = COLORS.red
+                    button_pressed_color = COLORS.red_pressed
+                else:
+                    button_text = TEXT.competition_inscriptions["select"]
+                    button_color = COLORS.blue_olympe
+                    button_pressed_color = COLORS.blue_pressed_olympe
+                disable_button = not selection_information["can_select"]
 
                 if self.athlete_folded_dict[athlete.id][0]:
                     inscription_card = SmallInscriptionCard(
-                        title_card=title_card,
+                        title_card=athlete.first_name + "\n" + athlete.name,
                         image_source=athlete.image,
                         font_ratio=self.font_ratio,
                         best_medal_source=best_medal_source,
                         disable_button=disable_button,
                         release_function=partial(self.send_athlete, athlete),
-                        button_text="TODO",
+                        button_text=button_text,
+                        button_color=button_color,
+                        button_pressed_color=button_pressed_color,
                         size_hint=(SCROLLVIEW_WIDTH, None),
                         height=BIG_HEADER_HEIGHT*self.font_ratio,
                     )
@@ -194,7 +208,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                             HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*3 + BUTTON_HEIGHT)
 
                     inscription_card = CompleteInscriptionCard(
-                        title_card=title_card,
+                        title_card=athlete.first_name + " " + athlete.name,
                         font_ratio=self.font_ratio,
                         skills_dict=athlete_skills,
                         image_source=athlete.image,
@@ -203,7 +217,9 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         height=height,
                         fatigue_evolution="TODO",
                         wound_risk="TODO",
-                        button_text="TODO",
+                        button_text=button_text,
+                        button_color=button_color,
+                        button_pressed_color=button_pressed_color,
                         best_medal_source=best_medal_source,
                         disable_button=disable_button,
                         release_function=partial(self.send_athlete, athlete)
@@ -213,7 +229,15 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                 scrollview_layout.add_widget(inscription_card)
 
     def send_athlete(self, athlete: Athlete):
-        print("TODO envoyer retirer athlète")
+        GAME.select_unselect_athlete(
+            athlete_id=athlete.id,
+            sport_id=self.list_sports[self.selected_sport_counter]
+        )
+        # TODO update the counter and price
+
+        # Rebuild scrollview
+        self.ids.scrollview_layout.reset_scrollview()
+        self.fill_scrollview()
 
     def ask_redraw(self, widget):
         for athlete_id in self.athlete_folded_dict:
@@ -237,20 +261,20 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         self.fill_scrollview()
     
     def select_sport(self, sport_counter):
-        self.selected_sport_id = sport_counter
+        self.selected_sport_counter = sport_counter
         self.reset_screen()
 
     def go_to_previous_sport(self):
-        if self.selected_sport_id != 0:
-            self.selected_sport_id -= 1
+        if self.selected_sport_counter != 0:
+            self.selected_sport_counter -= 1
             self.change_previous_next_buttons_text()
             self.reset_screen()
         else:
             self.go_to_next_screen(screen_name="game")
 
     def go_to_next_sport(self):
-        if self.selected_sport_id != len(self.list_sports) - 1:
-            self.selected_sport_id += 1
+        if self.selected_sport_counter != len(self.list_sports) - 1:
+            self.selected_sport_counter += 1
             self.change_previous_next_buttons_text()
             self.reset_screen()
         else:
