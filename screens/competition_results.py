@@ -1,5 +1,5 @@
 """
-Module to create the competition inscriptions screen.
+Module to create the competition results screen.
 """
 
 ###############
@@ -47,9 +47,9 @@ from tools.path import (
 #############
 
 
-class CompetitionInscriptionsScreen(OlympeScreen):
+class CompetitionResultsScreen(OlympeScreen):
     """
-    Class to manage the competition inscriptions screen of the game.
+    Class to manage the competition results screen of the game.
     """
 
     dict_type_screen = {
@@ -57,7 +57,6 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         SCREEN_BACK_ARROW : "game",
         SCREEN_SPEND_MONEY_RIGHT : True
     }
-    cancel_label = StringProperty()
     previous_label = StringProperty()
     next_label = StringProperty()
     validate_label = StringProperty()
@@ -67,8 +66,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
 
     def reload_language(self):
         super().reload_language()
-        my_text = TEXT.competition_inscription
-        self.cancel_label = TEXT.general["cancel"]
+        my_text = TEXT.competition_results
         self.previous_label = TEXT.general["previous"]
         self.next_label = TEXT.general["next"]
         self.validate_label = TEXT.general["validate"]
@@ -77,8 +75,9 @@ class CompetitionInscriptionsScreen(OlympeScreen):
 
     def change_previous_next_buttons_text(self):
         if self.selected_sport_id == 0:
-            self.ids.previous_button.text = self.cancel_label
+            self.ids.previous_button.opacity = 0
         else:
+            self.ids.previous_button.opacity = 1
             self.ids.previous_button.text = self.previous_label
 
         if self.selected_sport_id == len(self.list_sports) - 1:
@@ -141,8 +140,6 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             self.selected_sport_id -= 1
             self.change_previous_next_buttons_text()
             self.reset_screen()
-        else:
-            self.go_to_next_screen(screen_name="game")
 
     def go_to_next_sport(self):
         if self.selected_sport_id != len(self.list_sports) - 1:
