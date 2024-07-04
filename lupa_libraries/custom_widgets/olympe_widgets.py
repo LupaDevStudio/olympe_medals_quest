@@ -119,6 +119,7 @@ class OlympeCard(RelativeLayout):
     foldable_mode = BooleanProperty(False)
     image_mode = BooleanProperty(False)
     money_mode = BooleanProperty(False)
+    button_mode = BooleanProperty(False)
 
     header_height = NumericProperty(HEADER_HEIGHT)
     header_text = StringProperty()
@@ -131,10 +132,16 @@ class OlympeCard(RelativeLayout):
     keep_line_folded = BooleanProperty(False)
 
     image_source = StringProperty()
-    is_hurt = BooleanProperty(False)
+    has_icon_in_image = BooleanProperty(False)
+    icon_in_image_source = StringProperty()
+    icon_in_image_position = ObjectProperty({"x": 0.05, "top": 0.95})
     image_release_function = ObjectProperty(lambda: 1 + 1)
 
     money_amount = NumericProperty()
+
+    button_text = StringProperty()
+    button_release_function = ObjectProperty(lambda: 1 + 1)
+    button_disable_button = BooleanProperty(False)
 
     font_ratio = NumericProperty(1)
 

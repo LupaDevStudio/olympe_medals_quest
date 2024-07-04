@@ -198,7 +198,7 @@
         header_height: root.header_height
         font_size: FONTS_SIZES.label
         image_mode: True
-        is_hurt: root.is_hurt
+        has_icon_in_image: root.is_hurt
         image_source: root.image_source
         image_release_function: root.image_release_function
         money_mode: True
@@ -353,3 +353,26 @@
         pos_hint: {"center_x": 0.5}
         release_function: root.release_function
         disable_button: root.disable_button
+
+<SmallInscriptionCard>:
+
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        header_height: root.height
+        font_size: FONTS_SIZES.label
+        image_mode: True
+        has_icon_in_image: root.best_medal_source != ""
+        icon_in_image_source: root.best_medal_source
+        icon_in_image_position: {"right": 0.975, "y": 0.025}
+        image_source: root.image_source
+        button_mode: True
+        button_text: root.button_text
+        button_disable_button: root.disable_button
+        button_release_function: root.release_function
+        foldable_mode: True
+        is_folded: True
+        pos: (0, 0)
+        size_hint: (CARD_WIDTH, 1)
+        line_width: root.line_width

@@ -24,7 +24,8 @@ from kivy.properties import (
 from lupa_libraries import (
     OlympeScreen,
     SportLabelButton,
-    CompleteInscriptionCard
+    CompleteInscriptionCard,
+    SmallInscriptionCard
 )
 from tools.constants import (
     TEXT,
@@ -40,7 +41,8 @@ from tools.graphics import (
     MARGIN_HEIGHT,
     BUTTON_HEIGHT,
     SKILL_HEIGHT,
-    SCROLLVIEW_WIDTH
+    SCROLLVIEW_WIDTH,
+    BIG_HEADER_HEIGHT
 )
 from tools.data_structures import (
     Athlete,
@@ -71,7 +73,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
     validate_label = StringProperty()
     list_sports = ListProperty([])
     selected_sport_id = NumericProperty(0)
-    athlete_folded = ObjectProperty({})
+    athlete_folded_dict = ObjectProperty({})
     spent_coins = NumericProperty()
 
     def reload_language(self):
@@ -143,11 +145,17 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             scrollview_layout.add_widget(sport_button)
 
     def fill_scrollview(self):
-        scrollview_layout = self.ids["scrollview_layout"]
 
         selected_sport_id = self.list_sports[self.selected_sport_id]
         sport: Sport = SPORTS[selected_sport_id]
         sport_stats = sport.stats
+
+        if self.athlete_folded_dict == {}:
+            for athlete in GAME.team:
+                if selected_sport_id in athlete.sports:
+                    self.athlete_folded_dict[athlete.id] = [False, None]
+
+        scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
         for athlete in GAME.team:
@@ -158,41 +166,68 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                 for stat in sport_stats:
                     athlete_skills[stat] = athlete.stats[stat]
 
-                # TODO distinction avec is folded
+                title_card = athlete.first_name + " " + athlete.name
+                best_medal_source = GAME.get_best_medal_source_from_athlete_in_sport(
+                            athlete_id=athlete.id, sport_id=selected_sport_id)
+                disable_button = athlete.is_hurt # TODO aussi s'il y a trop d'athlètes envoyés et si on n'a pas asssez d'argent => le faire dans GAME
 
-                if len(athlete_skills) > 0:
-                    height = self.font_ratio * (
-                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+                if self.athlete_folded_dict[athlete.id][0]:
+                    inscription_card = SmallInscriptionCard(
+                        title_card=title_card,
+                        image_source=athlete.image,
+                        font_ratio=self.font_ratio,
+                        best_medal_source=best_medal_source,
+                        disable_button=disable_button,
+                        release_function=partial(self.send_athlete, athlete),
+                        button_text="TODO",
+                        size_hint=(SCROLLVIEW_WIDTH, None),
+                        height=BIG_HEADER_HEIGHT*self.font_ratio,
+                    )
+                
                 else:
-                    height = self.font_ratio * (
-                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*3 + BUTTON_HEIGHT)
 
-                inscription_card = CompleteInscriptionCard(
-                    title_card=athlete.first_name + " " + athlete.name,
-                    font_ratio=self.font_ratio,
-                    skills_dict=athlete_skills,
-                    image_source=athlete.image,
-                    health=get_health_string(athlete=athlete),
-                    size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=height,
-                    fatigue_evolution="TODO",
-                    wound_risk="TODO",
-                    button_text="TODO",
-                    best_medal_source=GAME.get_best_medal_source_from_athlete_in_sport(
-                        athlete_id=athlete.id, sport_id=selected_sport_id),
-                    disable_button=athlete.is_hurt,
-                    release_function=partial(self.send_athlete, athlete)
-                )
+                    if len(athlete_skills) > 0:
+                        height = self.font_ratio * (
+                            HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+                    else:
+                        height = self.font_ratio * (
+                            HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*3 + BUTTON_HEIGHT)
 
+                    inscription_card = CompleteInscriptionCard(
+                        title_card=title_card,
+                        font_ratio=self.font_ratio,
+                        skills_dict=athlete_skills,
+                        image_source=athlete.image,
+                        health=get_health_string(athlete=athlete),
+                        size_hint=(SCROLLVIEW_WIDTH, None),
+                        height=height,
+                        fatigue_evolution="TODO",
+                        wound_risk="TODO",
+                        button_text="TODO",
+                        best_medal_source=best_medal_source,
+                        disable_button=disable_button,
+                        release_function=partial(self.send_athlete, athlete)
+                    )
+
+                self.athlete_folded_dict[athlete.id][1] = inscription_card
                 scrollview_layout.add_widget(inscription_card)
 
     def send_athlete(self, athlete: Athlete):
         print("TODO envoyer retirer athlète")
 
     def ask_redraw(self, widget):
-        print("TODO redraw")
+        for athlete_id in self.athlete_folded_dict:
+            if widget == self.athlete_folded_dict[athlete_id][1]:
+                self.athlete_folded_dict[athlete_id][0] = not self.athlete_folded_dict[athlete_id][0]
+                break
+        
+        # Rebuild scrollview
+        self.ids.scrollview_layout.reset_scrollview()
+        self.fill_scrollview()
 
     def reset_screen(self):
+        self.athlete_folded_dict = {}
+
         # Reset scrollviews
         self.ids.scrollview_layout.reset_scrollview()
         self.ids.scrollview_layout_vertical.reset_scrollview()

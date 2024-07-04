@@ -23,7 +23,8 @@ from lupa_libraries.custom_widgets.character_widgets import (
     MedalsCard,
     SkillsCard,
     CompleteRecruitCard,
-    CompleteInscriptionCard
+    CompleteInscriptionCard,
+    SmallInscriptionCard
 )
 
 ### Layouts ###

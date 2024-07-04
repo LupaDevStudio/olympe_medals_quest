@@ -474,3 +474,34 @@ class CompleteInscriptionCard(RelativeLayout):
         current_screen_name = self.get_root_window().children[0].current
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
+
+class SmallInscriptionCard(RelativeLayout):
+
+    ### Information on the athlete ###
+
+    title_card = StringProperty()
+    image_source = StringProperty()
+    best_medal_source = StringProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    ### Sizes ###
+
+    button_text = StringProperty()
+    disable_button = BooleanProperty(False)
+    release_function = ObjectProperty(lambda: 1 + 1)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
