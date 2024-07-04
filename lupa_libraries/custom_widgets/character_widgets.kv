@@ -308,6 +308,9 @@
         height: root.character_height*root.font_ratio
         width: self.height
         pos_hint: {"x": 0.05}
+        icon_mode: root.best_medal_source != ""
+        icon_source: root.best_medal_source
+        icon_position: {"right": 0.975, "y": 0.025}
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height)
         font_ratio: root.font_ratio
         line_width: root.line_width
@@ -320,16 +323,25 @@
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
         width: root.width * (1 - 0.05*4) - character.width
         x: root.width * 0.05 * 2 + character.width
+        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2*root.character_height/3 + 6)
+
+    SurroundedLabel:
+        text: root.fatigue_evolution
+        font_ratio: root.font_ratio
+        size_hint: (None, None)
+        height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
+        width: root.width * (1 - 0.05*4) - character.width
+        x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + root.character_height/3 + 4)
 
-    # SurroundedLabel:
-    #     text: root.reputation
-    #     font_ratio: root.font_ratio
-    #     size_hint: (None, None)
-    #     height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
-    #     width: root.width * (1 - 0.05*4) - character.width
-    #     x: root.width * 0.05 * 2 + character.width
-    #     y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
+    SurroundedLabel:
+        text: root.wound_risk
+        font_ratio: root.font_ratio
+        size_hint: (None, None)
+        height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
+        width: root.width * (1 - 0.05*4) - character.width
+        x: root.width * 0.05 * 2 + character.width
+        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2)
 
     # Send button
     PressedButton:

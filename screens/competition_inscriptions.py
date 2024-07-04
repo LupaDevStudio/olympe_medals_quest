@@ -15,7 +15,8 @@ from functools import partial
 from kivy.properties import (
     StringProperty,
     NumericProperty,
-    ListProperty
+    ListProperty,
+    ObjectProperty
 )
 
 ### Local imports ###
@@ -70,6 +71,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
     validate_label = StringProperty()
     list_sports = ListProperty([])
     selected_sport_id = NumericProperty(0)
+    athlete_folded = ObjectProperty({})
     spent_coins = NumericProperty()
 
     def reload_language(self):
@@ -100,20 +102,35 @@ class CompetitionInscriptionsScreen(OlympeScreen):
 
     def fill_scrollview_vertical(self):
         scrollview_layout = self.ids["scrollview_layout_vertical"]
-        width_label = 100
         margin_label = 10
+        total_label_width = 0
 
         for counter_sport in range(len(self.list_sports)):
             sport_id = self.list_sports[counter_sport]
 
             pos_x = self.font_ratio * (
-                width_label*counter_sport + margin_label * (counter_sport+1))
+                total_label_width + margin_label * (counter_sport+1))
             
+            sport_name = TEXT.sports[sport_id]["name"]
+            width_label = 11 * len(sport_name)
+            if len(sport_name) <= 7:
+                width_label += 8
+            elif len(sport_name) >= 22:
+                width_label -= 28
+            elif len(sport_name) >= 17:
+                width_label -= 15
+            elif len(sport_name) >= 13:
+                width_label -= 7
+            number_long_letters = sport_name.count("m") + sport_name.count("w")
+            if number_long_letters >= 2:
+                width_label += 2.5 * number_long_letters
+            total_label_width += width_label
+
             sport_button = SportLabelButton(
-                text=TEXT.sports[sport_id]["name"],
+                text=sport_name,
                 size_hint=(None, 1),
-                width=width_label*self.font_ratio,
                 x=pos_x,
+                width=width_label*self.font_ratio,
                 pos_hint={"center_y": 0.5},
                 font_ratio=self.font_ratio,
                 is_selected=counter_sport == self.selected_sport_id,
@@ -158,6 +175,8 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                     health=get_health_string(athlete=athlete),
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=height,
+                    fatigue_evolution="TODO",
+                    wound_risk="TODO",
                     button_text="TODO",
                     best_medal_source=GAME.get_best_medal_source_from_athlete_in_sport(
                         athlete_id=athlete.id, sport_id=selected_sport_id),
