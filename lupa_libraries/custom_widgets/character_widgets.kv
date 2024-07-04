@@ -286,3 +286,58 @@
         pos_hint: {"center_x": 0.5}
         release_function: root.recruit_release_function
         disable_button: root.disable_button
+
+<CompleteInscriptionCard>:
+
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        pos: (0, 0)
+        size_hint: (CARD_WIDTH, 1)
+        foldable_mode: True
+        is_folded: False
+        line_width: root.line_width
+
+    ### Information ###
+    
+    CharacterButtonWithIcon:
+        id: character
+        image_source: root.image_source
+        size_hint: (None, None)
+        height: root.character_height*root.font_ratio
+        width: self.height
+        pos_hint: {"x": 0.05}
+        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height)
+        font_ratio: root.font_ratio
+        line_width: root.line_width
+        disable_button: True
+
+    SurroundedLabel:
+        text: root.health
+        font_ratio: root.font_ratio
+        size_hint: (None, None)
+        height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
+        width: root.width * (1 - 0.05*4) - character.width
+        x: root.width * 0.05 * 2 + character.width
+        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + root.character_height/3 + 4)
+
+    # SurroundedLabel:
+    #     text: root.reputation
+    #     font_ratio: root.font_ratio
+    #     size_hint: (None, None)
+    #     height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
+    #     width: root.width * (1 - 0.05*4) - character.width
+    #     x: root.width * 0.05 * 2 + character.width
+    #     y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
+
+    # Send button
+    PressedButton:
+        text: root.button_text
+        size_hint: (0.5, None)
+        height: root.button_height*root.font_ratio
+        font_ratio: root.font_ratio
+        y: MARGIN_HEIGHT*root.font_ratio
+        pos_hint: {"center_x": 0.5}
+        release_function: root.release_function
+        disable_button: root.disable_button

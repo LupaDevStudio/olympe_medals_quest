@@ -22,7 +22,8 @@ from lupa_libraries.custom_widgets.character_widgets import (
     CharacterInfoWithMainSportsLayout,
     MedalsCard,
     SkillsCard,
-    CompleteRecruitCard
+    CompleteRecruitCard,
+    CompleteInscriptionCard
 )
 
 ### Layouts ###

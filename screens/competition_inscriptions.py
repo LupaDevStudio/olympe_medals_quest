@@ -22,24 +22,31 @@ from kivy.properties import (
 
 from lupa_libraries import (
     OlympeScreen,
-    SportLabelButton
+    SportLabelButton,
+    CompleteInscriptionCard
 )
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_SPEND_MONEY_RIGHT,
     SCREEN_CUSTOM_TITLE,
-    GAME
+    GAME,
+    SPORTS
 )
 from tools.graphics import (
-    FONTS_SIZES,
-    COLORS
+    HEADER_HEIGHT,
+    CHARACTER_HEIGHT,
+    MARGIN_HEIGHT,
+    BUTTON_HEIGHT,
+    SKILL_HEIGHT,
+    SCROLLVIEW_WIDTH
 )
 from tools.data_structures import (
-    Athlete
+    Athlete,
+    Sport
 )
-from tools.path import (
-    PATH_TITLE_FONT
+from tools.olympe import (
+    get_health_string
 )
 
 #############
@@ -87,8 +94,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             self.ids.next_button.text = self.next_label
 
     def on_pre_enter(self, *args):
-        # TODO take the GAME.unlocked_sports
-        self.list_sports = ["Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6", "Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6"]
+        self.list_sports = GAME.sports_unlocked
 
         super().on_pre_enter(*args)
 
@@ -98,12 +104,13 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         margin_label = 10
 
         for counter_sport in range(len(self.list_sports)):
-            sport_name = self.list_sports[counter_sport]
+            sport_id = self.list_sports[counter_sport]
+
             pos_x = self.font_ratio * (
                 width_label*counter_sport + margin_label * (counter_sport+1))
             
             sport_button = SportLabelButton(
-                text=sport_name,
+                text=TEXT.sports[sport_id]["name"],
                 size_hint=(None, 1),
                 width=width_label*self.font_ratio,
                 x=pos_x,
@@ -121,7 +128,50 @@ class CompetitionInscriptionsScreen(OlympeScreen):
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
-        print("TODO fill scrollview")
+        selected_sport_id = self.list_sports[self.selected_sport_id]
+        sport: Sport = SPORTS[selected_sport_id]
+        sport_stats = sport.stats
+
+        athlete: Athlete
+        for athlete in GAME.team:
+            if selected_sport_id in athlete.sports:
+                athlete_skills = {
+                    selected_sport_id: athlete.sports[selected_sport_id]
+                }
+                for stat in sport_stats:
+                    athlete_skills[stat] = athlete.stats[stat]
+
+                # TODO distinction avec is folded
+
+                if len(athlete_skills) > 0:
+                    height = self.font_ratio * (
+                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+                else:
+                    height = self.font_ratio * (
+                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*3 + BUTTON_HEIGHT)
+
+                inscription_card = CompleteInscriptionCard(
+                    title_card=athlete.first_name + " " + athlete.name,
+                    font_ratio=self.font_ratio,
+                    skills_dict=athlete_skills,
+                    image_source=athlete.image,
+                    health=get_health_string(athlete=athlete),
+                    size_hint=(SCROLLVIEW_WIDTH, None),
+                    height=height,
+                    button_text="TODO",
+                    best_medal_source=GAME.get_best_medal_source_from_athlete_in_sport(
+                        athlete_id=athlete.id, sport_id=selected_sport_id),
+                    disable_button=athlete.is_hurt,
+                    release_function=partial(self.send_athlete, athlete)
+                )
+
+                scrollview_layout.add_widget(inscription_card)
+
+    def send_athlete(self, athlete: Athlete):
+        print("TODO envoyer retirer athlète")
+
+    def ask_redraw(self, widget):
+        print("TODO redraw")
 
     def reset_screen(self):
         # Reset scrollviews

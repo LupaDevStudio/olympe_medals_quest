@@ -86,8 +86,7 @@ class CompetitionResultsScreen(OlympeScreen):
             self.ids.next_button.text = self.next_label
 
     def on_pre_enter(self, *args):
-        # TODO take the GAME.unlocked_sports
-        self.list_sports = ["Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6", "Sport 1", "Sport 2", "Sport 3", "Sport 4", "Sport 5", "Sport 6"]
+        self.list_sports = GAME.sports_unlocked
 
         super().on_pre_enter(*args)
 
@@ -97,12 +96,12 @@ class CompetitionResultsScreen(OlympeScreen):
         margin_label = 10
 
         for counter_sport in range(len(self.list_sports)):
-            sport_name = self.list_sports[counter_sport]
+            sport_id = self.list_sports[counter_sport]
             pos_x = self.font_ratio * (
                 width_label*counter_sport + margin_label * (counter_sport+1))
             
             sport_button = SportLabelButton(
-                text=sport_name,
+                text=TEXT.sports[sport_id]["name"],
                 size_hint=(None, 1),
                 width=width_label*self.font_ratio,
                 x=pos_x,

@@ -52,8 +52,10 @@ PATH_ACTIVITIES_ICONS = PATH_ICONS + "activities/"
 PATH_CHARACTERS_IMAGES = PATH_IMAGES + "characters/"
 PATH_BACKGROUNDS = PATH_IMAGES + "backgrounds/"
 PATH_MEDALS_IMAGES = PATH_IMAGES + "medals/"
+
 PATH_FONTS = PATH_RESOURCES + "fonts/"
 PATH_COUNTRIES = PATH_RESOURCES + "countries.json"
+PATH_SPORTS = PATH_RESOURCES + "sports.json"
 
 # Path for the languages
 PATH_LANGUAGE = PATH_RESOURCES + "languages/"

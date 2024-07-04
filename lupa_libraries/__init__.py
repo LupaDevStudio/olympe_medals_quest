@@ -25,6 +25,7 @@ from lupa_libraries.custom_widgets import (
     SkillsCard,
     MedalsCard,
     CompleteRecruitCard,
+    CompleteInscriptionCard,
     SportLabelButton
 )
 

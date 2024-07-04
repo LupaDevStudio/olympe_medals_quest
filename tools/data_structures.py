@@ -175,29 +175,20 @@ class Sport():
     """
 
     id: str
-    name: str
-    skills: tuple[str]
+    stats: list[str]
+    requirements: list[str]
     mode_summer_winter: Literal["summer", "winter"]
 
     @ property
     def category(self) -> int:
-        return len(self.skills)
+        return len(self.stats)
 
     def __init__(self, dict_to_load: dict):
         self.id = dict_to_load.get("id", "")
-        self.name = dict_to_load.get("name", "")
-        self.skills = tuple(dict_to_load.get("skills", ()))
+        self.stats = list(dict_to_load.get("stats", ()))
+        self.requirements = list(dict_to_load.get("requirements", ()))
         self.mode_summer_winter = dict_to_load.get(
             "mode_summer_winter", "summer")
-
-    def export_dict(self) -> dict:
-        return {
-            "id": self.id,
-            "name": self.name,
-            "skills": list(self.skills),
-            "mode_summer_winter": self.mode_summer_winter,
-        }
-
 
 class Athlete():
     """
@@ -252,7 +243,7 @@ class Athlete():
         # Extract the first sports
         best_sports = dict(sorted_sports[:number_sports])
         return dict(reversed(best_sports.items()))
-         
+
     def __str__(self):
         return f"Athlete {self.id}: {self.name} {self.first_name}\n" \
                f"Age: {self.age}, Salary: {self.salary}, Recruit Price: {self.recruit_price}\n" \
@@ -403,7 +394,7 @@ class Medal():
     A class to store the data of a medal.
     """
 
-    type_medal: Literal["gold", "silver", "copper"]
+    type_medal: Literal["gold", "silver", "bronze"]
     edition: int
     type_edition: Literal["summer", "winter"]
     athlete_id: str
@@ -484,19 +475,18 @@ class Game():
     countries: dict[str, Country]
     sports_complex: SportsComplex
     medals: list[Medal]
-    sports: dict[str, Sport]
     sports_unlocking_progress: dict[str, float]
     # Sport id with athlete ids
     selected_athletes_summer: dict[str, list[str]]
     selected_athletes_winter: dict[str, list[str]]
 
     @property
-    def sports_unlocked(self) -> list[Sport]:
+    def sports_unlocked(self) -> list[str]:
         sports_unlocked = []
         for key in self.sports_unlocking_progress:
             value = self.sports_unlocking_progress[key]
-            if value >= 1:
-                sports_unlocked.append(self.sports[key])
+            if value == 1:
+                sports_unlocked.append(key)
         return sports_unlocked
 
     @property
@@ -537,8 +527,6 @@ class Game():
             dict_to_load=dict_to_load.get("sports_complex", {}))
         self.medals = [
             Medal(dict_to_load=medal_dict) for medal_dict in dict_to_load.get("medals", [])]
-        self.sports = {
-            sport_id: Sport(dict_to_load=sport_dict) for sport_id, sport_dict in dict_to_load.get("sports", {}).items()}
         self.sports_unlocking_progress = dict_to_load.get(
             "sports_unlocking_progress", {})
         self.selected_athletes_summer = dict_to_load.get(
@@ -618,7 +606,22 @@ class Game():
 
         return list_medals
 
-    def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "copper"], edition: int, type_edition: Literal["summer", "winter"]="summer"):
+    def get_best_medal_source_from_athlete_in_sport(self, athlete_id: str, sport_id: str) -> str:
+        order_medals = ["", "bronze", "silver", "gold"]
+        best_medal_type = ""
+        best_medal = None
+        for medal in self.medals:
+            if medal.athlete_id == athlete_id and medal.sport_id == sport_id:
+                ref = order_medals.index(best_medal_type)
+                current = order_medals.index(medal.type_medal)
+                if current > ref:
+                    best_medal_type = medal.type_medal
+                    best_medal = medal
+        if best_medal is None:
+            return ""
+        return best_medal.image
+
+    def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "bronze"], edition: int, type_edition: Literal["summer", "winter"]="summer"):
         new_medal = Medal(
             dict_to_load={
                 "sport_id": sport_id,
@@ -667,8 +670,6 @@ class Game():
             "sports_complex": self.sports_complex.export_dict(),
             "medals": [
                 medal.export_dict() for medal in self.medals],
-            "sports": {
-                sport_id: sport.export_dict() for sport_id, sport in self.sports.items()},
             "sports_unlocking_progress": self.sports_unlocking_progress,
             "selected_athletes_summer": self.selected_athletes_summer,
             "selected_athletes_winter": self.selected_athletes_winter,

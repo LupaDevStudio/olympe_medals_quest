@@ -27,7 +27,8 @@ from tools.basic_tools import (
     load_json_file
 )
 from tools.constants import (
-    GAME
+    GAME,
+    TEXT
 )
 from tools.data_structures import (
     Athlete,
@@ -80,6 +81,21 @@ for key in first_names_dict:
 def compute_salary(stats, reputation) -> int:
     # TODO
     return 1200
+
+def get_health_string(athlete: Athlete) -> str:
+    is_hurt = athlete.is_hurt
+
+    health = TEXT.injuries[athlete.health["type_injury"]]
+    if is_hurt:
+        time_absent = athlete.health["time_absent"]
+        if time_absent > 1:
+            health += " - " + time_absent + " " + \
+                TEXT.general["trimesters"].lower()
+        else:
+            health += " - " + time_absent + " " + \
+                TEXT.general["trimester"].lower()
+            
+    return health
 
 ##########################
 ### Athlete generation ###

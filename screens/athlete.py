@@ -46,6 +46,9 @@ from tools.graphics import (
 from tools.data_structures import (
     Athlete
 )
+from tools.olympe import (
+    get_health_string
+)
 
 #############
 ### Class ###
@@ -80,17 +83,6 @@ class AthleteScreen(OlympeScreen):
 
         ### Main information card ###
 
-        is_hurt = self.athlete.is_hurt
-        health = TEXT.injuries[self.athlete.health["type_injury"]]
-        if is_hurt:
-            time_absent = self.athlete.health["time_absent"]
-            if time_absent > 1:
-                health += " - " + time_absent + " " + \
-                    TEXT.general["trimesters"].lower()
-            else:
-                health += " - " + time_absent + " " + \
-                    TEXT.general["trimester"].lower()
-
         self.main_info_card = CharacterWithMainInfoFireLayout(
             image_source=self.athlete.image,
             salary=self.athlete.salary,
@@ -98,10 +90,10 @@ class AthleteScreen(OlympeScreen):
             reputation=TEXT.general["reputation"].replace("@", str(self.athlete.reputation)),
             fatigue=self.my_text["fatigue"].replace(
                 "@", str(self.athlete.fatigue)),
-            health=health,
+            health=get_health_string(athlete=self.athlete),
             font_ratio=self.font_ratio,
             fire_text=self.my_text["fire"],
-            is_hurt=is_hurt,
+            is_hurt=self.athlete.is_hurt,
             fire_athlete_function=self.ask_fire_athlete,
             size_hint=(SCROLLVIEW_WIDTH, None),
             height=250 * self.font_ratio

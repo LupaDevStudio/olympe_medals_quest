@@ -420,3 +420,57 @@ class CompleteRecruitCard(RelativeLayout):
         current_screen_name = self.get_root_window().children[0].current
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
+
+class CompleteInscriptionCard(RelativeLayout):
+
+
+    ### Information on the athlete ###
+
+    skills_dict = ObjectProperty({})
+    title_card = StringProperty()
+    image_source = StringProperty()
+    best_medal_source = StringProperty()
+    fatigue_evolution = StringProperty()
+    health = StringProperty()
+    wound_risk = StringProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    ### Sizes ###
+
+    button_height = NumericProperty(BUTTON_HEIGHT)
+    character_height = NumericProperty(CHARACTER_HEIGHT)
+
+    button_text = StringProperty()
+    disable_button = BooleanProperty(False)
+    release_function = ObjectProperty(lambda: 1 + 1)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        total_height = SKILL_HEIGHT * len(self.skills_dict) * self.font_ratio
+
+        character_skills_layout = CharacterSkillsLayout(
+            skills_dict=self.skills_dict,
+            font_ratio=self.font_ratio,
+            pos_hint={"x":0.025},
+            y=(MARGIN_HEIGHT*2 + self.button_height) * self.font_ratio,
+            size_hint=(0.95, None),
+            height=total_height
+        )
+        self.add_widget(character_skills_layout)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
