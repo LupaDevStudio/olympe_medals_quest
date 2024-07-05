@@ -16,6 +16,8 @@ from kivy.properties import (
     StringProperty,
     BooleanProperty
 )
+from kivy.core.window import Window
+from kivy.uix.gridlayout import GridLayout
 
 ### Local imports ###
 
@@ -56,8 +58,15 @@ class GameScreen(OlympeScreen):
     }
     launch_main_action_label = StringProperty()
     main_action = "plan"  # can be "plan" or "begin_competition"
+    our_country_label = StringProperty()
     has_notifications_olympe = BooleanProperty(True)
     has_notifications_minister = BooleanProperty(False)
+
+    def reload_language(self):
+        super().reload_language()
+        self.my_text = TEXT.game
+        self.launch_main_action_label = self.my_text[self.main_action]
+        self.our_country_label = TEXT.countries["our_country"]
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
@@ -85,15 +94,7 @@ class GameScreen(OlympeScreen):
             )
             USER_DATA.save_changes()
 
-    def on_enter(self, *args):
-        super().on_enter(*args)
-
         self.fill_grid_layout()
-
-    def reload_language(self):
-        super().reload_language()
-        self.my_text = TEXT.game
-        self.launch_main_action_label = self.my_text[self.main_action]
 
     def fill_grid_layout(self):
         # TODO insert in this list only the buttons unlocked depending on tutorial
@@ -109,12 +110,12 @@ class GameScreen(OlympeScreen):
         max_icons = 7
         max_lines = (max_icons // 2) + 1
 
-        grid_layout = self.ids["grid_layout"]
+        grid_layout: GridLayout = self.ids["grid_layout"]
         grid_layout.size_hint = (0.9, 0.45)
         grid_layout.padding = (0.05 * self.width, 20 * self.font_ratio)
         grid_layout.spacing = 20 * self.font_ratio
         height_button = (
-            grid_layout.size_hint[1] * self.height - grid_layout.padding[1] * 2 - (max_lines - 1) * grid_layout.spacing[1]) // max_lines
+            grid_layout.size_hint[1] * Window.size[1] - grid_layout.padding[1] * 2 - (max_lines - 1) * grid_layout.spacing[1]) // max_lines
 
         for element in list_buttons:
 
@@ -123,7 +124,7 @@ class GameScreen(OlympeScreen):
                 text=self.my_text[element],
                 font_ratio=self.font_ratio,
                 release_function=partial(self.go_to_next_screen, element),
-                size_hint=(0.45, None),
+                size_hint=(0.4, None),
                 height=height_button,
             )
 
@@ -131,11 +132,9 @@ class GameScreen(OlympeScreen):
 
     def launch_main_action(self):
         if self.main_action == "plan":
-            ...
-            # TODO go to planning screen
+            self.go_to_next_screen(screen_name="planification")
         elif self.main_action == "begin_competition":
-            ...
-            # TODO go to competition
+            self.go_to_next_screen(screen_name="competition_inscriptions")
 
     def launch_dialog_olympe(self):
         print("TODO olympe")

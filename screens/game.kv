@@ -15,6 +15,24 @@
         pos_hint: {"center_x": 0.5, "y": 0.8}
         size_hint: (0.7, 0.08)
 
+        Label:
+            text: root.our_country_label
+            font_size: root.font_ratio * FONTS_SIZES.subtitle
+            pos_hint: {"x": 0.075, "center_y": 0.5}
+            size_hint: (1, 1)
+            shorten: False
+            text_size: self.size
+            font_name: PATH_TITLE_FONT
+            halign: "left"
+            valign: "middle"
+            line_height: 1
+            color: COLORS.white
+
+        Image:
+            source: PATH_FLAGS_IMAGES + "our_country.png"
+            pos_hint: {"right": 0.925, "center_y": 0.5}
+            size_hint: (None, 0.7)
+            width: self.height
 
     ### List of actions allowed ###
 
@@ -29,7 +47,8 @@
         id: grid_layout
         cols: 2
         pos_hint: {"center_x": 0.5, "y": 0.325}
-        spacing: 20*root.font_ratio
+        spacing: 0.05*root.width
+        padding: 0.05*root.width
 
     ### Characters ###
 
