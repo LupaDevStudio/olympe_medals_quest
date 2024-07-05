@@ -10,6 +10,7 @@
         background_color: COLORS.dark_transparent_black
         line_width: LARGE_LINE_WIDTH
         line_offset_vertical: 0
+        font_ratio: root.font_ratio
 
         CustomScrollview:
             id: scrollview_vertical
@@ -30,6 +31,7 @@
     OlympeCard:
         pos_hint: {"center_x":0.5, "y": BOTTOM_BAR_HEIGHT + 0.025}
         size_hint: (SCROLLVIEW_WIDTH, 0.95 - 2*TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT)
+        font_ratio: root.font_ratio
 
         CustomScrollview:
             id: scrollview
