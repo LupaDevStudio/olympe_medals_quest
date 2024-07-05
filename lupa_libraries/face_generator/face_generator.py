@@ -72,32 +72,43 @@ HAIRCUT_FEMALE_FOLDER = os.path.join(RESOURCES_FOLDER, "women_hair")
 
 HAIR_COLOR_FEMALE = [
     "#3c3c3c",  # gray
-    "#d7bf94",  # light blond
-    "#d4946b",  # light brown
-    "#160800",  # black
+    "#000000",  # black
+    "#160800",  # black brown
     "#370d00",  # dark brown
+    "#3d1f0a",  # grey dark brown
+    "#8b4700",  # light brown
+    "#612a00",  # brown
+    "#5f360c",  # brown 2
+    "#a93c06",  # ginger brown
     "#ff5600",  # ginger
     "#ffab27",  # blond
+    "#df790e",  # dark blond
     "#a30000",  # red
     "#e51364",  # pink lupa
     "#247a91",  # blue lupa
     "#7700db",  # purple
     "#080072",  # dark blue
     "#006e03",  # green
+    "#00947a",  # turquoise 
 ]
 HAIR_COLOR_MALE = [
     "#3c3c3c",  # gray
-    "#d7bf94",  # light blond
-    "#d4946b",  # light brown
-    "#160800",  # black
+    "#000000",  # black
+    "#160800",  # black brown
     "#370d00",  # dark brown
+    "#3d1f0a",  # grey dark brown
+    "#8b4700",  # light brown
     "#612a00",  # brown
+    "#5f360c",  # brown 2
+    "#a93c06",  # ginger brown
     "#ff5600",  # ginger
     "#ffab27",  # blond
+    "#df790e",  # dark blond
     "#a30000",  # red
     "#247a91",  # blue lupa
     "#080072",  # dark blue
-    "#006e03"  # green
+    "#006e03",  # green
+    "#00947a",  # turquoise 
 ]
 
 HAIRCUT_MALE_SHAPES = [name.replace(".png", "")
@@ -149,11 +160,6 @@ EYES_Y_CENTER = HEIGHT * 120 / 250
 EYES_FOLDER = os.path.join(RESOURCES_FOLDER, "eye")
 
 EYES_COLORS = [
-    # "#4d4743",
-    # "#395269",
-    # "#694c39",
-    # "#4c6939",
-    # "#396962"
     "#612a00",  # brown
     "#03661e",  # green
     "#2c1000",  # dark brown
@@ -170,6 +176,7 @@ EYES_SHAPES = [name.replace(".png", "") for name in os.listdir(EYES_FOLDER)]
 
 FACE_FILE = os.path.join(SKIN_FOLDER, "face.png")
 LOWER_FACE_FILE = os.path.join(SKIN_FOLDER, "lower_face.png")
+LOWER_FACE_PONYTAILS_FILE = os.path.join(SKIN_FOLDER, "lower_face_ponytails.png")
 
 ### Body ###
 
@@ -846,6 +853,9 @@ class Body:
         self.right_arm.paste_on_image(image)
         self.t_shirt.paste_on_image(image)
 
+class LowerFacePonytails(Face):
+
+    image_src = LOWER_FACE_PONYTAILS_FILE
 
 class LowerFace(Face):
 
@@ -1095,9 +1105,14 @@ class Portrait:
         body.paste_on_image(image)
 
         # Add the lower face
-        lower_face = LowerFace(
-            primary_color=self.skin_color[0],
-            secondary_color=self.skin_color[1])
+        if self.hair_shape in ["woman_17", "woman_18", "woman_19", "woman_20"]:
+            lower_face = LowerFacePonytails(
+                primary_color=self.skin_color[0],
+                secondary_color=self.skin_color[1])
+        else:
+            lower_face = LowerFace(
+                primary_color=self.skin_color[0],
+                secondary_color=self.skin_color[1])
         lower_face.paste_on_image(image)
 
         # Add the eyes
@@ -1151,7 +1166,9 @@ class Portrait:
 
 if __name__ == "__main__":
     for i in range(100):
-        portrait = Portrait()
+        portrait = Portrait(
+            hairs_behind_face=False
+        )
         portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/{i}.png"))
         portrait.export_as_json(os.path.join(
             CURRENT_FOLDER, f"draft/{i}.json"))
