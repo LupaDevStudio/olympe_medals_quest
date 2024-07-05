@@ -222,7 +222,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         skills_dict=athlete_skills,
                         image_source=athlete.image,
                         health=get_health_string(athlete=athlete),
-                        size_hint=(SCROLLVIEW_WIDTH, None),
+                        size_hint=(1, None),
                         height=height,
                         fatigue_evolution="TODO",
                         wound_risk="TODO",

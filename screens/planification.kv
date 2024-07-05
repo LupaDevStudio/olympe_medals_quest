@@ -15,12 +15,13 @@
             bar_inactive_color: COLORS.blue_pressed_olympe
             size_hint: (1, None)
             height: self.parent.height - HEADER_HEIGHT*root.font_ratio - SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio
+            bar_margin: 8*root.font_ratio
 
             MyScrollViewLayout:
                 id: scrollview_layout
                 cols: 1
                 spacing: (10*root.font_ratio, 10*root.font_ratio)
-                padding: (10*root.font_ratio, 5*root.font_ratio, 10*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
+                padding: (10*root.font_ratio, 5*root.font_ratio, 20*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
 
     PressedButton:
         text: root.validate_label

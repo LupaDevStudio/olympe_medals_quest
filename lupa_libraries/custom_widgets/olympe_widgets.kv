@@ -1,5 +1,4 @@
 #:kivy 2.2.1
-#:set BACKGROUND_MARGIN 16
 
 <CharacterButtonWithIcon>:
     # Background
@@ -42,13 +41,13 @@
         Color:
             rgba: self.background_color
         Rectangle:
-            pos: (-BACKGROUND_MARGIN//2*self.font_ratio, 0)
-            size: (BACKGROUND_MARGIN*self.font_ratio + self.size[0], self.size[1])
+            pos: (0, 0)
+            size: self.size
 
         Color:
             rgba: COLORS.white if self.header_mode and (not self.is_folded or self.keep_line_folded) else COLORS.transparent
         Line:
-            points: [0, self.height - self.header_height*self.font_ratio, self.width, self.height - self.font_ratio * self.header_height]
+            points: [self.line_offset_vertical*self.font_ratio, self.height - self.header_height*self.font_ratio, self.width - self.line_offset_vertical*self.font_ratio, self.height - self.font_ratio * self.header_height]
             width: LARGE_LINE_WIDTH*root.font_ratio
 
     CharacterButtonWithIcon:

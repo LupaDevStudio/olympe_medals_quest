@@ -153,6 +153,7 @@ class OlympeCard(RelativeLayout):
 
     font_ratio = NumericProperty(1)
 
+    line_offset_vertical = NumericProperty(8)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     background_color = ColorProperty(COLORS.transparent_black)
 

@@ -68,4 +68,5 @@ class MyScrollViewVerticalLayout(GridLayout):
             self.remove_widget(element)
 
 class CustomScrollview(ScrollView):
-    pass
+    
+    font_ratio = NumericProperty(1)

@@ -165,6 +165,7 @@ class CharacterSkillsLayout(RelativeLayout):
     ### Information on the skills ###
 
     skills_dict = ObjectProperty({})
+    show_level_up = BooleanProperty(False)
 
     font_size = NumericProperty(FONTS_SIZES.label)
     text_font_name = StringProperty(PATH_TEXT_FONT)
@@ -203,11 +204,16 @@ class CharacterSkillsLayout(RelativeLayout):
             skill_label.bind(size=skill_label.setter('text_size'))
             self.add_widget(skill_label)
 
+            if self.show_level_up:
+                pos_hint = {"center_x": 0.7, "center_y": pos_y}
+            else:
+                pos_hint = {"x": 0.4+0.6*0.17, "center_y": pos_y}
+
             skill_widget = CharacterStats(
                 stat_dict=self.skills_dict[skill],
                 size_hint=(0.6, None),
                 height=(self.skill_height-5)*self.font_ratio,
-                pos_hint={"center_x": 0.7, "center_y": pos_y},
+                pos_hint=pos_hint,
                 font_ratio=self.font_ratio
             )
             self.add_widget(skill_widget)
@@ -247,9 +253,9 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
         character_skills_layout = CharacterSkillsLayout(
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
-            pos_hint={"x":0.025},
+            pos_hint={"x":0.05},
             y=MARGIN_HEIGHT * self.font_ratio,
-            size_hint=(0.95, None),
+            size_hint=(0.9, None),
             height=total_height
         )
         self.add_widget(character_skills_layout)
@@ -357,9 +363,9 @@ class SkillsCard(RelativeLayout):
             character_skills_layout = CharacterSkillsLayout(
                 skills_dict=self.skills_dict,
                 font_ratio=self.font_ratio,
-                pos_hint={"x":0.025},
+                pos_hint={"x":0.05},
                 y=MARGIN_HEIGHT * self.font_ratio,
-                size_hint=(0.95, None),
+                size_hint=(0.9, None),
                 height=total_height
             )
             self.add_widget(character_skills_layout)
@@ -409,9 +415,9 @@ class CompleteRecruitCard(RelativeLayout):
         character_skills_layout = CharacterSkillsLayout(
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
-            pos_hint={"x":0.025},
+            pos_hint={"x":0.05},
             y=(MARGIN_HEIGHT*2 + self.recruit_button_height) * self.font_ratio,
-            size_hint=(0.95, None),
+            size_hint=(0.9, None),
             height=total_height
         )
         self.add_widget(character_skills_layout)
@@ -465,9 +471,9 @@ class CompleteInscriptionCard(RelativeLayout):
         character_skills_layout = CharacterSkillsLayout(
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
-            pos_hint={"x":0.025},
+            pos_hint={"x":0.05},
             y=(MARGIN_HEIGHT*2 + self.button_height) * self.font_ratio,
-            size_hint=(0.95, None),
+            size_hint=(0.9, None),
             height=total_height
         )
         self.add_widget(character_skills_layout)
@@ -535,6 +541,7 @@ class PlanificationCard(RelativeLayout):
 
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
+    release_function = ObjectProperty(lambda: 1 + 1)
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current

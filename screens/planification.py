@@ -108,7 +108,8 @@ class PlanificationScreen(OlympeScreen):
                     total_price=abs(-1200), # TODO
                     minus_mode=True, # TODO
                     planning_text=TEXT.planification["planning"],
-                    list_activities=[]
+                    list_activities=[],
+                    release_function=partial(self.open_planning_popup, athlete)
                 )
 
             self.athlete_folded_dict[athlete.id][1] = athlete_card
@@ -123,6 +124,9 @@ class PlanificationScreen(OlympeScreen):
         # Rebuild scrollview
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
+
+    def open_planning_popup(self, athlete: Athlete):
+        print("Planning")
 
     def ask_validate_planning(self):
         print("TODO ask validation planing")

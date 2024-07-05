@@ -48,7 +48,7 @@
     # Background
     OlympeCard:
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         font_ratio: root.font_ratio
 
     CharacterButtonWithIcon:
@@ -77,11 +77,12 @@
     ### Information ###
     
     MoneyLayout:
+        id: salary_label
         coins_count: root.salary
         salary_mode: True
         font_ratio: root.font_ratio
         size_hint: (None, 0.14)
-        width: root.width * (1 - 0.05*4) - character.width
+        width: root.width * (1 - 0.05*3) - character.width
         pos_hint: {"y": 0.05*5 + 4*0.14}
         x: root.width * 0.05 * 2 + character.width
 
@@ -89,7 +90,7 @@
         text: root.age
         font_ratio: root.font_ratio
         size_hint: (None, 0.14)
-        width: root.width * (1 - 0.05*4) - character.width
+        width: salary_label.width
         pos_hint: {"y": 0.05*4 + 3*0.14}
         x: root.width * 0.05 * 2 + character.width
 
@@ -97,7 +98,7 @@
         text: root.reputation
         font_ratio: root.font_ratio
         size_hint: (None, 0.14)
-        width: root.width * (1 - 0.05*4) - character.width
+        width: salary_label.width
         pos_hint: {"y": 0.05*3 + 2*0.14}
         x: root.width * 0.05 * 2 + character.width
 
@@ -105,7 +106,7 @@
         text: root.fatigue
         font_ratio: root.font_ratio
         size_hint: (None, 0.14)
-        width: root.width * (1 - 0.05*4) - character.width
+        width: salary_label.width
         pos_hint: {"y": 0.05*2 + 0.14}
         x: root.width * 0.05 * 2 + character.width
 
@@ -113,7 +114,7 @@
         text: root.health
         font_ratio: root.font_ratio
         size_hint: (None, 0.14)
-        width: root.width * (1 - 0.05*4) - character.width
+        width: salary_label.width
         pos_hint: {"y": 0.05}
         x: root.width * 0.05 * 2 + character.width
 
@@ -185,7 +186,7 @@
         header_mode: True
         header_text: root.title_card
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         foldable_mode: True
         is_folded: root.is_folded
         line_width: root.line_width
@@ -205,11 +206,12 @@
         image_release_function: root.image_release_function
         money_mode: True
         money_amount: root.salary
+        money_size_hint: (0.35, 0.5)
         foldable_mode: root.foldable_mode
         is_folded: root.is_folded
         keep_line_folded: True
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
 
@@ -220,7 +222,7 @@
         header_mode: True
         header_text: root.title_card
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         foldable_mode: True
         is_folded: root.is_folded
         line_width: root.line_width
@@ -232,7 +234,7 @@
         header_mode: True
         header_text: root.title_card
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         foldable_mode: True
         is_folded: False
         line_width: root.line_width
@@ -253,12 +255,13 @@
         disable_button: True
 
     MoneyLayout:
+        id: salary_label
         coins_count: root.salary
         salary_mode: True
         font_ratio: root.font_ratio
         size_hint: (None, None)
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
-        width: root.width * (1 - 0.05*4) - character.width
+        width: root.width * (1 - 0.05*3) - character.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2*root.character_height/3 + 6)
 
@@ -267,7 +270,7 @@
         font_ratio: root.font_ratio
         size_hint: (None, None)
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
-        width: root.width * (1 - 0.05*4) - character.width
+        width: salary_label.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + root.character_height/3 + 4)
 
@@ -276,7 +279,7 @@
         font_ratio: root.font_ratio
         size_hint: (None, None)
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
-        width: root.width * (1 - 0.05*4) - character.width
+        width: salary_label.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
 
@@ -298,7 +301,7 @@
         header_mode: True
         header_text: root.title_card
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         foldable_mode: True
         is_folded: False
         line_width: root.line_width
@@ -322,11 +325,12 @@
         disable_button: True
 
     SurroundedLabel:
+        id: health_label
         text: root.health
         font_ratio: root.font_ratio
         size_hint: (None, None)
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
-        width: root.width * (1 - 0.05*4) - character.width
+        width: root.width * (1 - 0.05*3) - character.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2*root.character_height/3 + 6)
 
@@ -334,8 +338,8 @@
         text: root.fatigue_evolution
         font_ratio: root.font_ratio
         size_hint: (None, None)
-        height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
-        width: root.width * (1 - 0.05*4) - character.width
+        height: health_label.height
+        width: health_label.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + root.character_height/3 + 4)
 
@@ -343,8 +347,8 @@
         text: root.wound_risk
         font_ratio: root.font_ratio
         size_hint: (None, None)
-        height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
-        width: root.width * (1 - 0.05*4) - character.width
+        height: health_label.height
+        width: health_label.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2)
 
@@ -383,7 +387,7 @@
         foldable_mode: True
         is_folded: True
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
 
@@ -396,7 +400,7 @@
         foldable_mode: True
         is_folded: False
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
 
@@ -423,6 +427,46 @@
         minus_mode: root.minus_mode
         plus_mode: not root.minus_mode
 
+    SurroundedLabel:
+        id: first_activity
+        text: "Act 1 TODO"
+        font_ratio: root.font_ratio
+        size_hint: (None, None)
+        width: root.width*0.85 - character.width
+        height: (root.character_height - 2*7)/3
+        x: 0.1*root.width + character.width
+        y: (2*7 + MARGIN_HEIGHT*2)*root.font_ratio + planning_button.height + 2*self.height
+
+    SurroundedLabel:
+        text: "Act 2 TODO"
+        font_ratio: root.font_ratio
+        size_hint: (None, None)
+        width: first_activity.width
+        height: first_activity.height
+        x: 0.1*root.width + character.width
+        y: (1*7 + MARGIN_HEIGHT*2)*root.font_ratio + planning_button.height + self.height
+
+    SurroundedLabel:
+        text: "Act 3 TODO"
+        font_ratio: root.font_ratio
+        size_hint: (None, None)
+        width: first_activity.width
+        height: first_activity.height
+        x: 0.1*root.width + character.width
+        y: MARGIN_HEIGHT*2*root.font_ratio + planning_button.height
+
+    # Planning button
+    PressedButton:
+        id: planning_button
+        text: root.planning_text
+        size_hint: (None, None)
+        width: first_activity.width
+        height: SKILL_HEIGHT * root.font_ratio
+        font_ratio: root.font_ratio
+        x: 0.1*root.width + character.width
+        y: MARGIN_HEIGHT*root.font_ratio
+        release_function: root.release_function
+
 <SmallPlanificationCard>:
 
     # Background with title
@@ -442,7 +486,8 @@
         money_amount: root.total_price
         money_minus_mode: root.minus_mode
         money_plus_mode: not root.minus_mode
+        money_size_hint: (0.35, 0.5)
         pos: (0, 0)
-        size_hint: (CARD_WIDTH, 1)
+        size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
