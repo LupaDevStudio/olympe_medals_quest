@@ -97,7 +97,7 @@ HAIR_COLOR_MALE = [
     "#a30000",  # red
     "#247a91",  # blue lupa
     "#080072",  # dark blue
-    "#006e03",  # green
+    "#006e03"  # green
 ]
 
 HAIRCUT_MALE_SHAPES = [name.replace(".png", "")
@@ -1016,6 +1016,8 @@ class Portrait:
         # Set the position of the hairs
         if hairs_behind_face is None:
             hairs_behind_face = bool(randrange(0, 2))
+            if self.hair_shape in ["man_6", "man_11"]:
+                hairs_behind_face = True
         self.hairs_behind_face = hairs_behind_face
 
     def get_dict(self) -> dict:
@@ -1153,3 +1155,18 @@ if __name__ == "__main__":
         portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/{i}.png"))
         portrait.export_as_json(os.path.join(
             CURRENT_FOLDER, f"draft/{i}.json"))
+
+    # for i in range(10):
+    #     portrait = Portrait(
+    #         gender="female",
+    #         hair_color="#29546c",
+    #         hair_shape="woman_2",
+    #         eyes_color="#1e3581",
+    #         skin_color=("#f5d29d", "#e7c38c"),
+    #         nose_shape="nose_3",
+    #         mouth_shape="mouth_happy",
+    #         clothes_color=("#00305f", "#001933"),
+    #         shirt_shape="shirt_2",
+    #         hairs_behind_face=True
+    #     )
+    #     portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/olympe{i}.png"))
