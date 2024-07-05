@@ -5,10 +5,10 @@
         "trimesters": "trimestres",
         "settings": "Paramètres",
         "edition": "Edition @",
-        "salary": "Salaire - ",
-        "recruit": "Recruit - ",
-        "age": "Age - @ years",
-        "reputation": "Reputation - @",
+        "salary": "Salaire : ",
+        "recruit": "Recruit : ",
+        "age": "Age : @ years",
+        "reputation": "Reputation : @",
         "skills": "Compétences",
         "medals": "Medals",
         "validate": "Validate",
@@ -31,7 +31,10 @@
         "begin_competition": "Commencer COMPETITION"
     },
     "sports_complex": {},
-    "planification": {},
+    "planification": {
+        "planification": "Planification",
+        "planning": "Emploi du temps"
+    },
     "team": {
         "athlete": " athlete",
         "athletes": " athletes",
@@ -44,7 +47,7 @@
     },
     "athlete": {
         "fire": "Fire",
-        "fatigue": "Fatigue - @ %"
+        "fatigue": "Fatigue : @ %"
     },
     "settings": {},
     "sports_menu": {},

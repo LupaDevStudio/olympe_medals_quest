@@ -140,6 +140,8 @@ class OlympeCard(RelativeLayout):
 
     money_amount = NumericProperty()
     money_size_hint = ObjectProperty((0.25, 0.5))
+    money_minus_mode = BooleanProperty(False)
+    money_plus_mode = BooleanProperty(False)
 
     button_text = StringProperty()
     button_release_function = ObjectProperty(lambda: 1 + 1)

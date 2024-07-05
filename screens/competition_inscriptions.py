@@ -15,8 +15,7 @@ from functools import partial
 from kivy.properties import (
     StringProperty,
     NumericProperty,
-    ListProperty,
-    ObjectProperty
+    ListProperty
 )
 
 ### Local imports ###
@@ -75,7 +74,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
     validate_label = StringProperty()
     list_sports = ListProperty([])
     selected_sport_counter = NumericProperty(0)
-    athlete_folded_dict = ObjectProperty({})
+    athlete_folded_dict = {}
     spent_coins = NumericProperty()
     spent_coins_in_current_sport = NumericProperty(0)
     left_label = StringProperty()

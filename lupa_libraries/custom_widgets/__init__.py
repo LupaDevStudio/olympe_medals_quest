@@ -24,7 +24,9 @@ from lupa_libraries.custom_widgets.character_widgets import (
     SkillsCard,
     CompleteRecruitCard,
     CompleteInscriptionCard,
-    SmallInscriptionCard
+    SmallInscriptionCard,
+    PlanificationCard,
+    SmallPlanificationCard
 )
 
 ### Layouts ###

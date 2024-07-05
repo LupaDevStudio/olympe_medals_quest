@@ -496,11 +496,71 @@ class SmallInscriptionCard(RelativeLayout):
     button_color = ColorProperty(COLORS.blue_olympe)
     button_pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
 
-    ### Sizes ###
-
     button_text = StringProperty()
     disable_button = BooleanProperty(False)
     release_function = ObjectProperty(lambda: 1 + 1)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
+
+class PlanificationCard(RelativeLayout):
+
+    ### Information on the athlete ###
+
+    title_card = StringProperty()
+    image_source = StringProperty()
+    is_hurt = BooleanProperty()
+    total_price = NumericProperty(0)
+    minus_mode = BooleanProperty()
+    planning_text = StringProperty()
+    list_activities = ListProperty([])
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    ### Sizes ###
+
+    character_height = NumericProperty(CHARACTER_HEIGHT)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
+
+class SmallPlanificationCard(RelativeLayout):
+
+    ### Information on the athlete ###
+
+    title_card = StringProperty()
+    image_source = StringProperty()
+    is_hurt = BooleanProperty()
+    total_price = NumericProperty()
+    minus_mode = BooleanProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Colors ###
+
+    background_color = ColorProperty(COLORS.transparent_black)
+    font_color = ColorProperty(COLORS.white)
+    line_color = ColorProperty(COLORS.white)
+
+    ### Sizes ###
 
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)

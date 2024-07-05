@@ -91,6 +91,8 @@
         pos_hint: {"right": 0.95 - icon.width/(root.width+1)} if root.icon_mode else {"right": 0.95}
         opacity: 1 if root.money_mode else 0
         line_width: root.line_width
+        minus_mode: root.money_minus_mode
+        plus_mode: root.money_plus_mode
 
     PressedButton:
         id: button

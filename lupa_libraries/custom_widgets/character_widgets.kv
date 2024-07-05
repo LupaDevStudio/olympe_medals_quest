@@ -49,6 +49,7 @@
     OlympeCard:
         pos: (0, 0)
         size_hint: (CARD_WIDTH, 1)
+        font_ratio: root.font_ratio
 
     CharacterButtonWithIcon:
         id: character
@@ -188,6 +189,7 @@
         foldable_mode: True
         is_folded: root.is_folded
         line_width: root.line_width
+        font_ratio: root.font_ratio
 
 <CharacterInfoWithMainSportsLayout>:
 
@@ -209,6 +211,7 @@
         pos: (0, 0)
         size_hint: (CARD_WIDTH, 1)
         line_width: root.line_width
+        font_ratio: root.font_ratio
 
 <SkillsCard>:
 
@@ -233,6 +236,7 @@
         foldable_mode: True
         is_folded: False
         line_width: root.line_width
+        font_ratio: root.font_ratio
 
     ### Information ###
     
@@ -298,6 +302,7 @@
         foldable_mode: True
         is_folded: False
         line_width: root.line_width
+        font_ratio: root.font_ratio
 
     ### Information ###
     
@@ -380,3 +385,64 @@
         pos: (0, 0)
         size_hint: (CARD_WIDTH, 1)
         line_width: root.line_width
+        font_ratio: root.font_ratio
+
+<PlanificationCard>:
+
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        foldable_mode: True
+        is_folded: False
+        pos: (0, 0)
+        size_hint: (CARD_WIDTH, 1)
+        line_width: root.line_width
+        font_ratio: root.font_ratio
+
+    CharacterButtonWithIcon:
+        id: character
+        image_source: root.image_source
+        size_hint: (None, None)
+        height: root.character_height*root.font_ratio
+        width: self.height
+        pos_hint: {"x": 0.05}
+        icon_mode: root.is_hurt
+        y: root.font_ratio * (MARGIN_HEIGHT * 2 + SKILL_HEIGHT)
+        font_ratio: root.font_ratio
+        line_width: root.line_width
+
+    MoneyLayout:
+        coins_count: root.total_price
+        font_ratio: root.font_ratio
+        size_hint: (None, None)
+        pos_hint: {"x": 0.05}
+        width: character.width
+        height: root.font_ratio*SKILL_HEIGHT
+        y: root.font_ratio * MARGIN_HEIGHT
+        minus_mode: root.minus_mode
+        plus_mode: not root.minus_mode
+
+<SmallPlanificationCard>:
+
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        header_height: root.height
+        font_size: FONTS_SIZES.label
+        image_mode: True
+        image_source: root.image_source
+        has_icon_in_image: root.is_hurt
+        icon_in_image_source: PATH_ICONS + "hurt.png"
+        foldable_mode: True
+        is_folded: True
+        keep_line_folded: False
+        money_mode: True
+        money_amount: root.total_price
+        money_minus_mode: root.minus_mode
+        money_plus_mode: not root.minus_mode
+        pos: (0, 0)
+        size_hint: (CARD_WIDTH, 1)
+        line_width: root.line_width
+        font_ratio: root.font_ratio

@@ -38,7 +38,7 @@
     Label:
         text: root.text
         font_size: root.font_ratio * root.font_size
-        pos: (0, 0) if not root.press_button else (0, -OFFSET_PRESSED*root.font_ratio)
+        pos: (0, OFFSET_PRESSED//2*root.font_ratio) if not root.press_button else (0, -OFFSET_PRESSED//2*root.font_ratio)
         shorten: False
         text_size: (root.width*root.text_filling_ratio,None)
         font_name: root.text_font_name
@@ -66,7 +66,7 @@
         source: root.icon_source
         color: root.icon_color if not root.disable_button else root.disabled_icon_color
         pos_hint: {"center_x": 0.5}
-        y: root.height/2 - self.height/2 if not root.press_button else root.height/2 - self.height/2 - OFFSET_PRESSED*root.font_ratio
+        y: root.height/2 - self.height/2 + OFFSET_PRESSED//2*root.font_ratio if not root.press_button else root.height/2 - self.height/2 - OFFSET_PRESSED//2*root.font_ratio
         size_hint: (None, root.size_hint_y_icon)
         width: self.height
 
@@ -90,7 +90,7 @@
         source: root.icon_source
         color: root.icon_color if not root.disable_button else root.disabled_icon_color
         pos_hint: {"x": OFFSET_HORIZONTAL_ICON}
-        y: root.height/2 - self.height/2 if not root.press_button else root.height/2 - self.height/2 - OFFSET_PRESSED*root.font_ratio
+        y: root.height/2 - self.height/2 + OFFSET_PRESSED//2*root.font_ratio if not root.press_button else root.height/2 - self.height/2 - OFFSET_PRESSED//2*root.font_ratio
         size_hint: (None, root.size_hint_y_icon)
         width: self.height
 
@@ -101,7 +101,7 @@
         font_size: root.font_ratio * root.font_size
         font_name: root.text_font_name
         x: OFFSET_HORIZONTAL_ICON*2*root.width + icon.width
-        y: 0 if not root.press_button else -OFFSET_PRESSED*root.font_ratio
+        y: OFFSET_PRESSED//2*root.font_ratio if not root.press_button else -OFFSET_PRESSED//2*root.font_ratio
         shorten: False
         size_hint: (None, 1)
         size: self.texture_size
@@ -130,5 +130,5 @@
         font_ratio: root.font_ratio
         size_hint: (1, 1)
         pos_hint: {"center_x": 0.5}
-        y: 0 if not root.press_button else -OFFSET_PRESSED*root.font_ratio
+        y: OFFSET_PRESSED//2*root.font_ratio if not root.press_button else -OFFSET_PRESSED//2*root.font_ratio
         line_mode: False
