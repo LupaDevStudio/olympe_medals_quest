@@ -130,7 +130,7 @@
             "character": "olympe",
             "expression": "neutral",
             "mystery": false,
-            "text": "[NAME_MINISTER], je t'ai attendu ! Mais ce n'est pas grave, tu es là maintenant ! Tu as écouté le discours du président de [NAME_COMPETITION] ?",
+            "text": "Hector, je t'ai attendu ! Mais ce n'est pas grave, tu es là maintenant ! Tu as écouté le discours du président de [NAME_COMPETITION] ?",
             "background": "office"
         },
         {

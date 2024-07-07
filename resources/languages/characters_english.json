@@ -1,18 +1,26 @@
 {
     "olympe": {
         "name": "Olympe",
-        "title": "Présidente de NOM PAYS"
+        "title": "President of Elysia'"
     },
     "minister": {
-        "name": "[NAME_MINISTER]",
-        "title": "Ministre des sports"
+        "name": "Hector",
+        "title": "Minister of Sports"
+    },
+    "phil": {
+        "name": "Phil",
+        "title": "METTRE ANCIENNE PROFESSION"
+    },
+    "coach": {
+        "name": "Phil",
+        "title": "Sports coach"
     },
     "president_competition": {
-        "name": "Président",
-        "title": "Président de la compétition [NAME_COMPETITION]"
+        "name": "Atlas",
+        "title": "President of F.I.G.H.T."
     },
     "journalist": {
-        "name": "Journalist",
+        "name": "Ariane",
         "title": "Journalist of Champions Voice"
     }
 }
