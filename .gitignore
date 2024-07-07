@@ -2,7 +2,6 @@
 *.xar
 
 athletes/**
-athletes_old/**
 
 # Ignore the reports folder
 reports
