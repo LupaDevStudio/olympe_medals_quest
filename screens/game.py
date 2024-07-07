@@ -38,7 +38,8 @@ from tools.constants import (
     USER_DATA
 )
 from tools.olympe import (
-    generate_athlete
+    generate_athlete,
+    launch_new_phase
 )
 
 #############
@@ -57,7 +58,7 @@ class GameScreen(OlympeScreen):
         SCREEN_MONEY_RIGHT: True
     }
     launch_main_action_label = StringProperty()
-    main_action = "plan"  # can be "plan" or "begin_competition"
+    main_action = "plan"  # can be "plan" or "begin_competition_{mode}"
     our_country_label = StringProperty()
     has_notifications_olympe = BooleanProperty(True)
     has_notifications_minister = BooleanProperty(False)
@@ -72,7 +73,8 @@ class GameScreen(OlympeScreen):
         super().on_pre_enter(*args)
 
         # TODO update the has_notifications depending if Olympe or the minister has notifications
-        # TODO update main_action
+        # Update main_action
+        self.main_action = GAME.get_main_action()
 
         if self.has_notifications_olympe:
             self.ids.olympe_button.trigger_icon_flashing()

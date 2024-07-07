@@ -35,7 +35,8 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    GAME
+    GAME,
+    USER_DATA
 )
 from tools.graphics import (
     MARGIN_HEIGHT,
@@ -142,7 +143,7 @@ class RecruitScreen(OlympeScreen):
                     reputation=TEXT.general["reputation"].replace("@", str(athlete.reputation)),
                     recruit_price=athlete.recruit_price,
                     disable_button=not(GAME.can_recruit_athlete(athlete=athlete)),
-                    recruit_release_function=partial(self.recruit_athlete, athlete)
+                    recruit_release_function=partial(self.ask_recruit_athlete, athlete)
                 )
 
             self.folded_dict[athlete.id][1] = character_card
@@ -158,8 +159,18 @@ class RecruitScreen(OlympeScreen):
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
 
+    def ask_recruit_athlete(self, athlete: Athlete):
+        # TODO popup launching recruit athlete
+        print("Popup of confirmation")
+
     def recruit_athlete(self, athlete: Athlete):
-        print("TODO")
+        GAME.recruit_athlete(athlete=athlete)
+        USER_DATA.save_changes()
+
+        # Reset scrollview
+        self.ids.scrollview_layout.reset_scrollview()
+        self.fill_scrollview()
+        self.reload_language()
 
     def go_to_team(self):
         self.go_to_next_screen(screen_name="team")

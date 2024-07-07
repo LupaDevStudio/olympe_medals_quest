@@ -28,7 +28,8 @@ from tools.basic_tools import (
 )
 from tools.constants import (
     GAME,
-    TEXT
+    TEXT,
+    USER_DATA
 )
 from tools.data_structures import (
     Athlete,
@@ -138,14 +139,16 @@ def generate_sports(main_sport: str | None, second_sport: str | None, level) -> 
         second_sport = "cheese_rolling"
 
     sports_dict = {
-        main_sport: copy.deepcopy(DEFAULT_STAT_DICT),
-        second_sport: copy.deepcopy(DEFAULT_STAT_DICT)
+        main_sport: copy.deepcopy(DEFAULT_STAT_DICT)
     }
+    if second_sport is not None:
+        sports_dict[second_sport] = copy.deepcopy(DEFAULT_STAT_DICT)
 
     # Choose randomly the learning rates for the both sports
     sports_dict[main_sport]["learning_rate"] = generate_learning_rates(
         double_proba=0.2, simple_proba=0.5)
-    sports_dict[second_sport]["learning_rate"] = generate_learning_rates()
+    if second_sport is not None:
+        sports_dict[second_sport]["learning_rate"] = generate_learning_rates()
 
     # Choose randomly the values (points) according to level
     # TODO
@@ -153,7 +156,7 @@ def generate_sports(main_sport: str | None, second_sport: str | None, level) -> 
     return sports_dict
 
 
-def generate_reputation(charm_dict: dict):
+def generate_reputation(charm_dict: dict) -> int:
     charm = charm_dict["points"]
     basis_reputation = charm * 100 / 70
     random_number = rd.random() * 5
@@ -168,18 +171,32 @@ def generate_reputation(charm_dict: dict):
         return 100
     return reputation
 
+def generate_recruit_price(salary: int, level: int) -> int:
+    # Random margin between -10.000 and 10.000 depending on level
+    multiplying_factor = 10
+    if level == 2:
+        multiplying_factor = 50
+    elif level == 3:
+        multiplying_factor = 100
+    elif level == 4:
+        multiplying_factor = 500
+    else:
+        multiplying_factor = 1000
+    random_margin = rd.randint(-10, 10)
 
-def generate_recruit_price(salary: int):
-    # TODO
-    return 3000
+    recruit_price = salary * 10 + random_margin * multiplying_factor
+    if recruit_price <= 0:
+        recruit_price = salary = 10
 
+    return recruit_price
 
 def generate_athlete(
         country: str = "our_country",
         age: int | None = None,
-        level: int = None,
-        main_sport: str = None,
-        second_sport: str = None) -> Athlete:
+        time_for_recruit: int | None = None,
+        max_level: int | None = None, # between 1 and 5
+        main_sport: str | None = None,
+        second_sport: str | None = None) -> Athlete:
 
     ### Athlete identity ###
 
@@ -190,9 +207,15 @@ def generate_athlete(
     if age is None:
         age = generate_age()
 
+    # Choose the time for recruit
+    if time_for_recruit is None:
+        time_for_recruit = rd.randint(2, 5)
+
     # TODO remplacer les None en fonction du niveau de notre pays
-    if level is None:
-        ...
+    if max_level is None:
+        max_level = GAME.compute_average_level()
+
+    level = rd.randint(1, max_level)
 
     ### Stats and sports ###
 
@@ -205,13 +228,16 @@ def generate_athlete(
 
     # Salary and recruit price
     salary = compute_salary(stats=stats, reputation=reputation)
-    recruit_price = generate_recruit_price(salary=salary)
+    recruit_price = generate_recruit_price(
+        salary=salary,
+        level=level)
 
     dict_to_load = {
         "first_name": first_name,
         "name": name,
         "age": age,
         "salary": salary,
+        "time_for_recruit": time_for_recruit,
         "recruit_price": recruit_price,
         "portrait": portrait.get_dict(),
         "reputation": reputation,
@@ -227,6 +253,50 @@ def generate_athlete(
         PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.json"))
 
     return athlete
+
+############
+### Game ###
+############
+
+def launch_new_phase(mode_new_phase: str | None = None) -> str:
+    # TODO check if recruit mode is unlocked in the GAME
+    if True:
+        new_athletes_list = []
+        # Classic generation at random when no particular event
+        if mode_new_phase is None:
+            number_sports_unlocked = len(GAME.sports_unlocked)
+            if number_sports_unlocked < 3:
+                number_athletes_to_add = rd.randint(0, 2)
+            elif number_sports_unlocked < 8:
+                number_athletes_to_add = rd.randint(2, 6)
+            elif number_sports_unlocked < 13:
+                number_athletes_to_add = rd.randint(4, 8)
+            elif number_sports_unlocked < 20:
+                number_athletes_to_add = rd.randint(6, 10)
+            else:
+                number_athletes_to_add = rd.randint(8, 12)
+            for counter in range(number_athletes_to_add):
+                new_athletes_list.append(generate_athlete())
+
+        # When we unlock recruit mode, three new athletes of the starting sport with basic level are added
+        elif mode_new_phase == "unlock_recruit_mode":
+            for counter in range(3):
+                new_athletes_list.append(generate_athlete(max_level=1))
+
+        # When we just unlock a sport, three new athletes of this sport are added
+        elif "sport_" in mode_new_phase:
+            for counter in range(3):
+                new_athletes_list.append(generate_athlete(
+                    main_sport=mode_new_phase.replace("sport_", "")
+                ))
+
+    main_action = GAME.go_to_next_trimester()
+    GAME.update_recrutable_athletes(
+        new_athletes_list=new_athletes_list)
+    
+    USER_DATA.save_changes()
+
+    return main_action
 
 #################
 ### Main code ###

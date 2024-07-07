@@ -226,7 +226,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         height=height,
                         fatigue_evolution="TODO",
                         wound_risk="TODO",
-                        button_text=button_text,
+                        button_text=button_text, # TODO mettre le prix si besoin PRICES_SELECTION[sport.category]
                         button_color=button_color,
                         button_pressed_color=button_pressed_color,
                         best_medal_source=best_medal_source,

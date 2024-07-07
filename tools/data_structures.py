@@ -66,6 +66,14 @@ TIER_RANK_DICT = {
     5: "A",
     6: "S"
 }
+# TODO changer les clés
+LEVEL_DICT = {
+    1000: 1,
+    2000: 2,
+    3000: 3,
+    4000: 4,
+    5000: 5
+}
 ROOMS_EVOLUTION_DICT = {
     "id_room_1": {
         "name": "Name of room 1",
@@ -208,6 +216,7 @@ class Athlete():
     age: int
     salary: int
     recruit_price: int
+    time_for_recruit: int
     fatigue: int
     health: dict
     reputation: int
@@ -221,6 +230,16 @@ class Athlete():
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
     @ property
+    def global_score(self) -> str:
+        # TODO prendre en compte le type de sport
+        score = 0
+        for stat in self.stats:
+            score += self.stats[stat]["points"]
+        for sport in self.sports:
+            score += self.sports[sport]["points"]
+        return score
+
+    @ property
     def is_hurt(self) -> str:
         return self.health["is_hurt"]
 
@@ -231,6 +250,7 @@ class Athlete():
         self.age = dict_to_load.get("age", 0)
         self.salary = dict_to_load.get("salary", 0)
         self.recruit_price = dict_to_load.get("recruit_price", 0)
+        self.time_for_recruit = dict_to_load.get("time_for_recruit", 0)
         self.fatigue = dict_to_load.get("fatigue", 0)
         self.health = dict_to_load.get(
             "health", copy.deepcopy(DEFAULT_HEALTH_DICT))
@@ -293,6 +313,7 @@ class Athlete():
             "first_name": self.first_name,
             "age": self.age,
             "salary": self.salary,
+            "time_for_recruit": self.time_for_recruit,
             "recruit_price": self.recruit_price,
             "fatigue": self.fatigue,
             "health": self.health,
@@ -563,9 +584,15 @@ class Game():
         return monthly_activities + monthly_salaries
 
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
-        # TODO call this function each month after having some new athetes
         # Diminish the time left to recruit and remove those with 0 time left
-        # TODO
+        list_athletes_to_remove = []
+        athlete: Athlete
+        for athlete in self.recrutable_athletes:
+            athlete.time_for_recruit -= 1
+            if athlete.time_for_recruit == 0:
+                list_athletes_to_remove.append(athlete)
+        for athlete in list_athletes_to_remove:
+            self.recrutable_athletes.remove(athlete)
 
         # Add the new athletes
         for athlete in new_athletes_list:
@@ -582,6 +609,7 @@ class Game():
     def recruit_athlete(self, athlete: Athlete):
         self.money -= athlete.recruit_price
         self.team.append(athlete)
+        self.recrutable_athletes.remove(athlete)
 
     def fire_athlete(self, athlete_id: str):
         for athlete in self.team:
@@ -649,11 +677,11 @@ class Game():
         )
         self.medals.append(new_medal)
 
-    def go_to_next_month(self):
+    def go_to_next_trimester(self):
         if self.trimester != 4:
             self.trimester += 1
         else:
-            self.trimester = 0
+            self.trimester = 1
             self.year += 1
             self.begin_new_year()
 
@@ -663,6 +691,35 @@ class Game():
         # Update the stats of the athletes according to their activities and age
         for athlete in self.team:
             athlete.update_monthly_performance()
+
+    def compute_average_level(self) -> int:
+        # Take the average of the 5 best athletes
+        list_athletes_scores = []
+        for athlete in self.team:
+            list_athletes_scores.append(athlete.global_score)
+        list_athletes_scores.sort(reverse=True)
+
+        list_five_best_athletes = list_athletes_scores
+        if len(list_athletes_scores) > 5:
+            list_five_best_athletes = list_athletes_scores[:5]
+    
+        average_score = sum(list_five_best_athletes) / len(list_five_best_athletes)
+        
+        for score_ref in LEVEL_DICT:
+            if average_score <= score_ref:
+                return LEVEL_DICT[score_ref]
+        return 5
+
+    def get_main_action(self) -> str:
+
+        main_action = "plan" # or "being_competition_{mode}"
+
+        # Summer competition trimester 2 each 4 years
+        if self.year % NB_YEARS_BETWEEN_EDITION == 0:
+            if self.trimester == 2:
+                main_action = "being_competition_summer"
+
+        return main_action
 
     def begin_new_year(self):
         for athlete in self.team:
