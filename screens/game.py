@@ -85,6 +85,11 @@ class GameScreen(OlympeScreen):
             GAME.recruit_athlete(athlete=first_athlete)
             USER_DATA.save_changes()
         # TODO TEMP
+        if GAME.recrutable_athletes == []:
+            first_athlete = generate_athlete()
+            GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+            USER_DATA.save_changes()
+        # TODO TEMP
         if GAME.medals == []:
             GAME.win_medal(
                 sport_id="cheese_rolling",

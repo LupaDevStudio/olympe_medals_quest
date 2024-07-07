@@ -133,9 +133,9 @@ def generate_stats(level) -> dict:
 def generate_sports(main_sport: str | None, second_sport: str | None, level) -> dict:
     # TODO choisir un principal sport parmi les sports débloqués
     if main_sport is None:
-        main_sport = ...
+        main_sport = "buoy_racing"
     if second_sport is None:
-        second_sport = ...
+        second_sport = "cheese_rolling"
 
     sports_dict = {
         main_sport: copy.deepcopy(DEFAULT_STAT_DICT),
@@ -171,7 +171,7 @@ def generate_reputation(charm_dict: dict):
 
 def generate_recruit_price(salary: int):
     # TODO
-    return 0
+    return 3000
 
 
 def generate_athlete(
@@ -213,7 +213,7 @@ def generate_athlete(
         "age": age,
         "salary": salary,
         "recruit_price": recruit_price,
-        # "portrait": portrait.export_as_dict(), #TODO uncomment
+        "portrait": portrait.get_dict(),
         "reputation": reputation,
         "stats": stats,
         "sports": sports
@@ -222,7 +222,9 @@ def generate_athlete(
     # Create the athlete and its associated image
     athlete = Athlete(dict_to_load=dict_to_load)
     portrait.export_as_png(os.path.join(
-        PATH_ATHLETES_IMAGES, f"{athlete.id}.png"))
+        PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.png"))
+    portrait.export_as_json(os.path.join(
+        PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.json"))
 
     return athlete
 

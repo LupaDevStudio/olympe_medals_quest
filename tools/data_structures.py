@@ -562,6 +562,15 @@ class Game():
         monthly_activities = self.get_monthly_activities_payment()
         return monthly_activities + monthly_salaries
 
+    def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
+        # TODO call this function each month after having some new athetes
+        # Diminish the time left to recruit and remove those with 0 time left
+        # TODO
+
+        # Add the new athletes
+        for athlete in new_athletes_list:
+            self.recrutable_athletes.append(athlete)
+
     def can_recruit_athlete(self, athlete: Athlete):
         # If the user has enough money
         if self.money >= athlete.recruit_price:

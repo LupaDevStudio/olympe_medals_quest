@@ -1,0 +1,141 @@
+{"team": [
+    {
+        "id": "e567fac7-52e9-4d60-bf94-602c11b081e1",
+        "name": "Miamour",
+        "first_name": "Gatho",
+        "age": 22,
+        "salary": 35000,
+        "recruit_price": 0,
+        "fatigue": 0,
+        "health": {
+            "is_hurt": false,
+            "type_injury": "",
+            "time_absent": 0
+        },
+        "reputation": 0,
+        "stats": {
+            "strength": {
+                "points": 0,
+                "learning_rate": 1
+            },
+            "speed": {
+                "points": 48,
+                "learning_rate": 2
+            },
+            "technique": {
+                "points": 21,
+                "learning_rate": 1
+            },
+            "precision": {
+                "points": 12,
+                "learning_rate": 1
+            },
+            "charm": {
+                "points": 70,
+                "learning_rate": 1.5
+            }
+        },
+        "sports": {
+            "cheese_rolling": {
+                "points": 60,
+                "learning_rate": 2
+            }
+        },
+        "previous_planning": [],
+        "current_planning": []
+    },
+    {
+        "id": "e567fac7-52e9-4d60-bf94-602c11b081e2",
+        "name": "Gatho",
+        "first_name": "Miamour",
+        "age": 22,
+        "salary": 1200,
+        "recruit_price": 0,
+        "fatigue": 0,
+        "health": {
+            "is_hurt": false,
+            "type_injury": "",
+            "time_absent": 0
+        },
+        "reputation": 0,
+        "stats": {
+            "strength": {
+                "points": 0,
+                "learning_rate": 1
+            },
+            "speed": {
+                "points": 48,
+                "learning_rate": 2
+            },
+            "technique": {
+                "points": 21,
+                "learning_rate": 1
+            },
+            "precision": {
+                "points": 12,
+                "learning_rate": 1
+            },
+            "charm": {
+                "points": 70,
+                "learning_rate": 1.5
+            }
+        },
+        "sports": {
+            "cheese_rolling": {
+                "points": 56,
+                "learning_rate": 1.5
+            },
+            "buoy_racing": {
+                "points": 35,
+                "learning_rate": 1
+            }
+        },
+        "previous_planning": [],
+        "current_planning": []
+    },
+    {
+        "id": "e567fac7-52e9-4d60-bf94-602c11b081e3",
+        "name": "Riesle",
+        "first_name": "Edward",
+        "age": 22,
+        "salary": 35000,
+        "recruit_price": 0,
+        "fatigue": 0,
+        "health": {
+            "is_hurt": false,
+            "type_injury": "",
+            "time_absent": 0
+        },
+        "reputation": 0,
+        "stats": {
+            "strength": {
+                "points": 0,
+                "learning_rate": 1
+            },
+            "speed": {
+                "points": 48,
+                "learning_rate": 2
+            },
+            "technique": {
+                "points": 21,
+                "learning_rate": 1
+            },
+            "precision": {
+                "points": 12,
+                "learning_rate": 1
+            },
+            "charm": {
+                "points": 70,
+                "learning_rate": 1.5
+            }
+        },
+        "sports": {
+            "cheese_rolling": {
+                "points": 60,
+                "learning_rate": 2
+            }
+        },
+        "previous_planning": [],
+        "current_planning": []
+    }
+]}
