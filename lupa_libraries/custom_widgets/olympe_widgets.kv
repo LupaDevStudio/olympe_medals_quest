@@ -175,3 +175,13 @@
         size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
+
+    TextMoneyLayoutUnderPressedButton:
+        coins_amount: 12000 # TODO
+        text: "Agrandir" # TODO
+        size_hint: (None, None)
+        width: 200 # TODO faire selon la width de l'image
+        height: BIG_BUTTON_HEIGHT*root.font_ratio
+        y: MARGIN_HEIGHT*root.font_ratio
+        pos_hint: {"x": 0.05}
+        # release_function: #TODO

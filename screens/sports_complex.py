@@ -35,7 +35,7 @@ from tools.constants import (
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
     HEADER_HEIGHT,
-    BUTTON_HEIGHT,
+    BIG_BUTTON_HEIGHT,
     ROOM_HEIGHT,
     MARGIN_HEIGHT
 )
@@ -94,7 +94,7 @@ class SportsComplexScreen(OlympeScreen):
                     font_ratio=self.font_ratio,
                     title_card=sports_complex_title,
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
                 )
 
             self.rooms_folded_dict["sports_complex"][1] = sports_complex_card
@@ -118,7 +118,7 @@ class SportsComplexScreen(OlympeScreen):
                     font_ratio=self.font_ratio,
                     title_card=room_title,
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
                 )
 
             self.rooms_folded_dict[room_id][1] = room_card

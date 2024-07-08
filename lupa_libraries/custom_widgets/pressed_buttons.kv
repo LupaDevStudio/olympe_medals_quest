@@ -132,3 +132,41 @@
         pos_hint: {"center_x": 0.5}
         y: OFFSET_PRESSED//2*root.font_ratio if not root.press_button else -OFFSET_PRESSED//2*root.font_ratio
         line_mode: False
+
+<TextMoneyLayoutUnderPressedButton>:
+    # Background
+    PressedThemeBackground:
+        pos: root.pos
+        size: root.size
+        background_color: root.background_color
+        background_disabled_color: root.background_disabled_color
+        pressed_color: root.pressed_color
+        pressed_disabled_color: root.pressed_disabled_color
+        radius: root.radius
+        font_ratio: root.font_ratio
+        disable_button: root.disable_button
+        press_button: root.press_button
+
+    # Main text
+    Label:
+        id: label
+        text: root.text
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        pos_hint: {"center_x": 0.5}
+        y: root.height//2 + OFFSET_PRESSED//2*root.font_ratio if not root.press_button else root.height//2 - OFFSET_PRESSED//2*root.font_ratio
+        shorten: False
+        size_hint: (1, 0.5)
+        size: self.texture_size
+        halign: "center"
+        valign: "middle"
+        color: root.font_color if not root.disable_button else root.disabled_font_color
+
+    # Money Layout
+    MoneyLayout:
+        coins_count: root.coins_amount
+        font_ratio: root.font_ratio
+        size_hint: (1, 0.5)
+        pos_hint: {"center_x": 0.5}
+        y: OFFSET_PRESSED//2*root.font_ratio if not root.press_button else -OFFSET_PRESSED//2*root.font_ratio
+        line_mode: False

@@ -14,7 +14,8 @@ from lupa_libraries.custom_widgets.pressed_buttons import (
     PressedButton,
     IconPressedButton,
     PressedWithIconButton,
-    TextMoneyLayoutPressedButton
+    TextMoneyLayoutPressedButton,
+    TextMoneyLayoutUnderPressedButton
 )
 from lupa_libraries.custom_widgets.character_widgets import (
     CharacterWithNameLayout,
