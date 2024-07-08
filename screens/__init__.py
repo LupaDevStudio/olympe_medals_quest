@@ -18,6 +18,10 @@ from screens.athlete import AthleteScreen
 from screens.competition_inscriptions import CompetitionInscriptionsScreen
 from screens.competition_results import CompetitionResultsScreen
 from screens.planification import PlanificationScreen
+from screens.sports_complex import SportsComplexScreen
+from screens.sports_menu import SportsMenuScreen
+from screens.activities_menu import ActivitiesMenuScreen
+from screens.medals import MedalsScreen
 
 ### Reference dict to create the screens ###
 
@@ -31,5 +35,9 @@ SCREENS_DICT = {
     "athlete": AthleteScreen,
     "competition_inscriptions": CompetitionInscriptionsScreen,
     "competition_results": CompetitionResultsScreen,
-    "planification": PlanificationScreen
+    "planification": PlanificationScreen,
+    "sports_complex": SportsComplexScreen,
+    "sports_menu": SportsMenuScreen,
+    "activities_menu": ActivitiesMenuScreen,
+    "medals": MedalsScreen
 }

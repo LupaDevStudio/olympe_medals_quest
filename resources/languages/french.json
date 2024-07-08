@@ -14,7 +14,8 @@
         "validate": "Valider",
         "cancel": "Annuler",
         "next": "Suivant",
-        "previous": "Précédent"
+        "previous": "Précédent",
+        "level": "Niveau"
     },
     "home": {
         "play": "Jouer"
@@ -30,7 +31,10 @@
         "plan": "Planifier",
         "begin_competition": "Commencer COMPETITION"
     },
-    "sports_complex": {},
+    "sports_complex": {
+        "title": "Gestion des locaux",
+        "sports_complex": "Complexe sportif"
+    },
     "planification": {
         "planification": "Planification",
         "planning": "Emploi du temps"
@@ -50,10 +54,18 @@
         "fatigue": "Fatigue : @ %"
     },
     "settings": {},
-    "sports_menu": {},
-    "activities_menu": {},
-    "medals": {},
-    "shop": {},
+    "sports_menu": {
+        "title": "Sports"
+    },
+    "activities_menu": {
+        "title": "Activités"
+    },
+    "medals": {
+        "title": "Médailles"
+    },
+    "shop": {
+        "title": "Boutique"
+    },
     "competition_results": {},
     "competition_inscriptions": {
         "select": "Inscrire",
@@ -192,7 +204,13 @@
     "countries": {
         "our_country": "Elysia"
     },
-    "rooms": {},
+    "rooms": {
+        "id_room_1": "Name of room 1",
+        "id_room_2": "Name of room 2",
+        "id_room_3": "Name of room 3",
+        "id_room_4": "Name of room 4",
+        "id_room_5": "Name of room 5"
+    },
     "activities": {},
     "tutorial": {},
     "popup": {},

@@ -56,6 +56,8 @@ PATH_FLAGS_IMAGES = PATH_IMAGES + "flags/"
 
 PATH_FONTS = PATH_RESOURCES + "fonts/"
 PATH_COUNTRIES = PATH_RESOURCES + "countries.json"
+PATH_SPORTS_COMPLEX_DICT = PATH_RESOURCES + "sports_complex.json"
+PATH_ROOMS_DICT = PATH_RESOURCES + "rooms.json"
 PATH_SPORTS = PATH_RESOURCES + "sports.json"
 
 # Path for the languages

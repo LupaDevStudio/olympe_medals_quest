@@ -29,7 +29,9 @@ from lupa_libraries.custom_widgets import (
     SmallInscriptionCard,
     PlanificationCard,
     SmallPlanificationCard,
-    SportLabelButton
+    SportLabelButton,
+    SmallRoomCard,
+    CompleteRoomCard
 )
 
 ### Dialog generator ###

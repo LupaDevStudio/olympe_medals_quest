@@ -24,7 +24,9 @@ from tools.path import (
     PATH_MEDALS_IMAGES,
     PATH_BACKGROUNDS,
     PATH_ATHLETES_IMAGES,
-    PATH_SPORTS
+    PATH_SPORTS,
+    PATH_SPORTS_COMPLEX_DICT,
+    PATH_ROOMS_DICT
 )
 from tools.basic_tools import (
     load_json_file,
@@ -74,45 +76,8 @@ LEVEL_DICT = {
     4000: 4,
     5000: 5
 }
-ROOMS_EVOLUTION_DICT = {
-    "id_room_1": {
-        "name": "Name of room 1",
-        "price": 1000,
-        "levels": {
-            1: {
-                "activities_unlocked": [],
-                "effects": []
-            }
-        }
-    }
-}
-GYMNASIUM_EVOLUTION_DICT = {
-    1: {
-        "max_number_athletes": 5,
-        "rooms_unlocked": [["id_room_1", 1], ["id_room_2", 1]],
-        "price": 0
-    },
-    2: {
-        "max_number_athletes": 10,
-        "rooms_unlocked": [["id_room_1", 2], ["id_room_2", 2]],
-        "price": 20000
-    },
-    3: {
-        "max_number_athletes": 20,
-        "rooms_unlocked": [["id_room_1", 3], ["id_room_3", 1]],
-        "price": 30000
-    },
-    4: {
-        "max_number_athletes": 50,
-        "rooms_unlocked": [["id_room_1", 4], ["id_room_4", 1]],
-        "price": 40000
-    },
-    5: {
-        "max_number_athletes": 100,
-        "rooms_unlocked": [["id_room_1", 5], ["id_room_5", 1]],
-        "price": 50000
-    }
-}
+SPORTS_COMPLEX_EVOLUTION_DICT = load_json_file(PATH_SPORTS_COMPLEX_DICT)
+ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
 
 NB_YEARS_BETWEEN_EDITION = 4
 
@@ -331,41 +296,32 @@ class Room():
     """
 
     id: str
-    name: str
     current_level: int
-    activities_unlocked: list[Activity]
-    effects: list
 
     @ property
     def image(self) -> str:
         return PATH_BACKGROUNDS + f"{self.id}_{self.current_level}.png"
 
+    @ property
+    def activities_unlocked(self) -> list[Activity]:
+        # TODO mettre en activités
+        return ROOMS_EVOLUTION_DICT[self.id]["levels"][str(self.current_level)]["activities_unlocked"]
+    
+    @ property
+    def effects(self) -> list:
+        return ROOMS_EVOLUTION_DICT[self.id]["levels"][str(self.current_level)]["effects"]
+
     def __init__(self, dict_to_load: dict) -> None:
         self.id = dict_to_load.get("id", "")
-        self.name = dict_to_load.get("name", ROOMS_EVOLUTION_DICT[self.id])
         self.current_level = dict_to_load.get("current_level", 1)
-        self.activities_unlocked = [
-            Activity(activity) for activity in dict_to_load.get("activities_unlocked", [])]
-        self.effects = dict_to_load.get("effects", [])
-
-    def update_according_to_level(self) -> None:
-        self.activities_unlocked = ROOMS_EVOLUTION_DICT[self.id]["levels"][
-            self.current_level]["activities_unlocked"]
-        self.effects = ROOMS_EVOLUTION_DICT[self.id]["levels"][
-            self.current_level]["effects"]
 
     def increase_level(self) -> None:
         self.current_level += 1
-        self.update_according_to_level()
 
     def export_dict(self) -> dict:
         return {
             "id": self.id,
-            "name": self.name,
             "current_level": self.current_level,
-            "activities_unlocked": [
-                activity.export_dict() for activity in self.activities_unlocked],
-            "effects": self.effects
         }
 
 
@@ -377,26 +333,47 @@ class SportsComplex():
     current_level: int
     rooms_bought: dict[str, Room]  # id room and associated Room
 
-    @property
-    def max_number_athletes(self):
-        return GYMNASIUM_EVOLUTION_DICT[
-            self.current_level]["max_number_athletes"]
+    @ property
+    def image(self) -> str:
+        return PATH_BACKGROUNDS + f"sport_complex_{self.current_level}.jpg"
 
-    @property
-    def rooms_unlocked(self):
-        list_rooms = []
-        for element in GYMNASIUM_EVOLUTION_DICT[self.current_level]["rooms_unlocked"]:
-            list_rooms.append(element)
-        return list_rooms
+    @ property
+    def max_number_athletes(self):
+        return SPORTS_COMPLEX_EVOLUTION_DICT[
+            str(self.current_level)]["max_number_athletes"]
+
+    @ property
+    def rooms_unlocked(self) -> dict[str, Room]:
+        dict_rooms = {}
+        for level in range(1, self.current_level+1):
+            for element in SPORTS_COMPLEX_EVOLUTION_DICT[str(level)]["rooms_unlocked"]:
+                room_id = element[0]
+
+                # Add only the minimum level the user has not bought
+                room_level = element[1]
+                has_already_bought = self.check_has_already_bought_room(
+                    room_id=room_id,
+                    room_level=room_level
+                )
+                if room_id not in dict_rooms and not has_already_bought:
+                    dict_rooms[room_id] = Room(
+                        dict_to_load={
+                            "id": room_id,
+                            "current_level": room_level
+                        }
+                    )
+        return dict_rooms
 
     def __init__(self, dict_to_load: dict) -> None:
         self.current_level = dict_to_load.get('current_level', 1)
         self.rooms_bought = {
             room_id: Room(dict_to_load=room_dict) for room_id, room_dict in dict_to_load.get('rooms_bought', {}).items()}
 
-    @property
-    def image(self) -> str:
-        return PATH_BACKGROUNDS + f"sport_complex_{self.current_level}.jpg"
+    def check_has_already_bought_room(self, room_id: str, room_level: str):
+        for room_id_ref in self.rooms_bought:
+            if room_id == room_id_ref:
+                return self.rooms_bought[room_id].current_level == room_level
+        return False
 
     def increase_level(self):
         self.current_level += 1
@@ -620,13 +597,13 @@ class Game():
         self.team.remove(athlete)
         self.fired_team.append(athlete)
 
-    def buy_sport_complex(self, room_id: str):
+    def buy_sports_complex(self, room_id: str):
         if room_id == "sports_complex":
             self.sports_complex.increase_level()
-            self.money -= GYMNASIUM_EVOLUTION_DICT[self.sports_complex.current_level]["price"]
+            self.money -= SPORTS_COMPLEX_EVOLUTION_DICT[str(self.sports_complex.current_level)]["price"]
         else:
             bought_room: Room = self.sports_complex.buy_room(room_id=room_id)
-            self.money -= ROOMS_EVOLUTION_DICT[room_id][bought_room.current_level]["price"]
+            self.money -= ROOMS_EVOLUTION_DICT[room_id][str(bought_room.current_level)]["price"]
 
     def get_medals_from_athlete(self, athlete_id: str) -> Medal:
         list_medals = []
@@ -878,4 +855,4 @@ for sport_id in SPORTS:
             "stats": SPORTS[sport_id]["stats"],
             "requirements": SPORTS[sport_id]["requirements"]
         }
-    ) 
+    )

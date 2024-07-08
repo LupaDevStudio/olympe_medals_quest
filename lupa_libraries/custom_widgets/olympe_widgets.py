@@ -197,3 +197,35 @@ class SportLabelButton(ButtonBehavior, RelativeLayout):
     def on_release(self):
         if self.collide_point(self.last_touch.x, self.last_touch.y):
             self.release_function()
+
+class SmallRoomCard(RelativeLayout):
+
+    title_card = StringProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.subtitle)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
+
+class CompleteRoomCard(RelativeLayout):
+
+    title_card = StringProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.subtitle)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)

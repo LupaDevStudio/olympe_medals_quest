@@ -1,0 +1,27 @@
+{
+    "1": {
+        "max_number_athletes": 5,
+        "rooms_unlocked": [["id_room_1", 1], ["id_room_2", 1]],
+        "price": 0
+    },
+    "2": {
+        "max_number_athletes": 10,
+        "rooms_unlocked": [["id_room_1", 2], ["id_room_2", 2]],
+        "price": 20000
+    },
+    "3": {
+        "max_number_athletes": 20,
+        "rooms_unlocked": [["id_room_1", 3], ["id_room_3", 1]],
+        "price": 30000
+    },
+    "4": {
+        "max_number_athletes": 50,
+        "rooms_unlocked": [["id_room_1", 4], ["id_room_4", 1]],
+        "price": 40000
+    },
+    "5": {
+        "max_number_athletes": 100,
+        "rooms_unlocked": [["id_room_1", 5], ["id_room_5", 1]],
+        "price": 50000
+    }
+}

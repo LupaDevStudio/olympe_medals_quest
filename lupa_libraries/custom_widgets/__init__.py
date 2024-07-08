@@ -35,7 +35,9 @@ from lupa_libraries.custom_widgets.money_layout import MoneyLayout
 from lupa_libraries.custom_widgets.olympe_widgets import (
     CharacterButtonWithIcon,
     OlympeCard,
-    SportLabelButton
+    SportLabelButton,
+    SmallRoomCard,
+    CompleteRoomCard
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,
