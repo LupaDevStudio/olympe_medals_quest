@@ -292,7 +292,8 @@ class CompleteRoomCard(RelativeLayout):
             
 
     def fill_scrollview(self, *args):
-        scrollview_layout = self.ids["scrollview_layout"]
+        return
+        scrollview_layout = self.ids["scrollview_layout_2"]
 
         ### Next level ###
 

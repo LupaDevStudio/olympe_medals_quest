@@ -205,24 +205,25 @@
         pos_hint: {"x": 0.05}
         release_function: root.buy_function
 
-    OlympeCard:
-        size_hint: (0.5, None)
-        height: root.font_ratio * (ROOM_HEIGHT + BIG_BUTTON_HEIGHT + MARGIN_HEIGHT)
-        y: MARGIN_HEIGHT*root.font_ratio
-        pos_hint: {"x": 0.45}
+    # OlympeCard:
+    #     size_hint: (0.5, None)
+    #     height: root.font_ratio * (ROOM_HEIGHT + BIG_BUTTON_HEIGHT + MARGIN_HEIGHT)
+    #     y: MARGIN_HEIGHT*root.font_ratio
+    #     pos_hint: {"x": 0.45}
 
-        CustomScrollview:
-            id: scrollview
-            bar_width: 5*root.font_ratio
-            bar_color: COLORS.blue_olympe
-            bar_inactive_color: COLORS.blue_pressed_olympe
-            size_hint: (1, None)
-            height: self.parent.height
-            bar_margin: 8*root.font_ratio
+        # CustomScrollview:
+        #     id: scrollview_2
+        #     bar_width: 5*root.font_ratio
+        #     bar_color: COLORS.blue_olympe
+        #     bar_inactive_color: COLORS.blue_pressed_olympe
+        #     size_hint: (1, None)
+        #     # height: self.parent.height
+        #     bar_margin: 8*root.font_ratio
+        #     do_scroll_x: False
 
-            MyScrollViewLayout:
-                id: scrollview_layout
-                cols: 1
-                spacing: (10*root.font_ratio, 10*root.font_ratio)
-                padding: (10*root.font_ratio, 10*root.font_ratio, 20*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
+        #     MyScrollViewLayout:
+        #         id: scrollview_layout_2
+        #         cols: 1
+        #         spacing: (10*root.font_ratio, 10*root.font_ratio)
+        #         padding: (10*root.font_ratio, 10*root.font_ratio, 20*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
 

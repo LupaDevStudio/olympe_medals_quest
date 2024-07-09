@@ -72,6 +72,7 @@ class SportsComplexScreen(OlympeScreen):
         self.sports_complex_title = my_text["title"]
 
     def fill_scrollview(self):
+        return
         scrollview_layout = self.ids["scrollview_layout"]
 
         if self.rooms_folded_dict == {}:
@@ -112,10 +113,38 @@ class SportsComplexScreen(OlympeScreen):
                         },
                         {
                             "text": "Test3"
+                        },
+                        {
+                            "text": "Test"
+                        },
+                        {
+                            "text": "Test2"
+                        },
+                        {
+                            "text": "Test3"
                         }
                     ],# TODO
                     next_level_title=TEXT.general["level"] + " " + str(next_level),
-                    next_level_details=[]# TODO
+                    next_level_details=[
+                        {
+                            "text": "Test"
+                        },
+                        {
+                            "text": "Test2"
+                        },
+                        {
+                            "text": "Test3"
+                        },
+                        {
+                            "text": "Test"
+                        },
+                        {
+                            "text": "Test2"
+                        },
+                        {
+                            "text": "Test3"
+                        }
+                    ]
                 )
 
             self.rooms_folded_dict["sports_complex"][1] = sports_complex_card
