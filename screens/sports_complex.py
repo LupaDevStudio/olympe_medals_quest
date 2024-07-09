@@ -72,7 +72,6 @@ class SportsComplexScreen(OlympeScreen):
         self.sports_complex_title = my_text["title"]
 
     def fill_scrollview(self):
-        return
         scrollview_layout = self.ids["scrollview_layout"]
 
         if self.rooms_folded_dict == {}:

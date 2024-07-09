@@ -12,6 +12,7 @@ from kivy.clock import Clock
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import (
     BooleanProperty,
     StringProperty,
@@ -223,7 +224,7 @@ class SmallRoomCard(RelativeLayout):
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
 
-class CompleteRoomCard(RelativeLayout):
+class CompleteRoomCard(FloatLayout):
 
     title_card = StringProperty()
 
@@ -292,7 +293,6 @@ class CompleteRoomCard(RelativeLayout):
             
 
     def fill_scrollview(self, *args):
-        return
         scrollview_layout = self.ids["scrollview_layout_2"]
 
         ### Next level ###

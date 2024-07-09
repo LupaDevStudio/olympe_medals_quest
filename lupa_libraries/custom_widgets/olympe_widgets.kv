@@ -180,7 +180,7 @@
         font_size: root.font_size
         foldable_mode: True
         is_folded: False
-        pos: (0, 0)
+        pos: root.pos
         size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
@@ -189,7 +189,7 @@
         id: image
         image_source: root.image_source
         pos_hint: {"x": 0.05}
-        y: root.font_ratio*(2*MARGIN_HEIGHT+BIG_BUTTON_HEIGHT)
+        y: root.y + root.font_ratio*(2*MARGIN_HEIGHT+BIG_BUTTON_HEIGHT)
         size_hint: (0.35, None)
         height: ROOM_HEIGHT*root.font_ratio
         font_ratio: root.font_ratio
@@ -201,7 +201,7 @@
         size_hint: (None, None)
         width: image.width
         height: BIG_BUTTON_HEIGHT*root.font_ratio
-        y: MARGIN_HEIGHT*root.font_ratio
+        y: root.y + MARGIN_HEIGHT*root.font_ratio
         pos_hint: {"x": 0.05}
         release_function: root.buy_function
 
@@ -211,19 +211,29 @@
     #     y: MARGIN_HEIGHT*root.font_ratio
     #     pos_hint: {"x": 0.45}
 
-        # CustomScrollview:
-        #     id: scrollview_2
-        #     bar_width: 5*root.font_ratio
-        #     bar_color: COLORS.blue_olympe
-        #     bar_inactive_color: COLORS.blue_pressed_olympe
-        #     size_hint: (1, None)
-        #     # height: self.parent.height
-        #     bar_margin: 8*root.font_ratio
-        #     do_scroll_x: False
+    FloatLayout:
+        size_hint: (0.5, None)
+        height: root.font_ratio * (ROOM_HEIGHT + BIG_BUTTON_HEIGHT + MARGIN_HEIGHT)
+        y: root.y + MARGIN_HEIGHT*root.font_ratio
+        pos_hint: {"x": 0.45}
+        canvas.before:
+            Color:
+                rgba: COLORS.transparent_black
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
-        #     MyScrollViewLayout:
-        #         id: scrollview_layout_2
-        #         cols: 1
-        #         spacing: (10*root.font_ratio, 10*root.font_ratio)
-        #         padding: (10*root.font_ratio, 10*root.font_ratio, 20*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
+        CustomScrollview:
+            id: scrollview_2
+            bar_width: 5*root.font_ratio
+            bar_color: COLORS.blue_olympe
+            bar_inactive_color: COLORS.blue_pressed_olympe
+            size_hint: (1, 1)
+            bar_margin: 8*root.font_ratio
+            pos_hint: {"x": 0, "y": 0}
 
+            MyScrollViewLayout:
+                id: scrollview_layout_2
+                cols: 1
+                spacing: (10*root.font_ratio, 10*root.font_ratio)
+                padding: (10*root.font_ratio, 10*root.font_ratio, 20*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
