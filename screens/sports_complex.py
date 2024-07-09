@@ -101,7 +101,21 @@ class SportsComplexScreen(OlympeScreen):
                     button_text=TEXT.sports_complex["expand"],
                     image_source=PATH_BACKGROUNDS + f"sport_complex_{next_level}.jpg",
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
+                    current_level_title=TEXT.general["level"] + " " + str(sports_complex_level),
+                    current_level_details=[
+                        {
+                            "text": "Test"
+                        },
+                        {
+                            "text": "Test2"
+                        },
+                        {
+                            "text": "Test3"
+                        }
+                    ],# TODO
+                    next_level_title=TEXT.general["level"] + " " + str(next_level),
+                    next_level_details=[]# TODO
                 )
 
             self.rooms_folded_dict["sports_complex"][1] = sports_complex_card
@@ -122,8 +136,13 @@ class SportsComplexScreen(OlympeScreen):
                 )
             else:
                 button_text = TEXT.sports_complex["buy"]
+                current_level_details = []
+                current_level_title = ""
                 if room.current_level != 1:
                     button_text = TEXT.sports_complex["expand"]
+                    current_level_title = TEXT.general["level"] + " " + str(next_level-1)
+                    current_level_details = [] # TODO
+
                 room_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
                     title_card=room_title,
@@ -131,7 +150,11 @@ class SportsComplexScreen(OlympeScreen):
                     button_text=button_text,
                     image_source=room.image,
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
+                    current_level_title=current_level_title,
+                    current_level_details=current_level_details,
+                    next_level_title=TEXT.general["level"] + " " + str(next_level),
+                    next_level_details=[]# TODO
                 )
 
             self.rooms_folded_dict[room_id][1] = room_card

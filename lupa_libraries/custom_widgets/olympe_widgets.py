@@ -10,13 +10,15 @@ Module to create a custom scrollview with appropriate colors and size.
 
 from kivy.clock import Clock
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.properties import (
     BooleanProperty,
     StringProperty,
     NumericProperty,
     ColorProperty,
-    ObjectProperty
+    ObjectProperty,
+    ListProperty
 )
 
 ### Local imports ###
@@ -29,10 +31,13 @@ from tools.graphics import(
     COLORS,
     HEADER_HEIGHT,
     LARGE_LINE_WIDTH,
-    BUTTON_LINE_WIDTH
+    BUTTON_LINE_WIDTH,
+    SUBTITLE_HEIGHT,
+    LABEL_HEIGHT
 )
 from tools.path import (
     PATH_TITLE_FONT,
+    PATH_TEXT_FONT,
     PATH_ICONS
 )
 
@@ -178,6 +183,10 @@ class OlympeCard(RelativeLayout):
                 self.size_hint_y_icon = 0.5
             self.icon_function = self.parent.ask_redraw
 
+class SeparationLine(RelativeLayout):
+
+    font_ratio = NumericProperty(1)
+
 class SportLabelButton(ButtonBehavior, RelativeLayout):
 
     is_selected = BooleanProperty(False)
@@ -222,6 +231,11 @@ class CompleteRoomCard(RelativeLayout):
     price = NumericProperty()
     button_text = StringProperty()
 
+    current_level_title = StringProperty()
+    current_level_details = ListProperty()
+    next_level_title = StringProperty()
+    next_level_details = ListProperty()
+
     font_size = NumericProperty(FONTS_SIZES.subtitle)
     text_font_name = StringProperty(PATH_TITLE_FONT)
     font_color = ColorProperty(COLORS.white)
@@ -229,6 +243,83 @@ class CompleteRoomCard(RelativeLayout):
     buy_function = ObjectProperty(lambda: 1 + 1)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.fill_scrollview()
+
+    def set_label_text_width(self, widget, value):
+        """
+        Function called when creating the labels to set correctly their size.
+        """
+        widget.text_size = (value[0], None)
+
+    def fill_scrollview_level_content(self, scrollview_layout, title, list_content):
+
+        ### Title ###
+
+        title = Label(
+            text=title,
+            font_name=PATH_TITLE_FONT,
+            font_size=FONTS_SIZES.subtitle*self.font_ratio,
+            size_hint=(1, None),
+            height=self.font_ratio*SUBTITLE_HEIGHT
+        )
+        scrollview_layout.add_widget(title)
+
+        ### Content ###
+
+        for element in list_content:
+            text = "   - " + element["text"]
+            if "release_function" in element:
+                release_function = element["release_function"]
+
+                # TODO treat this case with a new widget
+
+            content = Label(
+                text=text,
+                font_name=PATH_TEXT_FONT,
+                font_size=FONTS_SIZES.label*self.font_ratio,
+                size_hint=(1, None),
+                height=self.font_ratio*LABEL_HEIGHT,
+                halign="left",
+                valign="middle"
+            )
+            content.bind(texture_size=content.setter("size"))
+            content.bind(size=self.set_label_text_width)
+            scrollview_layout.add_widget(content)
+            
+
+    def fill_scrollview(self, *args):
+        scrollview_layout = self.ids["scrollview_layout"]
+
+        ### Next level ###
+
+        self.fill_scrollview_level_content(
+            scrollview_layout=scrollview_layout,
+            title=self.next_level_title,
+            list_content=self.next_level_details
+        )
+
+        if self.current_level_details != []:
+
+            ### Separation line ###
+
+            separation_line = SeparationLine(
+                size_hint=(1, None),
+                height=0,
+                font_ratio=self.font_ratio
+            )
+            scrollview_layout.add_widget(separation_line)
+
+            ### Current level ###
+
+            self.fill_scrollview_level_content(
+                scrollview_layout=scrollview_layout,
+                title=self.current_level_title,
+                list_content=self.current_level_details
+            )
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
