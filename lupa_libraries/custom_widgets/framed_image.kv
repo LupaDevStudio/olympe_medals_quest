@@ -1,0 +1,19 @@
+#:kivy 2.2.1
+
+<FramedImage>:
+
+    # Line
+    canvas.after:
+        Color:
+            rgba: self.line_color
+        Line:
+            rectangle: (self.x, self.y, self.width, self.height)
+            width: self.line_width * self.font_ratio
+
+    # Character image
+    Image:
+        id: image
+        source: root.image_source
+        pos_hint: {"center_x": 0.5, "y": 0}
+        size_hint: (1, 1)
+        fit_mode: root.fit_mode

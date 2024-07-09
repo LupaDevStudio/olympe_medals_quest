@@ -33,6 +33,7 @@ from lupa_libraries.custom_widgets.character_widgets import (
 ### Layouts ###
 
 from lupa_libraries.custom_widgets.money_layout import MoneyLayout
+from lupa_libraries.custom_widgets.framed_image import FramedImage
 from lupa_libraries.custom_widgets.olympe_widgets import (
     CharacterButtonWithIcon,
     OlympeCard,

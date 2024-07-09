@@ -218,10 +218,15 @@ class CompleteRoomCard(RelativeLayout):
 
     title_card = StringProperty()
 
+    image_source = StringProperty()
+    price = NumericProperty()
+    button_text = StringProperty()
+
     font_size = NumericProperty(FONTS_SIZES.subtitle)
     text_font_name = StringProperty(PATH_TITLE_FONT)
     font_color = ColorProperty(COLORS.white)
 
+    buy_function = ObjectProperty(lambda: 1 + 1)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 

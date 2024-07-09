@@ -176,12 +176,22 @@
         line_width: root.line_width
         font_ratio: root.font_ratio
 
+    FramedImage:
+        id: image
+        image_source: root.image_source
+        pos_hint: {"x": 0.05}
+        y: root.font_ratio*(2*MARGIN_HEIGHT+BIG_BUTTON_HEIGHT)
+        size_hint: (0.35, None)
+        height: ROOM_HEIGHT*root.font_ratio
+        font_ratio: root.font_ratio
+        fit_mode: "cover"
+
     TextMoneyLayoutUnderPressedButton:
-        coins_amount: 12000 # TODO
-        text: "Agrandir" # TODO
+        coins_amount: root.price
+        text: root.button_text
         size_hint: (None, None)
-        width: 200 # TODO faire selon la width de l'image
+        width: image.width
         height: BIG_BUTTON_HEIGHT*root.font_ratio
         y: MARGIN_HEIGHT*root.font_ratio
         pos_hint: {"x": 0.05}
-        # release_function: #TODO
+        release_function: root.buy_function

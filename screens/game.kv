@@ -28,11 +28,12 @@
             line_height: 1
             color: COLORS.white
 
-        Image:
-            source: PATH_FLAGS_IMAGES + "our_country.png"
+        FramedImage:
+            image_source: PATH_FLAGS_IMAGES + "our_country.png"
             pos_hint: {"right": 0.925, "center_y": 0.5}
-            size_hint: (None, 0.7)
-            width: self.height
+            size_hint: (None, 0.65)
+            width: 1.73*self.height # Image ratio of the flags
+            font_ratio: root.font_ratio
 
     ### List of actions allowed ###
 

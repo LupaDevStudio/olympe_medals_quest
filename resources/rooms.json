@@ -1,55 +1,87 @@
 {
     "id_room_1": {
-        "price": 1000,
-        "levels": {
-            "1": {
-                "activities_unlocked": [],
-                "effects": []
-            },
-            "2": {
-                "activities_unlocked": [],
-                "effects": []
-            },
-            "3": {
-                "activities_unlocked": [],
-                "effects": []
-            }
+        "1": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 1000
+        },
+        "2": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 5000
+        },
+        "3": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 10000
         }
     },
     "id_room_2": {
-        "price": 1000,
-        "levels": {
-            "1": {
-                "activities_unlocked": [],
-                "effects": []
-            }
+        "1": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 1000
+        },
+        "2": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 5000
+        },
+        "3": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 10000
         }
     },
     "id_room_3": {
-        "price": 1000,
-        "levels": {
-            "1": {
-                "activities_unlocked": [],
-                "effects": []
-            }
+        "1": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 1000
+        },
+        "2": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 5000
+        },
+        "3": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 10000
         }
     },
     "id_room_4": {
-        "price": 1000,
-        "levels": {
-            "1": {
-                "activities_unlocked": [],
-                "effects": []
-            }
+        "1": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 1000
+        },
+        "2": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 5000
+        },
+        "3": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 10000
         }
     },
     "id_room_5": {
-        "price": 1000,
-        "levels": {
-            "1": {
-                "activities_unlocked": [],
-                "effects": []
-            }
+        "1": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 1000
+        },
+        "2": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 5000
+        },
+        "3": {
+            "activities_unlocked": [],
+            "effects": [],
+            "price": 10000
         }
     }
 }

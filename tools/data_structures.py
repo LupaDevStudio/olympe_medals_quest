@@ -300,16 +300,16 @@ class Room():
 
     @ property
     def image(self) -> str:
-        return PATH_BACKGROUNDS + f"{self.id}_{self.current_level}.png"
+        return PATH_BACKGROUNDS + f"{self.id}.jpg"
 
     @ property
     def activities_unlocked(self) -> list[Activity]:
         # TODO mettre en activités
-        return ROOMS_EVOLUTION_DICT[self.id]["levels"][str(self.current_level)]["activities_unlocked"]
+        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["activities_unlocked"]
     
     @ property
     def effects(self) -> list:
-        return ROOMS_EVOLUTION_DICT[self.id]["levels"][str(self.current_level)]["effects"]
+        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["effects"]
 
     def __init__(self, dict_to_load: dict) -> None:
         self.id = dict_to_load.get("id", "")

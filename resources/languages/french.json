@@ -33,7 +33,9 @@
     },
     "sports_complex": {
         "title": "Gestion des locaux",
-        "sports_complex": "Complexe sportif"
+        "sports_complex": "Complexe sportif",
+        "expand": "Agrandir",
+        "buy": "Acheter"
     },
     "planification": {
         "planification": "Planification",

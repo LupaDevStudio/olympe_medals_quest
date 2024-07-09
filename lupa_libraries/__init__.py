@@ -18,6 +18,7 @@ from lupa_libraries.custom_widgets import (
     PressedWithIconButton,
     TextMoneyLayoutPressedButton,
     TextMoneyLayoutUnderPressedButton,
+    FramedImage,
     CharacterButtonWithIcon,
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,

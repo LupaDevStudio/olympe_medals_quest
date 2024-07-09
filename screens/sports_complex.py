@@ -44,6 +44,9 @@ from tools.data_structures import (
     SPORTS_COMPLEX_EVOLUTION_DICT,
     ROOMS_EVOLUTION_DICT
 )
+from tools.path import (
+    PATH_BACKGROUNDS
+)
 
 #############
 ### Class ###
@@ -79,9 +82,10 @@ class SportsComplexScreen(OlympeScreen):
         # If the sports complex is not at its maximum level
         sports_complex_level = GAME.sports_complex.current_level
         if sports_complex_level != len(SPORTS_COMPLEX_EVOLUTION_DICT):
+            next_level = sports_complex_level+1
             sports_complex_title = TEXT.sports_complex[
                 "sports_complex"] + " - " + TEXT.general[
-                    "level"] + " " + str(sports_complex_level)
+                    "level"] + " " + str(next_level)
             if self.rooms_folded_dict["sports_complex"][0]:
                 sports_complex_card = SmallRoomCard(
                     font_ratio=self.font_ratio,
@@ -93,6 +97,9 @@ class SportsComplexScreen(OlympeScreen):
                 sports_complex_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
                     title_card=sports_complex_title,
+                    price=SPORTS_COMPLEX_EVOLUTION_DICT[str(next_level)]["price"],
+                    button_text=TEXT.sports_complex["expand"],
+                    image_source=PATH_BACKGROUNDS + f"sport_complex_{next_level}.jpg",
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
                 )
@@ -114,9 +121,15 @@ class SportsComplexScreen(OlympeScreen):
                     height=HEADER_HEIGHT*self.font_ratio
                 )
             else:
+                button_text = TEXT.sports_complex["buy"]
+                if room.current_level != 1:
+                    button_text = TEXT.sports_complex["expand"]
                 room_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
                     title_card=room_title,
+                    price=ROOMS_EVOLUTION_DICT[room_id][str(next_level)]["price"],
+                    button_text=button_text,
+                    image_source=room.image,
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio
                 )
