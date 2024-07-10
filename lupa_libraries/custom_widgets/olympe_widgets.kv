@@ -228,12 +228,12 @@
             bar_width: 5*root.font_ratio
             bar_color: COLORS.blue_olympe
             bar_inactive_color: COLORS.blue_pressed_olympe
-            size_hint: (1, 1)
+            size_hint: (1, 0.9)
             bar_margin: 8*root.font_ratio
-            pos_hint: {"x": 0, "y": 0}
+            pos_hint: {"x": 0, "center_y": 0.5}
 
             MyScrollViewLayout:
                 id: scrollview_layout_2
                 cols: 1
                 spacing: (10*root.font_ratio, 10*root.font_ratio)
-                padding: (10*root.font_ratio, 10*root.font_ratio, 20*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
+                padding: (10*root.font_ratio, 0, 20*root.font_ratio, 0)
