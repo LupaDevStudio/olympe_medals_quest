@@ -224,6 +224,20 @@ class SmallRoomCard(RelativeLayout):
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
 
+class LabelWithTutorial(RelativeLayout):
+
+    text = StringProperty()
+    icon_source = StringProperty(PATH_ICONS + "tutorial.png")
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+    font_color = ColorProperty(COLORS.white)
+    icon_color = ColorProperty(COLORS.white)
+
+    font_ratio = NumericProperty(1)
+
+    release_function = ObjectProperty(lambda: 1 + 1)
+
 class CompleteRoomCard(FloatLayout):
 
     title_card = StringProperty()
@@ -275,22 +289,27 @@ class CompleteRoomCard(FloatLayout):
             text = "   - " + element["text"]
             if "release_function" in element:
                 release_function = element["release_function"]
+                content = LabelWithTutorial(
+                    text=text,
+                    size_hint=(1, None),
+                    height=self.font_ratio*LABEL_HEIGHT,
+                    release_function=release_function,
+                    font_ratio=self.font_ratio
+                )
 
-                # TODO treat this case with a new widget
-
-            content = Label(
-                text=text,
-                font_name=PATH_TEXT_FONT,
-                font_size=FONTS_SIZES.label*self.font_ratio,
-                size_hint=(1, None),
-                height=self.font_ratio*LABEL_HEIGHT,
-                halign="left",
-                valign="middle"
-            )
-            content.bind(texture_size=content.setter("size"))
-            content.bind(size=self.set_label_text_width)
-            scrollview_layout.add_widget(content)
+            else:
+                content = Label(
+                    text=text,
+                    font_name=PATH_TEXT_FONT,
+                    font_size=FONTS_SIZES.label*self.font_ratio,
+                    size_hint=(1, None),
+                    height=self.font_ratio*LABEL_HEIGHT,
+                    halign="left",
+                    valign="middle"
+                )
+                content.bind(size=self.set_label_text_width)
             
+            scrollview_layout.add_widget(content)
 
     def fill_scrollview(self, *args):
         scrollview_layout = self.ids["scrollview_layout_2"]

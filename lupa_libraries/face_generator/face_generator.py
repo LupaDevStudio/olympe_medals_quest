@@ -196,6 +196,7 @@ ARM_FILE = os.path.join(CLOTHES_FOLDER, "arm.png")
 CLOTHES_COLOR = [
     ("#eeeeee", "#d2d2d2"),  # white
     ("#63b448", "#529c39"),  # green
+    ("#004800", "#003d00"),  # dark green
     ("#16a085", "#108a72"),  # turquoise
     ("#00305f", "#001933"),  # dark blue
     ("#3498db", "#2a81bb"),  # light blue
@@ -1165,13 +1166,13 @@ class Portrait:
 
 
 if __name__ == "__main__":
-    for i in range(100):
-        portrait = Portrait(
-            hairs_behind_face=False
-        )
-        portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/{i}.png"))
-        portrait.export_as_json(os.path.join(
-            CURRENT_FOLDER, f"draft/{i}.json"))
+    # for i in range(100):
+    #     portrait = Portrait(
+    #         hairs_behind_face=False
+    #     )
+    #     portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/{i}.png"))
+    #     portrait.export_as_json(os.path.join(
+    #         CURRENT_FOLDER, f"draft/{i}.json"))
 
     # for i in range(10):
     #     portrait = Portrait(
@@ -1187,3 +1188,19 @@ if __name__ == "__main__":
     #         hairs_behind_face=True
     #     )
     #     portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/olympe{i}.png"))
+
+    for i in range(20):
+        portrait = Portrait(
+            gender="male",
+            hair_color="#a30000",
+            hair_shape="man_5",
+            eyes_color="#03661e",
+            skin_color=("#ffe0b1", "#d2ac73"),
+            nose_shape="nose_3",
+            mouth_shape="mouth_straight",
+            clothes_color=("#004800", "#003d00"),
+            shirt_shape="shirt_2",
+            hairs_behind_face=False
+        )
+        portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/hector{i}.png"))
+

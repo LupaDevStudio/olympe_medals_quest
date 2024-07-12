@@ -105,13 +105,16 @@ class SportsComplexScreen(OlympeScreen):
                     current_level_title=TEXT.general["level"] + " " + str(sports_complex_level),
                     current_level_details=[
                         {
-                            "text": "Test"
+                            "text": "Test",
+                            "release_function": partial(self.open_tutorial_popup, "test")
                         },
                         {
-                            "text": "Test2"
+                            "text": "Test2",
+                            "release_function": partial(self.open_tutorial_popup, "test")
                         },
                         {
-                            "text": "Test3"
+                            "text": "Test3",
+                            "release_function": partial(self.open_tutorial_popup, "test")
                         },
                         {
                             "text": "Test"
@@ -197,3 +200,6 @@ class SportsComplexScreen(OlympeScreen):
         # Rebuild scrollview
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
+
+    def open_tutorial_popup(self, activity_id: str):
+        print("Open popup")

@@ -171,6 +171,30 @@
         line_width: root.line_width
         font_ratio: root.font_ratio
 
+<LabelWithTutorial>:
+
+    Label:
+        id: rank_indicator
+        text: root.text
+        pos_hint: {"x":0,"center_y":0.5}
+        size_hint: (0.6, 1)
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        color: root.font_color
+        size_hint: (None, None)
+        size: self.texture_size
+        halign: "left"
+        valign: "middle"
+
+    IconPressedButton:
+        icon_source: root.icon_source
+        size_hint: (None, 1)
+        width: self.height
+        pos_hint: {"right": 1, "center_y": 0.5}
+        font_ratio: root.font_ratio
+        release_function: root.release_function
+        radius: RADIUS_SMALL
+
 <CompleteRoomCard>:
 
     # Background with title
@@ -204,12 +228,6 @@
         y: root.y + MARGIN_HEIGHT*root.font_ratio
         pos_hint: {"x": 0.05}
         release_function: root.buy_function
-
-    # OlympeCard:
-    #     size_hint: (0.5, None)
-    #     height: root.font_ratio * (ROOM_HEIGHT + BIG_BUTTON_HEIGHT + MARGIN_HEIGHT)
-    #     y: MARGIN_HEIGHT*root.font_ratio
-    #     pos_hint: {"x": 0.45}
 
     FloatLayout:
         size_hint: (0.5, None)
