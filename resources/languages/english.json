@@ -35,7 +35,9 @@
         "title": "Gestion des locaux",
         "sports_complex": "Complexe sportif",
         "expand": "Agrandir",
-        "buy": "Acheter"
+        "buy": "Acheter",
+        "max_number_athletes": "Nombre d'athlètes : [NB_ATHLETES]",
+        "room": "[ROOM] - [LEVEL]"
     },
     "planification": {
         "planification": "Planification",

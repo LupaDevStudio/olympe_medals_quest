@@ -229,7 +229,7 @@ class LabelWithTutorial(RelativeLayout):
     text = StringProperty()
     icon_source = StringProperty(PATH_ICONS + "tutorial.png")
 
-    font_size = NumericProperty(FONTS_SIZES.label)
+    font_size = NumericProperty(FONTS_SIZES.small_label)
     text_font_name = StringProperty(PATH_TEXT_FONT)
     font_color = ColorProperty(COLORS.white)
     icon_color = ColorProperty(COLORS.white)
@@ -286,7 +286,7 @@ class CompleteRoomCard(FloatLayout):
         ### Content ###
 
         for element in list_content:
-            text = "   - " + element["text"]
+            text = "  - " + element["text"]
             if "release_function" in element:
                 release_function = element["release_function"]
                 content = LabelWithTutorial(
@@ -301,7 +301,7 @@ class CompleteRoomCard(FloatLayout):
                 content = Label(
                     text=text,
                     font_name=PATH_TEXT_FONT,
-                    font_size=FONTS_SIZES.label*self.font_ratio,
+                    font_size=FONTS_SIZES.small_label*self.font_ratio,
                     size_hint=(1, None),
                     height=self.font_ratio*LABEL_HEIGHT,
                     halign="left",

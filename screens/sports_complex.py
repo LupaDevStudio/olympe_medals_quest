@@ -82,7 +82,7 @@ class SportsComplexScreen(OlympeScreen):
         # If the sports complex is not at its maximum level
         sports_complex_level = GAME.sports_complex.current_level
         if sports_complex_level != len(SPORTS_COMPLEX_EVOLUTION_DICT):
-            next_level = sports_complex_level+1
+            next_level = sports_complex_level + 1
             sports_complex_title = TEXT.sports_complex[
                 "sports_complex"] + " - " + TEXT.general[
                     "level"] + " " + str(next_level)
@@ -94,6 +94,47 @@ class SportsComplexScreen(OlympeScreen):
                     height=HEADER_HEIGHT*self.font_ratio
                 )
             else:
+                current_level_details = []
+                previous_max_number_athletes = TEXT.sports_complex["max_number_athletes"].replace(
+                    "[NB_ATHLETES]", str(GAME.sports_complex.max_number_athletes))
+                current_level_details.append({
+                    "text": previous_max_number_athletes
+                })
+                for element in SPORTS_COMPLEX_EVOLUTION_DICT[str(sports_complex_level)]["rooms_unlocked"]:
+                    room_id = element[0]
+                    room_level = element[1]
+                    text = TEXT.sports_complex["room"].replace(
+                        "[ROOM]", TEXT.rooms[room_id])
+                    text = text.replace("[LEVEL]", str(room_level))
+                    current_level_details.append(
+                        {
+                            "text": text,
+                            "release_function": partial(
+                                self.open_tutorial_popup_room, room_id)
+                        }
+                    )
+
+                next_level_details = []
+                next_max_number_athletes = TEXT.sports_complex["max_number_athletes"].replace(
+                    "[NB_ATHLETES]", str(SPORTS_COMPLEX_EVOLUTION_DICT[str(next_level)]["max_number_athletes"]))
+                    
+                next_level_details.append({
+                    "text": next_max_number_athletes
+                })
+                for element in SPORTS_COMPLEX_EVOLUTION_DICT[str(next_level)]["rooms_unlocked"]:
+                    room_id = element[0]
+                    room_level = element[1]
+                    text = TEXT.sports_complex["room"].replace(
+                        "[ROOM]", TEXT.rooms[room_id])
+                    text = text.replace("[LEVEL]", str(room_level))
+                    next_level_details.append(
+                        {
+                            "text": text,
+                            "release_function": partial(
+                                self.open_tutorial_popup_room, room_id)
+                        }
+                    )
+
                 sports_complex_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
                     title_card=sports_complex_title,
@@ -103,56 +144,15 @@ class SportsComplexScreen(OlympeScreen):
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
                     current_level_title=TEXT.general["level"] + " " + str(sports_complex_level),
-                    current_level_details=[
-                        {
-                            "text": "Test",
-                            "release_function": partial(self.open_tutorial_popup, "test")
-                        },
-                        {
-                            "text": "Test2",
-                            "release_function": partial(self.open_tutorial_popup, "test")
-                        },
-                        {
-                            "text": "Test3",
-                            "release_function": partial(self.open_tutorial_popup, "test")
-                        },
-                        {
-                            "text": "Test"
-                        },
-                        {
-                            "text": "Test2"
-                        },
-                        {
-                            "text": "Test3"
-                        }
-                    ],# TODO
+                    current_level_details=current_level_details,
                     next_level_title=TEXT.general["level"] + " " + str(next_level),
-                    next_level_details=[
-                        {
-                            "text": "Test"
-                        },
-                        {
-                            "text": "Test2"
-                        },
-                        {
-                            "text": "Test3"
-                        },
-                        {
-                            "text": "Test"
-                        },
-                        {
-                            "text": "Test2"
-                        },
-                        {
-                            "text": "Test3"
-                        }
-                    ]
+                    next_level_details=next_level_details
                 )
 
             self.rooms_folded_dict["sports_complex"][1] = sports_complex_card
             scrollview_layout.add_widget(sports_complex_card)
 
-        # Add the unlocked rooms in the scrollview
+        # Add the unlocked rooms not bought in the scrollview
         for room_id in GAME.sports_complex.rooms_unlocked:
             room: Room = GAME.sports_complex.rooms_unlocked[room_id]
             room_title: str = TEXT.rooms[room_id] + " - " + TEXT.general[
@@ -169,10 +169,17 @@ class SportsComplexScreen(OlympeScreen):
                 button_text = TEXT.sports_complex["buy"]
                 current_level_details = []
                 current_level_title = ""
+
                 if room.current_level != 1:
                     button_text = TEXT.sports_complex["expand"]
                     current_level_title = TEXT.general["level"] + " " + str(next_level-1)
-                    current_level_details = [] # TODO
+                    current_level_details = []
+                    # TODO parcourir les activités et effets
+
+                # Fill next details
+                next_level_title = TEXT.general["level"] + " " + str(next_level)
+                next_level_details = []
+                # TODO parcourir les activités et effets
 
                 room_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
@@ -184,8 +191,8 @@ class SportsComplexScreen(OlympeScreen):
                     height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
                     current_level_title=current_level_title,
                     current_level_details=current_level_details,
-                    next_level_title=TEXT.general["level"] + " " + str(next_level),
-                    next_level_details=[]# TODO
+                    next_level_title=next_level_title,
+                    next_level_details=next_level_details
                 )
 
             self.rooms_folded_dict[room_id][1] = room_card
@@ -201,5 +208,11 @@ class SportsComplexScreen(OlympeScreen):
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
 
-    def open_tutorial_popup(self, activity_id: str):
-        print("Open popup")
+    def open_tutorial_popup_room(self, room_id: str):
+        print("Open popup room")
+
+    def open_tutorial_popup_activity(self, activity_id: str):
+        print("Open popup activity")
+
+    def open_tutorial_popup_effect(self, effect_id: str):
+        print("Open popup effect")
