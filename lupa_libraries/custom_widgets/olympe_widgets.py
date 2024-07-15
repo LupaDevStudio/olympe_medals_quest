@@ -127,6 +127,7 @@ class OlympeCard(RelativeLayout):
     money_mode = BooleanProperty(False)
     button_mode = BooleanProperty(False)
     left_surrounded_label_mode = BooleanProperty(False)
+    first_icon_mode = BooleanProperty(False)
 
     header_height = NumericProperty(HEADER_HEIGHT)
     header_text = StringProperty()
@@ -156,6 +157,9 @@ class OlympeCard(RelativeLayout):
     button_pressed_color = ColorProperty(COLORS.blue_pressed_olympe)
 
     left_label = StringProperty()
+
+    first_icon_source = StringProperty()
+    first_icon_color = ColorProperty(COLORS.white)
 
     font_ratio = NumericProperty(1)
 
@@ -340,6 +344,34 @@ class CompleteRoomCard(FloatLayout):
                 title=self.current_level_title,
                 list_content=self.current_level_details
             )
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
+
+class CompleteMedalsCard(FloatLayout):
+
+    title_card = StringProperty()
+    icon_mode = BooleanProperty(False)
+    icon_source = StringProperty()
+
+    medals_list = ListProperty([])
+
+    font_size = NumericProperty(FONTS_SIZES.subtitle)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.fill_card()
+
+    def fill_card(self):
+        print(self.medals_list)
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current

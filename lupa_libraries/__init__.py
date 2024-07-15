@@ -33,7 +33,8 @@ from lupa_libraries.custom_widgets import (
     SmallPlanificationCard,
     SportLabelButton,
     SmallRoomCard,
-    CompleteRoomCard
+    CompleteRoomCard,
+    CompleteMedalsCard
 )
 
 ### Dialog generator ###

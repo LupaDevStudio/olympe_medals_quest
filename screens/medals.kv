@@ -7,6 +7,9 @@
         header_text: root.medals_title
         pos_hint: {"center_x":0.5, "y": 0.025}
         size_hint: (SCROLLVIEW_WIDTH, 0.95 - TOP_BAR_HEIGHT)
+        icon_mode: True
+        icon_source: PATH_ICONS + "calendar.png" if root.sports_view else PATH_ICONS + "sports_menu.png"
+        icon_function: root.change_view_mode
         font_ratio: root.font_ratio
 
         CustomScrollview:

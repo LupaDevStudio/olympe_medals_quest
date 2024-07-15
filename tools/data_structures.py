@@ -21,6 +21,7 @@ import uuid
 
 from tools.path import (
     PATH_USER_DATA,
+    PATH_SPORTS_ICONS,
     PATH_MEDALS_IMAGES,
     PATH_BACKGROUNDS,
     PATH_ATHLETES_IMAGES,
@@ -162,6 +163,10 @@ class Sport():
     @ property
     def category(self) -> int:
         return len(self.stats)
+
+    @property
+    def icon(self) -> str:
+        return PATH_SPORTS_ICONS + self.id + ".png"
 
     def __init__(self, dict_to_load: dict):
         self.id = dict_to_load.get("id", "")
@@ -372,7 +377,7 @@ class SportsComplex():
     def check_has_already_bought_room(self, room_id: str, room_level: str):
         for room_id_ref in self.rooms_bought:
             if room_id == room_id_ref:
-                return self.rooms_bought[room_id].current_level == room_level
+                return self.rooms_bought[room_id].current_level >= room_level
         return False
 
     def increase_level(self):
@@ -542,6 +547,11 @@ class Game():
     def get_background_image(self) -> int:
         return self.sports_complex.image
 
+    def get_athlete_from_id(self, athlete_id) -> Athlete:
+        for athlete in self.team:
+            if athlete.id == athlete_id:
+                return athlete
+
     def get_monthly_salaries(self) -> int:
         monthly_salaries = 0
         for athlete in self.team:
@@ -605,7 +615,18 @@ class Game():
             bought_room: Room = self.sports_complex.buy_room(room_id=room_id)
             self.money -= ROOMS_EVOLUTION_DICT[room_id][str(bought_room.current_level)]["price"]
 
-    def get_medals_from_athlete(self, athlete_id: str) -> Medal:
+    def get_medals_from_edition(self, edition: int) -> list[Medal]:
+        list_medals = []
+        for medal in self.medals:
+            if medal.edition == edition:
+                list_medals.append(medal)
+
+        # Sort the list of medals first by sport_id and then by athlete_id
+        list_medals.sort(key=lambda medal: (medal.sport_id, medal.athlete_id), reverse=True)
+
+        return list_medals
+
+    def get_medals_from_athlete(self, athlete_id: str) -> list[Medal]:
         list_medals = []
         for medal in self.medals:
             if medal.athlete_id == athlete_id:
@@ -616,14 +637,14 @@ class Game():
 
         return list_medals
 
-    def get_medals_from_sport(self, sport_id: str) -> Medal:
+    def get_medals_from_sport(self, sport_id: str) -> list[Medal]:
         list_medals = []
         for medal in self.medals:
             if medal.sport_id == sport_id:
                 list_medals.append(medal)
 
-        # Sort the list of medals first by athlete_id and then by edition
-        list_medals.sort(key=lambda medal: (medal.athlete_id, medal.edition), reverse=True)
+        # Sort the list of medals first by edition and then by athlete_id
+        list_medals.sort(key=lambda medal: (medal.edition, medal.athlete_id), reverse=True)
 
         return list_medals
 

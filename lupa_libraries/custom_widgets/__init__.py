@@ -39,7 +39,8 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     OlympeCard,
     SportLabelButton,
     SmallRoomCard,
-    CompleteRoomCard
+    CompleteRoomCard,
+    CompleteMedalsCard
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,
