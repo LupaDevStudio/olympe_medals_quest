@@ -29,6 +29,7 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     SmallRoomCard,
     CompleteRoomCard,
     CompleteMedalsCard,
+    SmallMedalsCard,
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,
     CharacterInfoWithMainSportsLayout,

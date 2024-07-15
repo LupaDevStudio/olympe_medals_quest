@@ -65,7 +65,9 @@
         "title": "Activités"
     },
     "medals": {
-        "title": "Médailles"
+        "title": "Médailles",
+        "medal": "@ médaille",
+        "medals": "@ médailles"
     },
     "shop": {
         "title": "Boutique"

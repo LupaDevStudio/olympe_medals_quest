@@ -74,12 +74,11 @@ class PlanificationScreen(OlympeScreen):
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
-        if self.athlete_folded_dict == {}:
-            for athlete in GAME.team:
-                self.athlete_folded_dict[athlete.id] = [False, None]
-
         athlete: Athlete
         for athlete in GAME.team:
+
+            if athlete.id not in self.athlete_folded_dict:
+                self.athlete_folded_dict[athlete.id] = [False, None]
 
             if self.athlete_folded_dict[athlete.id][0]:
                 athlete_card = SmallPlanificationCard(

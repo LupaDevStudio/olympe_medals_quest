@@ -74,14 +74,16 @@ class SportsComplexScreen(OlympeScreen):
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
-        if self.rooms_folded_dict == {}:
-            self.rooms_folded_dict["sports_complex"] = [False, None]
-            for room_id in GAME.sports_complex.rooms_unlocked:
-                self.rooms_folded_dict[room_id] = [False, None]
+        ### Sports complex ###
 
         # If the sports complex is not at its maximum level
         sports_complex_level = GAME.sports_complex.current_level
         if sports_complex_level != len(SPORTS_COMPLEX_EVOLUTION_DICT):
+
+            # Init the folded dictionary
+            if "sports_complex" not in self.rooms_folded_dict:
+                self.rooms_folded_dict["sports_complex"] = [False, None]
+
             next_level = sports_complex_level + 1
             sports_complex_title = TEXT.sports_complex[
                 "sports_complex"] + " - " + TEXT.general[
@@ -152,8 +154,15 @@ class SportsComplexScreen(OlympeScreen):
             self.rooms_folded_dict["sports_complex"][1] = sports_complex_card
             scrollview_layout.add_widget(sports_complex_card)
 
+        ### Rooms ###
+
         # Add the unlocked rooms not bought in the scrollview
         for room_id in GAME.sports_complex.rooms_unlocked:
+
+            # Init the folded dictionary
+            if room_id not in self.rooms_folded_dict:
+                self.rooms_folded_dict[room_id] = [False, None]
+
             room: Room = GAME.sports_complex.rooms_unlocked[room_id]
             room_title: str = TEXT.rooms[room_id] + " - " + TEXT.general[
                 "level"] + " " + str(room.current_level)

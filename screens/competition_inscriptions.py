@@ -159,16 +159,16 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             sport_id=selected_sport_id
         )
 
-        if self.athlete_folded_dict == {}:
-            for athlete in GAME.team:
-                if selected_sport_id in athlete.sports:
-                    self.athlete_folded_dict[athlete.id] = [False, None]
-
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
         for athlete in GAME.team:
             if selected_sport_id in athlete.sports:
+
+                # Init the folded dictionary
+                if athlete.id not in self.athlete_folded_dict:
+                    self.athlete_folded_dict[athlete.id] = [False, None]
+
                 athlete_skills = {
                     selected_sport_id: athlete.sports[selected_sport_id]
                 }

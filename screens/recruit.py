@@ -84,19 +84,14 @@ class RecruitScreen(OlympeScreen):
             self.recruit_title = str(number_athletes_current) + " / " + str(
                 GAME.max_athletes) + my_text["athletes"]
 
-    def on_pre_enter(self, *args):
-        self.start_time = time.time()
-        athlete: Athlete
-        for athlete in GAME.recrutable_athletes:
-            if athlete.id not in self.folded_dict:
-                self.folded_dict[athlete.id] = [True, None]
-        return super().on_pre_enter(*args)
-
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
         for athlete in GAME.recrutable_athletes:
+
+            if athlete.id not in self.folded_dict:
+                self.folded_dict[athlete.id] = [True, None]
 
             if self.folded_dict[athlete.id][0]:
                 athlete_skills = athlete.get_best_sports()

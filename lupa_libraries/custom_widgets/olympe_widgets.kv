@@ -78,6 +78,18 @@
         color: root.first_icon_color
         opacity: 1 if root.first_icon_source else 0
 
+    SurroundedLabel:
+        text: root.left_label
+        font_ratio: root.font_ratio
+        size_hint: (0.4, None)
+        height: root.header_height * 0.65
+        pos_hint: {"x": 0.025}
+        y: root.height - root.header_height//2*root.font_ratio - self.height//2
+        line_width: root.line_width
+        font_size: root.font_size
+        text_font_name: root.text_font_name
+        opacity: 1 if root.left_surrounded_label_mode else 0
+
     Label:
         id: label
         text: root.header_text
@@ -85,8 +97,9 @@
         font_name: root.text_font_name
         pos_hint: {"x": 0.025} if not root.image_mode and not root.first_icon_mode else {"x": 0.025*2 + character_image.width/(root.width+1)} if not root.first_icon_mode else {"x": 0.025*2 + first_icon.width/(root.width+1)}
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
-        shorten: False
+        shorten: False if not root.right_surrounded_label_mode else True
         size_hint: (None, None)
+        text_size: (None, None) if not root.right_surrounded_label_mode else (root.width*0.4, None)
         size: self.texture_size
         halign: "left"
         valign: "middle"
@@ -119,6 +132,18 @@
         background_color: root.button_color
         pressed_color: root.button_pressed_color
 
+    SurroundedLabel:
+        text: root.right_label
+        font_ratio: root.font_ratio
+        size_hint: (0.3, None)
+        height: root.header_height * 0.65
+        x: root.width*0.95 - icon.width - self.width
+        y: root.height - root.header_height//2*root.font_ratio - self.height//2
+        line_width: root.line_width
+        font_size: FONTS_SIZES.label
+        text_font_name: root.text_font_name
+        opacity: 1 if root.right_surrounded_label_mode else 0
+
     IconPressedButton:
         id: icon
         icon_source: root.icon_source
@@ -132,18 +157,6 @@
         release_function: root.icon_function
         opacity: 1 if root.icon_mode else 0
         radius: RADIUS_SMALL
-
-    SurroundedLabel:
-        text: root.left_label
-        font_ratio: root.font_ratio
-        size_hint: (0.4, None)
-        height: root.header_height * 0.65
-        pos_hint: {"x": 0.025}
-        y: root.height - root.header_height//2*root.font_ratio - self.height//2
-        line_width: root.line_width
-        font_size: root.font_size
-        text_font_name: root.text_font_name
-        opacity: 1 if root.left_surrounded_label_mode else 0
 
 <SeparationLine>:
 
@@ -790,3 +803,21 @@
         cols: 3
         spacing: MARGIN_HEIGHT*root.font_ratio
         padding: MARGIN_HEIGHT*root.font_ratio
+
+<SmallMedalsCard>:
+
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        first_icon_mode: root.icon_mode
+        first_icon_source: root.icon_source
+        right_surrounded_label_mode: True
+        right_label: root.label
+        font_size: root.font_size
+        foldable_mode: True
+        is_folded: True
+        pos: root.pos
+        size_hint: (1, 1)
+        line_width: root.line_width
+        font_ratio: root.font_ratio
