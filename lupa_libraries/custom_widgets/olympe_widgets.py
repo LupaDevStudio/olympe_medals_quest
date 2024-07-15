@@ -14,6 +14,7 @@ from kivy.uix.label import Label
 from kivy.uix.image import Image
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.floatlayout import FloatLayout
+from kivy.core.window import Window
 from kivy.properties import (
     BooleanProperty,
     StringProperty,
@@ -46,7 +47,8 @@ from tools.graphics import(
     CHARACTER_HEIGHT,
     SKILL_HEIGHT,
     MARGIN_HEIGHT,
-    BUTTON_HEIGHT
+    BUTTON_HEIGHT,
+    SCROLLVIEW_WIDTH
 )
 from tools.path import (
     PATH_TITLE_FONT,
@@ -54,9 +56,9 @@ from tools.path import (
     PATH_ICONS
 )
 
-#############
-### Class ###
-#############
+#######################
+### General widgets ###
+#######################
 
 class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
     """
@@ -224,22 +226,6 @@ class SportLabelButton(ButtonBehavior, RelativeLayout):
         if self.collide_point(self.last_touch.x, self.last_touch.y):
             self.release_function()
 
-class SmallRoomCard(RelativeLayout):
-
-    title_card = StringProperty()
-
-    font_size = NumericProperty(FONTS_SIZES.subtitle)
-    text_font_name = StringProperty(PATH_TITLE_FONT)
-    font_color = ColorProperty(COLORS.white)
-
-    line_width = NumericProperty(BUTTON_LINE_WIDTH)
-    font_ratio = NumericProperty(1)
-
-    def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
-        screen.ask_redraw(self)
-
 class LabelWithTutorial(RelativeLayout):
 
     text = StringProperty()
@@ -254,9 +240,19 @@ class LabelWithTutorial(RelativeLayout):
 
     release_function = ObjectProperty(lambda: 1 + 1)
 
+class StatBar(RelativeLayout):
+    color = ColorProperty((0, 0, 0, 1))
+    font_ratio = NumericProperty(1)
+    radius = NumericProperty(2)
+
+#########################
+### Character widgets ###
+#########################
+
 class CharacterWithNameLayout(RelativeLayout):
 
-    is_hurt = BooleanProperty(False)
+    icon_mode = BooleanProperty(False)
+    icon_source = StringProperty(PATH_ICONS + "hurt.png")
     image_source = StringProperty()
 
     ### Name of the character ###
@@ -264,6 +260,11 @@ class CharacterWithNameLayout(RelativeLayout):
     character_name = StringProperty()
     font_size = NumericProperty(FONTS_SIZES.small_label)
     text_font_name = StringProperty(PATH_TEXT_FONT)
+
+    ### Subtitle ###
+
+    subtitle_mode = BooleanProperty(False)
+    subtitle_text = StringProperty()
 
     ### Colors ###
 
@@ -274,13 +275,6 @@ class CharacterWithNameLayout(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     release_function = ObjectProperty(lambda: 1 + 1)
     font_ratio = NumericProperty(1)
-
-
-class StatBar(RelativeLayout):
-    color = ColorProperty((0, 0, 0, 1))
-    font_ratio = NumericProperty(1)
-    radius = NumericProperty(2)
-
 
 class CharacterWithMainInfoFireLayout(RelativeLayout):
 
@@ -577,6 +571,10 @@ class SkillsCard(RelativeLayout):
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
 
+###########################
+### Recrutement widgets ###
+###########################
+
 class CompleteRecruitCard(RelativeLayout):
 
     ### Information on the athlete ###
@@ -629,8 +627,11 @@ class CompleteRecruitCard(RelativeLayout):
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
 
-class CompleteInscriptionCard(RelativeLayout):
+###########################
+### Inscription widgets ###
+###########################
 
+class CompleteInscriptionCard(RelativeLayout):
 
     ### Information on the athlete ###
 
@@ -716,7 +717,11 @@ class SmallInscriptionCard(RelativeLayout):
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
 
-class PlanificationCard(RelativeLayout):
+#############################
+### Planification widgets ###
+#############################
+
+class CompletePlanificationCard(RelativeLayout):
 
     ### Information on the athlete ###
 
@@ -770,6 +775,26 @@ class SmallPlanificationCard(RelativeLayout):
     line_color = ColorProperty(COLORS.white)
 
     ### Sizes ###
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen.ask_redraw(self)
+
+#####################
+### Rooms widgets ###
+#####################
+
+class SmallRoomCard(RelativeLayout):
+
+    title_card = StringProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.subtitle)
+    text_font_name = StringProperty(PATH_TITLE_FONT)
+    font_color = ColorProperty(COLORS.white)
 
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
@@ -887,6 +912,10 @@ class CompleteRoomCard(FloatLayout):
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
 
+######################
+### Medals widgets ###
+######################
+
 class CompleteMedalsCard(FloatLayout):
 
     title_card = StringProperty()
@@ -899,6 +928,9 @@ class CompleteMedalsCard(FloatLayout):
     text_font_name = StringProperty(PATH_TITLE_FONT)
     font_color = ColorProperty(COLORS.white)
 
+    card_width = NumericProperty(1)
+    card_height = NumericProperty(1)
+
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
@@ -908,7 +940,22 @@ class CompleteMedalsCard(FloatLayout):
         self.fill_card()
 
     def fill_card(self):
-        print(self.medals_list)
+        grid_layout = self.ids.grid_layout
+
+        for medal_dict in self.medals_list:
+            medal_card = CharacterWithNameLayout(
+                font_ratio=self.font_ratio,
+                subtitle_mode=True,
+                icon_mode=True,
+                icon_source=medal_dict["icon"],
+                image_source=medal_dict["image"],
+                character_name=medal_dict["title"],
+                subtitle_text=medal_dict["label"],
+                size_hint=(None, None),
+                height=self.card_height,
+                width=self.card_width
+            )
+            grid_layout.add_widget(medal_card)
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current

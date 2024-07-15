@@ -37,7 +37,7 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     CompleteRecruitCard,
     CompleteInscriptionCard,
     SmallInscriptionCard,
-    PlanificationCard,
+    CompletePlanificationCard,
     SmallPlanificationCard
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (

@@ -22,7 +22,7 @@ from kivy.properties import (
 from lupa_libraries import (
     OlympeScreen,
     SmallPlanificationCard,
-    PlanificationCard
+    CompletePlanificationCard
 )
 from tools.constants import (
     TEXT,
@@ -98,7 +98,7 @@ class PlanificationScreen(OlympeScreen):
                     HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN_HEIGHT
                 )
 
-                athlete_card = PlanificationCard(
+                athlete_card = CompletePlanificationCard(
                     font_ratio=self.font_ratio,
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=height,

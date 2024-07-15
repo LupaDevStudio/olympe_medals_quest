@@ -197,18 +197,24 @@
 
     CharacterButtonWithIcon:
         image_source: root.image_source
-        icon_source: PATH_ICONS + "hurt.png"
-        icon_mode: root.is_hurt
+        icon_source: root.icon_source
+        icon_mode: root.icon_mode
         icon_position: {"right": 0.95, "y": 0.05}
-        size_hint: (None, 0.6)
+        size_hint: (None, 0.6) if not root.subtitle_mode else (None, 0.5)
         width: self.height
-        pos_hint: {"center_x": 0.5, "y": 0.075}
+        pos_hint: {"center_x": 0.5, "y": 0.075} if not root.subtitle_mode else {"center_x": 0.5, "y": 0.2}
         font_ratio: root.font_ratio
         release_function: root.release_function
         line_width: root.line_width
-
-
     
+    Label:
+        text: root.subtitle_text
+        size_hint: (1, 0.2)
+        pos_hint: {"x":0, "y": 0}
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        color: root.font_color
+
 <CharacterWithMainInfoFireLayout>:
 
     # Background
@@ -558,7 +564,7 @@
         line_width: root.line_width
         font_ratio: root.font_ratio
 
-<PlanificationCard>:
+<CompletePlanificationCard>:
 
     # Background with title
     OlympeCard:
@@ -775,3 +781,12 @@
         size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
+
+    GridLayout:
+        id: grid_layout
+        size_hint: (1, None)
+        pos: root.pos
+        height: root.height-HEADER_HEIGHT*root.font_ratio
+        cols: 3
+        spacing: MARGIN_HEIGHT*root.font_ratio
+        padding: MARGIN_HEIGHT*root.font_ratio

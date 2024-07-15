@@ -33,7 +33,7 @@ from tools.constants import (
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
-    BIG_HEADER_HEIGHT,
+    HEADER_HEIGHT,
     CHARACTER_HEIGHT,
     MARGIN_HEIGHT
 )
@@ -68,6 +68,13 @@ class MedalsScreen(OlympeScreen):
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
+        card_width = (Window.size[0]*(SCROLLVIEW_WIDTH**2) - \
+            4*MARGIN_HEIGHT*self.font_ratio - \
+            (scrollview_layout.padding[2]-scrollview_layout.padding[0])/2) / 3
+        card_height = 1.25*card_width
+
+        print(card_height)
+
         if self.sports_view:
             for sport_id in GAME.sports_unlocked:
 
@@ -76,19 +83,20 @@ class MedalsScreen(OlympeScreen):
                 list_content = []
                 medal: Medal
                 for medal in list_medals:
-                    print(medal.athlete_id)
                     athlete = GAME.get_athlete_from_id(athlete_id=medal.athlete_id)
                     list_content.append({
                         "title": athlete.first_name,
                         "image": athlete.image,
-                        "icon": medal.type_medal,
-                        "label": medal.edition
+                        "icon": medal.image,
+                        "label": TEXT.general["edition"].replace(
+                            "@", str(medal.edition))
                     })
 
                 number_lines = (len(list_content)-1) // 3 + 1
                 height = self.font_ratio * (
-                    CHARACTER_HEIGHT*number_lines + MARGIN_HEIGHT*(number_lines+1)
-                )
+                    HEADER_HEIGHT + \
+                    MARGIN_HEIGHT * (number_lines + 1)
+                ) + card_height * number_lines
 
                 medals_card = CompleteMedalsCard(
                     title_card=TEXT.sports[sport_id]["name"],
@@ -97,7 +105,9 @@ class MedalsScreen(OlympeScreen):
                     medals_list=list_content,
                     font_ratio=self.font_ratio,
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=height
+                    height=height,
+                    card_height=card_height,
+                    card_width=card_width
                 )
 
                 scrollview_layout.add_widget(medals_card)

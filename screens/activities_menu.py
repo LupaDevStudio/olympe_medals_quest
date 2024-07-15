@@ -21,9 +21,7 @@ from kivy.core.window import Window
 ### Local imports ###
 
 from lupa_libraries import (
-    OlympeScreen,
-    CharacterWithNameLayout,
-    CharacterInfoWithMainSportsLayout
+    OlympeScreen
 )
 from tools.constants import (
     TEXT,

@@ -88,7 +88,7 @@ class TeamScreen(OlympeScreen):
                     2*scrollview_layout.padding[0]) / 3
                 athlete_button = CharacterWithNameLayout(
                     image_source=athlete.image,
-                    is_hurt=athlete.is_hurt,
+                    icon_mode=athlete.is_hurt,
                     character_name=athlete.first_name,
                     size_hint=(None, None),
                     height=width,

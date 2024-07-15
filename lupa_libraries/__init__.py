@@ -29,7 +29,7 @@ from lupa_libraries.custom_widgets import (
     CompleteRecruitCard,
     CompleteInscriptionCard,
     SmallInscriptionCard,
-    PlanificationCard,
+    CompletePlanificationCard,
     SmallPlanificationCard,
     SportLabelButton,
     SmallRoomCard,
