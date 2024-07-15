@@ -17,18 +17,6 @@ from lupa_libraries.custom_widgets.pressed_buttons import (
     TextMoneyLayoutPressedButton,
     TextMoneyLayoutUnderPressedButton
 )
-from lupa_libraries.custom_widgets.character_widgets import (
-    CharacterWithNameLayout,
-    CharacterWithMainInfoFireLayout,
-    CharacterInfoWithMainSportsLayout,
-    MedalsCard,
-    SkillsCard,
-    CompleteRecruitCard,
-    CompleteInscriptionCard,
-    SmallInscriptionCard,
-    PlanificationCard,
-    SmallPlanificationCard
-)
 
 ### Layouts ###
 
@@ -40,7 +28,17 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     SportLabelButton,
     SmallRoomCard,
     CompleteRoomCard,
-    CompleteMedalsCard
+    CompleteMedalsCard,
+    CharacterWithNameLayout,
+    CharacterWithMainInfoFireLayout,
+    CharacterInfoWithMainSportsLayout,
+    MedalsCard,
+    SkillsCard,
+    CompleteRecruitCard,
+    CompleteInscriptionCard,
+    SmallInscriptionCard,
+    PlanificationCard,
+    SmallPlanificationCard
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,
