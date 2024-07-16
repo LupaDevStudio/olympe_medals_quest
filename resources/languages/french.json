@@ -43,6 +43,10 @@
         "planification": "Planification",
         "planning": "Emploi du temps"
     },
+    "schedule": {
+        "progression": "Progression",
+        "change": "Modifier"
+    },
     "team": {
         "athlete": " athlète",
         "athletes": " athlètes",

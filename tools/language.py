@@ -57,6 +57,7 @@ class Text():
         self.competition_inscriptions = data["competition_inscriptions"]
         self.recruit = data["recruit"]
         self.medals = data["medals"]
+        self.schedule = data["schedule"]
 
         self.general = data["general"]
         self.injuries = data["injuries"]

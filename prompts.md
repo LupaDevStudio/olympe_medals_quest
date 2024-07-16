@@ -32,3 +32,18 @@ large new modern gymnasium, very well-organized, sport's equipment, one sprint t
 
 a man in a black suit and a white shirt giving a speech to a crowd of hundreds of people, man at a podium, gray white room, front view of the man, realistic, highly detailed, render, 4K
 a crowd of thousands of people seated in an auditorium, a man with a suit on the background giving a speech at the podium, realistic, highly detailed, render, 4K, grey auditorium but still colors
+
+## Nouveaux prompts
+
+https://perchance.org/ai-character-generator
+
+portrait of business woman with a black suit, determinate, (serious:0.7), (blue grey:1.3) haircut, glasses (Your Name art style:1.3)
+-> painted anime
+
+portrait of an (old:1.5) journalist woman with a brown jacket, long blond hairs, (Your Name art style:1.3)
+
+portrait of a business man with short dark brown hair with a black suit and a blue tie, slight beard, (Your Name art style:1.3)
+
+portrait of a 30 years old man athlete, wearing a suit, short ginger messy hair, (Your Name art style:1.3)
+
+portrait of a 30 years old (man:1.5), tanned skin, white T-shirt and brown jacket, (short:1.5) (tidy:1.5) brown hair, (Your Name art style:1.3)
