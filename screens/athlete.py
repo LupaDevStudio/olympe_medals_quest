@@ -130,6 +130,10 @@ class AthleteScreen(OlympeScreen):
             sports_dict = self.athlete.sports
             athlete_skills = dict(stats_dict)
             athlete_skills.update(sports_dict)
+
+            # Sort reverse
+            athlete_skills = dict(reversed(athlete_skills.items()))
+
             if len(athlete_skills) > 0:
                 height = self.font_ratio * (
                     HEADER_HEIGHT + MARGIN_HEIGHT*2 + SKILL_HEIGHT * len(athlete_skills))
@@ -138,9 +142,6 @@ class AthleteScreen(OlympeScreen):
         else:
             athlete_skills = {}
             height = self.font_ratio * HEADER_HEIGHT
-
-        # Sort reverse
-        athlete_skills = dict(reversed(athlete_skills.items()))
 
         self.skills_card = SkillsCard(
             font_ratio=self.font_ratio,

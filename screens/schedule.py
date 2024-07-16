@@ -21,8 +21,7 @@ from kivy.properties import (
 
 from lupa_libraries import (
     OlympeScreen,
-    SmallPlanificationCard,
-    CompletePlanificationCard
+    CharacterSkillsLayout
 )
 from tools.constants import (
     TEXT,
@@ -65,19 +64,56 @@ class ScheduleScreen(OlympeScreen):
     header_text = StringProperty()
     spent_coins = NumericProperty()
     spent_coins_for_athlete = NumericProperty()
-    progression_text = StringProperty()
+    progression_label = StringProperty()
     change_text = StringProperty()
+    fatigue_label = StringProperty()
+    injury_label = StringProperty()
 
     def reload_kwargs(self, dict_kwargs):
         self.athlete = dict_kwargs["athlete"]
         self.header_text = self.athlete.first_name + " " + self.athlete.name
 
+        self.reload_info()
+
     def reload_language(self):
         super().reload_language()
         my_text = TEXT.schedule
         self.validate_label = TEXT.general["validate"]
-        self.progression_text = my_text["progression"]
+        self.progression_label = my_text["progression"]
         self.change_text = my_text["change"]
+
+    def reload_info(self):
+        self.fatigue_label = TEXT.general["fatigue_evolution"].replace(
+            " : ", "\n").replace("@", "5").replace("€", "10") # TODO
+        self.injury_label = TEXT.general["injury_evolution"].replace(
+            " : ", "\n").replace("@", "5") # TODO
+
+        ### Stats ###
+
+        stats_dict = self.athlete.stats
+        sports_dict = self.athlete.sports
+        athlete_skills = dict(stats_dict)
+        athlete_skills.update(sports_dict)
+
+        self.fill_stats_scrollview(athlete_skills=athlete_skills)
+
+    def fill_stats_scrollview(self, athlete_skills):
+        scrollview_layout = self.ids.stats_scrollview_layout
+
+        total_height = self.font_ratio * (
+            SKILL_HEIGHT * len(athlete_skills)
+        )
+
+        skills_layout = CharacterSkillsLayout(
+            skills_dict=athlete_skills,
+            font_ratio=self.font_ratio,
+            pos_hint={"x": 0.05},
+            size_hint=(0.9, None),
+            height=total_height,
+            show_level_up=True
+        )
+
+        scrollview_layout.add_widget(skills_layout)
 
     def change_first_activity(self):
         self.open_planning_popup(1)

@@ -33,6 +33,7 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,
     CharacterInfoWithMainSportsLayout,
+    CharacterSkillsLayout,
     MedalsCard,
     SkillsCard,
     CompleteRecruitCard,

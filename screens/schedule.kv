@@ -14,6 +14,48 @@
         money_plus_mode: root.spent_coins_for_athlete < 0
         money_size_hint: (0.3, 0.65)
 
+        ### Progression ###
+
+        OlympeCard:
+            pos_hint: {"center_x":0.5}
+            y: 8*MARGIN_HEIGHT*root.font_ratio + 3*first_activity.height + fatigue.height
+            size_hint: (SCROLLVIEW_WIDTH, None)
+            height: self.parent.height - HEADER_HEIGHT*root.font_ratio - self.y - 2*MARGIN_HEIGHT*root.font_ratio
+            header_mode: True
+            header_text: root.progression_label
+            font_ratio: root.font_ratio
+
+            CustomScrollview:
+                id: scrollview
+                bar_width: 5*root.font_ratio
+                bar_color: COLORS.blue_olympe
+                bar_inactive_color: COLORS.blue_pressed_olympe
+                size_hint: (1, None)
+                height: self.parent.height - HEADER_HEIGHT*root.font_ratio - 10*root.font_ratio
+                bar_margin: 8*root.font_ratio
+
+                MyScrollViewLayout:
+                    id: stats_scrollview_layout
+                    cols: 1
+                    spacing: (10*root.font_ratio, 5*root.font_ratio)
+                    padding: (20*root.font_ratio, 5*root.font_ratio, 20*root.font_ratio, 5*root.font_ratio)
+
+        ### Fatigue and injury risk ###
+
+        SurroundedLabel:
+            id: fatigue
+            text: root.fatigue_label
+            font_ratio: root.font_ratio
+            size_hint: (0.425, 0.1)
+            pos_hint: {"x": 0.05}
+            y: 6*MARGIN_HEIGHT*root.font_ratio + 3*first_activity.height
+
+        SurroundedLabel:
+            text: root.injury_label
+            font_ratio: root.font_ratio
+            size_hint: fatigue.size_hint
+            pos_hint: {"x": 0.525}
+            y: fatigue.y
 
         ### Activities ###
 

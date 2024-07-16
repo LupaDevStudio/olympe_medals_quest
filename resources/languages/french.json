@@ -15,7 +15,9 @@
         "cancel": "Annuler",
         "next": "Suivant",
         "previous": "Précédent",
-        "level": "Niveau"
+        "level": "Niveau",
+        "fatigue_evolution": "Fatigue : @% -> €%",
+        "injury_evolution": "Risque de blessure : @%"
     },
     "home": {
         "play": "Jouer"

@@ -23,6 +23,7 @@ from lupa_libraries.custom_widgets import (
     CharacterWithNameLayout,
     CharacterWithMainInfoFireLayout,
     CharacterInfoWithMainSportsLayout,
+    CharacterSkillsLayout,
     SurroundedLabel,
     SkillsCard,
     MedalsCard,

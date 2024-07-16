@@ -15,7 +15,9 @@
         "cancel": "Cancel",
         "next": "Next",
         "previous": "Previous",
-        "level": "Niveau"
+        "level": "Niveau",
+        "fatigue_evolution": "Fatigue : @% -> €%",
+        "injury_evolution": "Risque de blessure : @%"
     },
     "home": {
         "play": "Play"
