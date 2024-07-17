@@ -216,6 +216,11 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         height = self.font_ratio * (
                             HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*3 + BUTTON_HEIGHT)
 
+                    fatigue_label = TEXT.general["fatigue_evolution"].replace(
+                        "@", "5").replace("€", "10") # TODO
+                    injury_label = TEXT.general["injury_evolution"].replace(
+                        "@", "5") # TODO
+
                     inscription_card = CompleteInscriptionCard(
                         title_card=athlete.first_name + " " + athlete.name,
                         font_ratio=self.font_ratio,
@@ -224,8 +229,8 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         health=get_health_string(athlete=athlete),
                         size_hint=(1, None),
                         height=height,
-                        fatigue_evolution="TODO",
-                        wound_risk="TODO",
+                        fatigue_evolution=fatigue_label,
+                        wound_risk=injury_label,
                         button_text=button_text, # TODO mettre le prix si besoin PRICES_SELECTION[sport.category]
                         button_color=button_color,
                         button_pressed_color=button_pressed_color,

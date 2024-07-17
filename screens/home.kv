@@ -2,10 +2,18 @@
 
 <HomeScreen>:
 
+    Image:
+        source: PATH_CHARACTERS_IMAGES + "full_olympe.png"
+        size_hint: (None, 0.6)
+        width: root.height*self.size_hint[1]*333/500
+        pos_hint: {"y": 0}
+        x: -0.15*self.width
+        fit_mode: "cover"
+
     PressedButton:
         text: root.play_label
         size_hint: (0.5, 0.1)
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        pos_hint: {"center_x": 0.5, "center_y": 0.7}
         font_ratio: root.font_ratio
         release_function: root.go_to_game
 
@@ -19,7 +27,7 @@
     PressedButton:
         text: "GO TO PLANIFICATION"
         size_hint: (0.5, 0.1)
-        pos_hint: {"center_x": 0.5, "center_y": 0.7}
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
         font_ratio: root.font_ratio
         release_function: root.go_to_planification
 
