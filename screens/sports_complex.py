@@ -71,13 +71,41 @@ class SportsComplexScreen(OlympeScreen):
         my_text = TEXT.sports_complex
         self.sports_complex_title = my_text["title"]
 
+    def get_info_from_sport_complex_level(self, sports_complex_level: int):
+
+        level_details = []
+        max_number_athletes = TEXT.sports_complex["max_number_athletes"].replace(
+            "[NB_ATHLETES]", str(SPORTS_COMPLEX_EVOLUTION_DICT[
+                str(sports_complex_level)]["max_number_athletes"])
+        )
+        level_details.append({
+            "text": max_number_athletes
+        })
+
+        for element in SPORTS_COMPLEX_EVOLUTION_DICT[str(sports_complex_level)]["rooms_unlocked"]:
+            room_id = element[0]
+            room_level = element[1]
+            text = TEXT.sports_complex["room"].replace(
+                "[ROOM]", TEXT.rooms[room_id]["name"])
+            text = text.replace("[LEVEL]", str(room_level))
+            level_details.append(
+                {
+                    "text": text,
+                    "release_function": partial(
+                        self.open_tutorial_popup_room, room_id)
+                }
+            )
+
+        return level_details
+
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
         ### Sports complex ###
 
-        # If the sports complex is not at its maximum level
         sports_complex_level = GAME.sports_complex.current_level
+
+        # If the sports complex is not at its maximum level
         if sports_complex_level != len(SPORTS_COMPLEX_EVOLUTION_DICT):
 
             # Init the folded dictionary
@@ -88,54 +116,29 @@ class SportsComplexScreen(OlympeScreen):
             sports_complex_title = TEXT.sports_complex[
                 "sports_complex"] + " - " + TEXT.general[
                     "level"] + " " + str(next_level)
+            
+            # Small view
             if self.rooms_folded_dict["sports_complex"][0]:
+
                 sports_complex_card = SmallRoomCard(
                     font_ratio=self.font_ratio,
                     title_card=sports_complex_title,
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=HEADER_HEIGHT*self.font_ratio
                 )
-            else:
-                current_level_details = []
-                previous_max_number_athletes = TEXT.sports_complex["max_number_athletes"].replace(
-                    "[NB_ATHLETES]", str(GAME.sports_complex.max_number_athletes))
-                current_level_details.append({
-                    "text": previous_max_number_athletes
-                })
-                for element in SPORTS_COMPLEX_EVOLUTION_DICT[str(sports_complex_level)]["rooms_unlocked"]:
-                    room_id = element[0]
-                    room_level = element[1]
-                    text = TEXT.sports_complex["room"].replace(
-                        "[ROOM]", TEXT.rooms[room_id]["name"])
-                    text = text.replace("[LEVEL]", str(room_level))
-                    current_level_details.append(
-                        {
-                            "text": text,
-                            "release_function": partial(
-                                self.open_tutorial_popup_room, room_id)
-                        }
-                    )
 
-                next_level_details = []
-                next_max_number_athletes = TEXT.sports_complex["max_number_athletes"].replace(
-                    "[NB_ATHLETES]", str(SPORTS_COMPLEX_EVOLUTION_DICT[str(next_level)]["max_number_athletes"]))
-                    
-                next_level_details.append({
-                    "text": next_max_number_athletes
-                })
-                for element in SPORTS_COMPLEX_EVOLUTION_DICT[str(next_level)]["rooms_unlocked"]:
-                    room_id = element[0]
-                    room_level = element[1]
-                    text = TEXT.sports_complex["room"].replace(
-                        "[ROOM]", TEXT.rooms[room_id]["name"])
-                    text = text.replace("[LEVEL]", str(room_level))
-                    next_level_details.append(
-                        {
-                            "text": text,
-                            "release_function": partial(
-                                self.open_tutorial_popup_room, room_id)
-                        }
-                    )
+            # Complete view
+            else:
+
+                # Details of the current level of the sports complex
+                current_level_details = self.get_info_from_sport_complex_level(
+                    sports_complex_level=sports_complex_level
+                )
+
+                # Details of the next level of the sports complex
+                next_level_details = self.get_info_from_sport_complex_level(
+                    sports_complex_level=next_level
+                )
 
                 sports_complex_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
@@ -183,12 +186,12 @@ class SportsComplexScreen(OlympeScreen):
                     button_text = TEXT.sports_complex["expand"]
                     current_level_title = TEXT.general["level"] + " " + str(next_level-1)
                     current_level_details = []
-                    # TODO parcourir les activités et effets
+                    # TODO parcourir les activités et effets DANS UNE FONCTION
 
                 # Fill next details
                 next_level_title = TEXT.general["level"] + " " + str(next_level)
                 next_level_details = []
-                # TODO parcourir les activités et effets
+                # TODO parcourir les activités et effets DANS UNE FONCTION
 
                 room_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
