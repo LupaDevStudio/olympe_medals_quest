@@ -1,87 +1,372 @@
 {
-    "id_room_1": {
+    "hospital": {
         "1": {
-            "activities_unlocked": [],
+            "activities_unlocked": [
+                ["convalescence", 1]
+            ],
             "effects": [],
-            "price": 1000
+            "price": 15000
         },
         "2": {
-            "activities_unlocked": [],
+            "activities_unlocked": [
+                ["convalescence", 2]
+            ],
             "effects": [],
-            "price": 5000
+            "price": 50000
         },
         "3": {
-            "activities_unlocked": [],
+            "activities_unlocked": [
+                ["convalescence", 3]
+            ],
             "effects": [],
-            "price": 10000
+            "price": 120000
         }
     },
-    "id_room_2": {
+    "massage_room": {
         "1": {
-            "activities_unlocked": [],
-            "effects": [],
-            "price": 1000
-        },
-        "2": {
-            "activities_unlocked": [],
-            "effects": [],
-            "price": 5000
-        },
-        "3": {
-            "activities_unlocked": [],
+            "activities_unlocked": [
+                ["massage", null]
+            ],
             "effects": [],
             "price": 10000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["therapeutic_massage", null]
+            ],
+            "effects": [],
+            "price": 40000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["reeducation", null]
+            ],
+            "effects": [],
+            "price": 100000
         }
     },
-    "id_room_3": {
+    "conference_room": {
         "1": {
-            "activities_unlocked": [],
+            "activities_unlocked": [
+                ["interview", null]
+            ],
             "effects": [],
-            "price": 1000
+            "price": 15000
         },
         "2": {
-            "activities_unlocked": [],
+            "activities_unlocked": [
+                ["sponsor", null]
+            ],
             "effects": [],
-            "price": 5000
-        },
-        "3": {
-            "activities_unlocked": [],
-            "effects": [],
-            "price": 10000
+            "price": 60000
         }
     },
-    "id_room_4": {
+    "canteen": {
         "1": {
             "activities_unlocked": [],
-            "effects": [],
-            "price": 1000
+            "effects": [
+                ["less_fatigue", 0.05]
+            ],
+            "price": 10000
         },
         "2": {
             "activities_unlocked": [],
-            "effects": [],
-            "price": 5000
+            "effects": [
+                ["less_fatigue", 0.1]
+            ],
+            "price": 40000
         },
         "3": {
             "activities_unlocked": [],
-            "effects": [],
-            "price": 10000
+            "effects": [
+                ["less_fatigue", 0.15]
+            ],
+            "price": 100000
+        },
+        "4": {
+            "activities_unlocked": [],
+            "effects": [
+                ["less_fatigue", 0.20]
+            ],
+            "price": 200000
+        },
+        "5": {
+            "activities_unlocked": [],
+            "effects": [
+                ["less_fatigue", 0.25]
+            ],
+            "price": 450000
         }
     },
-    "id_room_5": {
+    "polyvalente_room": {
         "1": {
             "activities_unlocked": [],
-            "effects": [],
-            "price": 1000
+            "effects": [
+                ["more_experience", 0.05]
+            ],
+            "price": 10000
         },
         "2": {
             "activities_unlocked": [],
-            "effects": [],
-            "price": 5000
+            "effects": [
+                ["more_experience", 0.1]
+            ],
+            "price": 40000
         },
         "3": {
             "activities_unlocked": [],
+            "effects": [
+                ["more_experience", 0.15]
+            ],
+            "price": 100000
+        },
+        "4": {
+            "activities_unlocked": [],
+            "effects": [
+                ["more_experience", 0.20]
+            ],
+            "price": 200000
+        },
+        "5": {
+            "activities_unlocked": [],
+            "effects": [
+                ["more_experience", 0.25]
+            ],
+            "price": 450000
+        }
+    },
+    "job_room": {
+        "1": {
+            "activities_unlocked": [
+                ["strength_job", null],
+                ["speed_job", null],
+                ["precision_job", null],
+                ["technique_job", null],
+                ["charm_job_1", null]
+            ],
+            "effects": [],
+            "price": 15000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["best_job", null],
+                ["charm_job_2", null]
+            ],
+            "effects": [],
+            "price": 50000
+        }
+    },
+    "secret_affairs_room": {
+        "1": {
+            "activities_unlocked": [
+                ["research_sports_1", null]
+            ],
+            "effects": [],
+            "price": 15000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["research_sports_2", null]
+            ],
+            "effects": [],
+            "price": 60000
+        }
+    },
+    "cryotherapy_room": {
+        "1": {
+            "activities_unlocked": [
+                ["cryotherapy", 1]
+            ],
             "effects": [],
             "price": 10000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["cryotherapy", 2]
+            ],
+            "effects": [],
+            "price": 40000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["cryotherapy", 3]
+            ],
+            "effects": [],
+            "price": 80000
+        }
+    },
+    "multisports_room": {
+        "1": {
+            "activities_unlocked": [
+                ["sport_activities", 2]
+            ],
+            "effects": [],
+            "price": 20000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["sport_activities", 3]
+            ],
+            "effects": [],
+            "price": 60000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["sport_activities", 4]
+            ],
+            "effects": [],
+            "price": 150000
+        }
+    },
+    "strength_room": {
+        "1": {
+            "activities_unlocked": [
+                ["strength", 2]
+            ],
+            "effects": [],
+            "price": 20000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["strength", 3]
+            ],
+            "effects": [],
+            "price": 60000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["strength_speed", null],
+                ["strength_technique", null],
+                ["strength_precision", null]
+            ],
+            "effects": [],
+            "price": 150000
+        },
+        "4": {
+            "activities_unlocked": [
+                ["strength", 4]
+            ],
+            "effects": [],
+            "price": 300000
+        }
+    },
+    "speed_room": {
+        "1": {
+            "activities_unlocked": [
+                ["speed", 2]
+            ],
+            "effects": [],
+            "price": 20000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["speed", 3]
+            ],
+            "effects": [],
+            "price": 60000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["speed_strength", null],
+                ["speed_technique", null],
+                ["speed_precision", null]
+            ],
+            "effects": [],
+            "price": 150000
+        },
+        "4": {
+            "activities_unlocked": [
+                ["speed", 4]
+            ],
+            "effects": [],
+            "price": 300000
+        }
+    },
+    "technique_room": {
+        "1": {
+            "activities_unlocked": [
+                ["technique", 2]
+            ],
+            "effects": [],
+            "price": 20000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["technique", 3]
+            ],
+            "effects": [],
+            "price": 60000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["technique_strength", null],
+                ["technique_speed", null],
+                ["technique_precision", null]
+            ],
+            "effects": [],
+            "price": 150000
+        },
+        "4": {
+            "activities_unlocked": [
+                ["technique", 4]
+            ],
+            "effects": [],
+            "price": 300000
+        }
+    },
+    "precision_room": {
+        "1": {
+            "activities_unlocked": [
+                ["precision", 2]
+            ],
+            "effects": [],
+            "price": 20000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["precision", 3]
+            ],
+            "effects": [],
+            "price": 60000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["precision_strength", null],
+                ["precision_speed", null],
+                ["precision_technique", null]
+            ],
+            "effects": [],
+            "price": 150000
+        },
+        "4": {
+            "activities_unlocked": [
+                ["precision", 4]
+            ],
+            "effects": [],
+            "price": 300000
+        }
+    },
+    "charm_room": {
+        "1": {
+            "activities_unlocked": [
+                ["charm", 2]
+            ],
+            "effects": [],
+            "price": 20000
+        },
+        "2": {
+            "activities_unlocked": [
+                ["charm", 3]
+            ],
+            "effects": [],
+            "price": 60000
+        },
+        "3": {
+            "activities_unlocked": [
+                ["charm", 4]
+            ],
+            "effects": [],
+            "price": 150000
         }
     }
 }

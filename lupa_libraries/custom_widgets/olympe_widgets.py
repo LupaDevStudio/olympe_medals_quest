@@ -87,6 +87,7 @@ class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
     release_function = ObjectProperty(lambda: 1 + 1)
     disable_button = BooleanProperty(False)
 
+    size_hint_character = ObjectProperty((None, 0.9))
     line_width = NumericProperty(LARGE_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 

@@ -106,7 +106,7 @@ class SportsComplexScreen(OlympeScreen):
                     room_id = element[0]
                     room_level = element[1]
                     text = TEXT.sports_complex["room"].replace(
-                        "[ROOM]", TEXT.rooms[room_id])
+                        "[ROOM]", TEXT.rooms[room_id]["name"])
                     text = text.replace("[LEVEL]", str(room_level))
                     current_level_details.append(
                         {
@@ -127,7 +127,7 @@ class SportsComplexScreen(OlympeScreen):
                     room_id = element[0]
                     room_level = element[1]
                     text = TEXT.sports_complex["room"].replace(
-                        "[ROOM]", TEXT.rooms[room_id])
+                        "[ROOM]", TEXT.rooms[room_id]["name"])
                     text = text.replace("[LEVEL]", str(room_level))
                     next_level_details.append(
                         {
@@ -164,7 +164,7 @@ class SportsComplexScreen(OlympeScreen):
                 self.rooms_folded_dict[room_id] = [False, None]
 
             room: Room = GAME.sports_complex.rooms_unlocked[room_id]
-            room_title: str = TEXT.rooms[room_id] + " - " + TEXT.general[
+            room_title: str = TEXT.rooms[room_id]["name"] + " - " + TEXT.general[
                 "level"] + " " + str(room.current_level)
             
             if self.rooms_folded_dict[room_id][0]:

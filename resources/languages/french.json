@@ -217,11 +217,62 @@
         "our_country": "Elysia"
     },
     "rooms": {
-        "id_room_1": "Name of room 1",
-        "id_room_2": "Name of room 2",
-        "id_room_3": "Name of room 3",
-        "id_room_4": "Name of room 4",
-        "id_room_5": "Name of room 5"
+        "hospital": {
+            "name": "Hôpital Dukoindlaru",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "massage_room": {
+            "name": "Clinique Sakrak",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "conference_room": {
+            "name": "Elysia News",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "canteen": {
+            "name": "Aux bons plats de Gatho",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "polyvalente_room": {
+            "name": "Salle polyvalente TODO",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "job_room": {
+            "name": "Agence Oboulo",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "secret_affairs_room": {
+            "name": "Services Secrets Elysiens",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "cryotherapy_room": {
+            "name": "Mr Freeze Thérapie",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "multisports_room": {
+            "name": "Salle multi-sports",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "strength_room": {
+            "name": "Salle de musculation",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "speed_room": {
+            "name": "Salle de cardio-training",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "technique_room": {
+            "name": "Salle de fitness",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "precision_room": {
+            "name": "Salle de méditation",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        },
+        "charm_room": {
+            "name": "Studio",
+            "description": "Ecrire la description avec le nombre de niveaux"
+        }
     },
     "activities": {},
     "tutorial": {},

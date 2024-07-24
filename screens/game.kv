@@ -61,6 +61,7 @@
         size_hint: (None, 0.15)
         width: self.height
         pos_hint: {"x": 0.1, "y": 0.15}
+        size_hint_character: (None, 1)
         font_ratio: root.font_ratio
         release_function: root.launch_dialog_olympe
 
@@ -72,6 +73,7 @@
         size_hint: (None, 0.15)
         width: self.height
         pos_hint: {"right": 0.9, "y": 0.15}
+        size_hint_character: olympe_button.size_hint_character
         font_ratio: root.font_ratio
         release_function: root.launch_dialog_minister
 
