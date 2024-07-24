@@ -26,6 +26,7 @@ from tools.path import (
     PATH_BACKGROUNDS,
     PATH_ATHLETES_IMAGES,
     PATH_SPORTS,
+    PATH_ACTIVITIES,
     PATH_SPORTS_COMPLEX_DICT,
     PATH_ROOMS_DICT
 )
@@ -125,30 +126,90 @@ class Activity():
     """
 
     id: str
-    name: str
+    effects: list
     category: str
-    level_category: int
+    all_trimester: bool
     price: int
     gain: int
+    condition: None|int
 
     def __init__(self, dict_to_load: dict):
         self.id = dict_to_load.get("id", "")
-        self.name = dict_to_load.get("name", "")
+        self.effects = dict_to_load.get("effects", [])
         self.category = dict_to_load.get("category", "")
-        self.level_category = dict_to_load.get("level_category", 0)
+        self.all_trimester = dict_to_load.get("all_trimester", False)
         self.price = dict_to_load.get("price", 0)
         self.gain = dict_to_load.get("gain", 0)
+        self.condition = dict_to_load.get("condition", None)
 
     def export_dict(self) -> dict:
         return {
             "id": self.id,
-            "name": self.name,
+            "effects": self.effects,
             "category": self.category,
-            "level_category": self.level_category,
+            "all_trimester": self.all_trimester,
             "price": self.price,
             "gain": self.gain,
+            "condition": self.condition
         }
 
+class InterviewActivity(Activity):
+    """
+    A class to store the data of the interview activities.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "interview"
+
+    def get_gain_reputation(self, athlete) -> int:
+        current_reputation = athlete.reputation
+        current_charm = athlete.stats["charm"]["points"]
+
+        # TODO
+        new_reputation = current_reputation + 0
+
+        return new_reputation
+
+class JobActivity(Activity):
+    """
+    A class to store the data of the job activities.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "job"
+
+    def get_can_access_gain_money_gain_stats(self, athlete) -> dict:
+
+        # Activities not based on stats
+        if self.id in ["basic_job", "best_job"]:
+            return {
+                "can_access": True,
+                "gain_money": self.gain,
+                "gain_stats": {}
+            }
+        
+        # Activities based on a stat
+
+        fix_part = self.gain
+        stat = self.id.replace("_job", "")
+        athlete_stat = athlete.stats[stat]["points"]
+
+        # The athlete is not skilled enough to perform the job
+        condition = self.condition
+        if athlete_stat < condition:
+            return {"can_access": False}
+        
+        variable_part = int(fix_part * athlete_stat / 70)
+
+        return {
+                "can_access": True,
+                "gain_money": fix_part + variable_part,
+                "gain_stats": {} # TODO
+            }
 
 class Sport():
     """
@@ -877,3 +938,31 @@ for sport_id in SPORTS:
             "requirements": SPORTS[sport_id]["requirements"]
         }
     )
+
+ACTIVITIES = load_json_file(PATH_ACTIVITIES)
+for activity_id in ACTIVITIES:
+    activity_dict = ACTIVITIES[activity_id]
+
+    # Job activities
+    if "_job" in activity_id:
+        ACTIVITIES[activity_id] = JobActivity(
+            dict_to_load={
+                "id": activity_id,
+                "condition": activity_dict.get("condition", None),
+                "gain": activity_dict["gain"]
+            }
+        )
+    
+    # Other activities
+    else:
+        ACTIVITIES[activity_id] = Activity(
+            dict_to_load={
+                "id": activity_id,
+                "effects": activity_dict.get("effects", []),
+                "category": activity_dict.get("category", ""),
+                "all_trimester": activity_dict.get("all_trimester", False),
+                "price": activity_dict.get("price", 0),
+                "gain": activity_dict.get("gain", 0),
+                "condition": activity_dict.get("condition", None)
+            }
+        )

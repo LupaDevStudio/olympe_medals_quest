@@ -1,0 +1,74 @@
+{
+    "vacation": {
+        "effects": [
+            ["fatigue", 0.1],
+            ["injury_evolution", 0.1]
+        ]
+    },
+    "convalescence_1": {
+        "effects": [
+            ["illness", "heal_one_trimester"]
+        ],
+        "all_trimester": true,
+        "price": 10
+    },
+    "convalescence_2": {
+        "effects": [
+            ["illness", "heal_all"]
+        ],
+        "all_trimester": true,
+        "price": 10
+    },
+    "massage": {
+        "effects": [
+            ["fatigue", 0.2]
+        ],
+        "price": 10
+    },
+    "therapeutic_massage": {
+        "effects": [
+            ["fatigue", 0.2],
+            ["injury_evolution", 0.2]
+        ],
+        "price": 10
+    },
+    "reeducation": {
+        "effects": [
+            ["injury", "heal_all"]
+        ],
+        "all_trimester": true,
+        "price": 10
+    },
+    "interview": {},
+    "sponsor": {},
+    "basic_job": {
+        "gain": 2000
+    },
+    "strength_job": {
+        "condition": 30,
+        "gain": 2000
+    },
+    "speed_job": {
+        "condition": 30,
+        "gain": 2000
+    },
+    "technique_job": {
+        "condition": 30,
+        "gain": 2000
+    },
+    "precision_job": {
+        "condition": 30,
+        "gain": 2000
+    },
+    "charm_job_1": {
+        "condition": 30,
+        "gain": 2000
+    },
+    "charm_job_2": {
+        "condition": 50,
+        "gain": 3000
+    },
+    "best_job": {
+        "gain": 3000
+    }
+}

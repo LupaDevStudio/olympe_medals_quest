@@ -2,44 +2,37 @@
     "hospital": {
         "1": {
             "activities_unlocked": [
-                ["convalescence", 1]
+                "convalescence"
             ],
             "effects": [],
             "price": 15000
         },
         "2": {
             "activities_unlocked": [
-                ["convalescence", 2]
+                "convalescence"
             ],
             "effects": [],
             "price": 50000
-        },
-        "3": {
-            "activities_unlocked": [
-                ["convalescence", 3]
-            ],
-            "effects": [],
-            "price": 120000
         }
     },
     "massage_room": {
         "1": {
             "activities_unlocked": [
-                ["massage", null]
+                "massage"
             ],
             "effects": [],
             "price": 10000
         },
         "2": {
             "activities_unlocked": [
-                ["therapeutic_massage", null]
+                "therapeutic_massage"
             ],
             "effects": [],
             "price": 40000
         },
         "3": {
             "activities_unlocked": [
-                ["reeducation", null]
+                "reeducation"
             ],
             "effects": [],
             "price": 100000
@@ -48,14 +41,14 @@
     "conference_room": {
         "1": {
             "activities_unlocked": [
-                ["interview", null]
+                "interview"
             ],
             "effects": [],
             "price": 15000
         },
         "2": {
             "activities_unlocked": [
-                ["sponsor", null]
+                "sponsor"
             ],
             "effects": [],
             "price": 60000
@@ -138,19 +131,19 @@
     "job_room": {
         "1": {
             "activities_unlocked": [
-                ["strength_job", null],
-                ["speed_job", null],
-                ["precision_job", null],
-                ["technique_job", null],
-                ["charm_job_1", null]
+                "strength_job",
+                "speed_job",
+                "precision_job",
+                "technique_job",
+                "charm_job_1"
             ],
             "effects": [],
             "price": 15000
         },
         "2": {
             "activities_unlocked": [
-                ["best_job", null],
-                ["charm_job_2", null]
+                "best_job",
+                "charm_job_2"
             ],
             "effects": [],
             "price": 50000
@@ -159,14 +152,14 @@
     "secret_affairs_room": {
         "1": {
             "activities_unlocked": [
-                ["research_sports_1", null]
+                "research_sports_1"
             ],
             "effects": [],
             "price": 15000
         },
         "2": {
             "activities_unlocked": [
-                ["research_sports_2", null]
+                "research_sports_2"
             ],
             "effects": [],
             "price": 60000
@@ -175,21 +168,21 @@
     "cryotherapy_room": {
         "1": {
             "activities_unlocked": [
-                ["cryotherapy", 1]
+                "cryotherapy_1"
             ],
             "effects": [],
             "price": 10000
         },
         "2": {
             "activities_unlocked": [
-                ["cryotherapy", 2]
+                "cryotherapy_2"
             ],
             "effects": [],
             "price": 40000
         },
         "3": {
             "activities_unlocked": [
-                ["cryotherapy", 3]
+                "cryotherapy_3"
             ],
             "effects": [],
             "price": 80000
@@ -198,21 +191,21 @@
     "multisports_room": {
         "1": {
             "activities_unlocked": [
-                ["sport_activities", 2]
+                "sport_activities_2"
             ],
             "effects": [],
             "price": 20000
         },
         "2": {
             "activities_unlocked": [
-                ["sport_activities", 3]
+                "sport_activities_3"
             ],
             "effects": [],
             "price": 60000
         },
         "3": {
             "activities_unlocked": [
-                ["sport_activities", 4]
+                "sport_activities_4"
             ],
             "effects": [],
             "price": 150000
@@ -221,30 +214,30 @@
     "strength_room": {
         "1": {
             "activities_unlocked": [
-                ["strength", 2]
+                "strength_2"
             ],
             "effects": [],
             "price": 20000
         },
         "2": {
             "activities_unlocked": [
-                ["strength", 3]
+                "strength_3"
             ],
             "effects": [],
             "price": 60000
         },
         "3": {
             "activities_unlocked": [
-                ["strength_speed", null],
-                ["strength_technique", null],
-                ["strength_precision", null]
+                "strength_speed",
+                "strength_technique",
+                "strength_precision"
             ],
             "effects": [],
             "price": 150000
         },
         "4": {
             "activities_unlocked": [
-                ["strength", 4]
+                "strength_4"
             ],
             "effects": [],
             "price": 300000
@@ -253,30 +246,30 @@
     "speed_room": {
         "1": {
             "activities_unlocked": [
-                ["speed", 2]
+                "speed_2"
             ],
             "effects": [],
             "price": 20000
         },
         "2": {
             "activities_unlocked": [
-                ["speed", 3]
+                "speed_3"
             ],
             "effects": [],
             "price": 60000
         },
         "3": {
             "activities_unlocked": [
-                ["speed_strength", null],
-                ["speed_technique", null],
-                ["speed_precision", null]
+                "speed_strength", 
+                "speed_technique",
+                "speed_precision"
             ],
             "effects": [],
             "price": 150000
         },
         "4": {
             "activities_unlocked": [
-                ["speed", 4]
+                "speed_4"
             ],
             "effects": [],
             "price": 300000
@@ -285,30 +278,30 @@
     "technique_room": {
         "1": {
             "activities_unlocked": [
-                ["technique", 2]
+                "technique_2"
             ],
             "effects": [],
             "price": 20000
         },
         "2": {
             "activities_unlocked": [
-                ["technique", 3]
+                "technique_3"
             ],
             "effects": [],
             "price": 60000
         },
         "3": {
             "activities_unlocked": [
-                ["technique_strength", null],
-                ["technique_speed", null],
-                ["technique_precision", null]
+                "technique_strength",
+                "technique_speed",
+                "technique_precision"
             ],
             "effects": [],
             "price": 150000
         },
         "4": {
             "activities_unlocked": [
-                ["technique", 4]
+                "technique_4"
             ],
             "effects": [],
             "price": 300000
@@ -317,30 +310,30 @@
     "precision_room": {
         "1": {
             "activities_unlocked": [
-                ["precision", 2]
+                "precision_2"
             ],
             "effects": [],
             "price": 20000
         },
         "2": {
             "activities_unlocked": [
-                ["precision", 3]
+                "precision_3"
             ],
             "effects": [],
             "price": 60000
         },
         "3": {
             "activities_unlocked": [
-                ["precision_strength", null],
-                ["precision_speed", null],
-                ["precision_technique", null]
+                "precision_strength",
+                "precision_speed",
+                "precision_technique"
             ],
             "effects": [],
             "price": 150000
         },
         "4": {
             "activities_unlocked": [
-                ["precision", 4]
+                "precision_4"
             ],
             "effects": [],
             "price": 300000
@@ -349,21 +342,21 @@
     "charm_room": {
         "1": {
             "activities_unlocked": [
-                ["charm", 2]
+                "charm_2"
             ],
             "effects": [],
             "price": 20000
         },
         "2": {
             "activities_unlocked": [
-                ["charm", 3]
+                "charm_3"
             ],
             "effects": [],
             "price": 60000
         },
         "3": {
             "activities_unlocked": [
-                ["charm", 4]
+                "charm_4"
             ],
             "effects": [],
             "price": 150000
