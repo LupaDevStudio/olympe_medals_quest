@@ -297,7 +297,6 @@ class Athlete():
     reputation: int
     stats: dict[str, dict]
     sports: dict[str, dict]
-    previous_planning: list[str]
     current_planning: list[str]
 
     @ property
@@ -333,8 +332,7 @@ class Athlete():
         self.reputation = dict_to_load.get("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
-        self.previous_planning = dict_to_load.get("previous_planning", ["vacation", "vacation", "vacation"])
-        self.current_planning = dict_to_load.get("current_planning", self.previous_planning)
+        self.current_planning = dict_to_load.get("current_planning", ["vacation", "vacation", "vacation"])
 
     def get_best_sports(self, number_sports: int = 2):
         # Sort the sports by decreasing points
@@ -379,7 +377,7 @@ class Athlete():
             if self.health["time_absent"] <= 0:
                 self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
 
-    def get_trimester_payment(self) -> int:
+    def get_trimester_gained_money(self) -> int:
         # Salary of the athlete
         trimester_payment = - self.salary
 
@@ -407,8 +405,7 @@ class Athlete():
             "reputation": self.reputation,
             "stats": self.stats,
             "sports": self.sports,
-            "previous_planning": [activity_id for activity_id in self.previous_planning],
-            "current_planning": [activity_id for activity_id in self.current_planning],
+            "current_planning": [activity_id for activity_id in self.current_planning]
         }
 
 
@@ -425,8 +422,7 @@ class Room():
         return PATH_BACKGROUNDS + f"{self.id}.jpg"
 
     @ property
-    def activities_unlocked(self) -> list[Activity]:
-        # TODO mettre en activités
+    def activities_unlocked(self) -> list[str]:
         return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["activities_unlocked"]
     
     @ property
@@ -669,10 +665,10 @@ class Game():
             if athlete.id == athlete_id:
                 return athlete
 
-    def get_trimester_total_payment(self) -> int:
+    def get_trimester_gained_total_money(self) -> int:
         trimester_payment = 0
         for athlete in self.team:
-            trimester_payment += athlete.get_trimester_payment()
+            trimester_payment += athlete.get_trimester_gained_money()
         return trimester_payment
 
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
@@ -795,7 +791,7 @@ class Game():
                 activity.apply_activity(athlete=athlete)
 
         # Update the amount of money due to salaries and activities
-        self.money += self.get_trimester_total_payment()
+        self.money += self.get_trimester_gained_total_money()
 
         # Update the stats of the athletes according to their age and ill state
         for athlete in self.team:

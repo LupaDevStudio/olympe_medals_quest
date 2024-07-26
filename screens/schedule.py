@@ -14,7 +14,8 @@ from functools import partial
 
 from kivy.properties import (
     StringProperty,
-    NumericProperty
+    NumericProperty,
+    ListProperty
 )
 
 ### Local imports ###
@@ -27,22 +28,14 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_SPEND_MONEY_RIGHT,
-    SCREEN_CUSTOM_TITLE,
-    GAME
+    GAME,
+    USER_DATA
 )
 from tools.graphics import (
-    SCROLLVIEW_WIDTH,
-    BIG_HEADER_HEIGHT,
-    CHARACTER_HEIGHT,
-    HEADER_HEIGHT,
-    SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    SKILL_HEIGHT
 )
 from tools.data_structures import (
     Athlete
-)
-from tools.path import (
-    PATH_ICONS
 )
 
 #############
@@ -63,15 +56,18 @@ class ScheduleScreen(OlympeScreen):
     validate_label = StringProperty()
     header_text = StringProperty()
     spent_coins = NumericProperty()
-    spent_coins_for_athlete = NumericProperty()
+    athlete_money_gain = NumericProperty()
     progression_label = StringProperty()
     change_text = StringProperty()
     fatigue_label = StringProperty()
     injury_label = StringProperty()
+    activities_ids_list = ListProperty([])
 
     def reload_kwargs(self, dict_kwargs):
         self.athlete = dict_kwargs["athlete"]
         self.header_text = self.athlete.first_name + " " + self.athlete.name
+        self.spent_coins = - GAME.get_trimester_gained_total_money()
+        self.athlete_money_gain = self.athlete.get_trimester_gained_money()
 
         self.reload_info()
 
@@ -84,7 +80,7 @@ class ScheduleScreen(OlympeScreen):
 
     def reload_info(self):
         self.fatigue_label = TEXT.general["fatigue_evolution"].replace(
-            " : ", "\n").replace("@", "5").replace("€", "10") # TODO
+            " : ", "\n").replace("@", str(self.athlete.fatigue)).replace("€", "10") # TODO
         self.injury_label = TEXT.general["injury_evolution"].replace(
             " : ", "\n").replace("@", "5") # TODO
 
@@ -96,6 +92,17 @@ class ScheduleScreen(OlympeScreen):
         athlete_skills.update(sports_dict)
 
         self.fill_stats_scrollview(athlete_skills=athlete_skills)
+
+    def on_pre_enter(self, *args):
+        super().on_pre_enter(*args)
+
+        self.bind(activities_ids_list=self.update_activities_label)
+        self.activities_ids_list = self.athlete.current_planning
+
+    def update_activities_label(self, *args):
+        self.ids.first_activity.text = TEXT.activities[self.activities_ids_list[0]]["name"]
+        self.ids.second_activity.text = TEXT.activities[self.activities_ids_list[1]]["name"]
+        self.ids.third_activity.text = TEXT.activities[self.activities_ids_list[2]]["name"]
 
     def fill_stats_scrollview(self, athlete_skills):
         scrollview_layout = self.ids.stats_scrollview_layout
@@ -127,8 +134,13 @@ class ScheduleScreen(OlympeScreen):
     def open_planning_popup(self, number_activity: int):
         print("Planning")
 
+        # update activities_ids_list[number_activity]
+
     def validate_planning(self):
-        print("TODO validate planning")
+        # Validate the new planning of the athlete
+        self.athlete.current_planning = self.activities_ids_list
+        USER_DATA.save_changes()
+
         self.go_to_next_screen(
             screen_name="planification",
             current_dict_kwargs={"athlete": self.athlete}

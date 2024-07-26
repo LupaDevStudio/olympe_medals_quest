@@ -34,7 +34,6 @@ from tools.constants import (
     GAME
 )
 from tools.path import (
-    PATH_BACKGROUNDS,
     PATH_ICONS
 )
 
@@ -111,6 +110,7 @@ class OlympeScreen(ImprovedScreen):
                 self.ids.money_frame.spend_mode = True
                 self.ids.money_frame.size_hint = (0.35, 0.7)
                 self.ids.money_frame.spent_coins_count = self.spent_coins
+                self.bind(spent_coins=self.update_money_frame)
 
                 if SCREEN_CUSTOM_TITLE or SCREEN_TITLE_YEAR in self.dict_type_screen:
                     self.ids.title.pos_hint = {"center_x":0.375, "center_y":0.5}
@@ -141,6 +141,9 @@ class OlympeScreen(ImprovedScreen):
         year = TEXT.general["year"] + " "
         trimester = TEXT.general["trimester"] + " "
         return year + str(USER_DATA.game.year) + "\n" + trimester + str(USER_DATA.game.trimester)
+
+    def update_money_frame(self, *args):
+        self.ids.money_frame.spent_coins_count = self.spent_coins
 
     def reload_language(self):
         if SCREEN_TITLE_YEAR in self.dict_type_screen:

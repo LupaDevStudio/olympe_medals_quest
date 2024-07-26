@@ -274,7 +274,12 @@
             "description": "Ecrire la description avec le nombre de niveaux"
         }
     },
-    "activities": {},
+    "activities": {
+        "vacation": {
+            "name": "Congés",
+            "description": "TODO"
+        }
+    },
     "tutorial": {},
     "popup": {},
     "injuries": {

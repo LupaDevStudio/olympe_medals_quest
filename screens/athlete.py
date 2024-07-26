@@ -25,16 +25,13 @@ from lupa_libraries import (
     SkillsCard,
     MedalsCard
 )
-from tools.path import (
-    PATH_BACKGROUNDS,
-    PATH_CHARACTERS_IMAGES
-)
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    GAME
+    GAME,
+    USER_DATA
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
@@ -155,6 +152,10 @@ class AthleteScreen(OlympeScreen):
     def ask_fire_athlete(self):
         print("TODO fire athlete")
 
+    def fire_athlete(self):
+        GAME.fire_athlete(athlete_id=self.athlete.id)
+        USER_DATA.save_changes()
+
     def ask_redraw(self, widget):
         if widget == self.medals_card:
             self.medals_folded = not self.medals_folded
@@ -164,6 +165,3 @@ class AthleteScreen(OlympeScreen):
         # Reset scrollview
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
-
-    def go_to_team(self):
-        self.go_to_next_screen(screen_name="team")

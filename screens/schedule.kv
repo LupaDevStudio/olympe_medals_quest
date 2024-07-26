@@ -9,9 +9,9 @@
         header_text: root.header_text
         font_ratio: root.font_ratio
         money_mode: True
-        money_amount: root.spent_coins_for_athlete
-        money_minus_mode: root.spent_coins_for_athlete > 0
-        money_plus_mode: root.spent_coins_for_athlete < 0
+        money_amount: abs(root.athlete_money_gain)
+        money_minus_mode: root.athlete_money_gain < 0
+        money_plus_mode: root.athlete_money_gain > 0
         money_size_hint: (0.3, 0.65)
 
         ### Progression ###
@@ -61,7 +61,7 @@
 
         SurroundedLabel:
             id: first_activity
-            text: "Act 1 TODO"
+            text: ""
             font_ratio: root.font_ratio
             size_hint: (0.55, 0.075)
             pos_hint: {"x": 0.05}
@@ -78,7 +78,7 @@
 
         SurroundedLabel:
             id: second_activity
-            text: "Act 2 TODO"
+            text: ""
             font_ratio: root.font_ratio
             size_hint: first_activity.size_hint
             x: first_activity.x
@@ -94,7 +94,7 @@
 
         SurroundedLabel:
             id: third_activity
-            text: "Act 3 TODO"
+            text: ""
             font_ratio: root.font_ratio
             size_hint: first_activity.size_hint
             x: first_activity.x

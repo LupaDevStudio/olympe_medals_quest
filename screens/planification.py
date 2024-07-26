@@ -42,9 +42,6 @@ from tools.graphics import (
 from tools.data_structures import (
     Athlete
 )
-from tools.path import (
-    PATH_ICONS
-)
 
 #############
 ### Class ###
@@ -72,10 +69,12 @@ class PlanificationScreen(OlympeScreen):
         self.header_text = my_text["planification"]
 
     def fill_scrollview(self):
+        self.spent_coins = - GAME.get_trimester_gained_total_money()
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
         for athlete in GAME.team:
+            trimester_gain = athlete.get_trimester_gained_money()
 
             if athlete.id not in self.athlete_folded_dict:
                 self.athlete_folded_dict[athlete.id] = [False, None]
@@ -88,14 +87,18 @@ class PlanificationScreen(OlympeScreen):
                     title_card=athlete.first_name + "\n" + athlete.name,
                     image_source=athlete.image,
                     is_hurt=athlete.is_hurt,
-                    total_price=abs(-1200), # TODO
-                    minus_mode=True # TODO
+                    total_price=abs(trimester_gain),
+                    minus_mode=trimester_gain < 0
                 )
 
             else:
                 height = self.font_ratio * (
                     HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN_HEIGHT
                 )
+
+                list_activities_label = []
+                for activity_id in athlete.current_planning:
+                    list_activities_label.append(TEXT.activities[activity_id]["name"])
 
                 athlete_card = CompletePlanificationCard(
                     font_ratio=self.font_ratio,
@@ -104,10 +107,10 @@ class PlanificationScreen(OlympeScreen):
                     title_card=athlete.first_name + " " + athlete.name,
                     image_source=athlete.image,
                     is_hurt=athlete.is_hurt,
-                    total_price=abs(-1200), # TODO
-                    minus_mode=True, # TODO
+                    total_price=abs(trimester_gain),
+                    minus_mode=trimester_gain < 0,
                     planning_text=TEXT.planification["planning"],
-                    list_activities=[],
+                    list_activities=list_activities_label,
                     release_function=partial(self.open_schedule_screen, athlete)
                 )
 
@@ -131,7 +134,7 @@ class PlanificationScreen(OlympeScreen):
         )
 
     def ask_validate_planning(self):
-        print("TODO ask validation planing")
+        print("TODO ask validation planning")
 
     def validate_planning(self):
         print("TODO validate planning")

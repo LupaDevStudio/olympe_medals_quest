@@ -615,7 +615,7 @@
 
     SurroundedLabel:
         id: first_activity
-        text: "Act 1 TODO"
+        text: root.list_activities[0]
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: root.width*0.85 - character.width
@@ -624,7 +624,7 @@
         y: (2*7 + MARGIN_HEIGHT*2)*root.font_ratio + planning_button.height + 2*self.height
 
     SurroundedLabel:
-        text: "Act 2 TODO"
+        text: root.list_activities[1]
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: first_activity.width
@@ -633,7 +633,7 @@
         y: (1*7 + MARGIN_HEIGHT*2)*root.font_ratio + planning_button.height + self.height
 
     SurroundedLabel:
-        text: "Act 3 TODO"
+        text: root.list_activities[2]
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: first_activity.width
