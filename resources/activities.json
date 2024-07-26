@@ -1,8 +1,8 @@
 {
     "vacation": {
         "effects": [
-            ["fatigue", 0.1],
-            ["injury_evolution", 0.1]
+            ["fatigue", -0.1],
+            ["injury_risk", -0.1]
         ]
     },
     "convalescence_1": {
@@ -21,14 +21,14 @@
     },
     "massage": {
         "effects": [
-            ["fatigue", 0.2]
+            ["fatigue", -0.2]
         ],
         "price": 10
     },
     "therapeutic_massage": {
         "effects": [
-            ["fatigue", 0.2],
-            ["injury_evolution", 0.2]
+            ["fatigue", -0.2],
+            ["injury_risk", -0.2]
         ],
         "price": 10
     },

@@ -8,7 +8,6 @@ Module with the class of the USER_DATA.
 
 ### Python imports ###
 
-import os
 import copy
 if __name__ == "__main__":
     import sys
@@ -39,6 +38,12 @@ from tools.basic_tools import (
 ### Constants ###
 #################
 
+STRENGTH = "strength"
+SPEED = "speed"
+TECHNIQUE = "technique"
+PRECISION = "precision"
+CHARM = "charm"
+
 MAX_ATHLETES_TO_SELECT = 3
 PRICES_SELECTION = {
     1: 5000,
@@ -55,11 +60,11 @@ DEFAULT_STAT_DICT = {
     "learning_rate": 1
 }
 DEFAULT_STATS_DICT = {
-    "strength": copy.deepcopy(DEFAULT_STAT_DICT),
-    "speed": copy.deepcopy(DEFAULT_STAT_DICT),
-    "technique": copy.deepcopy(DEFAULT_STAT_DICT),
-    "precision": copy.deepcopy(DEFAULT_STAT_DICT),
-    "charm": copy.deepcopy(DEFAULT_STAT_DICT)
+    STRENGTH: copy.deepcopy(DEFAULT_STAT_DICT),
+    SPEED: copy.deepcopy(DEFAULT_STAT_DICT),
+    TECHNIQUE: copy.deepcopy(DEFAULT_STAT_DICT),
+    PRECISION: copy.deepcopy(DEFAULT_STAT_DICT),
+    CHARM: copy.deepcopy(DEFAULT_STAT_DICT)
 }
 TIER_RANK_DICT = {
     0: "F",
@@ -83,6 +88,7 @@ ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
 
 NB_YEARS_BETWEEN_EDITION = 4
 
+FACTOR_SPONSOR_REPUTATION = 300
 
 #################
 ### Functions ###
@@ -119,6 +125,7 @@ def convert_characteristic_to_display(stat_dict: dict) -> dict:
 ### Classes ###
 ###############
 
+### Activities ###
 
 class Activity():
     """
@@ -153,6 +160,18 @@ class Activity():
             "condition": self.condition
         }
 
+    def apply_activity(self, athlete, game) -> None:
+        for effect in self.effects:
+            if effect[0] == "fatigue":
+                athlete.fatigue += effect[1]
+            elif effect[0] == "injury_risk":
+                athlete.injury_risk += effect[1]
+            elif effect[0] == "illness":
+                if effect[1] == "heal_one_trimester":
+                    athlete.health["time_absent"] -= 1
+                elif effect[1] == "heal_all":
+                    athlete.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
+
 class InterviewActivity(Activity):
     """
     A class to store the data of the interview activities.
@@ -168,9 +187,33 @@ class InterviewActivity(Activity):
         current_charm = athlete.stats["charm"]["points"]
 
         # TODO
-        new_reputation = current_reputation + 0
+        gain_reputation = 0
 
-        return new_reputation
+        return gain_reputation
+
+    def apply_activity(self, athlete, game) -> None:
+        gain_reputation = self.get_gain_reputation(athlete=athlete)
+        athlete.reputation += gain_reputation
+
+class SponsorActivity(Activity):
+    """
+    A class to store the data of the sponsors activities.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "sponsor"
+
+    def get_gain_money(self, athlete) -> int:
+        current_reputation = athlete.reputation
+        gain_money = FACTOR_SPONSOR_REPUTATION * current_reputation
+
+        return gain_money
+
+    def apply_activity(self, athlete, game) -> None:
+        gain_money = self.get_gain_money(athlete=athlete)
+        game.money += gain_money
 
 class JobActivity(Activity):
     """
@@ -188,8 +231,7 @@ class JobActivity(Activity):
         if self.id in ["basic_job", "best_job"]:
             return {
                 "can_access": True,
-                "gain_money": self.gain,
-                "gain_stats": {}
+                "gain_money": self.gain
             }
         
         # Activities based on a stat
@@ -211,6 +253,17 @@ class JobActivity(Activity):
                 "gain_stats": {} # TODO
             }
 
+    def apply_activity(self, athlete, game) -> None:
+        dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
+
+        game.money += dict_effects.get("gain_money", 0)
+        dict_effects_stats = dict_effects.get("gain_stats", {})
+
+        for key in dict_effects_stats:
+            athlete.stats[key]["points"] += dict_effects_stats[key]
+
+### Sports ###
+
 class Sport():
     """
     A class to store the data of a sport.
@@ -225,7 +278,7 @@ class Sport():
     def category(self) -> int:
         return len(self.stats)
 
-    @property
+    @ property
     def icon(self) -> str:
         return PATH_SPORTS_ICONS + self.id + ".png"
 
@@ -249,6 +302,7 @@ class Athlete():
     recruit_price: int
     time_for_recruit: int
     fatigue: int
+    injury_risk: float
     health: dict
     reputation: int
     stats: dict[str, dict]
@@ -283,6 +337,7 @@ class Athlete():
         self.recruit_price = dict_to_load.get("recruit_price", 0)
         self.time_for_recruit = dict_to_load.get("time_for_recruit", 0)
         self.fatigue = dict_to_load.get("fatigue", 0)
+        self.injury_risk = dict_to_load.get("injury_risk", 0)
         self.health = dict_to_load.get(
             "health", copy.deepcopy(DEFAULT_HEALTH_DICT))
         self.reputation = dict_to_load.get("reputation", 0)
@@ -328,13 +383,12 @@ class Athlete():
         return tier_rank_dict
 
     def update_monthly_performance(self):
-        # TODO update performance with chosen activities avec plafond à 70
         # TODO lose performance according to their age
 
         # Heal athletes
         if self.health["is_hurt"]:
             self.health["time_absent"] -= 1
-            if self.health["time_absent"] == 0:
+            if self.health["time_absent"] <= 0:
                 self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
 
     def export_dict(self) -> dict:
@@ -628,6 +682,7 @@ class Game():
 
     def get_monthly_payment(self) -> int:
         monthly_salaries = self.get_monthly_salaries()
+        # Only for activities that costs money
         monthly_activities = self.get_monthly_activities_payment()
         return monthly_activities + monthly_salaries
 
@@ -744,10 +799,15 @@ class Game():
             self.year += 1
             self.begin_new_year()
 
-        # Update the amount of money
+        # Update the stats of the athletes and the game depending on the activities performed
+        for athlete in self.team:
+            for activity in athlete.current_planning:
+                activity.apply_activity(athlete=athlete, game=self)
+
+        # Update the amount of money due to salaries and the cost of activities
         self.money -= self.get_monthly_payment()
 
-        # Update the stats of the athletes according to their activities and age
+        # Update the stats of the athletes according to their age and ill state
         for athlete in self.team:
             athlete.update_monthly_performance()
 
