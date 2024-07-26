@@ -149,18 +149,10 @@ class Activity():
         self.gain = dict_to_load.get("gain", 0)
         self.condition = dict_to_load.get("condition", None)
 
-    def export_dict(self) -> dict:
-        return {
-            "id": self.id,
-            "effects": self.effects,
-            "category": self.category,
-            "all_trimester": self.all_trimester,
-            "price": self.price,
-            "gain": self.gain,
-            "condition": self.condition
-        }
+    def get_gain(self, athlete) -> int:
+        return 0
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete) -> None:
         for effect in self.effects:
             if effect[0] == "fatigue":
                 athlete.fatigue += effect[1]
@@ -191,7 +183,7 @@ class InterviewActivity(Activity):
 
         return gain_reputation
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete) -> None:
         gain_reputation = self.get_gain_reputation(athlete=athlete)
         athlete.reputation += gain_reputation
 
@@ -205,15 +197,11 @@ class SponsorActivity(Activity):
 
         self.category = "sponsor"
 
-    def get_gain_money(self, athlete) -> int:
+    def get_gain(self, athlete) -> int:
         current_reputation = athlete.reputation
         gain_money = FACTOR_SPONSOR_REPUTATION * current_reputation
 
         return gain_money
-
-    def apply_activity(self, athlete, game) -> None:
-        gain_money = self.get_gain_money(athlete=athlete)
-        game.money += gain_money
 
 class JobActivity(Activity):
     """
@@ -253,10 +241,12 @@ class JobActivity(Activity):
                 "gain_stats": {} # TODO
             }
 
-    def apply_activity(self, athlete, game) -> None:
+    def get_gain(self, athlete) -> int:
         dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
+        return dict_effects.get("gain_money", 0)
 
-        game.money += dict_effects.get("gain_money", 0)
+    def apply_activity(self, athlete) -> None:
+        dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
         dict_effects_stats = dict_effects.get("gain_stats", {})
 
         for key in dict_effects_stats:
@@ -307,8 +297,8 @@ class Athlete():
     reputation: int
     stats: dict[str, dict]
     sports: dict[str, dict]
-    previous_planning: list[Activity]
-    current_planning: list[Activity]
+    previous_planning: list[str]
+    current_planning: list[str]
 
     @ property
     def image(self) -> str:
@@ -343,10 +333,8 @@ class Athlete():
         self.reputation = dict_to_load.get("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
-        self.previous_planning = [
-            Activity(activity) for activity in dict_to_load.get("previous_planning", [])]
-        self.current_planning = [
-            Activity(activity) for activity in dict_to_load.get("current_planning", [])]
+        self.previous_planning = dict_to_load.get("previous_planning", ["vacation", "vacation", "vacation"])
+        self.current_planning = dict_to_load.get("current_planning", self.previous_planning)
 
     def get_best_sports(self, number_sports: int = 2):
         # Sort the sports by decreasing points
@@ -364,7 +352,7 @@ class Athlete():
                f"Reputation: {self.reputation}\n" \
                f"Stats: {self.stats}\n" \
                f"Sports: {self.sports}\n" \
-               f"Current Planning: {', '.join(str(activity) for activity in self.current_planning)}"
+               f"Current Planning: {', '.join(activity_id for activity_id in self.current_planning)}"
 
     def convert_stats_to_tier_rank(self):
         tier_rank_dict = {}
@@ -382,7 +370,7 @@ class Athlete():
                 stat_dict=value)
         return tier_rank_dict
 
-    def update_monthly_performance(self):
+    def update_trimester_performance(self):
         # TODO lose performance according to their age
 
         # Heal athletes
@@ -390,6 +378,20 @@ class Athlete():
             self.health["time_absent"] -= 1
             if self.health["time_absent"] <= 0:
                 self.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
+
+    def get_trimester_payment(self) -> int:
+        # Salary of the athlete
+        trimester_payment = - self.salary
+
+        for activity_id in self.current_planning:
+            activity: Activity = ACTIVITIES[activity_id]
+
+            # Potential price of the activity
+            trimester_payment -= activity.price
+            # Potential gain of the activity
+            trimester_payment += activity.get_gain(athlete=self)
+
+        return trimester_payment
 
     def export_dict(self) -> dict:
         return {
@@ -405,8 +407,8 @@ class Athlete():
             "reputation": self.reputation,
             "stats": self.stats,
             "sports": self.sports,
-            "previous_planning": [activity.export_dict() for activity in self.previous_planning],
-            "current_planning": [activity.export_dict() for activity in self.current_planning],
+            "previous_planning": [activity_id for activity_id in self.previous_planning],
+            "current_planning": [activity_id for activity_id in self.current_planning],
         }
 
 
@@ -667,24 +669,11 @@ class Game():
             if athlete.id == athlete_id:
                 return athlete
 
-    def get_monthly_salaries(self) -> int:
-        monthly_salaries = 0
+    def get_trimester_total_payment(self) -> int:
+        trimester_payment = 0
         for athlete in self.team:
-            monthly_salaries += athlete.salary
-        return monthly_salaries
-
-    def get_monthly_activities_payment(self) -> int:
-        monthly_payment = 0
-        for athlete in self.team:
-            for activity in athlete.current_planning:
-                monthly_payment += activity.price
-        return monthly_payment
-
-    def get_monthly_payment(self) -> int:
-        monthly_salaries = self.get_monthly_salaries()
-        # Only for activities that costs money
-        monthly_activities = self.get_monthly_activities_payment()
-        return monthly_activities + monthly_salaries
+            trimester_payment += athlete.get_trimester_payment()
+        return trimester_payment
 
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
         # Diminish the time left to recruit and remove those with 0 time left
@@ -801,15 +790,16 @@ class Game():
 
         # Update the stats of the athletes and the game depending on the activities performed
         for athlete in self.team:
-            for activity in athlete.current_planning:
-                activity.apply_activity(athlete=athlete, game=self)
+            for activity_id in athlete.current_planning:
+                activity: Activity = ACTIVITIES[activity_id]
+                activity.apply_activity(athlete=athlete)
 
-        # Update the amount of money due to salaries and the cost of activities
-        self.money -= self.get_monthly_payment()
+        # Update the amount of money due to salaries and activities
+        self.money += self.get_trimester_total_payment()
 
         # Update the stats of the athletes according to their age and ill state
         for athlete in self.team:
-            athlete.update_monthly_performance()
+            athlete.update_trimester_performance()
 
     def compute_average_level(self) -> int:
         # Take the average of the 5 best athletes
