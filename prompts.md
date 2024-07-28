@@ -44,6 +44,9 @@ portrait of an (old:1.5) journalist woman with a brown jacket, long blond hairs,
 
 portrait of a business man with short dark brown hair with a black suit and a blue tie, slight beard, (Your Name art style:1.3)
 
-portrait of a 30 years old man athlete, wearing a suit, short ginger messy hair, (Your Name art style:1.3)
+portrait of a 40 years old man athlete, wearing a suit, (short:1.2) ginger hair, (Your Name art style:1.3)
 
 portrait of a 30 years old (man:1.5), tanned skin, white T-shirt and brown jacket, (short:1.5) (tidy:1.5) brown hair, (Your Name art style:1.3)
+
+portrait of a girl doctor, happy, very (short: 1.5) pink hair, green eyes, green earrings, white doctor blouse and black shirt, (Your Name art style:1.3)
+
