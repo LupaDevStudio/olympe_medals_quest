@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Linconym
+title = Olympe Medals Quest
 
 # (str) Package name
-package.name = linconym
+package.name = olympes_medals_quest
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = lupadevstudio.com
@@ -22,14 +22,14 @@ source.include_exts = py,png,jpg,kv,atlas,json,txt,ttf,wav,ico,ogg,otf,mp3,gif
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = test, bin, .buildozer, venv, PlayStore, reports, design
+source.exclude_dirs = test, bin, .buildozer, venv, PlayStore, reports, design, ven
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
 source.exclude_patterns = data.json, *.gitignore, requirements.txt, draft_*
 
 # (str) Application versioning (method 1)
-# version = 1.0.0
+# version = 0.0.1
 
 # (str) Application versioning (method 2)
 version.regex = __version__ = ['"](.*)['"]
@@ -47,7 +47,7 @@ requirements = python3, kivy
 #presplash.filename = ./resources/logo_collector_1024.png
 
 # (str) Icon of the application
-icon.filename = ./resources/logo.png
+icon.filename = ./resources/images/logo.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
@@ -63,7 +63,7 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3.11
+osx.python_version = 3.12
 
 # Kivy version to use
 osx.kivy_version = 2.2.1
@@ -90,8 +90,8 @@ android.presplash_color = #e6e6e6
 android.presplash_lottie = resources/presplash.json
 
 # (str) Adaptive icon of the application (used if Android API level is 26+ at runtime)
-icon.adaptive_foreground.filename = ./resources/ic_launcher.png
-icon.adaptive_background.filename = ./resources/ic_launcher_background.png
+icon.adaptive_foreground.filename = ./resources/images/adaptative_logo_front.png
+icon.adaptive_background.filename = ./resources/images/adaptative_logo_back.png
 
 # (list) Permissions
 android.permissions = INTERNET, ACCESS_NETWORK_STATE
@@ -176,7 +176,7 @@ android.extra_manifest_xml = ./resources/manifest/extra_manifest.xml
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-android.add_src = ./tools/kivads_src
+android.add_src = ./lupa_libraries/kivads/src
 
 # (list) Android AAR archives to add
 #android.add_aars =
@@ -188,7 +188,7 @@ android.add_src = ./tools/kivads_src
 #android.add_assets =
 
 # (list) Gradle dependencies to add
-android.gradle_dependencies = com.google.android.gms:play-services-ads:22.5.0, androidx.fragment:fragment-ktx:1.3.0-beta01, com.google.android.ump:user-messaging-platform:2.1.0
+android.gradle_dependencies = com.google.android.gms:play-services-ads:22.5.0, androidx.fragment:fragment-ktx:1.3.0-beta01, com.google.android.ump:user-messaging-platform:2.1.0, com.google.android.play:core:1.10.0
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
