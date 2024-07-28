@@ -47,7 +47,7 @@
             "character": "president_competition",
             "expression": "neutral",
             "mystery": false,
-            "text": "Cela ne s'arrêtera pas là ! Les athlètes pourront démontrer leur force, leur précision et leur vigueur à travers les épreuves de tir à l'arc, escalade, boxe, escrime, natation et [NEW_SPORT]... Hein ? Comment ? Mais, CASSIE !",
+            "text": "Cela ne s'arrêtera pas là ! Les athlètes pourront démontrer leur force, leur précision et leur vigueur à travers les épreuves de tir à l'arc, escalade, boxe, escrime, natation et [NEW_SPORT]...",
             "background": "president_speech"
         },
         {
