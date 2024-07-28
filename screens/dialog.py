@@ -12,6 +12,7 @@ from kivy.clock import Clock
 from kivy.properties import (
     StringProperty
 )
+from kivy.animation import Animation
 
 ### Local imports ###
 
@@ -30,6 +31,7 @@ from tools.path import (
     PATH_BACKGROUNDS,
     PATH_CHARACTERS_IMAGES
 )
+from lupa_libraries.dialog_generator.dialog_layout import get_shake_animation
 
 #############
 ### Class ###
@@ -112,11 +114,11 @@ class DialogScreen(OlympeScreen):
             )
             return
 
-        current_frame: dict = self.dialog_content_list[self.dialog_frame_counter]
+        current_dialog_dict: dict = self.dialog_content_list[self.dialog_frame_counter]
 
         # Set the background of the screen
         # TODO faire une transition smooth entre les différents backgrounds
-        background: str = current_frame["background"]
+        background: str = current_dialog_dict["background"]
         if background == "sports_complex":
             path_background = GAME.get_background_image()
         else:
@@ -125,13 +127,13 @@ class DialogScreen(OlympeScreen):
             back_image_path=path_background)
 
         # Set the character details
-        character_id: str = current_frame["character"]
-        expression: str = current_frame["expression"]
+        character_id: str = current_dialog_dict["character"]
+        expression: str = current_dialog_dict["expression"]
         self.character_image = PATH_CHARACTERS_IMAGES + \
             f"{character_id}_face_{expression}.png"
 
         # Hide the name and the title of the character if necessary
-        mystery: bool = current_frame["mystery"]
+        mystery: bool = current_dialog_dict["mystery"]
         if mystery:
             self.character_title = "???"
             self.character_name = "???"
@@ -140,7 +142,7 @@ class DialogScreen(OlympeScreen):
             self.character_title = CHARACTERS_DICT[TEXT.language][character_id]["title"]
 
         # Set the content of the scrolling dialog
-        self.dialog_text = current_frame["text"]
+        self.dialog_text = current_dialog_dict["text"]
         self.dialog_text_label = ""
         self.index_scrolling_label = 0
         talking_speed = USER_DATA.settings["text_scrolling_speed"] / \
@@ -148,6 +150,13 @@ class DialogScreen(OlympeScreen):
             TALKING_SPEED_DICT["emotions"][expression]
         Clock.schedule_interval(
             self.update_label, talking_speed)
+
+        # Apply the animation if needed
+        if "shake" in current_dialog_dict:
+            shake_type = current_dialog_dict["shake"]
+            shake_animation: Animation = get_shake_animation(
+                self, shake_type=shake_type)
+            shake_animation.start(self)
 
     def update_label(self, *args):
         """

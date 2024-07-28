@@ -12,7 +12,8 @@
             "expression": "neutral",
             "mystery": false,
             "text": "En tant que président de [COMPETITION_NAME], c'est un immense honneur pour moi de prendre la parole aujourd'hui. Je tiens à remercier tous les participants, les organisateurs, et les fans qui ont rendu possible cet événement exceptionnel.",
-            "background": "president_speech"
+            "background": "president_speech",
+            "shake": "pa"
         },
         {
             "character": "president_competition",

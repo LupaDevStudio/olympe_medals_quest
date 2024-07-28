@@ -6,6 +6,10 @@ Module to manage the dialogs.
 ### Imports ###
 ###############
 
+### Python imports ###
+
+from random import random
+from math import pi, sin, cos
 
 ### Kivy imports ###
 
@@ -15,6 +19,8 @@ from kivy.properties import (
     ColorProperty
 )
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.animation import Animation, AnimationTransition
+from kivy.uix.widget import Widget
 
 ### Local imports ###
 
@@ -28,13 +34,69 @@ from tools.graphics import (
     BUTTON_LINE_WIDTH
 )
 
+#################
+### Constants ###
+#################
+
+
+def get_shake_animation(widget: Widget, shake_type: str) -> Animation:
+    """
+    Return a shake animation of the given type.
+
+    Parameters
+    ----------
+    shake_type : str
+        Type of shake animation.
+
+    Returns
+    -------
+    kivy.Animation
+    """
+
+    original_x = widget.x
+    original_y = widget.y
+
+    shake_distance = 20
+    nb_shakes = 5
+    shake_speed = 200  # in px per sec
+    animation = None
+    blink_probability = 0.5
+    blink_delay = 0.1
+
+    for i in range(nb_shakes):
+        if i < nb_shakes - 1:
+            # Shake in a random direction
+            shake_angle = random() * 4 * pi - 2 * pi
+            new_x = original_x + shake_distance * cos(shake_angle)
+            new_y = original_y + shake_distance * sin(shake_angle)
+        else:
+            # Return to original position for the last shake
+            new_x = original_x
+            new_y = original_y
+        new_animation = Animation(pos=(
+            new_x, new_y), transition="in_out_back", duration=shake_distance / shake_speed)
+        if animation is None:
+            animation = new_animation
+        else:
+            animation += new_animation
+
+        # Add blinking
+        if blink_probability < random():
+            animation += Animation(opacity=0,
+                                   transition="linear", duration=blink_delay / 2)
+            animation += Animation(opacity=1,
+                                   transition="linear", duration=blink_delay / 2)
+
+    return animation
+
 #############
 ### Class ###
 #############
 
+
 class DialogLayout(RelativeLayout):
 
-    mode = StringProperty("left") # can be "left" or "right"
+    mode = StringProperty("left")  # can be "left" or "right"
 
     ### Content ###
 
@@ -50,13 +112,13 @@ class DialogLayout(RelativeLayout):
     font_ratio = NumericProperty(1)
     font_name_title = StringProperty(PATH_TITLE_FONT)
     font_name_text = StringProperty(PATH_TEXT_FONT)
-    
+
     ### Colors ###
 
     font_color = ColorProperty(COLORS.white)
     background_color = ColorProperty(COLORS.dark_transparent_black)
     frame_color = ColorProperty(COLORS.white)
-    
+
     frame_width = NumericProperty(BUTTON_LINE_WIDTH)
 
     def __init__(self, **kwargs):
