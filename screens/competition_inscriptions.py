@@ -266,6 +266,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
 
     def reset_screen(self):
         self.athlete_folded_dict = {}
+        self.change_previous_next_buttons_text()
 
         # Reset scrollviews
         self.ids.scrollview_layout.reset_scrollview()
