@@ -1,0 +1,18 @@
+{
+    "characters": {
+        "olympe": 1.2,
+        "minister": 0.7,
+        "phil": 1,
+        "coach": 1,
+        "president_competition": 0.9,
+        "journalist": 1
+    },
+    "emotions": {
+        "neutral": 1,
+        "thinking": 0.7,
+        "angry": 1.1,
+        "happy": 1.1,
+        "surprised": 1.5,
+        "sad": 0.5
+    }
+}

@@ -23,7 +23,8 @@ from tools.constants import (
     CHARACTERS_DICT,
     USER_DATA,
     TEXT,
-    GAME
+    GAME,
+    TALKING_SPEED_DICT
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -66,11 +67,11 @@ class DialogScreen(OlympeScreen):
     def pass_current_frame(self):
         """
         Finish the display of the current frame or go to the next frame of the dialog.
-        
+
         Parameters
         ----------
         None
-        
+
         Returns
         -------
         None
@@ -80,7 +81,7 @@ class DialogScreen(OlympeScreen):
             Clock.unschedule(self.update_label)
             self.dialog_text_label = self.dialog_text
             self.index_scrolling_label = len(self.dialog_text) + 1
-        
+
         # Go to the next frame if finished
         else:
             self.go_to_next_frame()
@@ -88,15 +89,15 @@ class DialogScreen(OlympeScreen):
     def go_to_next_frame(self):
         """
         Go to the next dialog, by setting again the character details and dialog text.
-        
+
         Parameters
         ----------
         None
-        
+
         Returns
         -------
         None
-        """       
+        """
         self.dialog_frame_counter += 1
 
         # Change screen if the dialog is finished
@@ -122,7 +123,7 @@ class DialogScreen(OlympeScreen):
             path_background = PATH_BACKGROUNDS + f"{background}.jpg"
         self.set_back_image_path(
             back_image_path=path_background)
-        
+
         # Set the character details
         character_id: str = current_frame["character"]
         expression: str = current_frame["expression"]
@@ -142,16 +143,20 @@ class DialogScreen(OlympeScreen):
         self.dialog_text = current_frame["text"]
         self.dialog_text_label = ""
         self.index_scrolling_label = 0
-        Clock.schedule_interval(self.update_label, USER_DATA.settings["text_scrolling_speed"])
+        talking_speed = USER_DATA.settings["text_scrolling_speed"] / \
+            TALKING_SPEED_DICT["characters"][character_id] / \
+            TALKING_SPEED_DICT["emotions"][expression]
+        Clock.schedule_interval(
+            self.update_label, talking_speed)
 
     def update_label(self, *args):
         """
         Update the content of the dialog to make it scroll.
-        
+
         Parameters
         ----------
         *args : optional
-        
+
         Returns
         -------
         None

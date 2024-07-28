@@ -22,7 +22,8 @@ import os
 
 from tools.path import (
     PATH_USER_DATA,
-    PATH_LANGUAGE
+    PATH_LANGUAGE,
+    PATH_TALKING_SPEED_DICT
 )
 from tools.basic_tools import (
     save_json_file,
@@ -93,6 +94,8 @@ CHARACTERS_DICT = {}
 for language_code in DICT_LANGUAGE_CORRESPONDANCE:
     CHARACTERS_DICT[language_code] = load_json_file(
         PATH_LANGUAGE + "characters_" + language_code + ".json")
+
+TALKING_SPEED_DICT = load_json_file(PATH_TALKING_SPEED_DICT)
 
 ### Screens ###
 
