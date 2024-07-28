@@ -130,7 +130,7 @@ class DialogScreen(OlympeScreen):
         character_id: str = current_dialog_dict["character"]
         expression: str = current_dialog_dict["expression"]
         self.character_image = PATH_CHARACTERS_IMAGES + \
-            f"{character_id}_face_{expression}.png"
+            f"{character_id}/{character_id}_face_{expression}.png"
 
         # Hide the name and the title of the character if necessary
         mystery: bool = current_dialog_dict["mystery"]

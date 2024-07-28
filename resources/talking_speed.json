@@ -5,14 +5,21 @@
         "phil": 1,
         "coach": 1,
         "president_competition": 0.9,
-        "journalist": 1
+        "journalist": 1,
+        "cook": 0.8,
+        "lawyer": 1.4,
+        "doctor": 1.3,
+        "mason": 0.6
     },
     "emotions": {
         "neutral": 1,
         "thinking": 0.7,
-        "angry": 1.1,
+        "angry": 1.2,
         "happy": 1.1,
         "surprised": 1.5,
-        "sad": 0.5
+        "sad": 0.6,
+        "embarrassed": 0.5,
+        "fear": 0.6,
+        "disinterested": 0.9
     }
 }

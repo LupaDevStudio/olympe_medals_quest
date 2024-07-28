@@ -19,7 +19,8 @@
             "expression": "neutral",
             "mystery": false,
             "text": "Sans oublier tous nos extraordinaires sponsors : Choco-Cola, Toy-Yoda, Samsquash, Fauxsa, Alphamega, Hairbnb, Intelephant, Alligagator, McDuck et Poopsy !",
-            "background": "president_speech"
+            "background": "president_speech",
+            "shake": "flash"
         },
         {
             "character": "president_competition",
@@ -50,22 +51,38 @@
             "background": "president_speech"
         },
         {
+            "character": "president_competition",
+            "expression": "surprised",
+            "mystery": false,
+            "text": "Hein ? Comment ?",
+            "background": "president_speech",
+            "shake": "medium"
+        },
+        {
+            "character": "president_competition",
+            "expression": "angry",
+            "mystery": false,
+            "text": "Mais, CASSIE !",
+            "background": "president_speech",
+            "shake": "strong"
+        },
+        {
             "character": "journalist",
-            "expression": "neutral",
+            "expression": "happy",
             "mystery": false,
             "text": "Le [NEW_SPORT] !",
             "background": "president_speech_sheet"
         },
         {
             "character": "president_competition",
-            "expression": "neutral",
+            "expression": "embarrassed",
             "mystery": false,
             "text": "Non, hum, c'est...",
             "background": "president_speech_sheet"
         },
         {
             "character": "journalist",
-            "expression": "neutral",
+            "expression": "happy",
             "mystery": false,
             "text": "Le [NEW_SPORT] sera présent pour la vingt-et-unième édition de COMPETITION ! C'est incroyable, quelle annonce inattendue !",
             "background": "president_speech"
@@ -79,7 +96,7 @@
         },
         {
             "character": "olympe",
-            "expression": "neutral",
+            "expression": "thinking",
             "mystery": true,
             "text": "...",
             "background": "olympe_tv"
@@ -107,14 +124,14 @@
         },
         {
             "character": "minister",
-            "expression": "neutral",
+            "expression": "surprised",
             "mystery": true,
             "text": "Madame la présidente, euh, comment... ?",
             "background": "olympe_phone"
         },
         {
             "character": "olympe",
-            "expression": "neutral",
+            "expression": "angry",
             "mystery": false,
             "text": "Tout de suite.",
             "background": "olympe_phone"
@@ -135,7 +152,7 @@
         },
         {
             "character": "minister",
-            "expression": "neutral",
+            "expression": "embarrassed",
             "mystery": false,
             "text": "Euh, non... En quoi cela nous concerne-t-il cette...",
             "background": "office"
@@ -156,7 +173,7 @@
         },
         {
             "character": "olympe",
-            "expression": "neutral",
+            "expression": "happy",
             "mystery": false,
             "text": "C'était dans la présentation officielle délivrée par le président ; le [NEW_SPORT] était dans la liste, je t'assure ! Il fera partie de la compétition, c'est acté désormais ! C'est notre chance ou jamais d'exister dans cette compétition !",
             "background": "office"
@@ -191,21 +208,21 @@
         },
         {
             "character": "minister",
-            "expression": "neutral",
+            "expression": "embarrassed",
             "mystery": false,
             "text": "Nous n'avons pas de...",
             "background": "office"
         },
         {
             "character": "olympe",
-            "expression": "neutral",
+            "expression": "angry",
             "mystery": false,
             "text": "Un entraîneur sportif, je veux. Et pas n'importe lequel : le meilleur des meilleurs ! Ramène-le ici et vite !",
             "background": "office"
         },
         {
             "character": "minister",
-            "expression": "neutral",
+            "expression": "embarrassed",
             "mystery": false,
             "text": "Euh... oui, Madame la Présidente !",
             "background": "office"

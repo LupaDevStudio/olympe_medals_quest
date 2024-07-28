@@ -22,5 +22,21 @@
     "journalist": {
         "name": "Ariane",
         "title": "Journalist of Champions Voice"
+    },
+    "cook": {
+        "name": "NOM",
+        "title": "TITRE"
+    },
+    "doctor": {
+        "name": "NOM",
+        "title": "TITRE"
+    },
+    "mason": {
+        "name": "NOM",
+        "title": "TITRE"
+    },
+    "lawyer": {
+        "name": "NOM",
+        "title": "TITRE"
     }
 }
