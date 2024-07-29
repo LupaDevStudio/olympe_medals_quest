@@ -84,7 +84,8 @@ class GameScreen(OlympeScreen):
         # TODO TEMP
         if GAME.team == []:
             first_athlete = generate_athlete()
-            GAME.recruit_athlete(athlete=first_athlete)
+            GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+            GAME.recruit_athlete(athlete=GAME.recrutable_athletes[0])
             USER_DATA.save_changes()
         # TODO TEMP
         if GAME.recrutable_athletes == []:

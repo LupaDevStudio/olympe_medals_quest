@@ -81,7 +81,12 @@ LEVEL_DICT = {
     2000: 2,
     3000: 3,
     4000: 4,
-    5000: 5
+    5000: 5,
+    6000: 6,
+    7000: 7,
+    8000: 8,
+    9000: 9,
+    10000: 10
 }
 SPORTS_COMPLEX_EVOLUTION_DICT = load_json_file(PATH_SPORTS_COMPLEX_DICT)
 ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
@@ -798,6 +803,9 @@ class Game():
             athlete.update_trimester_performance()
 
     def compute_average_level(self) -> int:
+        if self.team == []:
+            return 1
+
         # Take the average of the 5 best athletes
         list_athletes_scores = []
         for athlete in self.team:
@@ -813,7 +821,7 @@ class Game():
         for score_ref in LEVEL_DICT:
             if average_score <= score_ref:
                 return LEVEL_DICT[score_ref]
-        return 5
+        return 10
 
     def get_main_action(self) -> str:
 

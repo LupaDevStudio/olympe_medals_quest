@@ -211,7 +211,6 @@ def generate_athlete(
     if time_for_recruit is None:
         time_for_recruit = rd.randint(2, 5)
 
-    # TODO remplacer les None en fonction du niveau de notre pays
     if max_level is None:
         max_level = GAME.compute_average_level()
 
