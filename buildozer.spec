@@ -26,7 +26,8 @@ source.exclude_dirs = test, bin, .buildozer, venv, PlayStore, reports, design, v
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
-source.exclude_patterns = data.json, *.gitignore, requirements.txt, draft_*
+# TODO add data.json to the list of excluded files
+source.exclude_patterns = *.gitignore, requirements.txt, draft_*
 
 # (str) Application versioning (method 1)
 # version = 0.0.1
@@ -37,7 +38,9 @@ version.filename = tools/constants.py
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy
+requirements = python3,
+    kivy,
+    Pillow,
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -63,7 +66,7 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3.12
+osx.python_version = 3.11
 
 # Kivy version to use
 osx.kivy_version = 2.2.1
