@@ -958,6 +958,10 @@ class UserData():
             dict_to_load=data["game"]) if "game" in data else Game()
         self.save_changes()
 
+    def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]):
+        print("TODO")
+        new_game = Game()
+
     def save_changes(self) -> None:
         """
         Save the changes in the data.

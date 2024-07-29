@@ -5,7 +5,8 @@
             "expression": "neutral",
             "mystery": true,
             "text": "Mesdames et Messieurs, honorables invités, athlètes exceptionnels, et fans passionnés du monde entier !",
-            "background": "president_speech"
+            "background": "president_speech",
+            "shake": "flash"
         },
         {
             "character": "president_competition",
@@ -71,7 +72,8 @@
             "expression": "happy",
             "mystery": false,
             "text": "Le [NEW_SPORT] !",
-            "background": "president_speech_sheet"
+            "background": "president_speech_sheet",
+            "shake": "weak"
         },
         {
             "character": "president_competition",
@@ -134,7 +136,8 @@
             "expression": "angry",
             "mystery": false,
             "text": "Tout de suite.",
-            "background": "olympe_phone"
+            "background": "olympe_phone",
+            "shake": "weak"
         },
         {
             "character": "minister",
@@ -218,7 +221,8 @@
             "expression": "angry",
             "mystery": false,
             "text": "Un entraîneur sportif, je veux. Et pas n'importe lequel : le meilleur des meilleurs ! Ramène-le ici et vite !",
-            "background": "office"
+            "background": "office",
+            "shake": "weak"
         },
         {
             "character": "minister",
