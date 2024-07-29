@@ -3,7 +3,7 @@
         "name": "Olympe",
         "title": "Présidente d'Elysia"
     },
-    "minister": {
+    "hector": {
         "name": "Hector",
         "title": "Ministre des Sports"
     },
@@ -11,32 +11,36 @@
         "name": "Phil",
         "title": "METTRE ANCIENNE PROFESSION"
     },
-    "coach": {
+    "phil_coach": {
         "name": "Phil",
         "title": "Entraîneur sportif"
     },
-    "president_competition": {
+    "atlas": {
         "name": "Atlas",
         "title": "Président du F.I.G.H.T."
     },
     "journalist": {
         "name": "Ariane",
-        "title": "Journaliste de la Voix des Champions"
+        "title": "Journaliste officielle de la Voix des Champions"
     },
-    "cook": {
-        "name": "NOM",
+    "ariane": {
+        "name": "Ariane",
+        "title": "Journaliste d'Elysia News"
+    },
+    "theresa": {
+        "name": "Theresa",
+        "title": "Cuisinière d'Aux bons plats de Gatho"
+    },
+    "diana": {
+        "name": "Diana",
         "title": "TITRE"
     },
-    "doctor": {
-        "name": "NOM",
+    "simon": {
+        "name": "Simon",
         "title": "TITRE"
     },
-    "mason": {
-        "name": "NOM",
-        "title": "TITRE"
-    },
-    "lawyer": {
-        "name": "NOM",
+    "narcisse": {
+        "name": "Narcisse",
         "title": "TITRE"
     }
 }
