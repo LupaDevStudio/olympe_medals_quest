@@ -65,10 +65,11 @@ class Colors():
 
 
 COLORS = Colors()
+COLOR_THOUGHT = "999999"
 
 ### Sizes ###
 
-ICON_BUTTON_SIZE = 0.1
+ICON_BUTTON_SIZE = 0.08
 
 TOP_BAR_HEIGHT = 0.09
 BOTTOM_BAR_HEIGHT = 0.09

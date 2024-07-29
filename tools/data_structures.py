@@ -81,7 +81,12 @@ LEVEL_DICT = {
     2000: 2,
     3000: 3,
     4000: 4,
-    5000: 5
+    5000: 5,
+    6000: 6,
+    7000: 7,
+    8000: 8,
+    9000: 9,
+    10000: 10
 }
 SPORTS_COMPLEX_EVOLUTION_DICT = load_json_file(PATH_SPORTS_COMPLEX_DICT)
 ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
@@ -671,6 +676,26 @@ class Game():
             trimester_payment += athlete.get_trimester_gained_money()
         return trimester_payment
 
+    def get_current_sports_category(self) -> int:
+        current_category = 1
+        for athlete in self.team:
+            for sport_id in athlete.sports:
+                sport: Sport = SPORTS[sport_id]
+                if sport.category > current_category:
+                    current_category = sport.category
+                    if current_category == 3:
+                        return current_category
+        return current_category
+
+    def get_all_sports_from_current_category(self) -> list[str]:
+        current_category = self.get_current_sports_category()
+        list_sports: list[str] = []
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            if sport.category <= current_category:
+                list_sports.append(sport_id)
+        return list_sports
+
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
         # Diminish the time left to recruit and remove those with 0 time left
         list_athletes_to_remove = []
@@ -798,6 +823,9 @@ class Game():
             athlete.update_trimester_performance()
 
     def compute_average_level(self) -> int:
+        if self.team == []:
+            return 1
+
         # Take the average of the 5 best athletes
         list_athletes_scores = []
         for athlete in self.team:
@@ -813,7 +841,7 @@ class Game():
         for score_ref in LEVEL_DICT:
             if average_score <= score_ref:
                 return LEVEL_DICT[score_ref]
-        return 5
+        return 10
 
     def get_main_action(self) -> str:
 
@@ -949,6 +977,10 @@ class UserData():
         self.game = Game(
             dict_to_load=data["game"]) if "game" in data else Game()
         self.save_changes()
+
+    def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]):
+        print("TODO")
+        new_game = Game()
 
     def save_changes(self) -> None:
         """

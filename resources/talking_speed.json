@@ -1,15 +1,16 @@
 {
     "characters": {
         "olympe": 1.2,
-        "minister": 0.7,
+        "hector": 0.7,
         "phil": 1,
-        "coach": 1,
-        "president_competition": 0.9,
+        "phil_coach": 1,
+        "atlas": 0.9,
         "journalist": 1,
-        "cook": 0.8,
-        "lawyer": 1.4,
-        "doctor": 1.3,
-        "mason": 0.6
+        "ariane": 1,
+        "theresa": 0.8,
+        "narcisse": 1.4,
+        "diana": 1.3,
+        "simon": 0.6
     },
     "emotions": {
         "neutral": 1,

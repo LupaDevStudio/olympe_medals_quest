@@ -14,7 +14,7 @@ from functools import partial
 
 from kivy.properties import (
     StringProperty,
-    BooleanProperty
+    ListProperty
 )
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
@@ -26,7 +26,7 @@ from lupa_libraries import (
     PressedWithIconButton
 )
 from tools.path import (
-    PATH_BACKGROUNDS,
+    PATH_CHARACTERS_IMAGES,
     PATH_ICONS
 )
 from tools.constants import (
@@ -39,6 +39,7 @@ from tools.constants import (
 )
 from tools.olympe import (
     generate_athlete,
+    generate_and_add_first_athlete,
     launch_new_phase
 )
 
@@ -60,8 +61,15 @@ class GameScreen(OlympeScreen):
     launch_main_action_label = StringProperty()
     main_action = "plan"  # can be "plan" or "begin_competition_{mode}"
     our_country_label = StringProperty()
-    has_notifications_olympe = BooleanProperty(True)
-    has_notifications_minister = BooleanProperty(False)
+    notifications_list = ListProperty([])
+
+    def reload_kwargs(self, dict_kwargs: dict):
+        has_seen_notification = dict_kwargs.get("has_seen_notification", False)
+        
+        if has_seen_notification:
+            # Remove the notification once seen in GAME
+            # TODO self.notifications_list.remove(self.notifications_list[0])
+            pass
 
     def reload_language(self):
         super().reload_language()
@@ -72,36 +80,37 @@ class GameScreen(OlympeScreen):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
 
-        # TODO update the has_notifications depending if Olympe or the minister has notifications
+        # TODO update the notifications_list depending if one of the characters has something to say
+        self.notifications_list = [
+            ["olympe", "introduction"]
+        ]
         # Update main_action
         self.main_action = GAME.get_main_action()
 
-        if self.has_notifications_olympe:
-            self.ids.olympe_button.trigger_icon_flashing()
-        if self.has_notifications_minister:
-            self.ids.minister_button.trigger_icon_flashing()
+        self.ids.notification_button.trigger_icon_flashing()
 
         # TODO TEMP
+        if GAME.sports_unlocked == []:
+            GAME.sports_unlocking_progress["cheese_rolling"] = 1
+        # TODO TEMP
         if GAME.team == []:
-            first_athlete = generate_athlete()
-            GAME.recruit_athlete(athlete=first_athlete)
-            USER_DATA.save_changes()
+            generate_and_add_first_athlete(main_sport="cheese_rolling")
         # TODO TEMP
         if GAME.recrutable_athletes == []:
             first_athlete = generate_athlete()
             GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
             USER_DATA.save_changes()
-        # TODO TEMP
-        if GAME.medals == []:
-            GAME.win_medal(
-                sport_id="cheese_rolling",
-                athlete_id=GAME.team[0].id,
-                type="gold",
-                edition=1
-            )
-            USER_DATA.save_changes()
-
         self.fill_grid_layout()
+
+        self.update_notification_panel()
+
+    def update_notification_panel(self):
+
+        # Update the notification panel
+        if self.notifications_list != []:
+            character = self.notifications_list[0][0]
+            self.ids.notification_button.image_source = PATH_CHARACTERS_IMAGES + \
+                character + "/neutral.png"
 
     def fill_grid_layout(self):
         # TODO insert in this list only the buttons unlocked depending on tutorial
@@ -143,11 +152,21 @@ class GameScreen(OlympeScreen):
         elif self.main_action == "begin_competition":
             self.go_to_next_screen(screen_name="competition_inscriptions")
 
-    def launch_dialog_olympe(self):
-        print("TODO olympe")
+    def launch_dialog(self):
+        event = self.notifications_list[0]
+        dialog_id = event[1]
 
-    def launch_dialog_minister(self):
-        print("TODO minister")
+        self.go_to_next_screen(
+            screen_name="dialog",
+            next_dict_kwargs={
+                "dialog_code": dialog_id,
+                "next_screen": "game",
+                "next_dict_kwargs": {
+                    "has_seen_notification": True
+                }
+            }
+        )
+
 
     def on_leave(self, *args):
         super().on_leave(*args)
@@ -157,7 +176,4 @@ class GameScreen(OlympeScreen):
         for element in list_widgets:
             self.ids.grid_layout.remove_widget(element)
 
-        if self.has_notifications_olympe:
-            self.ids.olympe_button.stop_icon_flashing()
-        if self.has_notifications_minister:
-            self.ids.minister_button.stop_icon_flashing()
+        self.ids.notification_button.stop_icon_flashing()

@@ -131,12 +131,7 @@ def generate_stats(level) -> dict:
     return stats
 
 
-def generate_sports(main_sport: str | None, second_sport: str | None, level) -> dict:
-    # TODO choisir un principal sport parmi les sports débloqués
-    if main_sport is None:
-        main_sport = "buoy_racing"
-    if second_sport is None:
-        second_sport = "cheese_rolling"
+def generate_sports(main_sport: str, second_sport: str | None, level) -> dict:
 
     sports_dict = {
         main_sport: copy.deepcopy(DEFAULT_STAT_DICT)
@@ -194,13 +189,18 @@ def generate_athlete(
         country: str = "our_country",
         age: int | None = None,
         time_for_recruit: int | None = None,
-        max_level: int | None = None, # between 1 and 5
-        main_sport: str | None = None,
-        second_sport: str | None = None) -> Athlete:
+        recruit_price: int | None = None,
+        reputation: int | None = None,
+        max_level: int | None = None, # between 1 and 10
+        main_sport: str = "random",
+        second_sport: str | None = "random",
+        gender: Literal["male", "female"] | None = None,
+        portrait: Portrait | None = None) -> Athlete:
 
     ### Athlete identity ###
 
-    gender = rd.choice(["male", "female"])
+    if gender is None:
+        gender = rd.choice(["male", "female"])
     first_name = rd.choice(first_names_dict[country][gender])
     name = rd.choice(names_dict[country])
     # Don't generate the age for the first athlete of the game
@@ -209,28 +209,50 @@ def generate_athlete(
 
     # Choose the time for recruit
     if time_for_recruit is None:
-        time_for_recruit = rd.randint(2, 5)
+        time_for_recruit = rd.randint(2, 4)
 
-    # TODO remplacer les None en fonction du niveau de notre pays
     if max_level is None:
         max_level = GAME.compute_average_level()
 
     level = rd.randint(1, max_level)
 
-    ### Stats and sports ###
+    ### Stats ###
 
     stats = generate_stats(level)
+
+    ### Sports ###
+
+    if main_sport == "random":
+        # Main sport among those unlocked
+        main_sport = rd.choice(GAME.sports_unlocked)
+    if second_sport == "random":
+        # Second sport among all sports of the current category or less
+        list_second_sports = GAME.get_all_sports_from_current_category()
+        list_second_sports.remove(main_sport)
+        second_sport = rd.choice(list_second_sports)
     sports = generate_sports(main_sport, second_sport, level)
-    reputation = generate_reputation(stats["charm"])
+
+    ### Reputation ###
+
+    if reputation is None:
+        reputation = generate_reputation(stats["charm"])
+
+    ### Portrait ###
 
     # Generate the portrait of the athlete
-    portrait = Portrait(gender=gender)
+    if portrait is None:
+        portrait = Portrait(gender=gender)
 
-    # Salary and recruit price
+    ### Costs ###
+
+    # Salary
     salary = compute_salary(stats=stats, reputation=reputation)
-    recruit_price = generate_recruit_price(
-        salary=salary,
-        level=level)
+
+    # Recruit price
+    if recruit_price is None:
+        recruit_price = generate_recruit_price(
+            salary=salary,
+            level=level)
 
     dict_to_load = {
         "first_name": first_name,
@@ -253,6 +275,33 @@ def generate_athlete(
         PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.json"))
 
     return athlete
+
+def generate_and_add_first_athlete(main_sport: str) -> None:
+
+    gender = rd.choice(["male", "female"])
+    portrait = Portrait(
+        gender=gender,
+        hairs_behind_face=True,
+        mouth_shape=rd.choice(["mouth_happy", "mouth_glad"]),
+        eyebrow_y_offset=0,
+        eyes_x_offset=0,
+        eyes_y_offset=0,
+        eyes_shape="eye_1"
+    )
+
+    first_athlete = generate_athlete(
+        age=rd.randint(16, 22),
+        recruit_price=0,
+        main_sport=main_sport,
+        second_sport=None,
+        max_level=1,
+        gender=gender,
+        portrait=portrait,
+        reputation=0
+    )
+    GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+    GAME.recruit_athlete(GAME.recrutable_athletes[0])
+    USER_DATA.save_changes()
 
 ############
 ### Game ###

@@ -1,141 +1,381 @@
-{"team": [
-    {
-        "id": "e567fac7-52e9-4d60-bf94-602c11b081e1",
-        "name": "Miamour",
-        "first_name": "Gatho",
-        "age": 22,
-        "salary": 35000,
-        "recruit_price": 0,
-        "fatigue": 0,
-        "health": {
-            "is_hurt": false,
-            "type_injury": "",
-            "time_absent": 0
-        },
-        "reputation": 0,
-        "stats": {
-            "strength": {
-                "points": 0,
-                "learning_rate": 1
-            },
-            "speed": {
-                "points": 48,
-                "learning_rate": 2
-            },
-            "technique": {
-                "points": 21,
-                "learning_rate": 1
-            },
-            "precision": {
-                "points": 12,
-                "learning_rate": 1
-            },
-            "charm": {
-                "points": 70,
-                "learning_rate": 1.5
-            }
-        },
-        "sports": {
-            "cheese_rolling": {
-                "points": 60,
-                "learning_rate": 2
-            }
-        },
-        "previous_planning": [],
-        "current_planning": []
+{
+    "settings": {
+        "sound_volume": 0.5,
+        "music_volume": 0.5,
+        "language": "english",
+        "text_scrolling_speed": 0.03
     },
-    {
-        "id": "e567fac7-52e9-4d60-bf94-602c11b081e2",
-        "name": "Gatho",
-        "first_name": "Miamour",
-        "age": 22,
-        "salary": 1200,
-        "recruit_price": 0,
-        "fatigue": 0,
-        "health": {
-            "is_hurt": false,
-            "type_injury": "",
-            "time_absent": 0
-        },
-        "reputation": 0,
-        "stats": {
-            "strength": {
-                "points": 0,
-                "learning_rate": 1
+    "tutorial": {},
+    "game": {
+        "money": 100000,
+        "year": 3,
+        "trimester": 1,
+        "team": [
+            {
+                "id": "e567fac7-52e9-4d60-bf94-602c11b081e1",
+                "name": "Miamour",
+                "first_name": "Gatho",
+                "age": 22,
+                "salary": 35000,
+                "time_for_recruit": 0,
+                "recruit_price": 0,
+                "fatigue": 0,
+                "health": {
+                    "is_hurt": false,
+                    "type_injury": "",
+                    "time_absent": 0
+                },
+                "reputation": 0,
+                "stats": {
+                    "strength": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "speed": {
+                        "points": 48,
+                        "learning_rate": 2
+                    },
+                    "technique": {
+                        "points": 21,
+                        "learning_rate": 1
+                    },
+                    "precision": {
+                        "points": 12,
+                        "learning_rate": 1
+                    },
+                    "charm": {
+                        "points": 70,
+                        "learning_rate": 1.5
+                    }
+                },
+                "sports": {
+                    "cheese_rolling": {
+                        "points": 60,
+                        "learning_rate": 2
+                    }
+                },
+                "current_planning": [
+                    "vacation",
+                    "vacation",
+                    "vacation"
+                ]
             },
-            "speed": {
-                "points": 48,
-                "learning_rate": 2
+            {
+                "id": "e567fac7-52e9-4d60-bf94-602c11b081e2",
+                "name": "Gatho",
+                "first_name": "Miamour",
+                "age": 22,
+                "salary": 1200,
+                "time_for_recruit": 0,
+                "recruit_price": 0,
+                "fatigue": 0,
+                "health": {
+                    "is_hurt": false,
+                    "type_injury": "",
+                    "time_absent": 0
+                },
+                "reputation": 0,
+                "stats": {
+                    "strength": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "speed": {
+                        "points": 48,
+                        "learning_rate": 2
+                    },
+                    "technique": {
+                        "points": 21,
+                        "learning_rate": 1
+                    },
+                    "precision": {
+                        "points": 12,
+                        "learning_rate": 1
+                    },
+                    "charm": {
+                        "points": 70,
+                        "learning_rate": 1.5
+                    }
+                },
+                "sports": {
+                    "cheese_rolling": {
+                        "points": 56,
+                        "learning_rate": 1.5
+                    },
+                    "buoy_racing": {
+                        "points": 35,
+                        "learning_rate": 1
+                    }
+                },
+                "current_planning": [
+                    "vacation",
+                    "vacation",
+                    "vacation"
+                ]
             },
-            "technique": {
-                "points": 21,
-                "learning_rate": 1
+            {
+                "id": "e567fac7-52e9-4d60-bf94-602c11b081e3",
+                "name": "Riesle",
+                "first_name": "Edward",
+                "age": 22,
+                "salary": 35000,
+                "time_for_recruit": 0,
+                "recruit_price": 0,
+                "fatigue": 0,
+                "health": {
+                    "is_hurt": false,
+                    "type_injury": "",
+                    "time_absent": 0
+                },
+                "reputation": 0,
+                "stats": {
+                    "strength": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "speed": {
+                        "points": 48,
+                        "learning_rate": 2
+                    },
+                    "technique": {
+                        "points": 21,
+                        "learning_rate": 1
+                    },
+                    "precision": {
+                        "points": 12,
+                        "learning_rate": 1
+                    },
+                    "charm": {
+                        "points": 70,
+                        "learning_rate": 1.5
+                    }
+                },
+                "sports": {
+                    "cheese_rolling": {
+                        "points": 60,
+                        "learning_rate": 2
+                    }
+                },
+                "current_planning": [
+                    "vacation",
+                    "vacation",
+                    "vacation"
+                ]
             },
-            "precision": {
-                "points": 12,
-                "learning_rate": 1
+            {
+                "id": "8e568a71-cb96-4430-ba76-dc9f0b4c535c",
+                "name": "Jarry",
+                "first_name": "Mathias",
+                "age": 25,
+                "salary": 1200,
+                "time_for_recruit": 0,
+                "recruit_price": 3000,
+                "fatigue": 0,
+                "health": {
+                    "is_hurt": false,
+                    "type_injury": "",
+                    "time_absent": 0
+                },
+                "reputation": 0,
+                "stats": {
+                    "strength": {
+                        "points": 0,
+                        "learning_rate": 1.5
+                    },
+                    "speed": {
+                        "points": 0,
+                        "learning_rate": 2
+                    },
+                    "technique": {
+                        "points": 0,
+                        "learning_rate": 1.5
+                    },
+                    "precision": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "charm": {
+                        "points": 0,
+                        "learning_rate": 1
+                    }
+                },
+                "sports": {
+                    "buoy_racing": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "cheese_rolling": {
+                        "points": 0,
+                        "learning_rate": 1.5
+                    }
+                },
+                "current_planning": [
+                    "vacation",
+                    "vacation",
+                    "vacation"
+                ]
             },
-            "charm": {
-                "points": 70,
-                "learning_rate": 1.5
+            {
+                "id": "800503ff-47fb-4a9a-9616-55451b05be4c",
+                "name": "Brabant",
+                "first_name": "Ethel",
+                "age": 33,
+                "salary": 1200,
+                "time_for_recruit": 4,
+                "recruit_price": 12000,
+                "fatigue": 0,
+                "health": {
+                    "is_hurt": false,
+                    "type_injury": "",
+                    "time_absent": 0
+                },
+                "reputation": 0,
+                "stats": {
+                    "strength": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "speed": {
+                        "points": 0,
+                        "learning_rate": 2
+                    },
+                    "technique": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "precision": {
+                        "points": 0,
+                        "learning_rate": 1.5
+                    },
+                    "charm": {
+                        "points": 0,
+                        "learning_rate": 1
+                    }
+                },
+                "sports": {
+                    "buoy_racing": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "cheese_rolling": {
+                        "points": 0,
+                        "learning_rate": 1.5
+                    }
+                },
+                "current_planning": [
+                    "vacation",
+                    "vacation",
+                    "vacation"
+                ]
             }
-        },
-        "sports": {
-            "cheese_rolling": {
-                "points": 56,
-                "learning_rate": 1.5
-            },
-            "buoy_racing": {
-                "points": 35,
-                "learning_rate": 1
+        ],
+        "fired_team": [],
+        "retired_team": [],
+        "recrutable_athletes": [
+            {
+                "id": "b82fc438-d297-4c04-8706-ad0a421f6d46",
+                "name": "Alonso",
+                "first_name": "Liberty",
+                "age": 39,
+                "salary": 1200,
+                "time_for_recruit": 4,
+                "recruit_price": 20000,
+                "fatigue": 0,
+                "health": {
+                    "is_hurt": false,
+                    "type_injury": "",
+                    "time_absent": 0
+                },
+                "reputation": 0,
+                "stats": {
+                    "strength": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "speed": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "technique": {
+                        "points": 0,
+                        "learning_rate": 2
+                    },
+                    "precision": {
+                        "points": 0,
+                        "learning_rate": 2
+                    },
+                    "charm": {
+                        "points": 0,
+                        "learning_rate": 1
+                    }
+                },
+                "sports": {
+                    "buoy_racing": {
+                        "points": 0,
+                        "learning_rate": 1
+                    },
+                    "cheese_rolling": {
+                        "points": 0,
+                        "learning_rate": 1
+                    }
+                },
+                "current_planning": [
+                    "vacation",
+                    "vacation",
+                    "vacation"
+                ]
             }
+        ],
+        "countries": {},
+        "sports_complex": {
+            "current_level": 1,
+            "rooms_bought": {}
         },
-        "previous_planning": [],
-        "current_planning": []
-    },
-    {
-        "id": "e567fac7-52e9-4d60-bf94-602c11b081e3",
-        "name": "Riesle",
-        "first_name": "Edward",
-        "age": 22,
-        "salary": 35000,
-        "recruit_price": 0,
-        "fatigue": 0,
-        "health": {
-            "is_hurt": false,
-            "type_injury": "",
-            "time_absent": 0
-        },
-        "reputation": 0,
-        "stats": {
-            "strength": {
-                "points": 0,
-                "learning_rate": 1
+        "medals": [
+            {
+                "type_medal": "gold",
+                "edition": 1,
+                "athlete_id": "e567fac7-52e9-4d60-bf94-602c11b081e1",
+                "sport_id": "cheese_rolling",
+                "type_edition": "summer"
             },
-            "speed": {
-                "points": 48,
-                "learning_rate": 2
+            {
+                "type_medal": "silver",
+                "edition": 1,
+                "athlete_id": "e567fac7-52e9-4d60-bf94-602c11b081e2",
+                "sport_id": "cheese_rolling",
+                "type_edition": "summer"
             },
-            "technique": {
-                "points": 21,
-                "learning_rate": 1
+            {
+                "type_medal": "gold",
+                "edition": 1,
+                "athlete_id": "e567fac7-52e9-4d60-bf94-602c11b081e3",
+                "sport_id": "cheese_rolling",
+                "type_edition": "summer"
             },
-            "precision": {
-                "points": 12,
-                "learning_rate": 1
+            {
+                "type_medal": "silver",
+                "edition": 2,
+                "athlete_id": "e567fac7-52e9-4d60-bf94-602c11b081e2",
+                "sport_id": "cheese_rolling",
+                "type_edition": "summer"
             },
-            "charm": {
-                "points": 70,
-                "learning_rate": 1.5
+            {
+                "type_medal": "gold",
+                "edition": 1,
+                "athlete_id": "e567fac7-52e9-4d60-bf94-602c11b081e1",
+                "sport_id": "buoy_racing",
+                "type_edition": "summer"
             }
+        ],
+        "sports_unlocking_progress": {
+            "cheese_rolling": 1,
+            "buoy_racing": 1
         },
-        "sports": {
-            "cheese_rolling": {
-                "points": 60,
-                "learning_rate": 2
-            }
+        "selected_athletes_summer": {
+            "cheese_rolling": [],
+            "buoy_racing": []
         },
-        "previous_planning": [],
-        "current_planning": []
+        "selected_athletes_winter": {}
     }
-]}
+}
