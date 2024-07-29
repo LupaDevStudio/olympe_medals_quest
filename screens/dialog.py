@@ -31,7 +31,12 @@ from tools.path import (
     PATH_BACKGROUNDS,
     PATH_CHARACTERS_IMAGES
 )
-from lupa_libraries.dialog_generator.dialog_layout import get_shake_animation
+from tools.graphics import (
+    COLOR_THOUGHT
+)
+from lupa_libraries.dialog_generator.dialog_layout import (
+    get_shake_animation
+)
 
 #############
 ### Class ###
@@ -148,6 +153,7 @@ class DialogScreen(OlympeScreen):
 
         # Set the content of the scrolling dialog
         self.dialog_text = current_dialog_dict["text"]
+        self.format_text()
         self.dialog_text_label = ""
         self.index_scrolling_label = 0
         talking_speed = USER_DATA.settings["text_scrolling_speed"] / \
@@ -163,6 +169,11 @@ class DialogScreen(OlympeScreen):
                 self, shake_type=shake_type)
             shake_animation.start(self)
 
+    def format_text(self):
+        # Insert thoughts in a different color
+        self.dialog_text = self.dialog_text.replace("(", f"[color={COLOR_THOUGHT}](")
+        self.dialog_text = self.dialog_text.replace(")", f")[/color]")
+
     def update_label(self, *args):
         """
         Update the content of the dialog to make it scroll.
@@ -175,7 +186,13 @@ class DialogScreen(OlympeScreen):
         -------
         None
         """
-        self.index_scrolling_label += 1
+        # Update the display of the label
+        if self.dialog_text[self.index_scrolling_label:self.index_scrolling_label+14] == f"[color={COLOR_THOUGHT}]":
+            self.index_scrolling_label += 15
+        elif self.dialog_text[self.index_scrolling_label:self.index_scrolling_label+8] == f"[/color]":
+            self.index_scrolling_label += 9
+        else:
+            self.index_scrolling_label += 1
 
         # End condition
         if self.index_scrolling_label == len(self.dialog_text) + 1:

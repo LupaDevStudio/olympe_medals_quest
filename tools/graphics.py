@@ -65,6 +65,7 @@ class Colors():
 
 
 COLORS = Colors()
+COLOR_THOUGHT = "999999"
 
 ### Sizes ###
 
