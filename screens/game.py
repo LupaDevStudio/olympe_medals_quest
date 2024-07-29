@@ -90,6 +90,9 @@ class GameScreen(OlympeScreen):
         self.ids.notification_button.trigger_icon_flashing()
 
         # TODO TEMP
+        if GAME.sports_unlocked == []:
+            GAME.sports_unlocking_progress["cheese_rolling"] = 1
+        # TODO TEMP
         if GAME.team == []:
             generate_and_add_first_athlete(main_sport="cheese_rolling")
         # TODO TEMP

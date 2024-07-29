@@ -84,7 +84,8 @@ class AthleteScreen(OlympeScreen):
             image_source=self.athlete.image,
             salary=self.athlete.salary,
             age=TEXT.general["age"].replace("@", str(self.athlete.age)),
-            reputation=TEXT.general["reputation"].replace("@", str(self.athlete.reputation)),
+            reputation=TEXT.general["reputation"].replace(
+                "@", str(int(self.athlete.reputation))),
             fatigue=self.my_text["fatigue"].replace(
                 "@", str(self.athlete.fatigue)),
             health=get_health_string(athlete=self.athlete),
@@ -97,28 +98,6 @@ class AthleteScreen(OlympeScreen):
         )
         scrollview_layout.add_widget(self.main_info_card)
 
-        ### Medals ###
-
-        if not self.medals_folded:
-            athlete_medals = GAME.get_medals_from_athlete(
-                athlete_id=self.athlete.id)
-            if len(athlete_medals) > 0:
-                height = self.font_ratio * (
-                    HEADER_HEIGHT + MARGIN_HEIGHT*2 + MEDAL_HEIGHT * len(athlete_medals))
-            else:
-                height = self.font_ratio * HEADER_HEIGHT * 2
-        else:
-            athlete_medals = []
-            height = self.font_ratio * HEADER_HEIGHT
-
-        self.medals_card = MedalsCard(
-            font_ratio=self.font_ratio,
-            size_hint=(SCROLLVIEW_WIDTH, None),
-            height=height,
-            medals_list=athlete_medals,
-            is_folded=self.medals_folded
-        )
-        scrollview_layout.add_widget(self.medals_card)
 
         ### Skills ###
 
@@ -148,6 +127,32 @@ class AthleteScreen(OlympeScreen):
             is_folded=self.skills_folded
         )
         scrollview_layout.add_widget(self.skills_card)
+
+        ### Medals ###
+
+        athlete_medals = GAME.get_medals_from_athlete(
+                athlete_id=self.athlete.id)
+
+        # Display the medals card only if the athlete has some
+        if athlete_medals != []:
+            if not self.medals_folded:
+                if len(athlete_medals) > 0:
+                    height = self.font_ratio * (
+                        HEADER_HEIGHT + MARGIN_HEIGHT*2 + MEDAL_HEIGHT * len(athlete_medals))
+                else:
+                    height = self.font_ratio * HEADER_HEIGHT * 2
+            else:
+                athlete_medals = []
+                height = self.font_ratio * HEADER_HEIGHT
+
+            self.medals_card = MedalsCard(
+                font_ratio=self.font_ratio,
+                size_hint=(SCROLLVIEW_WIDTH, None),
+                height=height,
+                medals_list=athlete_medals,
+                is_folded=self.medals_folded
+            )
+            scrollview_layout.add_widget(self.medals_card)
 
     def ask_fire_athlete(self):
         print("TODO fire athlete")

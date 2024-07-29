@@ -676,6 +676,26 @@ class Game():
             trimester_payment += athlete.get_trimester_gained_money()
         return trimester_payment
 
+    def get_current_sports_category(self) -> int:
+        current_category = 1
+        for athlete in self.team:
+            for sport_id in athlete.sports:
+                sport: Sport = SPORTS[sport_id]
+                if sport.category > current_category:
+                    current_category = sport.category
+                    if current_category == 3:
+                        return current_category
+        return current_category
+
+    def get_all_sports_from_current_category(self) -> list[str]:
+        current_category = self.get_current_sports_category()
+        list_sports: list[str] = []
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            if sport.category <= current_category:
+                list_sports.append(sport_id)
+        return list_sports
+
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
         # Diminish the time left to recruit and remove those with 0 time left
         list_athletes_to_remove = []

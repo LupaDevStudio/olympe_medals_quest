@@ -192,8 +192,8 @@ def generate_athlete(
         recruit_price: int | None = None,
         reputation: int | None = None,
         max_level: int | None = None, # between 1 and 10
-        main_sport: str | None = None,
-        second_sport: str | None = None,
+        main_sport: str = "random",
+        second_sport: str | None = "random",
         gender: Literal["male", "female"] | None = None,
         portrait: Portrait | None = None) -> Athlete:
 
@@ -209,26 +209,46 @@ def generate_athlete(
 
     # Choose the time for recruit
     if time_for_recruit is None:
-        time_for_recruit = rd.randint(2, 5)
+        time_for_recruit = rd.randint(2, 4)
 
     if max_level is None:
         max_level = GAME.compute_average_level()
 
     level = rd.randint(1, max_level)
 
-    ### Stats and sports ###
+    ### Stats ###
 
     stats = generate_stats(level)
+
+    ### Sports ###
+
+    if main_sport == "random":
+        # Main sport among those unlocked
+        main_sport = rd.choice(GAME.sports_unlocked)
+    if second_sport == "random":
+        # Second sport among all sports of the current category or less
+        list_second_sports = GAME.get_all_sports_from_current_category()
+        list_second_sports.remove(main_sport)
+        second_sport = rd.choice(list_second_sports)
     sports = generate_sports(main_sport, second_sport, level)
+
+    ### Reputation ###
+
     if reputation is None:
         reputation = generate_reputation(stats["charm"])
+
+    ### Portrait ###
 
     # Generate the portrait of the athlete
     if portrait is None:
         portrait = Portrait(gender=gender)
 
-    # Salary and recruit price
+    ### Costs ###
+
+    # Salary
     salary = compute_salary(stats=stats, reputation=reputation)
+
+    # Recruit price
     if recruit_price is None:
         recruit_price = generate_recruit_price(
             salary=salary,
@@ -273,6 +293,7 @@ def generate_and_add_first_athlete(main_sport: str) -> None:
         age=rd.randint(16, 22),
         recruit_price=0,
         main_sport=main_sport,
+        second_sport=None,
         max_level=1,
         gender=gender,
         portrait=portrait,

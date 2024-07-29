@@ -135,7 +135,8 @@ class RecruitScreen(OlympeScreen):
                     title_card=athlete.first_name + " " + athlete.name,
                     salary=athlete.salary,
                     age=TEXT.general["age"].replace("@", str(athlete.age)),
-                    reputation=TEXT.general["reputation"].replace("@", str(athlete.reputation)),
+                    reputation=TEXT.general["reputation"].replace(
+                        "@", str(int(athlete.reputation))),
                     recruit_price=athlete.recruit_price,
                     disable_button=not(GAME.can_recruit_athlete(athlete=athlete)),
                     recruit_release_function=partial(self.ask_recruit_athlete, athlete)
