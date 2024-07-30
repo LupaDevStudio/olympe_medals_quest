@@ -36,7 +36,7 @@ from tools.graphics import (
     SCROLLVIEW_WIDTH,
     HEADER_HEIGHT,
     CHARACTER_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Medal,
@@ -72,7 +72,7 @@ class MedalsScreen(OlympeScreen):
         scrollview_layout = self.ids["scrollview_layout"]
 
         card_width = (Window.size[0]*(SCROLLVIEW_WIDTH**2) - \
-            4*MARGIN_HEIGHT*self.font_ratio - \
+            4*MARGIN*self.font_ratio - \
             (scrollview_layout.padding[2]-scrollview_layout.padding[0])/2) / 3
         card_height = 1.25*card_width
 
@@ -121,7 +121,7 @@ class MedalsScreen(OlympeScreen):
                     number_lines = (number_medals-1) // 3 + 1
                     height = self.font_ratio * (
                         HEADER_HEIGHT + \
-                        MARGIN_HEIGHT * (number_lines + 1)
+                        MARGIN * (number_lines + 1)
                     ) + card_height * number_lines
 
                     medals_card = CompleteMedalsCard(
@@ -182,7 +182,7 @@ class MedalsScreen(OlympeScreen):
                     number_lines = (number_medals-1) // 3 + 1
                     height = self.font_ratio * (
                         HEADER_HEIGHT + \
-                        MARGIN_HEIGHT * (number_lines + 1)
+                        MARGIN * (number_lines + 1)
                     ) + card_height * number_lines
 
                     medals_card = CompleteMedalsCard(

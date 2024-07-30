@@ -37,7 +37,7 @@ from tools.graphics import (
     CHARACTER_HEIGHT,
     HEADER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Athlete
@@ -93,7 +93,7 @@ class PlanificationScreen(OlympeScreen):
 
             else:
                 height = self.font_ratio * (
-                    HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN_HEIGHT
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN
                 )
 
                 list_activities_label = []

@@ -136,4 +136,5 @@ if __name__ == "__main__":
     if not ANDROID_MODE:
         # Window.size = (720, 1080)
         Window.size = (405, 720)
+        # Window.size = (1080, 2340)
     MainApp().run()

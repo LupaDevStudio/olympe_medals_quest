@@ -34,7 +34,7 @@ from tools.graphics import (
     SCROLLVIEW_WIDTH,
     BIG_HEADER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Athlete

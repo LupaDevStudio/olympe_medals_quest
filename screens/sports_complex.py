@@ -37,7 +37,7 @@ from tools.graphics import (
     HEADER_HEIGHT,
     BIG_BUTTON_HEIGHT,
     ROOM_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Room,
@@ -147,7 +147,7 @@ class SportsComplexScreen(OlympeScreen):
                     button_text=TEXT.sports_complex["expand"],
                     image_source=PATH_BACKGROUNDS + f"sport_complex_{next_level}.jpg",
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN)*self.font_ratio,
                     current_level_title=TEXT.general["level"] + " " + str(sports_complex_level),
                     current_level_details=current_level_details,
                     next_level_title=TEXT.general["level"] + " " + str(next_level),
@@ -200,7 +200,7 @@ class SportsComplexScreen(OlympeScreen):
                     button_text=button_text,
                     image_source=room.image,
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN)*self.font_ratio,
                     current_level_title=current_level_title,
                     current_level_details=current_level_details,
                     next_level_title=next_level_title,

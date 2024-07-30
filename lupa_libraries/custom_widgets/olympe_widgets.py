@@ -46,7 +46,7 @@ from tools.graphics import(
     BIG_HEADER_HEIGHT,
     CHARACTER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT,
+    MARGIN,
     BUTTON_HEIGHT,
     SCROLLVIEW_WIDTH
 )
@@ -303,6 +303,7 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     font_ratio = NumericProperty(1)
 
     ### Function ###
+
     fire_athlete_function = ObjectProperty(lambda: 1 + 1)
 
 
@@ -453,7 +454,7 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
             pos_hint={"x":0.05},
-            y=MARGIN_HEIGHT * self.font_ratio,
+            y=MARGIN * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )
@@ -490,12 +491,12 @@ class MedalsCard(RelativeLayout):
         if not self.is_folded:
 
             idx = 0
-            total_height = (MARGIN_HEIGHT*2 + HEADER_HEIGHT + len(
+            total_height = (MARGIN*2 + HEADER_HEIGHT + len(
                 self.medals_list) * MEDAL_HEIGHT) * self.font_ratio
 
             medal: Medal
             for medal in self.medals_list:
-                pos_y = (MARGIN_HEIGHT + (idx+0.5) * MEDAL_HEIGHT)*self.font_ratio / total_height
+                pos_y = (MARGIN + (idx+0.5) * MEDAL_HEIGHT)*self.font_ratio / total_height
                 
                 year: str = TEXT.general["year"]
                 sport: str = TEXT.sports[medal.sport_id]["name"]
@@ -563,7 +564,7 @@ class SkillsCard(RelativeLayout):
                 skills_dict=self.skills_dict,
                 font_ratio=self.font_ratio,
                 pos_hint={"x":0.05},
-                y=MARGIN_HEIGHT * self.font_ratio,
+                y=MARGIN * self.font_ratio,
                 size_hint=(0.9, None),
                 height=total_height
             )
@@ -619,7 +620,7 @@ class CompleteRecruitCard(RelativeLayout):
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
             pos_hint={"x":0.05},
-            y=(MARGIN_HEIGHT*2 + self.recruit_button_height) * self.font_ratio,
+            y=(MARGIN*2 + self.recruit_button_height) * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )
@@ -678,7 +679,7 @@ class CompleteInscriptionCard(RelativeLayout):
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
             pos_hint={"x":0.05},
-            y=(MARGIN_HEIGHT*2 + self.button_height) * self.font_ratio,
+            y=(MARGIN*2 + self.button_height) * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )

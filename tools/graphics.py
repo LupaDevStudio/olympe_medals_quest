@@ -14,15 +14,15 @@ Constants
 
 class FontSize():
     def __init__(self) -> None:
-        self.title = 21
-        self.subtitle = 18
-        self.label = 15
-        self.small_label = 12
+        self.title = 19
+        self.subtitle = 16
+        self.label = 13.5
+        self.small_label = 11.5
 
-        self.big_button = 18
-        self.button = 16
+        self.big_button = 16
+        self.button = 14
 
-        self.coins_count = 15
+        self.coins_count = 13
 
 
 FONTS_SIZES = FontSize()
@@ -76,9 +76,9 @@ BOTTOM_BAR_HEIGHT = 0.09
 BUTTON_BOTTOM_BAR_HEIGHT = 0.85
 HEADER_HEIGHT = 50
 BIG_HEADER_HEIGHT = 75
-CHARACTER_HEIGHT = 125
-MARGIN_HEIGHT = 10
-SKILL_HEIGHT = 35
+CHARACTER_HEIGHT = 100
+MARGIN = 10
+SKILL_HEIGHT = 30
 MEDAL_HEIGHT = 45
 BUTTON_HEIGHT = 40
 BIG_BUTTON_HEIGHT = 65
@@ -88,7 +88,7 @@ LABEL_HEIGHT = 25
 
 # Radius
 
-RADIUS = 12
+RADIUS = 10
 RADIUS_SMALL = 6
 
 ### Scrollview ###

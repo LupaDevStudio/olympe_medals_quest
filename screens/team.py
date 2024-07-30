@@ -36,7 +36,7 @@ from tools.graphics import (
     SCROLLVIEW_WIDTH,
     BIG_HEADER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Athlete
@@ -101,7 +101,7 @@ class TeamScreen(OlympeScreen):
             else:
                 skills_dict = athlete.get_best_sports()
                 height = self.font_ratio * (
-                    BIG_HEADER_HEIGHT + len(skills_dict) * SKILL_HEIGHT + MARGIN_HEIGHT*2) 
+                    BIG_HEADER_HEIGHT + len(skills_dict) * SKILL_HEIGHT + MARGIN*2) 
 
                 athlete_button = CharacterInfoWithMainSportsLayout(
                     image_source=athlete.image,

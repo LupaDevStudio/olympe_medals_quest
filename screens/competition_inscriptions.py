@@ -36,7 +36,7 @@ from tools.constants import (
 from tools.graphics import (
     HEADER_HEIGHT,
     CHARACTER_HEIGHT,
-    MARGIN_HEIGHT,
+    MARGIN,
     BUTTON_HEIGHT,
     SKILL_HEIGHT,
     SCROLLVIEW_WIDTH,
@@ -211,10 +211,10 @@ class CompetitionInscriptionsScreen(OlympeScreen):
 
                     if len(athlete_skills) > 0:
                         height = self.font_ratio * (
-                            HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+                            HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
                     else:
                         height = self.font_ratio * (
-                            HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*3 + BUTTON_HEIGHT)
+                            HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*3 + BUTTON_HEIGHT)
 
                     fatigue_label = TEXT.general["fatigue_evolution"].replace(
                         "@", "5").replace("€", "10") # TODO

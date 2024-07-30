@@ -39,7 +39,7 @@ from tools.constants import (
     USER_DATA
 )
 from tools.graphics import (
-    MARGIN_HEIGHT,
+    MARGIN,
     BUTTON_HEIGHT,
     HEADER_HEIGHT,
     CHARACTER_HEIGHT,
@@ -96,7 +96,7 @@ class RecruitScreen(OlympeScreen):
             if self.folded_dict[athlete.id][0]:
                 athlete_skills = athlete.get_best_sports()
                 height = self.font_ratio * (
-                    BIG_HEADER_HEIGHT + len(athlete_skills) * SKILL_HEIGHT + MARGIN_HEIGHT*2) 
+                    BIG_HEADER_HEIGHT + len(athlete_skills) * SKILL_HEIGHT + MARGIN*2) 
 
                 character_card = CharacterInfoWithMainSportsLayout(
                     image_source=athlete.image,
@@ -118,10 +118,10 @@ class RecruitScreen(OlympeScreen):
                 athlete_skills.update(sports_dict)
                 if len(athlete_skills) > 0:
                     height = self.font_ratio * (
-                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
                 else:
                     height = self.font_ratio * (
-                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN_HEIGHT*3 + BUTTON_HEIGHT)
+                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*3 + BUTTON_HEIGHT)
 
                 # Sort reverse
                 athlete_skills = dict(reversed(athlete_skills.items()))
