@@ -2,12 +2,10 @@
 
 <SaveScreen>:
 
-    PressedButton:
-        text: "test"
-        size_hint: (0.4, BUTTON_BOTTOM_BAR_HEIGHT*BOTTOM_BAR_HEIGHT)
-        pos_hint: {"center_x": 0.5, "y": 0.5}
-        font_ratio: root.font_ratio
-        release_function: root.launch_game
+    RelativeLayout:
+        id: save_layout
+        pos_hint: {"center_x":0.5, "y": BOTTOM_BAR_HEIGHT + 0.025}
+        size_hint: (SCROLLVIEW_WIDTH, 0.95 - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT)
 
     PressedButton:
         text: root.new_game_label

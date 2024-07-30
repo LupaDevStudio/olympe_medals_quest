@@ -15,6 +15,7 @@ if __name__ == "__main__":
     sys.path.append("./")
 from typing import Literal
 import uuid
+from datetime import datetime
 
 ### Local imports ###
 
@@ -591,6 +592,9 @@ class Game():
     """
 
     difficulty: Literal["easy", "medium", "difficult"]
+    total_time_played: float # in seconds
+    last_time_played: str
+    unlocked_characters: list[str]
     money: int
     year: int
     trimester: int
@@ -640,6 +644,9 @@ class Game():
     def __init__(self, dict_to_load: dict = {}) -> None:
 
         self.difficulty = dict_to_load.get("difficulty", "medium")
+        self.total_time_played = dict_to_load.get("total_time_played", 0)
+        self.last_time_played = dict_to_load.get("last_time_played", "")
+        self.unlocked_characters = dict_to_load.get("unlocked_characters", [])
         self.money = dict_to_load.get("money", 0)
         self.year = dict_to_load.get("year", 3)
         self.trimester = dict_to_load.get("trimester", 1)
@@ -946,6 +953,9 @@ class Game():
     def export_dict(self):
         return {
             "difficulty": self.difficulty,
+            "total_time_played": self.total_time_played,
+            "last_time_played": datetime.now().strftime("%m/%d/%Y - %Hh%M"),
+            "unlocked_characters": self.unlocked_characters,
             "money": self.money,
             "year": self.year,
             "trimester": self.trimester,
@@ -1005,6 +1015,14 @@ class UserData():
 
     def can_start_new_game(self):
         return self.game_1 is None or self.game_2 is None or self.game_3 is None
+
+    def delete_game(self, id_game: int):
+        if id_game == 1:
+            self.game_1 = None
+        elif id_game == 2:
+            self.game_2 = None
+        else:
+            self.game_3 = None
 
     def save_changes(self) -> None:
         """

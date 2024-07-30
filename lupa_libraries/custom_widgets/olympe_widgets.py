@@ -150,6 +150,8 @@ class OlympeCard(RelativeLayout):
 
     icon_source = StringProperty()
     icon_function = ObjectProperty(lambda: 1 + 1)
+    icon_button_color = ColorProperty(COLORS.blue_olympe)
+    icon_button_color_pressed = ColorProperty(COLORS.blue_pressed_olympe)
     size_hint_y_icon = NumericProperty(0.6)
 
     is_folded = BooleanProperty(False)
@@ -985,3 +987,23 @@ class SmallMedalsCard(FloatLayout):
         current_screen_name = self.get_root_window().children[0].current
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
+
+####################
+### Save widgets ###
+####################
+
+class SaveCard(FloatLayout):
+
+    title_card = StringProperty()
+
+    characters_list = ListProperty([])
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    delete_function = ObjectProperty(lambda: 1 + 1)
+    launch_function = ObjectProperty(lambda: 1 + 1)

@@ -23,7 +23,11 @@
         "play": "Play"
     },
     "save": {
-        "new_game": "Nouvelle partie"
+        "new_game": "Nouvelle partie",
+        "save": "Sauvegarde @ - €",
+        "easy": "Facile",
+        "medium": "Moyen",
+        "difficult": "Difficile"
     },
     "game": {
         "team": "Équipe",
