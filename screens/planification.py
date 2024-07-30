@@ -27,9 +27,7 @@ from lupa_libraries import (
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
-    SCREEN_SPEND_MONEY_RIGHT,
-    SCREEN_CUSTOM_TITLE,
-    GAME
+    SCREEN_SPEND_MONEY_RIGHT
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
@@ -37,7 +35,7 @@ from tools.graphics import (
     CHARACTER_HEIGHT,
     HEADER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Athlete
@@ -69,11 +67,11 @@ class PlanificationScreen(OlympeScreen):
         self.header_text = my_text["planification"]
 
     def fill_scrollview(self):
-        self.spent_coins = - GAME.get_trimester_gained_total_money()
+        self.spent_coins = - self.GAME.get_trimester_gained_total_money()
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
-        for athlete in GAME.team:
+        for athlete in self.GAME.team:
             trimester_gain = athlete.get_trimester_gained_money()
 
             if athlete.id not in self.athlete_folded_dict:
@@ -93,7 +91,7 @@ class PlanificationScreen(OlympeScreen):
 
             else:
                 height = self.font_ratio * (
-                    HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN_HEIGHT
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN
                 )
 
                 list_activities_label = []

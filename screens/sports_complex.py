@@ -29,15 +29,14 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON,
-    GAME
+    SCREEN_TITLE_ICON
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
     HEADER_HEIGHT,
     BIG_BUTTON_HEIGHT,
     ROOM_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Room,
@@ -103,7 +102,7 @@ class SportsComplexScreen(OlympeScreen):
 
         ### Sports complex ###
 
-        sports_complex_level = GAME.sports_complex.current_level
+        sports_complex_level = self.GAME.sports_complex.current_level
 
         # If the sports complex is not at its maximum level
         if sports_complex_level != len(SPORTS_COMPLEX_EVOLUTION_DICT):
@@ -147,7 +146,7 @@ class SportsComplexScreen(OlympeScreen):
                     button_text=TEXT.sports_complex["expand"],
                     image_source=PATH_BACKGROUNDS + f"sport_complex_{next_level}.jpg",
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN)*self.font_ratio,
                     current_level_title=TEXT.general["level"] + " " + str(sports_complex_level),
                     current_level_details=current_level_details,
                     next_level_title=TEXT.general["level"] + " " + str(next_level),
@@ -160,13 +159,13 @@ class SportsComplexScreen(OlympeScreen):
         ### Rooms ###
 
         # Add the unlocked rooms not bought in the scrollview
-        for room_id in GAME.sports_complex.rooms_unlocked:
+        for room_id in self.GAME.sports_complex.rooms_unlocked:
 
             # Init the folded dictionary
             if room_id not in self.rooms_folded_dict:
                 self.rooms_folded_dict[room_id] = [False, None]
 
-            room: Room = GAME.sports_complex.rooms_unlocked[room_id]
+            room: Room = self.GAME.sports_complex.rooms_unlocked[room_id]
             room_title: str = TEXT.rooms[room_id]["name"] + " - " + TEXT.general[
                 "level"] + " " + str(room.current_level)
             
@@ -200,7 +199,7 @@ class SportsComplexScreen(OlympeScreen):
                     button_text=button_text,
                     image_source=room.image,
                     size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN_HEIGHT)*self.font_ratio,
+                    height=(HEADER_HEIGHT+BIG_BUTTON_HEIGHT+ROOM_HEIGHT+3*MARGIN)*self.font_ratio,
                     current_level_title=current_level_title,
                     current_level_details=current_level_details,
                     next_level_title=next_level_title,

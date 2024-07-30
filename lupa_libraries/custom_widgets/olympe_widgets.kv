@@ -1,5 +1,6 @@
 #:kivy 2.2.1
-#:set CHARACTER_LINE_OFFSET_HORIZONTAL 10
+#:set CHARACTER_LINE_OFFSET_HORIZONTAL 5
+#:set CHARACTER_NAME_HEIGHT_HINT 0.3
 
 <CharacterButtonWithIcon>:
     # Background
@@ -24,7 +25,9 @@
         source: root.image_source
         pos_hint: {"center_x": 0.5, "y": 0}
         size_hint: root.size_hint_character
-        width: self.height
+        width: root.width
+        # width: self.height
+        fit_mode: "cover"
 
     # Icon
     Image:
@@ -56,7 +59,7 @@
         image_source: root.image_source
         pos_hint: {"x": 0.025}
         size_hint: (None, None)
-        height: 0.8*root.header_height
+        height: 0.8*root.header_height*root.font_ratio
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         width: self.height
         opacity: 1 if root.image_mode else 0
@@ -72,7 +75,7 @@
         source: root.first_icon_source
         pos_hint: {"x": 0.025}
         size_hint: (None, None)
-        height: 0.6*root.header_height
+        height: 0.6*root.header_height*root.font_ratio
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         width: self.height
         color: root.first_icon_color
@@ -82,7 +85,7 @@
         text: root.left_label
         font_ratio: root.font_ratio
         size_hint: (0.4, None)
-        height: root.header_height * 0.65
+        height: root.header_height*0.65*root.font_ratio
         pos_hint: {"x": 0.025}
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         line_width: root.line_width
@@ -110,7 +113,7 @@
         coins_count: root.money_amount
         font_ratio: root.font_ratio
         size_hint: (root.money_size_hint[0], None)
-        height: root.money_size_hint[1]*root.header_height
+        height: root.money_size_hint[1]*root.header_height*root.font_ratio
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         pos_hint: {"right": 0.95 - icon.width/(root.width+1)} if root.icon_mode else {"right": 0.95}
         opacity: 1 if root.money_mode else 0
@@ -123,7 +126,7 @@
         text: root.button_text
         size_hint: (0.35, None)
         font_ratio: root.font_ratio
-        height: 0.5*root.header_height
+        height: 0.5*root.header_height*root.font_ratio
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         pos_hint: {"right": 0.95 - icon.width/(root.width+1)}
         disable_button: root.button_disable_button and root.button_mode
@@ -136,7 +139,7 @@
         text: root.right_label
         font_ratio: root.font_ratio
         size_hint: (0.3, None)
-        height: root.header_height * 0.65
+        height: root.header_height * 0.65*root.font_ratio
         x: root.width*0.95 - icon.width - self.width
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         line_width: root.line_width
@@ -149,7 +152,7 @@
         icon_source: root.icon_source
         size_hint_y_icon: root.size_hint_y_icon
         size_hint: (None, None)
-        height: HEADER_HEIGHT * 0.65
+        height: HEADER_HEIGHT*0.65*root.font_ratio if root.header_height > HEADER_HEIGHT else root.header_height*0.65
         width: self.height
         pos_hint: {"right": 0.975}
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
@@ -157,6 +160,8 @@
         release_function: root.icon_function
         opacity: 1 if root.icon_mode else 0
         radius: RADIUS_SMALL
+        background_color: root.icon_button_color
+        pressed_color: root.icon_button_color_pressed
 
 <SeparationLine>:
 
@@ -192,7 +197,7 @@
         Color:
             rgba: self.line_color
         Line:
-            points: [CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8, self.width-CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8]
+            points: [CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*(1-CHARACTER_NAME_HEIGHT_HINT), self.width-CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*(1-CHARACTER_NAME_HEIGHT_HINT)]
             width: self.line_width*root.font_ratio
 
     Label:
@@ -200,7 +205,7 @@
         font_size: root.font_ratio * root.font_size
         font_name: root.text_font_name
         x: CHARACTER_LINE_OFFSET_HORIZONTAL*root.font_ratio
-        y: root.height*0.9 - self.height//2
+        y: root.height*(1-CHARACTER_NAME_HEIGHT_HINT/2) - self.height//2
         shorten: False
         size_hint: (None, None)
         size: self.texture_size
@@ -213,14 +218,15 @@
         icon_source: root.icon_source
         icon_mode: root.icon_mode
         icon_position: {"right": 0.95, "y": 0.05}
-        size_hint: (None, 0.6) if not root.subtitle_mode else (None, 0.5)
+        size_hint: (None, (1-CHARACTER_NAME_HEIGHT_HINT-0.15)) if not root.subtitle_mode else (None, (1-CHARACTER_NAME_HEIGHT_HINT-0.3))
         width: self.height
-        pos_hint: {"center_x": 0.5, "y": 0.075} if not root.subtitle_mode else {"center_x": 0.5, "y": 0.2}
+        pos_hint: {"center_x": 0.5, "y": 0.07} if not root.subtitle_mode else {"center_x": 0.5, "y": 0.2}
         font_ratio: root.font_ratio
         release_function: root.release_function
         line_width: root.line_width
     
     Label:
+        id: subtitle_label
         text: root.subtitle_text
         size_hint: (1, 0.2)
         pos_hint: {"x":0, "y": 0}
@@ -242,18 +248,22 @@
         icon_source: PATH_ICONS + "hurt.png"
         icon_mode: root.is_hurt
         icon_position: {"right": 0.95, "y": 0.05}
-        size_hint: (None, 0.5)
+        size_hint: (None, None)
+        x: MARGIN*root.font_ratio
+        y: (2*MARGIN+BUTTON_HEIGHT)*root.font_ratio
+        height: CHARACTER_HEIGHT * root.font_ratio
         width: self.height
-        pos_hint: {"x": 0.05, "y": 0.4}
         font_ratio: root.font_ratio
         line_width: root.line_width
         disable_button: True
 
     PressedButton:
         text: root.fire_text
-        size_hint: (None, 0.2)
+        size_hint: (None, None)
+        height: BUTTON_HEIGHT * root.font_ratio
         width: character.width
-        pos_hint: {"x": 0.05, "y": 0.1}
+        x: MARGIN*root.font_ratio
+        y: MARGIN*root.font_ratio
         font_ratio: root.font_ratio
         pressed_color: COLORS.red_pressed
         background_color: COLORS.red
@@ -266,42 +276,51 @@
         coins_count: root.salary
         salary_mode: True
         font_ratio: root.font_ratio
-        size_hint: (None, 0.14)
-        width: root.width * (1 - 0.05*3) - character.width
-        pos_hint: {"y": 0.05*5 + 4*0.14}
-        x: root.width * 0.05 * 2 + character.width
+        size_hint: (None, None)
+        width: root.width - character.width - 3*MARGIN*root.font_ratio
+        height: (root.height-6*MARGIN*root.font_ratio)/5
+        y: 5*MARGIN*root.font_ratio + 4*self.height
+        x: MARGIN*2*root.font_ratio + character.width
 
     SurroundedLabel:
         text: root.age
         font_ratio: root.font_ratio
-        size_hint: (None, 0.14)
+        size_hint: (None, None)
         width: salary_label.width
+        height: salary_label.height
         pos_hint: {"y": 0.05*4 + 3*0.14}
-        x: root.width * 0.05 * 2 + character.width
+        y: 4*MARGIN*root.font_ratio + 3*self.height
+        x: salary_label.x
 
     SurroundedLabel:
         text: root.reputation
         font_ratio: root.font_ratio
-        size_hint: (None, 0.14)
+        size_hint: (None, None)
         width: salary_label.width
+        height: salary_label.height
         pos_hint: {"y": 0.05*3 + 2*0.14}
-        x: root.width * 0.05 * 2 + character.width
+        y: 3*MARGIN*root.font_ratio + 2*self.height
+        x: salary_label.x
 
     SurroundedLabel:
         text: root.fatigue
         font_ratio: root.font_ratio
-        size_hint: (None, 0.14)
+        size_hint: (None, None)
         width: salary_label.width
+        height: salary_label.height
         pos_hint: {"y": 0.05*2 + 0.14}
-        x: root.width * 0.05 * 2 + character.width
+        y: 2*MARGIN*root.font_ratio + self.height
+        x: salary_label.x
 
     SurroundedLabel:
         text: root.health
         font_ratio: root.font_ratio
-        size_hint: (None, 0.14)
+        size_hint: (None, None)
         width: salary_label.width
+        height: salary_label.height
         pos_hint: {"y": 0.05}
-        x: root.width * 0.05 * 2 + character.width
+        y: MARGIN*root.font_ratio
+        x: salary_label.x
 
 <StatBar>:
 
@@ -435,7 +454,7 @@
         height: root.character_height*root.font_ratio
         width: self.height
         pos_hint: {"x": 0.05}
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height)
         font_ratio: root.font_ratio
         line_width: root.line_width
         disable_button: True
@@ -449,7 +468,7 @@
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
         width: root.width * (1 - 0.05*3) - character.width
         x: root.width * 0.05 * 2 + character.width
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2*root.character_height/3 + 6)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2*root.character_height/3 + 6)
 
     SurroundedLabel:
         text: root.age
@@ -458,7 +477,7 @@
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
         width: salary_label.width
         x: root.width * 0.05 * 2 + character.width
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + root.character_height/3 + 4)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + root.character_height/3 + 4)
 
     SurroundedLabel:
         text: root.reputation
@@ -467,7 +486,7 @@
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
         width: salary_label.width
         x: root.width * 0.05 * 2 + character.width
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
 
     # Recruit button
     TextMoneyLayoutPressedButton:
@@ -475,7 +494,7 @@
         size_hint: (0.5, None)
         height: root.recruit_button_height*root.font_ratio
         font_ratio: root.font_ratio
-        y: MARGIN_HEIGHT*root.font_ratio
+        y: MARGIN*root.font_ratio
         pos_hint: {"center_x": 0.5}
         release_function: root.recruit_release_function
         disable_button: root.disable_button
@@ -505,7 +524,7 @@
         icon_mode: root.best_medal_source != ""
         icon_source: root.best_medal_source
         icon_position: {"right": 0.975, "y": 0.025}
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height)
         font_ratio: root.font_ratio
         line_width: root.line_width
         disable_button: True
@@ -518,7 +537,7 @@
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
         width: root.width * (1 - 0.05*3) - character.width
         x: root.width * 0.05 * 2 + character.width
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2*root.character_height/3 + 6)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2*root.character_height/3 + 6)
 
     SurroundedLabel:
         text: root.fatigue_evolution
@@ -527,7 +546,7 @@
         height: health_label.height
         width: health_label.width
         x: root.width * 0.05 * 2 + character.width
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + root.character_height/3 + 4)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + root.character_height/3 + 4)
 
     SurroundedLabel:
         text: root.wound_risk
@@ -536,7 +555,7 @@
         height: health_label.height
         width: health_label.width
         x: root.width * 0.05 * 2 + character.width
-        y: root.font_ratio * (MARGIN_HEIGHT * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2)
+        y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.button_height + 2)
 
     # Send button
     PressedButton:
@@ -544,7 +563,7 @@
         size_hint: (0.5, None)
         height: root.button_height*root.font_ratio
         font_ratio: root.font_ratio
-        y: MARGIN_HEIGHT*root.font_ratio
+        y: MARGIN*root.font_ratio
         pos_hint: {"center_x": 0.5}
         release_function: root.release_function
         disable_button: root.disable_button
@@ -598,7 +617,7 @@
         width: self.height
         pos_hint: {"x": 0.05}
         icon_mode: root.is_hurt
-        y: root.font_ratio * (MARGIN_HEIGHT * 2 + SKILL_HEIGHT)
+        y: root.font_ratio * (MARGIN * 2 + SKILL_HEIGHT)
         font_ratio: root.font_ratio
         line_width: root.line_width
 
@@ -609,7 +628,7 @@
         pos_hint: {"x": 0.05}
         width: character.width
         height: root.font_ratio*SKILL_HEIGHT
-        y: root.font_ratio * MARGIN_HEIGHT
+        y: root.font_ratio * MARGIN
         minus_mode: root.minus_mode
         plus_mode: not root.minus_mode
 
@@ -621,7 +640,7 @@
         width: root.width*0.85 - character.width
         height: (root.character_height - 2*7)/3
         x: 0.1*root.width + character.width
-        y: (2*7 + MARGIN_HEIGHT*2)*root.font_ratio + planning_button.height + 2*self.height
+        y: (2*7 + MARGIN*2)*root.font_ratio + planning_button.height + 2*self.height
 
     SurroundedLabel:
         text: root.list_activities[1]
@@ -630,7 +649,7 @@
         width: first_activity.width
         height: first_activity.height
         x: 0.1*root.width + character.width
-        y: (1*7 + MARGIN_HEIGHT*2)*root.font_ratio + planning_button.height + self.height
+        y: (1*7 + MARGIN*2)*root.font_ratio + planning_button.height + self.height
 
     SurroundedLabel:
         text: root.list_activities[2]
@@ -639,7 +658,7 @@
         width: first_activity.width
         height: first_activity.height
         x: 0.1*root.width + character.width
-        y: MARGIN_HEIGHT*2*root.font_ratio + planning_button.height
+        y: MARGIN*2*root.font_ratio + planning_button.height
 
     # Planning button
     PressedButton:
@@ -650,7 +669,7 @@
         height: SKILL_HEIGHT * root.font_ratio
         font_ratio: root.font_ratio
         x: 0.1*root.width + character.width
-        y: MARGIN_HEIGHT*root.font_ratio
+        y: MARGIN*root.font_ratio
         release_function: root.release_function
 
 <SmallPlanificationCard>:
@@ -736,7 +755,7 @@
         id: image
         image_source: root.image_source
         pos_hint: {"x": 0.025}
-        y: root.y + root.font_ratio*(2*MARGIN_HEIGHT+BIG_BUTTON_HEIGHT)
+        y: root.y + root.font_ratio*(2*MARGIN+BIG_BUTTON_HEIGHT)
         size_hint: (0.3, None)
         height: ROOM_HEIGHT*root.font_ratio
         font_ratio: root.font_ratio
@@ -748,14 +767,15 @@
         size_hint: (None, None)
         width: image.width
         height: BIG_BUTTON_HEIGHT*root.font_ratio
-        y: root.y + MARGIN_HEIGHT*root.font_ratio
+        y: root.y + MARGIN*root.font_ratio
         pos_hint: {"x": 0.025}
         release_function: root.buy_function
+        font_ratio: root.font_ratio
 
     FloatLayout:
         size_hint: (0.625, None)
-        height: root.font_ratio * (ROOM_HEIGHT + BIG_BUTTON_HEIGHT + MARGIN_HEIGHT)
-        y: root.y + MARGIN_HEIGHT*root.font_ratio
+        height: root.font_ratio * (ROOM_HEIGHT + BIG_BUTTON_HEIGHT + MARGIN)
+        y: root.y + MARGIN*root.font_ratio
         pos_hint: {"right": 0.975}
         canvas.before:
             Color:
@@ -772,6 +792,7 @@
             size_hint: (1, 0.9)
             bar_margin: 8*root.font_ratio
             pos_hint: {"x": 0, "center_y": 0.5}
+            font_ratio: root.font_ratio
 
             MyScrollViewLayout:
                 id: scrollview_layout_2
@@ -801,8 +822,8 @@
         pos: root.pos
         height: root.height-HEADER_HEIGHT*root.font_ratio
         cols: 3
-        spacing: MARGIN_HEIGHT*root.font_ratio
-        padding: MARGIN_HEIGHT*root.font_ratio
+        spacing: MARGIN*root.font_ratio
+        padding: MARGIN*root.font_ratio
 
 <SmallMedalsCard>:
 
@@ -821,3 +842,93 @@
         size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
+
+<SaveCard>:
+
+    # Background with title
+    OlympeCard:
+        header_mode: True
+        header_text: root.title_card
+        header_height: SMALL_HEADER_HEIGHT
+        icon_mode: True
+        icon_source: PATH_ICONS + "delete.png"
+        icon_function: root.delete_function
+        icon_button_color: COLORS.red
+        icon_button_color_pressed: COLORS.red_pressed
+        font_size: root.font_size
+        pos: root.pos
+        size_hint: (1, 1)
+        line_width: root.line_width
+        font_ratio: root.font_ratio
+
+        CharacterButtonWithIcon:
+            id: character_image
+            image_source: root.best_athlete_image
+            x: MARGIN*root.font_ratio
+            size_hint: (None, None)
+            height: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.6
+            y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.35
+            width: self.height
+            font_ratio: root.font_ratio
+            line_width: root.line_width
+            disable_button: True
+
+        PressedButton:
+            id: button
+            text: root.load_text
+            size_hint: (None, None)
+            font_ratio: root.font_ratio
+            width: character_image.width
+            height: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.25
+            y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.05
+            x: character_image.x
+            release_function: root.launch_function
+
+        SurroundedLabel:
+            id: number_athletes_label
+            text: root.number_athletes_label
+            font_ratio: root.font_ratio
+            size_hint: (None, None)
+            width: (root.width - button.x*4 - button.width)/2
+            height: (character_image.height-2*button.y) / 2
+            y: separation_line.y + button.y
+            x: separation_line.x
+            line_width: root.line_width
+            font_size: root.font_size
+            text_font_name: root.text_font_name
+
+        MoneyLayout:
+            id: money_frame
+            coins_count: root.money
+            font_ratio: root.font_ratio
+            size_hint: (None, None)
+            height: number_athletes_label.height
+            width: number_athletes_label.width
+            x: number_athletes_label.x + self.width + button.x
+            y: number_athletes_label.y
+            line_width: root.line_width
+
+        SeparationLine:
+            id: separation_line
+            font_ratio: root.font_ratio
+            x: character_image.x*2 + character_image.width
+            y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.35
+            size_hint: (None, None)
+            width: root.width - self.x - character_image.x
+
+        Label:
+            id: label_information
+            text: root.information
+            font_size: root.font_ratio * FONTS_SIZES.small_label
+            font_name: root.text_font_name
+            size_hint: (None, None)
+            x: separation_line.x
+            width: separation_line.width
+            height: button.height
+            y: button.y
+            shorten: False
+            text_size: (self.width, self.height)
+            size: self.texture_size
+            halign: "left"
+            valign: "middle"
+            color: root.font_color

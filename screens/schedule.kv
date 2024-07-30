@@ -18,9 +18,9 @@
 
         OlympeCard:
             pos_hint: {"center_x":0.5}
-            y: 8*MARGIN_HEIGHT*root.font_ratio + 3*first_activity.height + fatigue.height
+            y: 8*MARGIN*root.font_ratio + 3*first_activity.height + fatigue.height
             size_hint: (SCROLLVIEW_WIDTH, None)
-            height: self.parent.height - HEADER_HEIGHT*root.font_ratio - self.y - 2*MARGIN_HEIGHT*root.font_ratio
+            height: self.parent.height - HEADER_HEIGHT*root.font_ratio - self.y - 2*MARGIN*root.font_ratio
             header_mode: True
             header_text: root.progression_label
             font_ratio: root.font_ratio
@@ -48,7 +48,7 @@
             font_ratio: root.font_ratio
             size_hint: (0.425, 0.1)
             pos_hint: {"x": 0.05}
-            y: 6*MARGIN_HEIGHT*root.font_ratio + 3*first_activity.height
+            y: 6*MARGIN*root.font_ratio + 3*first_activity.height
 
         SurroundedLabel:
             text: root.injury_label
@@ -65,7 +65,7 @@
             font_ratio: root.font_ratio
             size_hint: (0.55, 0.075)
             pos_hint: {"x": 0.05}
-            y: 4*MARGIN_HEIGHT*root.font_ratio + 2*self.height
+            y: 4*MARGIN*root.font_ratio + 2*self.height
 
         PressedButton:
             id: first_activity_button
@@ -82,7 +82,7 @@
             font_ratio: root.font_ratio
             size_hint: first_activity.size_hint
             x: first_activity.x
-            y: 3*MARGIN_HEIGHT*root.font_ratio + self.height
+            y: 3*MARGIN*root.font_ratio + self.height
 
         PressedButton:
             text: root.change_text
@@ -98,7 +98,7 @@
             font_ratio: root.font_ratio
             size_hint: first_activity.size_hint
             x: first_activity.x
-            y: 2*MARGIN_HEIGHT*root.font_ratio
+            y: 2*MARGIN*root.font_ratio
 
         PressedButton:
             text: root.change_text

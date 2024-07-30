@@ -255,12 +255,19 @@ class ImprovedScreen(Screen):
         """
         Update the font_name ratio to use on the screen to keep letter size constant with Window size changes.
         """
+        # if ANDROID_MODE:
+        #     self.font_ratio = Window.size[1] / \
+        #         600 + (Window.size[0] / Window.size[1] - 1) * 0.5
+        # else:
+        #     self.font_ratio = Window.size[1] / \
+        #         600 + (Window.size[0] / Window.size[1] - 1) * 0.5
+
         if ANDROID_MODE:
             self.font_ratio = Window.size[1] / \
                 600 + (Window.size[0] / Window.size[1] - 1) * 0.5
         else:
             self.font_ratio = Window.size[1] / \
-                600 + (Window.size[0] / Window.size[1] - 1) * 0.5
+                600 + (Window.size[0] / Window.size[1] - 1) * 0.29
 
     def disable_widget(self, widget_id: str):
         """

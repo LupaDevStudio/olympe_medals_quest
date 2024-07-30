@@ -55,6 +55,9 @@ class WindowManager(ScreenManager):
         self.add_widget(current_screen)
         self.current = "temp"
 
+        # Constant used for multiple games
+        self.id_game = 1
+
     def go_to_previous_screen(self):
         if len(self.list_previous_screens) != 0:
             previous_screen = self.list_previous_screens.pop()
@@ -136,4 +139,5 @@ if __name__ == "__main__":
     if not ANDROID_MODE:
         # Window.size = (720, 1080)
         Window.size = (405, 720)
+        # Window.size = (1080, 2340)
     MainApp().run()

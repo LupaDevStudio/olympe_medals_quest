@@ -22,6 +22,15 @@
     "home": {
         "play": "Play"
     },
+    "save": {
+        "new_game": "Nouvelle partie",
+        "save": "Sauvegarde @ - €",
+        "easy": "Facile",
+        "medium": "Moyen",
+        "difficult": "Difficile",
+        "load": "Charger",
+        "information": "Année [YEAR] - Trimestre [TRIMESTER]\nLast played: [DATE]"
+    },
     "game": {
         "team": "Équipe",
         "recruit": "Recruter",
@@ -91,7 +100,6 @@
         "precision": "Precision",
         "charm": "Charm"
     },
-
     "sports": {
         "cheese_rolling": {
             "name": "Cheese Rolling",

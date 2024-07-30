@@ -28,7 +28,6 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_SPEND_MONEY_RIGHT,
-    GAME,
     USER_DATA
 )
 from tools.graphics import (
@@ -66,7 +65,7 @@ class ScheduleScreen(OlympeScreen):
     def reload_kwargs(self, dict_kwargs):
         self.athlete = dict_kwargs["athlete"]
         self.header_text = self.athlete.first_name + " " + self.athlete.name
-        self.spent_coins = - GAME.get_trimester_gained_total_money()
+        self.spent_coins = - self.GAME.get_trimester_gained_total_money()
         self.athlete_money_gain = self.athlete.get_trimester_gained_money()
 
         self.reload_info()

@@ -22,6 +22,15 @@
     "home": {
         "play": "Jouer"
     },
+    "save": {
+        "new_game": "Nouvelle partie",
+        "save": "Sauvegarde @ - €",
+        "easy": "Facile",
+        "medium": "Moyen",
+        "difficult": "Difficile",
+        "load": "Charger",
+        "information": "Année [YEAR] - Trimestre [TRIMESTER]\nDernière session : [DATE]"
+    },
     "game": {
         "team": "Équipe",
         "recruit": "Recruter",

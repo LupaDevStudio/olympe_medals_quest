@@ -14,7 +14,8 @@ from functools import partial
 
 from kivy.properties import (
     StringProperty,
-    NumericProperty
+    NumericProperty,
+    ObjectProperty
 )
 
 ### Local imports ###
@@ -30,11 +31,14 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_CUSTOM_TITLE,
     TEXT,
-    USER_DATA,
-    GAME
+    USER_DATA
 )
 from tools.path import (
-    PATH_ICONS
+    PATH_ICONS,
+    PATH_BACKGROUNDS
+)
+from tools.data_structures import (
+    Game
 )
 
 #############
@@ -52,10 +56,11 @@ class OlympeScreen(ImprovedScreen):
     title_screen = StringProperty()
     title_icon_source = StringProperty()
     money_amount = NumericProperty()
+    GAME = Game()
 
     def __init__(self, back_image_path=None, **kw):
         if back_image_path is None:
-            path_sports_complex = GAME.get_background_image()
+            path_sports_complex = self.GAME.get_background_image()
             super().__init__(
                 back_image_path=path_sports_complex,
                 **kw)
@@ -76,7 +81,7 @@ class OlympeScreen(ImprovedScreen):
                 code = self.dict_type_screen[SCREEN_CUSTOM_TITLE]
                 if code == "edition":
                     self.title_screen = TEXT.general["edition"].replace(
-                        "@", str(GAME.current_edition))
+                        "@", str(self.GAME.current_edition))
                 else:
                     self.title_screen = TEXT.general[code]
             else:
@@ -102,11 +107,11 @@ class OlympeScreen(ImprovedScreen):
 
             # Display the money frame or not
             if SCREEN_MONEY_RIGHT in self.dict_type_screen:
-                self.money_amount = USER_DATA.game.money
+                self.money_amount = self.GAME.money
                 self.ids.money_frame.spend_mode = False
                 self.ids.money_frame.size_hint = (0.25, 0.7)
             elif SCREEN_SPEND_MONEY_RIGHT in self.dict_type_screen:
-                self.money_amount = USER_DATA.game.money
+                self.money_amount = self.GAME.money
                 self.ids.money_frame.spend_mode = True
                 self.ids.money_frame.size_hint = (0.35, 0.7)
                 self.ids.money_frame.spent_coins_count = self.spent_coins
@@ -126,8 +131,17 @@ class OlympeScreen(ImprovedScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
+        id_game = self.manager.id_game
+        if id_game == 1:
+            self.GAME = USER_DATA.game_1
+        elif id_game == 2:
+            self.GAME = USER_DATA.game_2
+        else:
+            self.GAME = USER_DATA.game_3
+
         self.reload_language()
-        self.money_amount = USER_DATA.game.money
+        if SCREEN_MONEY_RIGHT in self.dict_type_screen:
+            self.money_amount = self.GAME.money
 
         # Fill vertical scrollview if it exists
         if "scrollview_layout_vertical" in self.ids:
@@ -140,7 +154,7 @@ class OlympeScreen(ImprovedScreen):
     def get_title_year(self):
         year = TEXT.general["year"] + " "
         trimester = TEXT.general["trimester"] + " "
-        return year + str(USER_DATA.game.year) + "\n" + trimester + str(USER_DATA.game.trimester)
+        return year + str(self.GAME.year) + "\n" + trimester + str(self.GAME.trimester)
 
     def update_money_frame(self, *args):
         self.ids.money_frame.spent_coins_count = self.spent_coins
@@ -153,7 +167,7 @@ class OlympeScreen(ImprovedScreen):
             code = self.dict_type_screen[SCREEN_CUSTOM_TITLE]
             if code == "edition":
                 self.title_screen = TEXT.general["edition"].replace(
-                    "@", str(GAME.current_edition))
+                    "@", str(self.GAME.current_edition))
             else:
                 self.title_screen = TEXT.general[code]
 

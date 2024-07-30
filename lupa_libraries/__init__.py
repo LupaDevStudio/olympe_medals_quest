@@ -36,7 +36,8 @@ from lupa_libraries.custom_widgets import (
     SmallRoomCard,
     CompleteRoomCard,
     CompleteMedalsCard,
-    SmallMedalsCard
+    SmallMedalsCard,
+    SaveCard
 )
 
 ### Dialog generator ###

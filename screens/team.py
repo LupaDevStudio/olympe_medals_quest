@@ -29,14 +29,13 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON,
-    GAME
+    SCREEN_TITLE_ICON
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
     BIG_HEADER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Athlete
@@ -67,19 +66,19 @@ class TeamScreen(OlympeScreen):
 
         self.recruit_label = my_text["recruit"]
 
-        number_athletes_current = GAME.number_athletes
+        number_athletes_current = self.GAME.number_athletes
         if number_athletes_current <= 1:
             self.team_title = str(number_athletes_current) + " / " + str(
-                GAME.max_athletes) + my_text["athlete"]
+                self.GAME.max_athletes) + my_text["athlete"]
         else:
             self.team_title = str(number_athletes_current) + " / " + str(
-                GAME.max_athletes) + my_text["athletes"]
+                self.GAME.max_athletes) + my_text["athletes"]
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
-        for athlete in GAME.team:
+        for athlete in self.GAME.team:
 
             # Display the characters in a grid
             if self.grid_view:
@@ -101,7 +100,7 @@ class TeamScreen(OlympeScreen):
             else:
                 skills_dict = athlete.get_best_sports()
                 height = self.font_ratio * (
-                    BIG_HEADER_HEIGHT + len(skills_dict) * SKILL_HEIGHT + MARGIN_HEIGHT*2) 
+                    BIG_HEADER_HEIGHT + len(skills_dict) * SKILL_HEIGHT + MARGIN*2) 
 
                 athlete_button = CharacterInfoWithMainSportsLayout(
                     image_source=athlete.image,

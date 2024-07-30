@@ -27,14 +27,13 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON,
-    GAME
+    SCREEN_TITLE_ICON
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
     BIG_HEADER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT
+    MARGIN
 )
 from tools.data_structures import (
     Athlete

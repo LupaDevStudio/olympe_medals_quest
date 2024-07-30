@@ -28,8 +28,7 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_SPEND_MONEY_RIGHT,
-    SCREEN_CUSTOM_TITLE,
-    GAME
+    SCREEN_CUSTOM_TITLE
 )
 from tools.graphics import (
     FONTS_SIZES,
@@ -86,7 +85,7 @@ class CompetitionResultsScreen(OlympeScreen):
             self.ids.next_button.text = self.next_label
 
     def on_pre_enter(self, *args):
-        self.list_sports = GAME.sports_unlocked
+        self.list_sports = self.GAME.sports_unlocked
 
         super().on_pre_enter(*args)
 

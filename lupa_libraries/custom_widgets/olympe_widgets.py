@@ -46,14 +46,14 @@ from tools.graphics import(
     BIG_HEADER_HEIGHT,
     CHARACTER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN_HEIGHT,
-    BUTTON_HEIGHT,
-    SCROLLVIEW_WIDTH
+    MARGIN,
+    BUTTON_HEIGHT
 )
 from tools.path import (
     PATH_TITLE_FONT,
     PATH_TEXT_FONT,
-    PATH_ICONS
+    PATH_ICONS,
+    PATH_CHARACTERS_IMAGES
 )
 
 #######################
@@ -150,6 +150,8 @@ class OlympeCard(RelativeLayout):
 
     icon_source = StringProperty()
     icon_function = ObjectProperty(lambda: 1 + 1)
+    icon_button_color = ColorProperty(COLORS.blue_olympe)
+    icon_button_color_pressed = ColorProperty(COLORS.blue_pressed_olympe)
     size_hint_y_icon = NumericProperty(0.6)
 
     is_folded = BooleanProperty(False)
@@ -303,6 +305,7 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     font_ratio = NumericProperty(1)
 
     ### Function ###
+
     fire_athlete_function = ObjectProperty(lambda: 1 + 1)
 
 
@@ -453,7 +456,7 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
             pos_hint={"x":0.05},
-            y=MARGIN_HEIGHT * self.font_ratio,
+            y=MARGIN * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )
@@ -490,12 +493,12 @@ class MedalsCard(RelativeLayout):
         if not self.is_folded:
 
             idx = 0
-            total_height = (MARGIN_HEIGHT*2 + HEADER_HEIGHT + len(
+            total_height = (MARGIN*2 + HEADER_HEIGHT + len(
                 self.medals_list) * MEDAL_HEIGHT) * self.font_ratio
 
             medal: Medal
             for medal in self.medals_list:
-                pos_y = (MARGIN_HEIGHT + (idx+0.5) * MEDAL_HEIGHT)*self.font_ratio / total_height
+                pos_y = (MARGIN + (idx+0.5) * MEDAL_HEIGHT)*self.font_ratio / total_height
                 
                 year: str = TEXT.general["year"]
                 sport: str = TEXT.sports[medal.sport_id]["name"]
@@ -563,7 +566,7 @@ class SkillsCard(RelativeLayout):
                 skills_dict=self.skills_dict,
                 font_ratio=self.font_ratio,
                 pos_hint={"x":0.05},
-                y=MARGIN_HEIGHT * self.font_ratio,
+                y=MARGIN * self.font_ratio,
                 size_hint=(0.9, None),
                 height=total_height
             )
@@ -619,7 +622,7 @@ class CompleteRecruitCard(RelativeLayout):
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
             pos_hint={"x":0.05},
-            y=(MARGIN_HEIGHT*2 + self.recruit_button_height) * self.font_ratio,
+            y=(MARGIN*2 + self.recruit_button_height) * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )
@@ -678,7 +681,7 @@ class CompleteInscriptionCard(RelativeLayout):
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
             pos_hint={"x":0.05},
-            y=(MARGIN_HEIGHT*2 + self.button_height) * self.font_ratio,
+            y=(MARGIN*2 + self.button_height) * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )
@@ -984,3 +987,62 @@ class SmallMedalsCard(FloatLayout):
         current_screen_name = self.get_root_window().children[0].current
         screen = self.get_root_window().children[0].get_screen(current_screen_name)
         screen.ask_redraw(self)
+
+####################
+### Save widgets ###
+####################
+
+class SaveCard(FloatLayout):
+
+    title_card = StringProperty()
+    load_text = StringProperty()
+    information = StringProperty()
+    number_athletes_label = StringProperty()
+    money = NumericProperty()
+
+    best_athlete_image = StringProperty()
+
+    characters_list = ListProperty([])
+
+    font_size = NumericProperty(FONTS_SIZES.label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
+    font_ratio = NumericProperty(1)
+
+    delete_function = ObjectProperty(lambda: 1 + 1)
+    launch_function = ObjectProperty(lambda: 1 + 1)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.fill_unlocked_characters()
+
+    def fill_unlocked_characters(self):
+        max_characters = 8
+        margin_between_char = 3
+        character_height = self.ids.number_athletes_label.height
+        character_width = (self.width - self.ids.button.x*3 - margin_between_char*self.font_ratio*(max_characters-1) - self.ids.button.width) / max_characters
+        character_y = self.ids.number_athletes_label.y + \
+            character_height + self.ids.button.y
+        first_character_x = self.ids.number_athletes_label.x
+
+        # Add each character
+        for counter in range(len(self.characters_list)):
+            character_id = self.characters_list[counter]
+            character_x = first_character_x+counter*(margin_between_char*self.font_ratio+character_width)
+
+            character_card = CharacterButtonWithIcon(
+                font_ratio=self.font_ratio,
+                size_hint=(None, None),
+                height=character_height,
+                width=character_width,
+                x=self.x+character_x,
+                y=self.y+character_y,
+                image_source=PATH_CHARACTERS_IMAGES+f"{character_id}/neutral.png",
+                disable_button=True,
+                line_width=self.line_width
+            )
+
+            self.add_widget(character_card)

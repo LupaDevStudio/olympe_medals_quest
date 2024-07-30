@@ -30,13 +30,14 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    GAME,
     USER_DATA
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
     HEADER_HEIGHT,
-    MARGIN_HEIGHT,
+    MARGIN,
+    CHARACTER_HEIGHT,
+    BUTTON_HEIGHT,
     MEDAL_HEIGHT,
     SKILL_HEIGHT
 )
@@ -94,10 +95,9 @@ class AthleteScreen(OlympeScreen):
             is_hurt=self.athlete.is_hurt,
             fire_athlete_function=self.ask_fire_athlete,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=250 * self.font_ratio
+            height=(MARGIN*3+BUTTON_HEIGHT+CHARACTER_HEIGHT) * self.font_ratio
         )
         scrollview_layout.add_widget(self.main_info_card)
-
 
         ### Skills ###
 
@@ -112,7 +112,7 @@ class AthleteScreen(OlympeScreen):
 
             if len(athlete_skills) > 0:
                 height = self.font_ratio * (
-                    HEADER_HEIGHT + MARGIN_HEIGHT*2 + SKILL_HEIGHT * len(athlete_skills))
+                    HEADER_HEIGHT + MARGIN*2 + SKILL_HEIGHT * len(athlete_skills))
             else:
                 height = self.font_ratio * HEADER_HEIGHT * 2
         else:
@@ -130,7 +130,7 @@ class AthleteScreen(OlympeScreen):
 
         ### Medals ###
 
-        athlete_medals = GAME.get_medals_from_athlete(
+        athlete_medals = self.GAME.get_medals_from_athlete(
                 athlete_id=self.athlete.id)
 
         # Display the medals card only if the athlete has some
@@ -138,7 +138,7 @@ class AthleteScreen(OlympeScreen):
             if not self.medals_folded:
                 if len(athlete_medals) > 0:
                     height = self.font_ratio * (
-                        HEADER_HEIGHT + MARGIN_HEIGHT*2 + MEDAL_HEIGHT * len(athlete_medals))
+                        HEADER_HEIGHT + MARGIN*2 + MEDAL_HEIGHT * len(athlete_medals))
                 else:
                     height = self.font_ratio * HEADER_HEIGHT * 2
             else:
@@ -154,11 +154,14 @@ class AthleteScreen(OlympeScreen):
             )
             scrollview_layout.add_widget(self.medals_card)
 
+        else:
+            self.medals_card = None
+
     def ask_fire_athlete(self):
         print("TODO fire athlete")
 
     def fire_athlete(self):
-        GAME.fire_athlete(athlete_id=self.athlete.id)
+        self.GAME.fire_athlete(athlete_id=self.athlete.id)
         USER_DATA.save_changes()
 
     def ask_redraw(self, widget):

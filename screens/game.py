@@ -34,7 +34,6 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_YEAR,
-    GAME,
     USER_DATA
 )
 from tools.olympe import (
@@ -55,7 +54,7 @@ class GameScreen(OlympeScreen):
 
     dict_type_screen = {
         SCREEN_TITLE_YEAR: True,
-        SCREEN_BACK_ARROW: "home",
+        SCREEN_BACK_ARROW: "save",
         SCREEN_MONEY_RIGHT: True
     }
     launch_main_action_label = StringProperty()
@@ -67,7 +66,7 @@ class GameScreen(OlympeScreen):
         has_seen_notification = dict_kwargs.get("has_seen_notification", False)
         
         if has_seen_notification:
-            # Remove the notification once seen in GAME
+            # Remove the notification once seen in self.GAME
             # TODO self.notifications_list.remove(self.notifications_list[0])
             pass
 
@@ -85,20 +84,20 @@ class GameScreen(OlympeScreen):
             ["olympe", "introduction"]
         ]
         # Update main_action
-        self.main_action = GAME.get_main_action()
+        self.main_action = self.GAME.get_main_action()
 
         self.ids.notification_button.trigger_icon_flashing()
 
         # TODO TEMP
-        if GAME.sports_unlocked == []:
-            GAME.sports_unlocking_progress["cheese_rolling"] = 1
+        if self.GAME.sports_unlocked == []:
+            self.GAME.sports_unlocking_progress["cheese_rolling"] = 1
         # TODO TEMP
-        if GAME.team == []:
-            generate_and_add_first_athlete(main_sport="cheese_rolling")
+        if self.GAME.team == []:
+            generate_and_add_first_athlete(GAME=self.GAME, main_sport="cheese_rolling")
         # TODO TEMP
-        if GAME.recrutable_athletes == []:
-            first_athlete = generate_athlete()
-            GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+        if self.GAME.recrutable_athletes == []:
+            first_athlete = generate_athlete(GAME=self.GAME)
+            self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
             USER_DATA.save_changes()
         self.fill_grid_layout()
 
@@ -129,7 +128,7 @@ class GameScreen(OlympeScreen):
         grid_layout: GridLayout = self.ids["grid_layout"]
         grid_layout.size_hint = (0.9, 0.45)
         grid_layout.padding = (0.05 * self.width, 20 * self.font_ratio)
-        grid_layout.spacing = 20 * self.font_ratio
+        grid_layout.spacing = (0.05 * self.width, 20 * self.font_ratio)
         height_button = (
             grid_layout.size_hint[1] * Window.size[1] - grid_layout.padding[1] * 2 - (max_lines - 1) * grid_layout.spacing[1]) // max_lines
 
