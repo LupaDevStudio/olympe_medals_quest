@@ -26,8 +26,7 @@ source.exclude_dirs = test, bin, .buildozer, venv, PlayStore, reports, design, v
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
-# TODO add data.json to the list of excluded files
-source.exclude_patterns = *.gitignore, requirements.txt, draft_*
+source.exclude_patterns = data.json, *.gitignore, requirements.txt, draft_*
 
 # (str) Application versioning (method 1)
 # version = 0.0.1
