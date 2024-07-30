@@ -590,6 +590,7 @@ class Game():
     A class to store the data of the game.
     """
 
+    difficulty: Literal["easy", "medium", "difficult"]
     money: int
     year: int
     trimester: int
@@ -636,8 +637,9 @@ class Game():
                 return self.year // NB_YEARS_BETWEEN_EDITION
             return (self.year + NB_YEARS_BETWEEN_EDITION//2) // NB_YEARS_BETWEEN_EDITION
 
-    def __init__(self, dict_to_load: dict) -> None:
+    def __init__(self, dict_to_load: dict = {}) -> None:
 
+        self.difficulty = dict_to_load.get("difficulty", "medium")
         self.money = dict_to_load.get("money", 0)
         self.year = dict_to_load.get("year", 3)
         self.trimester = dict_to_load.get("trimester", 1)
@@ -943,6 +945,7 @@ class Game():
 
     def export_dict(self):
         return {
+            "difficulty": self.difficulty,
             "money": self.money,
             "year": self.year,
             "trimester": self.trimester,
@@ -974,13 +977,34 @@ class UserData():
         data = load_json_file(PATH_USER_DATA)
         self.settings = data["settings"]
         self.tutorial = data["tutorial"]
-        self.game = Game(
-            dict_to_load=data["game"]) if "game" in data else Game()
+        self.game_1 = Game(
+            dict_to_load=data["game_1"]) if \
+                "game_1" in data and data["game_1"] is not None else None
+        self.game_2 = Game(
+            dict_to_load=data["game_2"]) if \
+                "game_2" in data and data["game_2"] is not None else None
+        self.game_3 = Game(
+            dict_to_load=data["game_3"]) if \
+                "game_3" in data and data["game_3"] is not None else None
         self.save_changes()
 
-    def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]):
-        print("TODO")
-        new_game = Game()
+    def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]) -> int:
+        new_game = Game(
+            dict_to_load={"difficulty": difficulty}
+        )
+
+        if self.game_1 is None:
+            self.game_1 = new_game
+            return 1
+        elif self.game_2 is None:
+            self.game_2 = new_game
+            return 2
+        else:
+            self.game_3 = new_game
+            return 3
+
+    def can_start_new_game(self):
+        return self.game_1 is None or self.game_2 is None or self.game_3 is None
 
     def save_changes(self) -> None:
         """
@@ -999,7 +1023,9 @@ class UserData():
         data = {
             "settings": self.settings,
             "tutorial": self.tutorial,
-            "game": self.game.export_dict(),
+            "game_1": self.game_1.export_dict() if self.game_1 is not None else None,
+            "game_2": self.game_2.export_dict() if self.game_2 is not None else None,
+            "game_3": self.game_3.export_dict() if self.game_3 is not None else None
         }
 
         # Save this dictionary

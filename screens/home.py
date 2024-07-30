@@ -46,9 +46,9 @@ class HomeScreen(OlympeScreen):
         my_text = TEXT.home
         self.play_label = my_text["play"]
 
-    def go_to_game(self):
+    def go_to_save(self):
         self.go_to_next_screen(
-            screen_name="game"
+            screen_name="save"
         )
 
     def go_to_dialog(self):

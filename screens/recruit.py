@@ -35,7 +35,6 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    GAME,
     USER_DATA
 )
 from tools.graphics import (
@@ -76,19 +75,19 @@ class RecruitScreen(OlympeScreen):
 
         self.team_label = my_text["team"]
 
-        number_athletes_current = GAME.number_athletes
+        number_athletes_current = self.GAME.number_athletes
         if number_athletes_current <= 1:
             self.recruit_title = str(number_athletes_current) + " / " + str(
-                GAME.max_athletes) + my_text["athlete"]
+                self.GAME.max_athletes) + my_text["athlete"]
         else:
             self.recruit_title = str(number_athletes_current) + " / " + str(
-                GAME.max_athletes) + my_text["athletes"]
+                self.GAME.max_athletes) + my_text["athletes"]
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
-        for athlete in GAME.recrutable_athletes:
+        for athlete in self.GAME.recrutable_athletes:
 
             if athlete.id not in self.folded_dict:
                 self.folded_dict[athlete.id] = [True, None]
@@ -138,7 +137,7 @@ class RecruitScreen(OlympeScreen):
                     reputation=TEXT.general["reputation"].replace(
                         "@", str(int(athlete.reputation))),
                     recruit_price=athlete.recruit_price,
-                    disable_button=not(GAME.can_recruit_athlete(athlete=athlete)),
+                    disable_button=not(self.GAME.can_recruit_athlete(athlete=athlete)),
                     recruit_release_function=partial(self.ask_recruit_athlete, athlete)
                 )
 
@@ -160,7 +159,7 @@ class RecruitScreen(OlympeScreen):
         print("Popup of confirmation")
 
     def recruit_athlete(self, athlete: Athlete):
-        GAME.recruit_athlete(athlete=athlete)
+        self.GAME.recruit_athlete(athlete=athlete)
         USER_DATA.save_changes()
 
         # Reset scrollview

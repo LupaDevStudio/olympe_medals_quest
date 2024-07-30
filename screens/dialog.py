@@ -24,7 +24,6 @@ from tools.constants import (
     CHARACTERS_DICT,
     USER_DATA,
     TEXT,
-    GAME,
     TALKING_SPEED_DICT
 )
 from tools.path import (
@@ -125,7 +124,7 @@ class DialogScreen(OlympeScreen):
         # TODO faire une transition smooth entre les différents backgrounds
         background: str = current_dialog_dict["background"]
         if background == "sports_complex":
-            path_background = GAME.get_background_image()
+            path_background = self.GAME.get_background_image()
         else:
             path_background = PATH_BACKGROUNDS + f"{background}.jpg"
         self.set_back_image_path(

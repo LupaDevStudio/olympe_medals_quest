@@ -22,6 +22,9 @@
     "home": {
         "play": "Jouer"
     },
+    "save": {
+        "new_game": "Nouvelle partie"
+    },
     "game": {
         "team": "Équipe",
         "recruit": "Recruter",

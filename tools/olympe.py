@@ -27,12 +27,12 @@ from tools.basic_tools import (
     load_json_file
 )
 from tools.constants import (
-    GAME,
     TEXT,
     USER_DATA
 )
 from tools.data_structures import (
     Athlete,
+    Game,
     DEFAULT_STATS_DICT,
     DEFAULT_STAT_DICT
 )
@@ -186,6 +186,7 @@ def generate_recruit_price(salary: int, level: int) -> int:
     return recruit_price
 
 def generate_athlete(
+        GAME: Game,
         country: str = "our_country",
         age: int | None = None,
         time_for_recruit: int | None = None,
@@ -276,7 +277,7 @@ def generate_athlete(
 
     return athlete
 
-def generate_and_add_first_athlete(main_sport: str) -> None:
+def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
 
     gender = rd.choice(["male", "female"])
     portrait = Portrait(
@@ -290,6 +291,7 @@ def generate_and_add_first_athlete(main_sport: str) -> None:
     )
 
     first_athlete = generate_athlete(
+        GAME=GAME,
         age=rd.randint(16, 22),
         recruit_price=0,
         main_sport=main_sport,
@@ -307,7 +309,7 @@ def generate_and_add_first_athlete(main_sport: str) -> None:
 ### Game ###
 ############
 
-def launch_new_phase(mode_new_phase: str | None = None) -> str:
+def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
     # TODO check if recruit mode is unlocked in the GAME
     if True:
         new_athletes_list = []
@@ -325,17 +327,18 @@ def launch_new_phase(mode_new_phase: str | None = None) -> str:
             else:
                 number_athletes_to_add = rd.randint(8, 12)
             for counter in range(number_athletes_to_add):
-                new_athletes_list.append(generate_athlete())
+                new_athletes_list.append(generate_athlete(GAME=GAME))
 
         # When we unlock recruit mode, three new athletes of the starting sport with basic level are added
         elif mode_new_phase == "unlock_recruit_mode":
             for counter in range(3):
-                new_athletes_list.append(generate_athlete(max_level=1))
+                new_athletes_list.append(generate_athlete(GAME=GAME, max_level=1))
 
         # When we just unlock a sport, three new athletes of this sport are added
         elif "sport_" in mode_new_phase:
             for counter in range(3):
                 new_athletes_list.append(generate_athlete(
+                    GAME=GAME,
                     main_sport=mode_new_phase.replace("sport_", "")
                 ))
 
@@ -352,21 +355,21 @@ def launch_new_phase(mode_new_phase: str | None = None) -> str:
 #################
 
 
-if __name__ == "__main__":
-    dict_age = {}
+# if __name__ == "__main__":
+#     dict_age = {}
 
-    DEBUG_AGE = False
-    if DEBUG_AGE:
-        for country in range(10000):
-            athlete = generate_athlete()
-            if athlete.age not in dict_age:
-                dict_age[athlete.age] = 1
-            else:
-                dict_age[athlete.age] += 1
-        x = list(dict_age.keys())
-        y = list(dict_age.values())
-        plt.bar(x, y)
-        plt.xlabel('Âge')
-        plt.ylabel('Fréquence')
-        plt.title('Fréquence des âges')
-        plt.show()
+#     DEBUG_AGE = False
+#     if DEBUG_AGE:
+#         for country in range(10000):
+#             athlete = generate_athlete()
+#             if athlete.age not in dict_age:
+#                 dict_age[athlete.age] = 1
+#             else:
+#                 dict_age[athlete.age] += 1
+#         x = list(dict_age.keys())
+#         y = list(dict_age.values())
+#         plt.bar(x, y)
+#         plt.xlabel('Âge')
+#         plt.ylabel('Fréquence')
+#         plt.title('Fréquence des âges')
+#         plt.show()

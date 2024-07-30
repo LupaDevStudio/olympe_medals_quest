@@ -30,7 +30,6 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    GAME,
     USER_DATA
 )
 from tools.graphics import (
@@ -131,7 +130,7 @@ class AthleteScreen(OlympeScreen):
 
         ### Medals ###
 
-        athlete_medals = GAME.get_medals_from_athlete(
+        athlete_medals = self.GAME.get_medals_from_athlete(
                 athlete_id=self.athlete.id)
 
         # Display the medals card only if the athlete has some
@@ -162,7 +161,7 @@ class AthleteScreen(OlympeScreen):
         print("TODO fire athlete")
 
     def fire_athlete(self):
-        GAME.fire_athlete(athlete_id=self.athlete.id)
+        self.GAME.fire_athlete(athlete_id=self.athlete.id)
         USER_DATA.save_changes()
 
     def ask_redraw(self, widget):

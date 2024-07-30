@@ -27,8 +27,7 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON,
-    GAME
+    SCREEN_TITLE_ICON
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,

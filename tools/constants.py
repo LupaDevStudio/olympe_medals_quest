@@ -30,7 +30,8 @@ from tools.basic_tools import (
     load_json_file
 )
 from tools.data_structures import (
-    UserData
+    UserData,
+    Game
 )
 from tools.language import (
     Text
@@ -68,7 +69,6 @@ if not os.path.exists(PATH_USER_DATA):
 
 # Load the data of the user
 USER_DATA = UserData()
-GAME = USER_DATA.game
 
 ### Language ###
 

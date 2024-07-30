@@ -29,8 +29,7 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON,
-    GAME
+    SCREEN_TITLE_ICON
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
@@ -80,14 +79,14 @@ class MedalsScreen(OlympeScreen):
 
         if self.sports_view:
 
-            for sport_id in GAME.sports_unlocked:
+            for sport_id in self.GAME.sports_unlocked:
 
                 # Initialisation of the folded dictionary
                 if sport_id not in self.medals_per_sport_folded_dict:
                     self.medals_per_sport_folded_dict[sport_id] = [False, None]
 
                 # Build the list of medals obtained for each sport
-                list_medals = GAME.get_medals_from_sport(sport_id=sport_id)
+                list_medals = self.GAME.get_medals_from_sport(sport_id=sport_id)
                 number_medals = len(list_medals)
 
                 if self.medals_per_sport_folded_dict[sport_id][0]:
@@ -109,7 +108,7 @@ class MedalsScreen(OlympeScreen):
                     list_content = []
                     medal: Medal
                     for medal in list_medals:
-                        athlete = GAME.get_athlete_from_id(athlete_id=medal.athlete_id)
+                        athlete = self.GAME.get_athlete_from_id(athlete_id=medal.athlete_id)
                         list_content.append({
                             "title": athlete.first_name,
                             "image": athlete.image,
@@ -143,14 +142,14 @@ class MedalsScreen(OlympeScreen):
 
         else:
 
-            for edition in range(1, GAME.current_edition+1):
+            for edition in range(1, self.GAME.current_edition+1):
 
                 # Initialisation of the folded dictionary
                 if edition not in self.medals_per_edition_folded_dict:
                     self.medals_per_edition_folded_dict[edition] = [False, None]
 
                 # Build the list of medals obtained for each edition
-                list_medals = GAME.get_medals_from_edition(edition=edition)
+                list_medals = self.GAME.get_medals_from_edition(edition=edition)
                 number_medals = len(list_medals)
 
                 if self.medals_per_edition_folded_dict[edition][0]:
@@ -171,7 +170,7 @@ class MedalsScreen(OlympeScreen):
                     list_content = []
                     medal: Medal
                     for medal in list_medals:
-                        athlete = GAME.get_athlete_from_id(athlete_id=medal.athlete_id)
+                        athlete = self.GAME.get_athlete_from_id(athlete_id=medal.athlete_id)
                         list_content.append({
                             "title": athlete.first_name,
                             "image": athlete.image,

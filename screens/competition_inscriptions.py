@@ -30,8 +30,7 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_SPEND_MONEY_RIGHT,
-    SCREEN_CUSTOM_TITLE,
-    GAME
+    SCREEN_CUSTOM_TITLE
 )
 from tools.graphics import (
     HEADER_HEIGHT,
@@ -100,7 +99,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             self.ids.next_button.text = self.next_label
 
     def on_pre_enter(self, *args):
-        self.list_sports = GAME.sports_unlocked
+        self.list_sports = self.GAME.sports_unlocked
 
         super().on_pre_enter(*args)
 
@@ -153,16 +152,16 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         sport_stats = sport.stats
 
         self.left_label = TEXT.competition_inscriptions["number_athletes"].replace(
-            "@", str(GAME.get_number_athletes_selected_for_sport(sport_id=selected_sport_id))).replace(
+            "@", str(self.GAME.get_number_athletes_selected_for_sport(sport_id=selected_sport_id))).replace(
                 "€", str(MAX_ATHLETES_TO_SELECT))
-        self.spent_coins_in_current_sport = GAME.get_price_selection_for_sport(
+        self.spent_coins_in_current_sport = self.GAME.get_price_selection_for_sport(
             sport_id=selected_sport_id
         )
 
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
-        for athlete in GAME.team:
+        for athlete in self.GAME.team:
             if selected_sport_id in athlete.sports:
 
                 # Init the folded dictionary
@@ -175,10 +174,10 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                 for stat in sport_stats:
                     athlete_skills[stat] = athlete.stats[stat]
 
-                best_medal_source = GAME.get_best_medal_source_from_athlete_in_sport(
+                best_medal_source = self.GAME.get_best_medal_source_from_athlete_in_sport(
                             athlete_id=athlete.id, sport_id=selected_sport_id)
                 
-                selection_information = GAME.can_select_athlete(
+                selection_information = self.GAME.can_select_athlete(
                     athlete=athlete,
                     sport_id=selected_sport_id
                 )
@@ -243,11 +242,11 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                 scrollview_layout.add_widget(inscription_card)
 
     def select_athlete(self, athlete: Athlete):
-        GAME.select_unselect_athlete(
+        self.GAME.select_unselect_athlete(
             athlete_id=athlete.id,
             sport_id=self.list_sports[self.selected_sport_counter]
         )
-        self.spent_coins = GAME.compute_total_spent_money_selection()
+        self.spent_coins = self.GAME.compute_total_spent_money_selection()
         self.ids.money_frame.spent_coins_count = self.spent_coins
 
         # Rebuild scrollview
