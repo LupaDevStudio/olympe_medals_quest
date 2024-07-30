@@ -22,7 +22,7 @@ from tools.constants import FPS
 ###############
 
 
-class MusicMixer():
+class MusicMixer:
     """
     Class to play music, only one sound can be played at the time.
     """
@@ -177,7 +177,7 @@ class DynamicMusicMixer(MusicMixer):
             self.instructions.remove(el)
 
 
-class SoundMixer():
+class SoundMixer:
     """
     Manager for the sound effects of the game.
 
@@ -193,7 +193,7 @@ class SoundMixer():
             for i in range(channel_number):
                 self.sounds[key][i].volume = volume
 
-    def play(self, name: str, volume: float = None):
+    def play(self, name: str, volume: float | None = None):
         """
         Play the selected sound.
 
@@ -215,7 +215,7 @@ class SoundMixer():
         else:
             print("Unable to play the desired sound due to channel saturation")
 
-    def change_volume(self, new_volume: float, name: str = None):
+    def change_volume(self, new_volume: float, name: str | None = None):
         """
         Change the volume of a single sound or all the sounds.
 
