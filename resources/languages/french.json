@@ -27,7 +27,8 @@
         "save": "Sauvegarde @ - €",
         "easy": "Facile",
         "medium": "Moyen",
-        "difficult": "Difficile"
+        "difficult": "Difficile",
+        "load": "Charger"
     },
     "game": {
         "team": "Équipe",

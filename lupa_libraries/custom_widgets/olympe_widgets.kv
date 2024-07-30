@@ -150,7 +150,7 @@
         icon_source: root.icon_source
         size_hint_y_icon: root.size_hint_y_icon
         size_hint: (None, None)
-        height: HEADER_HEIGHT*0.65*root.font_ratio
+        height: HEADER_HEIGHT*0.65*root.font_ratio if root.header_height > HEADER_HEIGHT else root.header_height*0.65
         width: self.height
         pos_hint: {"right": 0.975}
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
@@ -847,6 +847,7 @@
     OlympeCard:
         header_mode: True
         header_text: root.title_card
+        header_height: SMALL_HEADER_HEIGHT
         icon_mode: True
         icon_source: PATH_ICONS + "delete.png"
         icon_function: root.delete_function
@@ -857,3 +858,26 @@
         size_hint: (1, 1)
         line_width: root.line_width
         font_ratio: root.font_ratio
+
+        CharacterButtonWithIcon:
+            id: character_image
+            image_source: root.best_athlete_image
+            x: MARGIN*root.font_ratio
+            size_hint: (None, None)
+            height: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.6
+            y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.35
+            width: self.height
+            font_ratio: root.font_ratio
+            line_width: root.line_width
+            disable_button: True
+
+        PressedButton:
+            id: button
+            text: root.load_text
+            size_hint: (None, None)
+            font_ratio: root.font_ratio
+            width: character_image.width
+            height: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.25
+            y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.05
+            x: character_image.x
+            release_function: root.launch_function

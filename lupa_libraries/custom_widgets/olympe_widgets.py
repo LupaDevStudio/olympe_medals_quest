@@ -995,6 +995,9 @@ class SmallMedalsCard(FloatLayout):
 class SaveCard(FloatLayout):
 
     title_card = StringProperty()
+    load_text = StringProperty()
+
+    best_athlete_image = StringProperty()
 
     characters_list = ListProperty([])
 

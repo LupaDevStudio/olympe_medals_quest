@@ -110,7 +110,9 @@ class SaveScreen(OlympeScreen):
             launch_function=partial(self.launch_game, id_save),
             size_hint=(1, None),
             height=height_card,
-            y=height_card*(2-self.number_saves)+MARGIN*self.font_ratio*(2-self.number_saves)
+            y=height_card*(2-self.number_saves)+MARGIN*self.font_ratio*(2-self.number_saves),
+            load_text=TEXT.save["load"],
+            best_athlete_image=game.get_best_athlete_image()
         )
 
         save_layout.add_widget(save_card)

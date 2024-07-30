@@ -798,6 +798,15 @@ class Game():
             return ""
         return best_medal.image
 
+    def get_best_athlete_image(self) -> str:
+        best_score: int = 0
+        best_athlete: Athlete = None
+        for athlete in self.team:
+            if athlete.global_score >= best_score:
+                best_score = athlete.global_score
+                best_athlete = athlete
+        return best_athlete.image
+
     def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "bronze"], edition: int, type_edition: Literal["summer", "winter"]="summer"):
         new_medal = Medal(
             dict_to_load={
