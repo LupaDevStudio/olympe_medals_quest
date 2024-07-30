@@ -129,7 +129,7 @@ class GameScreen(OlympeScreen):
         grid_layout: GridLayout = self.ids["grid_layout"]
         grid_layout.size_hint = (0.9, 0.45)
         grid_layout.padding = (0.05 * self.width, 20 * self.font_ratio)
-        grid_layout.spacing = 20 * self.font_ratio
+        grid_layout.spacing = (0.05 * self.width, 20 * self.font_ratio)
         height_button = (
             grid_layout.size_hint[1] * Window.size[1] - grid_layout.padding[1] * 2 - (max_lines - 1) * grid_layout.spacing[1]) // max_lines
 

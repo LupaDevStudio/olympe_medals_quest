@@ -1,6 +1,5 @@
 #:kivy 2.2.1
 #:set OFFSET_PRESSED 5
-#:set OFFSET_HORIZONTAL_ICON 0.1
 
 <PressedThemeBackground>:
     # Background
@@ -89,7 +88,7 @@
         id: icon
         source: root.icon_source
         color: root.icon_color if not root.disable_button else root.disabled_icon_color
-        pos_hint: {"x": OFFSET_HORIZONTAL_ICON}
+        x: SMALL_MARGIN*root.font_ratio
         y: root.height/2 - self.height/2 + OFFSET_PRESSED//2*root.font_ratio if not root.press_button else root.height/2 - self.height/2 - OFFSET_PRESSED//2*root.font_ratio
         size_hint: (None, root.size_hint_y_icon)
         width: self.height
@@ -100,7 +99,7 @@
         text: root.text
         font_size: root.font_ratio * root.font_size
         font_name: root.text_font_name
-        x: OFFSET_HORIZONTAL_ICON*2*root.width + icon.width
+        x: SMALL_MARGIN*2*root.font_ratio + icon.width
         y: OFFSET_PRESSED//2*root.font_ratio if not root.press_button else -OFFSET_PRESSED//2*root.font_ratio
         shorten: False
         size_hint: (None, 1)

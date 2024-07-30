@@ -1,5 +1,6 @@
 #:kivy 2.2.1
-#:set CHARACTER_LINE_OFFSET_HORIZONTAL 10
+#:set CHARACTER_LINE_OFFSET_HORIZONTAL 5
+#:set CHARACTER_NAME_HEIGHT_HINT 0.3
 
 <CharacterButtonWithIcon>:
     # Background
@@ -192,7 +193,7 @@
         Color:
             rgba: self.line_color
         Line:
-            points: [CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8, self.width-CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*0.8]
+            points: [CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*(1-CHARACTER_NAME_HEIGHT_HINT), self.width-CHARACTER_LINE_OFFSET_HORIZONTAL*self.font_ratio, self.height*(1-CHARACTER_NAME_HEIGHT_HINT)]
             width: self.line_width*root.font_ratio
 
     Label:
@@ -200,7 +201,7 @@
         font_size: root.font_ratio * root.font_size
         font_name: root.text_font_name
         x: CHARACTER_LINE_OFFSET_HORIZONTAL*root.font_ratio
-        y: root.height*0.9 - self.height//2
+        y: root.height*(1-CHARACTER_NAME_HEIGHT_HINT/2) - self.height//2
         shorten: False
         size_hint: (None, None)
         size: self.texture_size
@@ -213,14 +214,15 @@
         icon_source: root.icon_source
         icon_mode: root.icon_mode
         icon_position: {"right": 0.95, "y": 0.05}
-        size_hint: (None, 0.6) if not root.subtitle_mode else (None, 0.5)
+        size_hint: (None, (1-CHARACTER_NAME_HEIGHT_HINT-0.15)) if not root.subtitle_mode else (None, (1-CHARACTER_NAME_HEIGHT_HINT-0.3))
         width: self.height
-        pos_hint: {"center_x": 0.5, "y": 0.075} if not root.subtitle_mode else {"center_x": 0.5, "y": 0.2}
+        pos_hint: {"center_x": 0.5, "y": 0.07} if not root.subtitle_mode else {"center_x": 0.5, "y": 0.2}
         font_ratio: root.font_ratio
         release_function: root.release_function
         line_width: root.line_width
     
     Label:
+        id: subtitle_label
         text: root.subtitle_text
         size_hint: (1, 0.2)
         pos_hint: {"x":0, "y": 0}

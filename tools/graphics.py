@@ -14,12 +14,12 @@ Constants
 
 class FontSize():
     def __init__(self) -> None:
-        self.title = 19
-        self.subtitle = 16
+        self.title = 17
+        self.subtitle = 15.5
         self.label = 13.5
         self.small_label = 11.5
 
-        self.big_button = 16
+        self.big_button = 15.5
         self.button = 14
 
         self.coins_count = 13
@@ -78,6 +78,7 @@ HEADER_HEIGHT = 50
 BIG_HEADER_HEIGHT = 75
 CHARACTER_HEIGHT = 100
 MARGIN = 10
+SMALL_MARGIN = 8
 SKILL_HEIGHT = 30
 MEDAL_HEIGHT = 45
 BUTTON_HEIGHT = 40
