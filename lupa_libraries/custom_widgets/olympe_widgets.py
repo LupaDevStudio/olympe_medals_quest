@@ -996,6 +996,7 @@ class SaveCard(FloatLayout):
 
     title_card = StringProperty()
     load_text = StringProperty()
+    information = StringProperty()
 
     best_athlete_image = StringProperty()
 

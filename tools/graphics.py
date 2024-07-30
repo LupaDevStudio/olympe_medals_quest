@@ -90,8 +90,8 @@ LABEL_HEIGHT = 25
 
 # Radius
 
-RADIUS = 10
-RADIUS_SMALL = 6
+RADIUS = 9
+RADIUS_SMALL = 4
 
 ### Scrollview ###
 

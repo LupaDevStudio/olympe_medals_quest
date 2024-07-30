@@ -881,3 +881,28 @@
             y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.05
             x: character_image.x
             release_function: root.launch_function
+
+        SeparationLine:
+            id: separation_line
+            font_ratio: root.font_ratio
+            x: character_image.x*2 + character_image.width
+            y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.35
+            size_hint: (None, None)
+            width: root.width - self.x - character_image.x
+
+        Label:
+            id: label_information
+            text: root.information
+            font_size: root.font_ratio * FONTS_SIZES.small_label
+            font_name: root.text_font_name
+            size_hint: (None, None)
+            x: separation_line.x
+            width: separation_line.width
+            height: button.height
+            y: button.y
+            shorten: False
+            text_size: (self.width, self.height)
+            size: self.texture_size
+            halign: "left"
+            valign: "middle"
+            color: root.font_color

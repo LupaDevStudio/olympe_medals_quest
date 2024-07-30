@@ -963,7 +963,7 @@ class Game():
         return {
             "difficulty": self.difficulty,
             "total_time_played": self.total_time_played,
-            "last_time_played": datetime.now().strftime("%m/%d/%Y - %Hh%M"),
+            "last_time_played": datetime.now().strftime("%m/%d/%Y - %H:%M"),
             "unlocked_characters": self.unlocked_characters,
             "money": self.money,
             "year": self.year,

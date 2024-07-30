@@ -10,6 +10,7 @@ Module to create the save screen.
 
 from typing import Literal
 from functools import partial
+from datetime import datetime
 
 ### Kivy imports ###
 
@@ -102,6 +103,20 @@ class SaveScreen(OlympeScreen):
         height_card = (Window.size[1] * (0.95 - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT) - \
             MARGIN*2*self.font_ratio) / 3
         
+        date = game.last_time_played
+        if TEXT.language == "french":
+
+            date_en_format = '%m/%d/%Y - %H:%M'
+            date_fr_format = '%d/%m/%Y - %Hh%M'
+
+            date_en_datetime = datetime.strptime(date, date_en_format)
+            date = date_en_datetime.strftime(date_fr_format)
+
+        information = TEXT.save["information"].replace(
+            "[YEAR]", str(game.year)).replace(
+            "[TRIMESTER]", str(game.trimester)).replace(
+            "[DATE]", date)
+
         save_card = SaveCard(
             font_ratio=self.font_ratio,
             title_card=TEXT.save["save"].replace(
@@ -112,7 +127,8 @@ class SaveScreen(OlympeScreen):
             height=height_card,
             y=height_card*(2-self.number_saves)+MARGIN*self.font_ratio*(2-self.number_saves),
             load_text=TEXT.save["load"],
-            best_athlete_image=game.get_best_athlete_image()
+            best_athlete_image=game.get_best_athlete_image(),
+            information=information
         )
 
         save_layout.add_widget(save_card)
@@ -135,6 +151,7 @@ class SaveScreen(OlympeScreen):
         for element in list_widgets:
             self.ids.save_layout.remove_widget(element)
         self.number_saves = 0
+        self.can_start_new_game: bool = USER_DATA.can_start_new_game()
         # Rebuild the layout of save cards
         self.fill_save_cards()
 
