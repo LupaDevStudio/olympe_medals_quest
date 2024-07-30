@@ -116,6 +116,11 @@ class SaveScreen(OlympeScreen):
             "[YEAR]", str(game.year)).replace(
             "[TRIMESTER]", str(game.trimester)).replace(
             "[DATE]", date)
+        number_athletes = game.number_athletes
+        if number_athletes > 1:
+            number_athletes_label = str(number_athletes) + TEXT.team["athletes"]
+        else:
+            number_athletes_label = str(number_athletes) + TEXT.team["athlete"]
 
         save_card = SaveCard(
             font_ratio=self.font_ratio,
@@ -123,12 +128,16 @@ class SaveScreen(OlympeScreen):
                 "@", str(id_save)).replace("€", TEXT.save[game.difficulty]),
             delete_function=partial(self.delete_game, id_save),
             launch_function=partial(self.launch_game, id_save),
-            size_hint=(1, None),
+            size_hint=(None, None),
+            width=Window.size[0]*SCROLLVIEW_WIDTH,
             height=height_card,
             y=height_card*(2-self.number_saves)+MARGIN*self.font_ratio*(2-self.number_saves),
             load_text=TEXT.save["load"],
             best_athlete_image=game.get_best_athlete_image(),
-            information=information
+            information=information,
+            number_athletes_label=number_athletes_label,
+            money=game.money,
+            characters_list=game.unlocked_characters
         )
 
         save_layout.add_widget(save_card)

@@ -47,13 +47,13 @@ from tools.graphics import(
     CHARACTER_HEIGHT,
     SKILL_HEIGHT,
     MARGIN,
-    BUTTON_HEIGHT,
-    SCROLLVIEW_WIDTH
+    BUTTON_HEIGHT
 )
 from tools.path import (
     PATH_TITLE_FONT,
     PATH_TEXT_FONT,
-    PATH_ICONS
+    PATH_ICONS,
+    PATH_CHARACTERS_IMAGES
 )
 
 #######################
@@ -997,6 +997,8 @@ class SaveCard(FloatLayout):
     title_card = StringProperty()
     load_text = StringProperty()
     information = StringProperty()
+    number_athletes_label = StringProperty()
+    money = NumericProperty()
 
     best_athlete_image = StringProperty()
 
@@ -1011,3 +1013,36 @@ class SaveCard(FloatLayout):
 
     delete_function = ObjectProperty(lambda: 1 + 1)
     launch_function = ObjectProperty(lambda: 1 + 1)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.fill_unlocked_characters()
+
+    def fill_unlocked_characters(self):
+        max_characters = 8
+        margin_between_char = 3
+        character_height = self.ids.number_athletes_label.height
+        character_width = (self.width - self.ids.button.x*3 - margin_between_char*self.font_ratio*(max_characters-1) - self.ids.button.width) / max_characters
+        character_y = self.ids.number_athletes_label.y + \
+            character_height + self.ids.button.y
+        first_character_x = self.ids.number_athletes_label.x
+
+        # Add each character
+        for counter in range(len(self.characters_list)):
+            character_id = self.characters_list[counter]
+            character_x = first_character_x+counter*(margin_between_char*self.font_ratio+character_width)
+
+            character_card = CharacterButtonWithIcon(
+                font_ratio=self.font_ratio,
+                size_hint=(None, None),
+                height=character_height,
+                width=character_width,
+                x=self.x+character_x,
+                y=self.y+character_y,
+                image_source=PATH_CHARACTERS_IMAGES+f"{character_id}/neutral.png",
+                disable_button=True,
+                line_width=self.line_width
+            )
+
+            self.add_widget(character_card)

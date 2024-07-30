@@ -25,7 +25,9 @@
         source: root.image_source
         pos_hint: {"center_x": 0.5, "y": 0}
         size_hint: root.size_hint_character
-        width: self.height
+        width: root.width
+        # width: self.height
+        fit_mode: "cover"
 
     # Icon
     Image:
@@ -881,6 +883,30 @@
             y: (root.height - SMALL_HEADER_HEIGHT*root.font_ratio) * 0.05
             x: character_image.x
             release_function: root.launch_function
+
+        SurroundedLabel:
+            id: number_athletes_label
+            text: root.number_athletes_label
+            font_ratio: root.font_ratio
+            size_hint: (None, None)
+            width: (root.width - button.x*4 - button.width)/2
+            height: (character_image.height-2*button.y) / 2
+            y: separation_line.y + button.y
+            x: separation_line.x
+            line_width: root.line_width
+            font_size: root.font_size
+            text_font_name: root.text_font_name
+
+        MoneyLayout:
+            id: money_frame
+            coins_count: root.money
+            font_ratio: root.font_ratio
+            size_hint: (None, None)
+            height: number_athletes_label.height
+            width: number_athletes_label.width
+            x: number_athletes_label.x + self.width + button.x
+            y: number_athletes_label.y
+            line_width: root.line_width
 
         SeparationLine:
             id: separation_line
