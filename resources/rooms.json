@@ -2,14 +2,14 @@
     "hospital": {
         "1": {
             "activities_unlocked": [
-                "convalescence"
+                "convalescence_1"
             ],
             "effects": [],
             "price": 15000
         },
         "2": {
             "activities_unlocked": [
-                "convalescence"
+                "convalescence_2"
             ],
             "effects": [],
             "price": 50000

@@ -145,6 +145,8 @@ class Activity():
     price: int
     gain: int
     condition: None|int
+    can_be_done_when_ill: bool
+    can_be_done_when_hurt: bool
 
     def __init__(self, dict_to_load: dict):
         self.id = dict_to_load.get("id", "")
@@ -154,21 +156,57 @@ class Activity():
         self.price = dict_to_load.get("price", 0)
         self.gain = dict_to_load.get("gain", 0)
         self.condition = dict_to_load.get("condition", None)
+        self.can_be_done_when_ill = dict_to_load.get("can_be_done_when_ill", False)
+        self.can_be_done_when_hurt = dict_to_load.get("can_be_done_when_hurt", False)
 
     def get_gain(self, athlete) -> int:
         return 0
 
-    def apply_activity(self, athlete) -> None:
+    def get_effects(self, athlete) -> dict:
+        dict_effects = {}
         for effect in self.effects:
+
+            # For fatigue
             if effect[0] == "fatigue":
-                athlete.fatigue += effect[1]
+                final_fatigue = athlete.fatigue + effect[1]
+                if final_fatigue > 1:
+                    dict_effects["fatigue"] = 1
+                elif final_fatigue < 0:
+                    dict_effects["fatigue"] = 0
+                else:
+                    dict_effects["fatigue"] = final_fatigue
+            
+            # For injury risk
             elif effect[0] == "injury_risk":
-                athlete.injury_risk += effect[1]
-            elif effect[0] == "illness":
-                if effect[1] == "heal_one_trimester":
-                    athlete.health["time_absent"] -= 1
-                elif effect[1] == "heal_all":
-                    athlete.health = copy.deepcopy(DEFAULT_HEALTH_DICT)
+                final_injury_risk = athlete.injury_risk + effect[1]
+                if final_injury_risk > 1:
+                    dict_effects["injury_risk"] = 1
+                elif final_injury_risk < 0:
+                    dict_effects["injury_risk"] = 0
+                else:
+                    dict_effects["injury_risk"] = final_injury_risk
+
+            # For illness and injuries
+            elif effect[0] in ["illness", "injury"]:
+                if effect[0] in athlete.health["type_injury"]:
+                    if effect[1] == "heal_one_trimester":
+                        dict_effects["health"] = copy.deepcopy(athlete.health)
+                        dict_effects["health"]["time_absent"] -= 1
+                    elif effect[1] == "heal_all":
+                        dict_effects["health"] = copy.deepcopy(DEFAULT_HEALTH_DICT)
+
+        return dict_effects
+
+    def apply_activity(self, athlete, game) -> None:
+        dict_effects = self.get_effects(athlete=athlete)
+        for key_effect in dict_effects:
+            consequence = dict_effects[key_effect]
+            if key_effect == "fatigue":
+                athlete.fatigue = consequence
+            elif key_effect == "injury_risk":
+                athlete.injury_risk = consequence
+            elif key_effect == "illness":
+                athlete.health = copy.deepcopy(consequence)
 
 class InterviewActivity(Activity):
     """
@@ -189,7 +227,7 @@ class InterviewActivity(Activity):
 
         return gain_reputation
 
-    def apply_activity(self, athlete) -> None:
+    def apply_activity(self, athlete, game) -> None:
         gain_reputation = self.get_gain_reputation(athlete=athlete)
         athlete.reputation += gain_reputation
 
@@ -251,12 +289,42 @@ class JobActivity(Activity):
         dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
         return dict_effects.get("gain_money", 0)
 
-    def apply_activity(self, athlete) -> None:
+    def apply_activity(self, athlete, game) -> None:
         dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
         dict_effects_stats = dict_effects.get("gain_stats", {})
 
         for key in dict_effects_stats:
             athlete.stats[key]["points"] += dict_effects_stats[key]
+
+class ResearchSportActivity(Activity):
+    """
+    A class to store the data of the research sports activities.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "research_sport"
+        self.type_sport = int(self.id.replace("research_sport_", ""))
+
+    def gain_research_in_sport(self, game):
+        researching_sport_id: str = game.get_current_unlocking_sport()
+        if researching_sport_id is None:
+            return 0
+        
+        researching_sport: Sport = SPORTS[researching_sport]
+        # TODO change with right values
+        if self.type_sport == 1 and researching_sport.category == 1:
+            return 0.1
+        elif self.type_sport == 2 and researching_sport.category == 2:
+            return 0.05
+        
+        return 0
+
+    def apply_activity(self, athlete, game) -> None:
+        researching_sport_id = game.get_current_unlocking_sport()
+        gain_research = self.gain_research_in_sport(game=game)
+        game.sports_unlocking_progress[researching_sport_id] += gain_research
 
 ### Sports ###
 
@@ -704,6 +772,12 @@ class Game():
             if sport.category <= current_category:
                 list_sports.append(sport_id)
         return list_sports
+
+    def get_current_unlocking_sport(self) -> str | None:
+        for sport_id in self.sports_unlocking_progress:
+            if self.sports_unlocking_progress[sport_id] != 1:
+                return sport_id
+        return None
 
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
         # Diminish the time left to recruit and remove those with 0 time left
