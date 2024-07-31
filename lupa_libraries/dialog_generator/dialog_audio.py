@@ -56,7 +56,7 @@ if __name__ == "__main__":
             label = Label(text="", color=(1, 1, 1, 1))
             self.label = label
             Clock.schedule_once(
-                self.update_label, 1 / dialog_speed)
+                self.update_label, 1)
             return label
 
         def on_start(self):
@@ -75,6 +75,7 @@ if __name__ == "__main__":
                     sound.pitch = 1.5
                 else:
                     sound.pitch = 1.
+                sound.stop()
                 sound.play()
 
             if current_letter in [".", ",", "!"]:
