@@ -109,5 +109,32 @@
             ["fatigue", -0.8]
         ],
         "price": 10
+    },
+    "competition_national_1": {
+        "price": 1000
+    },
+    "competition_continental_1": {
+        "price": 5000
+    },
+    "competition_world_1": {
+        "price": 10000
+    },
+    "competition_national_2": {
+        "price": 5000
+    },
+    "competition_continental_2": {
+        "price": 10
+    },
+    "competition_world_2": {
+        "price": 10
+    },
+    "competition_national_3": {
+        "price": 10
+    },
+    "competition_continental_3": {
+        "price": 10
+    },
+    "competition_world_3": {
+        "price": 10
     }
 }

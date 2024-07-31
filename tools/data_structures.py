@@ -46,10 +46,80 @@ PRECISION = "precision"
 CHARM = "charm"
 
 MAX_ATHLETES_TO_SELECT = 3
-PRICES_SELECTION = {
-    1: 5000,
-    2: 10000,
-    3: 15000
+PRICE_FIGHT_SELECTION = {
+    1: 10000,
+    2: 50000,
+    3: 100000
+}
+REWARD_FIGHT = {
+    1: {
+        "gold": 100000,
+        "silver": 70000,
+        "bronze": 50000
+    },
+    2: {
+        "gold": 500000,
+        "silver": 200000,
+        "bronze": 100000
+    },
+    3: {
+        "gold": 1000000,
+        "silver": 700000,
+        "bronze": 500000
+    }
+}
+REWARD_COMPETITION = {
+    "national": {
+        1: { # category 1 of sport
+            1: 10000, # gold medal
+            2: 7000,
+            3: 5000
+        },
+        2: {
+            1: 50000,
+            2: 700000,
+            3: 500000
+        },
+        3: {
+            1: 1000000,
+            2: 700000,
+            3: 500000
+        }
+    },
+    "continental": {
+        1: {
+            1: 20000,
+            2: 14000,
+            3: 10000
+        },
+        2: {
+            1: 1000000,
+            2: 700000,
+            3: 500000
+        },
+        3: {
+            1: 1000000,
+            2: 700000,
+            3: 500000
+        }
+    },
+    "world": {
+        1: {
+            1: 50000,
+            2: 35000,
+            3: 25000
+        },
+        2: {
+            1: 1000000,
+            2: 700000,
+            3: 500000
+        },
+        3: {
+            1: 1000000,
+            2: 700000,
+            3: 500000
+        }
+    }
 }
 DEFAULT_HEALTH_DICT = {
     "is_hurt": False,
@@ -197,7 +267,7 @@ class Activity():
 
         return dict_effects
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, dict_precision) -> None:
         dict_effects = self.get_effects(athlete=athlete)
         for key_effect in dict_effects:
             consequence = dict_effects[key_effect]
@@ -227,7 +297,7 @@ class InterviewActivity(Activity):
 
         return gain_reputation
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, dict_precision) -> None:
         gain_reputation = self.get_gain_reputation(athlete=athlete)
         athlete.reputation += gain_reputation
 
@@ -289,7 +359,7 @@ class JobActivity(Activity):
         dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
         return dict_effects.get("gain_money", 0)
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, dict_precision) -> None:
         dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
         dict_effects_stats = dict_effects.get("gain_stats", {})
 
@@ -321,10 +391,43 @@ class ResearchSportActivity(Activity):
         
         return 0
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, dict_precision) -> None:
         researching_sport_id = game.get_current_unlocking_sport()
         gain_research = self.gain_research_in_sport(game=game)
         game.sports_unlocking_progress[researching_sport_id] += gain_research
+
+class CompetitionActivity(Activity):
+    """
+    A class to store the data of the competition activities.
+    """
+
+    type_competition: Literal["national", "continental", "world"]
+    category_sport: int
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "competition"
+        self.type_competition = self.id.replace("competition_", "")[:-2]
+        self.category_sport = int(self.id.replace(
+            f"competition_{self.type_competition}", ""))
+
+    def get_gain_sport(self, athlete, sport):
+        return {}
+
+    def get_result(self, athlete, sport) -> int:
+        # TODO
+        return 1
+
+    def apply_activity(self, athlete, game, dict_precision) -> None:
+        # TODO rajouter la fatigue et risque de blessure aussi
+        sport = dict_precision["sport"]
+
+        # Gain of the competition
+        result = self.get_result(athlete=athlete, sport=sport)
+        # TODO
+        # if result == 1:
+        #     if 
 
 ### Sports ###
 
@@ -371,10 +474,22 @@ class Athlete():
     reputation: int
     stats: dict[str, dict]
     sports: dict[str, dict]
-    current_planning: list[str]
+    current_planning: dict[dict[str]]
+
+    # current_planning = {
+    #     "competition_continent_1": {
+    #         "sport": "sport_id (category 1)",
+    #     },
+    #     "sport_activities_1": {
+    #         "sport": "sport_id"
+    #     },
+    #     "stat_activities_2": {
+    #         "stat": "stat_id"
+    #     }
+    # }
 
     @ property
-    def image(self) -> str:
+    def image(self) -> str:      
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
     @ property
@@ -905,7 +1020,10 @@ class Game():
         for athlete in self.team:
             for activity_id in athlete.current_planning:
                 activity: Activity = ACTIVITIES[activity_id]
-                activity.apply_activity(athlete=athlete)
+                activity.apply_activity(
+                    athlete=athlete,
+                    game=self,
+                    dict_precision=athlete.current_planning[activity_id])
 
         # Update the amount of money due to salaries and activities
         self.money += self.get_trimester_gained_total_money()
@@ -957,14 +1075,14 @@ class Game():
             for sport_id in self.selected_athletes_summer:
                 sport: Sport = SPORTS[sport_id]
                 sport_category = sport.category
-                price_sport = PRICES_SELECTION[sport_category]
+                price_sport = PRICE_FIGHT_SELECTION[sport_category]
                 total_money_spent += price_sport * len(self.selected_athletes_summer[sport_id])
 
         elif mode == "winter":
             for sport_id in self.selected_athletes_winter:
                 sport: Sport = SPORTS[sport_id]
                 sport_category = sport.category
-                price_sport = PRICES_SELECTION[sport_category]
+                price_sport = PRICE_FIGHT_SELECTION[sport_category]
                 total_money_spent += price_sport * len(self.selected_athletes_winter[sport_id])
         
         return total_money_spent
@@ -974,7 +1092,7 @@ class Game():
             sport_id=sport_id, mode=mode
         )
         sport: Sport = SPORTS[sport_id]
-        return number_athletes_selected*PRICES_SELECTION[sport.category]
+        return number_athletes_selected*PRICE_FIGHT_SELECTION[sport.category]
 
     def get_number_athletes_selected_for_sport(self, sport_id: str, mode: Literal["summer", "winter"] = "summer") -> int:
         if mode == "summer":
@@ -992,7 +1110,7 @@ class Game():
             athlete_id = athlete.id
             sport: Sport = SPORTS[sport_id]
             total_spends = self.compute_total_spent_money_selection(mode=mode)
-            price_sport = PRICES_SELECTION[sport.category]
+            price_sport = PRICE_FIGHT_SELECTION[sport.category]
             number_athletes_selected = self.get_number_athletes_selected_for_sport(
                 sport_id=sport_id, mode=mode
             )
