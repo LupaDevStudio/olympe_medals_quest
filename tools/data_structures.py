@@ -267,7 +267,7 @@ class Activity():
 
         return dict_effects
 
-    def apply_activity(self, athlete, game, dict_precision) -> None:
+    def apply_activity(self, athlete, game) -> None:
         dict_effects = self.get_effects(athlete=athlete)
         for key_effect in dict_effects:
             consequence = dict_effects[key_effect]
@@ -297,7 +297,7 @@ class InterviewActivity(Activity):
 
         return gain_reputation
 
-    def apply_activity(self, athlete, game, dict_precision) -> None:
+    def apply_activity(self, athlete, game) -> None:
         gain_reputation = self.get_gain_reputation(athlete=athlete)
         athlete.reputation += gain_reputation
 
@@ -359,7 +359,7 @@ class JobActivity(Activity):
         dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
         return dict_effects.get("gain_money", 0)
 
-    def apply_activity(self, athlete, game, dict_precision) -> None:
+    def apply_activity(self, athlete, game) -> None:
         dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
         dict_effects_stats = dict_effects.get("gain_stats", {})
 
@@ -391,7 +391,7 @@ class ResearchSportActivity(Activity):
         
         return 0
 
-    def apply_activity(self, athlete, game, dict_precision) -> None:
+    def apply_activity(self, athlete, game) -> None:
         researching_sport_id = game.get_current_unlocking_sport()
         gain_research = self.gain_research_in_sport(game=game)
         game.sports_unlocking_progress[researching_sport_id] += gain_research
@@ -402,29 +402,30 @@ class CompetitionActivity(Activity):
     """
 
     type_competition: Literal["national", "continental", "world"]
+    sport_id: str
     category_sport: int
 
     def __init__(self, dict_to_load: dict):
         super().__init__(dict_to_load)
 
         self.category = "competition"
-        self.type_competition = self.id.replace("competition_", "")[:-2]
-        self.category_sport = int(self.id.replace(
-            f"competition_{self.type_competition}", ""))
+        list_infos = self.id.split("_")
+        self.type_competition = list_infos[1]
+        self.sport_id = list_infos[2]
+        self.category_sport = int(list_infos[3])
 
-    def get_gain_sport(self, athlete, sport):
+    def get_gain_sport(self, athlete):
         return {}
 
-    def get_result(self, athlete, sport) -> int:
+    def get_result(self, athlete) -> int:
         # TODO
         return 1
 
-    def apply_activity(self, athlete, game, dict_precision) -> None:
+    def apply_activity(self, athlete, game) -> None:
         # TODO rajouter la fatigue et risque de blessure aussi
-        sport = dict_precision["sport"]
 
         # Gain of the competition
-        result = self.get_result(athlete=athlete, sport=sport)
+        result = self.get_result(athlete=athlete)
         # TODO
         # if result == 1:
         #     if 
@@ -474,19 +475,7 @@ class Athlete():
     reputation: int
     stats: dict[str, dict]
     sports: dict[str, dict]
-    current_planning: dict[dict[str]]
-
-    # current_planning = {
-    #     "competition_continent_1": {
-    #         "sport": "sport_id (category 1)",
-    #     },
-    #     "sport_activities_1": {
-    #         "sport": "sport_id"
-    #     },
-    #     "stat_activities_2": {
-    #         "stat": "stat_id"
-    #     }
-    # }
+    current_planning: list[str]
 
     @ property
     def image(self) -> str:      
@@ -1022,8 +1011,7 @@ class Game():
                 activity: Activity = ACTIVITIES[activity_id]
                 activity.apply_activity(
                     athlete=athlete,
-                    game=self,
-                    dict_precision=athlete.current_planning[activity_id])
+                    game=self)
 
         # Update the amount of money due to salaries and activities
         self.money += self.get_trimester_gained_total_money()

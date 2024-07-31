@@ -26,7 +26,7 @@ __version__ = "1.0.0"
 
 CURRENT_FOLDER = os.path.dirname(__file__)
 RESOURCES_FOLDER = os.path.join(CURRENT_FOLDER, "resources")
-BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "base_4.ogg")
+BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "base_6.wav")
 
 #################
 ### Functions ###
@@ -53,7 +53,7 @@ if __name__ == "__main__":
             label = Label(text="", color=(1, 1, 1, 1))
             self.label = label
             Clock.schedule_once(
-                self.update_label, 1 / dialog_speed)
+                self.update_label, 1)
             return label
 
         def on_start(self):
@@ -72,6 +72,7 @@ if __name__ == "__main__":
                     sound.pitch = 1.5
                 else:
                     sound.pitch = 1.
+                sound.stop()
                 sound.play()
 
             if current_letter in [".", ",", "!"]:
