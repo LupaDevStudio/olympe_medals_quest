@@ -36,8 +36,8 @@ class Colors():
         self.blue_pressed_olympe = (22 / 255, 74 / 255, 87 / 255, 1)
         self.gray_disable = (128 / 255, 128 / 255, 128 / 255, 1)
         self.gray_pressed_disable = (102 / 255, 102 / 255, 102 / 255, 1)
-        self.red = (1, 0, 0, 1)
-        self.red_pressed = (191 / 255, 0, 0, 1)
+        self.red = (240 / 255, 0, 0, 1)
+        self.red_pressed = (128 / 255, 0, 0, 1)
 
         self.white = (1, 1, 1, 1)
         self.black = (0, 0, 0, 1)
