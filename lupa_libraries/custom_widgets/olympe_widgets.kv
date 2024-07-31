@@ -152,7 +152,7 @@
         icon_source: root.icon_source
         size_hint_y_icon: root.size_hint_y_icon
         size_hint: (None, None)
-        height: HEADER_HEIGHT*0.65*root.font_ratio if root.header_height > HEADER_HEIGHT else root.header_height*0.65
+        height: HEADER_HEIGHT*0.65*root.font_ratio if root.header_height > HEADER_HEIGHT else root.header_height*0.65*root.font_ratio
         width: self.height
         pos_hint: {"right": 0.975}
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
@@ -855,7 +855,6 @@
         icon_function: root.delete_function
         icon_button_color: COLORS.red
         icon_button_color_pressed: COLORS.red_pressed
-        font_size: root.font_size
         pos: root.pos
         size_hint: (1, 1)
         line_width: root.line_width

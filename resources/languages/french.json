@@ -29,7 +29,7 @@
         "medium": "Moyen",
         "difficult": "Difficile",
         "load": "Charger",
-        "information": "Année [YEAR] - Trimestre [TRIMESTER]\nDernière session : [DATE]"
+        "information": "Année [YEAR] - Trimestre [TRIMESTER]\nDernière fois : [DATE]"
     },
     "game": {
         "team": "Équipe",

@@ -109,11 +109,11 @@ class OlympeScreen(ImprovedScreen):
             if SCREEN_MONEY_RIGHT in self.dict_type_screen:
                 self.money_amount = self.GAME.money
                 self.ids.money_frame.spend_mode = False
-                self.ids.money_frame.size_hint = (0.25, 0.7)
+                self.ids.money_frame.size_hint = (0.25, 0.65)
             elif SCREEN_SPEND_MONEY_RIGHT in self.dict_type_screen:
                 self.money_amount = self.GAME.money
                 self.ids.money_frame.spend_mode = True
-                self.ids.money_frame.size_hint = (0.35, 0.7)
+                self.ids.money_frame.size_hint = (0.35, 0.65)
                 self.ids.money_frame.spent_coins_count = self.spent_coins
                 self.bind(spent_coins=self.update_money_frame)
 

@@ -3,20 +3,24 @@
         "effects": [
             ["fatigue", -0.1],
             ["injury_risk", -0.1]
-        ]
+        ],
+        "can_be_done_when_ill": true,
+        "can_be_done_when_hurt": true
     },
     "convalescence_1": {
         "effects": [
             ["illness", "heal_one_trimester"]
         ],
         "all_trimester": true,
-        "price": 10
+        "price": 10,
+        "can_be_done_when_ill": true
     },
     "convalescence_2": {
         "effects": [
             ["illness", "heal_all"]
         ],
         "all_trimester": true,
+        "can_be_done_when_ill": true,
         "price": 10
     },
     "massage": {
@@ -37,10 +41,15 @@
             ["injury", "heal_all"]
         ],
         "all_trimester": true,
+        "can_be_done_when_hurt": true,
         "price": 10
     },
-    "interview": {},
-    "sponsor": {},
+    "interview": {
+        "can_be_done_when_hurt": true
+    },
+    "sponsor": {
+        "can_be_done_when_hurt": true
+    },
     "basic_job": {
         "gain": 2000
     },
@@ -70,5 +79,62 @@
     },
     "best_job": {
         "gain": 3000
+    },
+    "research_sports_1": {
+        "can_be_done_when_ill": true,
+        "can_be_done_when_hurt": true,
+        "all_trimester": true,
+        "price": 10
+    },
+    "research_sports_2": {
+        "can_be_done_when_ill": true,
+        "can_be_done_when_hurt": true,
+        "all_trimester": true,
+        "price": 10
+    },
+    "cryotherapy_1": {
+        "effects": [
+            ["fatigue", -0.2]
+        ],
+        "price": 10
+    },
+    "cryotherapy_2": {
+        "effects": [
+            ["fatigue", -0.4]
+        ],
+        "price": 10
+    },
+    "cryotherapy_3": {
+        "effects": [
+            ["fatigue", -0.8]
+        ],
+        "price": 10
+    },
+    "competition_national_1": {
+        "price": 1000
+    },
+    "competition_continental_1": {
+        "price": 5000
+    },
+    "competition_world_1": {
+        "price": 10000
+    },
+    "competition_national_2": {
+        "price": 5000
+    },
+    "competition_continental_2": {
+        "price": 10
+    },
+    "competition_world_2": {
+        "price": 10
+    },
+    "competition_national_3": {
+        "price": 10
+    },
+    "competition_continental_3": {
+        "price": 10
+    },
+    "competition_world_3": {
+        "price": 10
     }
 }

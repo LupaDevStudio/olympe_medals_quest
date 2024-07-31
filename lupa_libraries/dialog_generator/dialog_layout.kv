@@ -1,7 +1,7 @@
 #:kivy 2.2.1
 #:set OFFSET 10
-#:set WIDTH_HINT_TOP 0.75
-#:set CHARACTER_HEIGHT_HINT 0.3
+#:set WIDTH_HINT_TOP 0.775
+#:set CHARACTER_HEIGHT_HINT 0.275
 
 <DialogLayout>:
 
@@ -37,6 +37,7 @@
         y: (1-CHARACTER_HEIGHT_HINT)*root.height - OFFSET*root.font_ratio
         size_hint: (None, CHARACTER_HEIGHT_HINT)
         width: self.height
+        fit_mode: "cover"
     
     # Name of the character
     Label:
@@ -57,10 +58,10 @@
     Label:
         text: root.character_title
         x: 2*OFFSET*root.font_ratio + image.width
-        y: (1-CHARACTER_HEIGHT_HINT)*root.height
+        y: (1-CHARACTER_HEIGHT_HINT)*root.height-OFFSET*root.font_ratio
         size_hint: (None, None)
         width: WIDTH_HINT_TOP*root.width - self.x - OFFSET*root.font_ratio
-        height: CHARACTER_HEIGHT_HINT/2*root.height
+        height: 2*CHARACTER_HEIGHT_HINT/3*root.height
         font_name: root.font_name_title
         font_size: root.font_ratio*root.font_size_text
         color: root.font_color
