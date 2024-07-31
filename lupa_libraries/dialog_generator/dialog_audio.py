@@ -26,13 +26,16 @@ __version__ = "1.0.0"
 
 CURRENT_FOLDER = os.path.dirname(__file__)
 RESOURCES_FOLDER = os.path.join(CURRENT_FOLDER, "resources")
-BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "base_4.ogg")
+BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "blipSelect(4).wav")
+# BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_p_single.wav")
+TCHH_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "click.wav")
 
 #################
 ### Functions ###
 #################
 
 sound: Sound = SoundLoader.load(BASE_SOUND_FILE)
+tchhh: Sound = SoundLoader.load(TCHH_SOUND_FILE)
 
 
 if __name__ == "__main__":
