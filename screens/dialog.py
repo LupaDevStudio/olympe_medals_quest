@@ -6,6 +6,10 @@ Module to create the dialog screen.
 ### Imports ###
 ###############
 
+### Python imports ###
+
+from functools import partial
+
 ### Kivy properties ###
 
 from kivy.clock import Clock
@@ -34,7 +38,8 @@ from tools.graphics import (
     COLOR_THOUGHT
 )
 from lupa_libraries.dialog_generator.dialog_layout import (
-    get_shake_animation
+    get_shake_animation,
+    DialogLayout
 )
 
 #############
@@ -47,156 +52,55 @@ class DialogScreen(OlympeScreen):
     Class to manage the screen of dialogs of the game.
     """
 
-    dialog_code: str
-    dialog_frame_counter: int
-    dialog_content_list: list
-
-    ### Current dialog frame property ###
-
-    character_name = StringProperty()
-    character_title = StringProperty()
-    character_image = StringProperty()
-    dialog_text: str
-    index_scrolling_label: int
-    dialog_text_label = StringProperty()
-
     def reload_kwargs(self, dict_kwargs):
-        self.dialog_code = dict_kwargs["dialog_code"]
-        self.next_screen = dict_kwargs["next_screen"]
-        self.next_dict_kwargs = dict_kwargs["next_dict_kwargs"]
+        dialog_code = dict_kwargs["dialog_code"]
+        next_screen = dict_kwargs["next_screen"]
+        next_dict_kwargs = dict_kwargs["next_dict_kwargs"]
+
+        on_dialog_end = partial(
+            self.go_to_next_screen,
+            screen_name=next_screen,
+            current_dict_kwargs={
+                "dialog_code": dialog_code,
+                "next_screen": next_screen,
+                "next_dict_kwargs": next_dict_kwargs},
+            next_dict_kwargs=next_dict_kwargs
+        )
 
         # Reset the variables and start the dialog
         self.dialog_frame_counter = -1
-        self.dialog_content_list = DIALOGS_DICT[TEXT.language][self.dialog_code]
-        self.go_to_next_frame()
+        self.dialog_content_list = DIALOGS_DICT[TEXT.language][dialog_code]
 
-    def pass_current_frame(self):
+        dialog_layout: DialogLayout = self.ids.dialog_layout
+        dialog_layout.reload(
+            talking_speed=USER_DATA.settings["text_scrolling_speed"],
+            on_dialog_end=on_dialog_end,
+            color_thought=COLOR_THOUGHT,
+            path_character_images=PATH_CHARACTERS_IMAGES,
+            character_dict=CHARACTERS_DICT[TEXT.language],
+            dialog_content_list=self.dialog_content_list,
+            talking_speed_dict=TALKING_SPEED_DICT
+        )
+
+    def set_background(self, background: str):
         """
-        Finish the display of the current frame or go to the next frame of the dialog.
+        Set the background of the screen to the given image.
 
         Parameters
         ----------
-        None
+        background : str
+            Name of the background to set.
 
         Returns
         -------
-        None
         """
-        # Finish the display of the current frame if not finished
-        if self.index_scrolling_label < len(self.dialog_text) + 1:
-            Clock.unschedule(self.update_label)
-            self.dialog_text_label = self.dialog_text
-            self.index_scrolling_label = len(self.dialog_text) + 1
 
-        # Go to the next frame if finished
-        else:
-            self.go_to_next_frame()
-
-    def go_to_next_frame(self):
-        """
-        Go to the next dialog, by setting again the character details and dialog text.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
-        """
-        self.dialog_frame_counter += 1
-
-        # Change screen if the dialog is finished
-        if self.dialog_frame_counter == len(self.dialog_content_list):
-            self.go_to_next_screen(
-                screen_name=self.next_screen,
-                current_dict_kwargs={
-                    "dialog_code": self.dialog_code,
-                    "next_screen": self.next_screen,
-                    "next_dict_kwargs": self.next_dict_kwargs},
-                next_dict_kwargs=self.next_dict_kwargs
-            )
-            return
-
-        current_dialog_dict: dict = self.dialog_content_list[self.dialog_frame_counter]
-
-        # Set the background of the screen
-        # TODO faire une transition smooth entre les différents backgrounds
-        background: str = current_dialog_dict["background"]
         if background == "sports_complex":
             path_background = self.GAME.get_background_image()
         else:
             path_background = PATH_BACKGROUNDS + f"{background}.jpg"
-        self.set_back_image_path(
-            back_image_path=path_background)
 
-        # Set the character details
-        character_id: str = current_dialog_dict["character"]
-        character_id_for_image: str = character_id
-        if character_id == "journalist":
-            character_id_for_image = "ariane"
-        elif character_id == "phil_coach":
-            character_id_for_image = "phil"
-        expression: str = current_dialog_dict["expression"]
-        self.character_image = PATH_CHARACTERS_IMAGES + \
-            f"{character_id_for_image}/{expression}.png"
+        self.set_back_image_path(path_background)
 
-        # Hide the name and the title of the character if necessary
-        mystery: bool = current_dialog_dict["mystery"]
-        if mystery:
-            self.character_title = "???"
-            self.character_name = "???"
-        else:
-            self.character_name = CHARACTERS_DICT[TEXT.language][character_id]["name"]
-            self.character_title = CHARACTERS_DICT[TEXT.language][character_id]["title"]
-
-        # Set the content of the scrolling dialog
-        self.dialog_text = current_dialog_dict["text"]
-        self.format_text()
-        self.dialog_text_label = ""
-        self.index_scrolling_label = 0
-        talking_speed = USER_DATA.settings["text_scrolling_speed"] / \
-            TALKING_SPEED_DICT["characters"][character_id] / \
-            TALKING_SPEED_DICT["emotions"][expression]
-        Clock.schedule_interval(
-            self.update_label, talking_speed)
-
-        # Apply the animation if needed
-        if "shake" in current_dialog_dict:
-            shake_type = current_dialog_dict["shake"]
-            shake_animation: Animation = get_shake_animation(
-                self, shake_type=shake_type)
-            shake_animation.start(self)
-
-    def format_text(self):
-        # Insert thoughts in a different color
-        self.dialog_text = self.dialog_text.replace("(", f"[color={COLOR_THOUGHT}](")
-        self.dialog_text = self.dialog_text.replace(")", f")[/color]")
-
-    def update_label(self, *args):
-        """
-        Update the content of the dialog to make it scroll.
-
-        Parameters
-        ----------
-        *args : optional
-
-        Returns
-        -------
-        None
-        """
-        # Update the display of the label
-        if self.dialog_text[self.index_scrolling_label:self.index_scrolling_label+14] == f"[color={COLOR_THOUGHT}]":
-            self.index_scrolling_label += 15
-        elif self.dialog_text[self.index_scrolling_label:self.index_scrolling_label+8] == f"[/color]":
-            self.index_scrolling_label += 9
-        else:
-            self.index_scrolling_label += 1
-
-        # End condition
-        if self.index_scrolling_label == len(self.dialog_text) + 1:
-            Clock.unschedule(self.update_label)
-            return
-
-        # Update the content of the label
-        self.dialog_text_label = self.dialog_text[0:self.index_scrolling_label]
+    def pass_current_frame(self):
+        self.ids.dialog_layout.pass_current_frame()

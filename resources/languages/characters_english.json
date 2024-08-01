@@ -1,46 +1,57 @@
 {
     "olympe": {
         "name": "Olympe",
-        "title": "President of Elysia"
+        "title": "President of Elysia",
+        "voice": "feminine_voice_medium"
     },
     "hector": {
         "name": "Hector",
-        "title": "Minister of Sports of Elysia"
+        "title": "Minister of Sports of Elysia",
+        "voice": "masculine_voice_medium_heavy"
     },
     "phil": {
         "name": "Phil",
-        "title": "METTRE ANCIENNE PROFESSION"
+        "title": "METTRE ANCIENNE PROFESSION",
+        "voice": "masculine_voice_medium"
     },
     "phil_coach": {
         "name": "Phil",
-        "title": "Sports coach"
+        "title": "Sports coach",
+        "voice": "masculine_voice_medium"
     },
     "atlas": {
         "name": "Atlas",
-        "title": "President of the F.I.G.H.T."
+        "title": "President of the F.I.G.H.T.",
+        "voice": "masculine_voice_heavy"
     },
     "journalist": {
         "name": "Ariane",
-        "title": "Official journalist of Champions Voice"
+        "title": "Official journalist of Champions Voice",
+        "voice": "feminine_voice_medium_light"
     },
     "ariane": {
         "name": "Ariane",
-        "title": "Journalist of Elysia News"
+        "title": "Journalist of Elysia News",
+        "voice": "feminine_voice_medium_light"
     },
     "theresa": {
         "name": "Theresa",
-        "title": "TITRE"
+        "title": "TITRE",
+        "voice": "feminine_voice_medium"
     },
     "diana": {
         "name": "Diana",
-        "title": "TITRE"
+        "title": "TITRE",
+        "voice": "feminine_voice_light"
     },
     "simon": {
         "name": "Simon",
-        "title": "TITRE"
+        "title": "TITRE",
+        "voice": "masculine_voice_heavy"
     },
     "narcisse": {
         "name": "Narcisse",
-        "title": "TITRE"
+        "title": "TITRE",
+        "voice": "masculine_voice_medium"
     }
 }
