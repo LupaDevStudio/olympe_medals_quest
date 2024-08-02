@@ -41,6 +41,9 @@ from tools.data_structures import (
     Medal,
     SPORTS
 )
+from tools.path import (
+    PATH_BACKGROUNDS
+)
 
 #############
 ### Class ###
@@ -61,6 +64,11 @@ class MedalsScreen(OlympeScreen):
     sports_view = BooleanProperty(True)
     medals_per_sport_folded_dict = {}
     medals_per_edition_folded_dict = {}
+
+    def __init__(self, **kw):
+        super().__init__(
+            back_image_path=PATH_BACKGROUNDS + "medals.jpg",
+            **kw)
 
     def reload_language(self):
         super().reload_language()

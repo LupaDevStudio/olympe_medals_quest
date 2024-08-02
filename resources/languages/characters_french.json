@@ -9,7 +9,7 @@
     },
     "phil": {
         "name": "Phil",
-        "title": "METTRE ANCIENNE PROFESSION"
+        "title": "Fils d'artisan"
     },
     "phil_coach": {
         "name": "Phil",
@@ -28,12 +28,12 @@
         "title": "Journaliste d'Elysia News"
     },
     "theresa": {
-        "name": "Theresa",
+        "name": "Thérèse",
         "title": "Cuisinière d'Aux bons plats de Gatho"
     },
     "diana": {
-        "name": "Diana",
-        "title": "TITRE"
+        "name": "Diane",
+        "title": "Petite sœur de Phil, étudiante en médecine"
     },
     "simon": {
         "name": "Simon",
