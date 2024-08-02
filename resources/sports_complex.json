@@ -53,12 +53,12 @@
             ["hospital", 2],
             ["massage_room", 3],
             ["cryotherapy_room", 2],
-            ["multisports_room", 3],
             ["strength_room", 3],
             ["speed_room", 3],
             ["technique_room", 3],
             ["precision_room", 3],
-            ["charm_room", 3]
+            ["charm_room", 3],
+            ["sports_3_room", 1]
         ],
         "price": 1000000
     },
@@ -68,6 +68,7 @@
             ["canteen", 5],
             ["polyvalente_room", 5],
             ["cryotherapy_room", 3],
+            ["multisports_room", 3],
             ["strength_room", 4],
             ["speed_room", 4],
             ["technique_room", 4],

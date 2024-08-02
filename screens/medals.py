@@ -34,7 +34,6 @@ from tools.constants import (
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
     HEADER_HEIGHT,
-    CHARACTER_HEIGHT,
     MARGIN
 )
 from tools.data_structures import (

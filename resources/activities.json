@@ -48,7 +48,8 @@
         "can_be_done_when_hurt": true
     },
     "sponsor": {
-        "can_be_done_when_hurt": true
+        "can_be_done_when_hurt": true,
+        "all_trimester": true
     },
     "basic_job": {
         "gain": 2000
@@ -80,13 +81,13 @@
     "best_job": {
         "gain": 3000
     },
-    "research_sports_1": {
+    "tribune_1": {
         "can_be_done_when_ill": true,
         "can_be_done_when_hurt": true,
         "all_trimester": true,
         "price": 10
     },
-    "research_sports_2": {
+    "tribune_2": {
         "can_be_done_when_ill": true,
         "can_be_done_when_hurt": true,
         "all_trimester": true,

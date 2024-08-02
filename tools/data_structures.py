@@ -70,16 +70,6 @@ REWARD_FIGHT = {
 }
 REWARD_COMPETITION = {
     "national": {
-        1: { # category 1 of sport
-            1: 10000, # gold medal
-            2: 7000,
-            3: 5000
-        },
-        2: {
-            1: 50000,
-            2: 700000,
-            3: 500000
-        },
         3: {
             1: 1000000,
             2: 700000,
@@ -87,11 +77,6 @@ REWARD_COMPETITION = {
         }
     },
     "continental": {
-        1: {
-            1: 20000,
-            2: 14000,
-            3: 10000
-        },
         2: {
             1: 1000000,
             2: 700000,
@@ -165,6 +150,11 @@ ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
 NB_YEARS_BETWEEN_EDITION = 4
 
 FACTOR_SPONSOR_REPUTATION = 300
+
+# 3 years
+TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_1 = 3 * 4
+# 5 years
+TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_2 = 5 * 4
 
 #################
 ### Functions ###
@@ -366,7 +356,7 @@ class JobActivity(Activity):
         for key in dict_effects_stats:
             athlete.stats[key]["points"] += dict_effects_stats[key]
 
-class ResearchSportActivity(Activity):
+class TribuneActivity(Activity):
     """
     A class to store the data of the research sports activities.
     """
@@ -374,8 +364,8 @@ class ResearchSportActivity(Activity):
     def __init__(self, dict_to_load: dict):
         super().__init__(dict_to_load)
 
-        self.category = "research_sport"
-        self.type_sport = int(self.id.replace("research_sport_", ""))
+        self.category = "tribune"
+        self.type_sport = int(self.id.replace("tribune_", ""))
 
     def gain_research_in_sport(self, game):
         researching_sport_id: str = game.get_current_unlocking_sport()
@@ -383,11 +373,10 @@ class ResearchSportActivity(Activity):
             return 0
         
         researching_sport: Sport = SPORTS[researching_sport]
-        # TODO change with right values
         if self.type_sport == 1 and researching_sport.category == 1:
-            return 0.1
+            return 1 / TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_1
         elif self.type_sport == 2 and researching_sport.category == 2:
-            return 0.05
+            return 1 / TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_2
         
         return 0
 
