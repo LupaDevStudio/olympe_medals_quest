@@ -26,20 +26,25 @@ __version__ = "1.0.0"
 
 CURRENT_FOLDER = os.path.dirname(__file__)
 RESOURCES_FOLDER = os.path.join(CURRENT_FOLDER, "resources")
-BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "blipSelect(4).wav")
-# BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_p_single.wav")
-TCHH_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "click.wav")
+# BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "blipSelect(4).wav")
+# BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_p_single.wav") # pensées
+# BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_my.wav")
+# BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_py_2.wav")
+BASE_SOUND_FILE = os.path.join(
+    RESOURCES_FOLDER, "test_y_single.wav")  # paroles
+# TCHH_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "click.wav")
 
 #################
 ### Functions ###
 #################
 
 sound: Sound = SoundLoader.load(BASE_SOUND_FILE)
-tchhh: Sound = SoundLoader.load(TCHH_SOUND_FILE)
+# tchhh: Sound = SoundLoader.load(TCHH_SOUND_FILE)
 
 
 if __name__ == "__main__":
     dialog_speed = 20  # letter per second
+    voice_speed = 10  # letter per second
     test_sentence = "Votre manière de raisonner est décidement très intéressante... Je vous embauche !"
 
     from kivy.app import App
@@ -56,12 +61,31 @@ if __name__ == "__main__":
             label = Label(text="", color=(1, 1, 1, 1))
             self.label = label
             Clock.schedule_once(
-                self.update_label, 1)
+                self.update_label, 0.1)
+            Clock.schedule_once(self.update_voice, 0.1)
             return label
 
         def on_start(self):
 
             return super().on_start()
+
+        def update_voice(self, *_):
+            current_letter = self.dialog_text[self.index_scrolling_label - 1]
+            if current_letter not in [" ", "."]:
+                if current_letter in ["a", "e", "i", "o", "u", "y"]:
+                    sound.pitch = 1.
+                else:
+                    sound.pitch = 0.8
+                sound.play()
+
+            if current_letter in [".", ",", "!"]:
+                next_delay = (1 / voice_speed) * 4
+            else:
+                next_delay = (1 / voice_speed)
+
+            if self.index_scrolling_label < len(self.dialog_text):
+                Clock.schedule_once(
+                    self.update_voice, next_delay)
 
         def update_label(self, *_):
             self.index_scrolling_label += 1
@@ -70,13 +94,13 @@ if __name__ == "__main__":
             self.label.text = self.dialog_text[0:self.index_scrolling_label]
 
             current_letter = self.dialog_text[self.index_scrolling_label - 1]
-            if current_letter not in [" ", "."]:
-                if current_letter in ["a", "e", "i", "o", "u", "y"]:
-                    sound.pitch = 1.5
-                else:
-                    sound.pitch = 1.
-                sound.stop()
-                sound.play()
+            # if current_letter not in [" ", "."]:
+            #     if current_letter in ["a", "e", "i", "o", "u", "y"]:
+            #         sound.pitch = 1.
+            #     else:
+            #         sound.pitch = 0.5
+            #     sound.stop()
+            #     sound.play()
 
             if current_letter in [".", ",", "!"]:
                 next_delay = (1 / dialog_speed) * 4

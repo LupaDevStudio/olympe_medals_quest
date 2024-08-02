@@ -1,5 +1,5 @@
 """
-Package containing tools and functions for game objects and interactions.
+Package containing tools and functions for sound management.
 """
 
 ###############
@@ -7,7 +7,7 @@ Package containing tools and functions for game objects and interactions.
 ###############
 
 
-from tools.game_tools.sound import (
+from .sound import (
     MusicMixer,
     DynamicMusicMixer,
     SoundMixer,

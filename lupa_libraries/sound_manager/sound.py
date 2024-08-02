@@ -7,13 +7,17 @@ Module to manage musics and sound effects
 ###############
 
 ### Python imports ###
+
+import os
 from math import exp
 from typing import Literal
 
 ### Kivy imports ###
+
 from kivy.core.audio import SoundLoader, Sound
 
 ### Local imports ###
+
 from tools.constants import FPS
 
 
@@ -267,6 +271,7 @@ def load_sounds(music_list: str, foldername: str, volume: float) -> dict:
     sound_dict = {}
     for file in music_list:
         name_file = file.split(".")[0]
-        sound_dict[name_file] = SoundLoader.load(foldername + file)
+        sound_dict[name_file] = SoundLoader.load(
+            os.path.join(foldername, file))
         sound_dict[name_file].volume = volume
     return sound_dict
