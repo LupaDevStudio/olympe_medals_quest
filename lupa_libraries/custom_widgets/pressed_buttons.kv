@@ -1,5 +1,9 @@
 #:kivy 2.2.1
 #:set OFFSET_PRESSED 3.5
+#:set TRIANGLE_REL_WIDTH 0.07
+#:set TRIANGLE_REL_OFFSET 0.85
+#:set OUTLINE_RECTANGLE 6
+#:set BUTTON_OUTLINE_WIDTH 6
 
 <PressedThemeBackground>:
     # Background
@@ -8,21 +12,21 @@
         Color:
             rgba: self.pressed_color if not self.disable_button else self.pressed_disabled_color
         RoundedRectangle:
-            pos: (0, -OFFSET_PRESSED//2*self.font_ratio)
+            pos: (self.pos[0], self.pos[1]-OFFSET_PRESSED//2*self.font_ratio)
             size: self.size
             radius: [self.radius*self.font_ratio]
         # Rounded rectangle above
         Color:
             rgba: self.background_color if not self.disable_button else self.background_disabled_color
         RoundedRectangle:
-            pos: (0, OFFSET_PRESSED//2*self.font_ratio) if not self.press_button else (0, -OFFSET_PRESSED//2*self.font_ratio)
+            pos: (self.pos[0], self.pos[1]+ OFFSET_PRESSED//2*self.font_ratio) if not self.press_button else (self.pos[0],self.pos[1] -OFFSET_PRESSED//2*self.font_ratio)
             size: self.size
             radius: [self.radius*self.font_ratio]
 
 <PressedButton>:
     # Background
     PressedThemeBackground:
-        pos: root.pos
+        pos: (0,0)
         size: root.size
         background_color: root.background_color
         background_disabled_color: root.background_disabled_color
@@ -49,7 +53,7 @@
 <IconPressedButton>:
     # Background
     PressedThemeBackground:
-        pos: root.pos
+        pos: (0,0)
         size: root.size
         background_color: root.background_color
         background_disabled_color: root.background_disabled_color
@@ -72,7 +76,7 @@
 <PressedWithIconButton>:
     # Background
     PressedThemeBackground:
-        pos: root.pos
+        pos: (0,0)
         size: root.size
         background_color: root.background_color
         background_disabled_color: root.background_disabled_color
@@ -111,7 +115,7 @@
 <TextMoneyLayoutPressedButton>:
     # Background
     PressedThemeBackground:
-        pos: root.pos
+        pos: (0,0)
         size: root.size
         background_color: root.background_color
         background_disabled_color: root.background_disabled_color
@@ -135,7 +139,7 @@
 <TextMoneyLayoutUnderPressedButton>:
     # Background
     PressedThemeBackground:
-        pos: root.pos
+        pos: (0,0)
         size: root.size
         background_color: root.background_color
         background_disabled_color: root.background_disabled_color
@@ -169,3 +173,98 @@
         pos_hint: {"center_x": 0.5}
         y: OFFSET_PRESSED//2*root.font_ratio if not root.press_button else -OFFSET_PRESSED//2*root.font_ratio
         line_mode: False
+
+
+<PressedSpinnerOption>:
+
+    font_size: self.parent.parent.font_size if self.parent is not None else 12
+    color: self.parent.parent.text_color if self.parent is not None else (0,0,0,1)
+    pressed_color: self.parent.parent.pressed_color if self.parent is not None else (0.5,0.5,0.5,1)
+    background_color: self.parent.parent.background_color if self.parent is not None else (0, 0, 0, 1)
+
+    size_hint_y: None
+    # height: "48dp"
+    height: self.texture_size[1] + self.font_size*1.5
+    font_name: PATH_TEXT_FONT
+    shorten: False
+    text_size: (root.width*0.8,None)
+    halign: "center"
+
+    canvas.before:
+        Color:
+            rgba: (0.5,0.5,0.5,1)
+        Line:
+            points: [0+OUTLINE_RECTANGLE/2,self.y,self.width-OUTLINE_RECTANGLE/2,self.y]
+            width: 1
+        Color:
+            rgba: self.background_color
+        RoundedRectangle:
+            pos:self.pos
+            size:self.size
+            radius: [self.radius * self.font_ratio]*4
+
+<PressedDropDown>:
+
+    font_size: self.attach_to.font_size if self.attach_to is not None else 12
+    background_color: self.attach_to.dropdown_color if self.attach_to is not None else (0, 0, 0, 1)
+    background_disabled_color: self.attach_to.dropdown_color if self.attach_to is not None else (1,1,1,1)
+    pressed_color: self.attach_to.pressed_color if self.attach_to is not None else (1,1,1,1)
+    pressed_disabled_color: self.attach_to.pressed_disabled_color if self.attach_to is not None else (1,1,1,1)
+    text_color: self.attach_to.text_color if self.attach_to is not None else (0, 0, 0, 1)
+    disable_button: self.attach_to.disable_button if self.attach_to is not None else False
+    press_button: self.attach_to.press_button if self.attach_to is not None else False
+
+    max_height: self.attach_to.pos[1]*0.9 if self.attach_to is not None else None
+
+    # Background
+    PressedThemeBackground:
+        pos: (0,0)
+        size: root.size
+        background_color: root.background_color
+        background_disabled_color: root.background_disabled_color
+        pressed_color: root.pressed_color
+        pressed_disabled_color: root.pressed_disabled_color
+        radius: root.radius
+        font_ratio: root.font_ratio
+        disable_button: root.disable_button
+        press_button: root.press_button
+    
+    
+
+<PressedSpinner>:
+
+    canvas.after:
+        # Triangle
+        Color:
+            rgba: (1,1,1,1)
+        Triangle:
+            points: [self.x + self.width*TRIANGLE_REL_OFFSET,self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH),self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH/2),self.y + self.height*0.5 - self.width*TRIANGLE_REL_WIDTH/2]
+
+    # Background
+    PressedThemeBackground:
+        id: background
+        pos_hint: {"center_x":0.5,"top":1}
+        size: (root.size[0],root.size[1])
+        size_hint: (None,None)
+        background_color: root.background_color
+        background_disabled_color: root.background_disabled_color
+        pressed_color: root.pressed_color
+        pressed_disabled_color: root.pressed_disabled_color
+        radius: root.radius
+        font_ratio: root.font_ratio
+        disable_button: root.disable_button
+        press_button: root.press_button
+    
+    Label:
+        pos: (0, OFFSET_PRESSED//2*root.font_ratio) if not root.press_button else (0, -OFFSET_PRESSED//2*root.font_ratio)
+        size: root.size[0] - 2*root.width*TRIANGLE_REL_WIDTH, root.size[1]
+        font_size: root.font_ratio * root.font_size
+        shorten: False
+        text: root.text
+        text_size: (root.size[0]*0.7,root.size[1])
+        font_name: PATH_TEXT_FONT
+        halign: "left"
+        valign: "center"
+        line_height: 1
+        color: root.text_color
+

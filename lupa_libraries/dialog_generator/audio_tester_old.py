@@ -26,13 +26,13 @@ __version__ = "1.0.0"
 
 CURRENT_FOLDER = os.path.dirname(__file__)
 RESOURCES_FOLDER = os.path.join(CURRENT_FOLDER, "resources")
-# BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "base.ogg")
+BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "base.ogg")
 # BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "blipSelect(4).wav")
 # BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_p_single.wav") # pensées
 # BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_my.wav")
 # BASE_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "test_py_2.wav")
-BASE_SOUND_FILE = os.path.join(
-    RESOURCES_FOLDER, "test_y_single.wav")  # paroles
+# BASE_SOUND_FILE = os.path.join(
+#     RESOURCES_FOLDER, "test_y_single.wav")  # paroles
 # TCHH_SOUND_FILE = os.path.join(RESOURCES_FOLDER, "click.wav")
 
 #################
@@ -73,14 +73,14 @@ if __name__ == "__main__":
         def update_voice(self, *_):
             current_letter = self.dialog_text[self.index_scrolling_label - 1]
             if current_letter not in [" ", "."]:
-                if current_letter in ["a", "e", "i", "o", "u", "y"]:
-                    sound.pitch = 1.
-                else:
-                    sound.pitch = 0.8
+                # if current_letter in ["a", "e", "i", "o", "u", "y"]:
+                #     sound.pitch = 1.
+                # else:
+                #     sound.pitch = 0.8
                 sound.play()
 
             if current_letter in [".", ",", "!"]:
-                next_delay = (1 / voice_speed) * 4
+                next_delay = (1 / voice_speed)
             else:
                 next_delay = (1 / voice_speed)
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
             #     sound.play()
 
             if current_letter in [".", ",", "!"]:
-                next_delay = (1 / dialog_speed) * 4
+                next_delay = (1 / dialog_speed)
             else:
                 next_delay = (1 / dialog_speed)
 

@@ -270,6 +270,8 @@ def load_sounds(music_list: str, foldername: str, volume: float) -> dict:
     """
     sound_dict = {}
     for file in music_list:
+        if len(file.split(".")) == 1:
+            continue
         name_file = file.split(".")[0]
         sound_dict[name_file] = SoundLoader.load(
             os.path.join(foldername, file))

@@ -34,7 +34,7 @@ from tools.data_structures import (
     Medal,
     convert_points_to_tier_rank
 )
-from tools.graphics import(
+from tools.graphics import (
     FONTS_SIZES,
     COLORS,
     HEADER_HEIGHT,
@@ -59,6 +59,7 @@ from tools.path import (
 #######################
 ### General widgets ###
 #######################
+
 
 class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
     """
@@ -132,6 +133,7 @@ class CharacterButtonWithIcon(ButtonBehavior, RelativeLayout):
         if self.collide_point(self.last_touch.x, self.last_touch.y) and not self.disable_button:
             self.stop_icon_flashing()
             self.release_function()
+
 
 class OlympeCard(RelativeLayout):
 
@@ -207,9 +209,11 @@ class OlympeCard(RelativeLayout):
                 self.size_hint_y_icon = 0.5
             self.icon_function = self.parent.ask_redraw
 
+
 class SeparationLine(RelativeLayout):
 
     font_ratio = NumericProperty(1)
+
 
 class SportLabelButton(ButtonBehavior, RelativeLayout):
 
@@ -231,6 +235,7 @@ class SportLabelButton(ButtonBehavior, RelativeLayout):
         if self.collide_point(self.last_touch.x, self.last_touch.y):
             self.release_function()
 
+
 class LabelWithTutorial(RelativeLayout):
 
     text = StringProperty()
@@ -245,14 +250,17 @@ class LabelWithTutorial(RelativeLayout):
 
     release_function = ObjectProperty(lambda: 1 + 1)
 
+
 class StatBar(RelativeLayout):
     color = ColorProperty((0, 0, 0, 1))
     font_ratio = NumericProperty(1)
     radius = NumericProperty(2)
 
+
 #########################
 ### Character widgets ###
 #########################
+
 
 class CharacterWithNameLayout(RelativeLayout):
 
@@ -280,6 +288,7 @@ class CharacterWithNameLayout(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     release_function = ObjectProperty(lambda: 1 + 1)
     font_ratio = NumericProperty(1)
+
 
 class CharacterWithMainInfoFireLayout(RelativeLayout):
 
@@ -362,6 +371,7 @@ class CharacterStats(RelativeLayout):
                 )
                 self.add_widget(current_bar)
 
+
 class CharacterSkillsLayout(RelativeLayout):
 
     ### Information on the skills ###
@@ -383,10 +393,12 @@ class CharacterSkillsLayout(RelativeLayout):
         super().__init__(**kw)
 
         idx = 0
-        total_height = len(self.skills_dict) * self.skill_height * self.font_ratio
+        total_height = len(self.skills_dict) * \
+            self.skill_height * self.font_ratio
 
         for skill in self.skills_dict:
-            pos_y = (idx+0.5) * self.skill_height *self.font_ratio / total_height
+            pos_y = (idx + 0.5) * self.skill_height * \
+                self.font_ratio / total_height
             if skill in TEXT.stats:
                 text = TEXT.stats[skill]
             elif skill in TEXT.sports:
@@ -398,7 +410,7 @@ class CharacterSkillsLayout(RelativeLayout):
                 font_name=PATH_TITLE_FONT,
                 color=COLORS.white,
                 size_hint=(0.5, None),
-                height=(self.skill_height-5)*self.font_ratio,
+                height=(self.skill_height - 5) * self.font_ratio,
                 pos_hint={"x": 0, "center_y": pos_y},
                 halign="left",
                 valign="middle"
@@ -409,17 +421,18 @@ class CharacterSkillsLayout(RelativeLayout):
             if self.show_level_up:
                 pos_hint = {"center_x": 0.7, "center_y": pos_y}
             else:
-                pos_hint = {"x": 0.4+0.6*0.17, "center_y": pos_y}
+                pos_hint = {"x": 0.4 + 0.6 * 0.17, "center_y": pos_y}
 
             skill_widget = CharacterStats(
                 stat_dict=self.skills_dict[skill],
                 size_hint=(0.6, None),
-                height=(self.skill_height-5)*self.font_ratio,
+                height=(self.skill_height - 5) * self.font_ratio,
                 pos_hint=pos_hint,
                 font_ratio=self.font_ratio
             )
             self.add_widget(skill_widget)
             idx += 1
+
 
 class CharacterInfoWithMainSportsLayout(RelativeLayout):
 
@@ -455,7 +468,7 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
         character_skills_layout = CharacterSkillsLayout(
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
-            pos_hint={"x":0.05},
+            pos_hint={"x": 0.05},
             y=MARGIN * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
@@ -464,8 +477,10 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
+
 
 class MedalsCard(RelativeLayout):
 
@@ -493,18 +508,19 @@ class MedalsCard(RelativeLayout):
         if not self.is_folded:
 
             idx = 0
-            total_height = (MARGIN*2 + HEADER_HEIGHT + len(
+            total_height = (MARGIN * 2 + HEADER_HEIGHT + len(
                 self.medals_list) * MEDAL_HEIGHT) * self.font_ratio
 
             medal: Medal
             for medal in self.medals_list:
-                pos_y = (MARGIN + (idx+0.5) * MEDAL_HEIGHT)*self.font_ratio / total_height
-                
+                pos_y = (MARGIN + (idx + 0.5) * MEDAL_HEIGHT) * \
+                    self.font_ratio / total_height
+
                 year: str = TEXT.general["year"]
                 sport: str = TEXT.sports[medal.sport_id]["name"]
                 text = sport + " - " + year.capitalize() + " " + str(medal.year)
 
-                width = (MEDAL_HEIGHT-5)*self.font_ratio
+                width = (MEDAL_HEIGHT - 5) * self.font_ratio
                 medal_image = Image(
                     source=medal.image,
                     size_hint=(None, None),
@@ -520,9 +536,9 @@ class MedalsCard(RelativeLayout):
                     font_name=PATH_TITLE_FONT,
                     color=COLORS.white,
                     size_hint=(0.5, None),
-                    height=(MEDAL_HEIGHT-5)*self.font_ratio,
+                    height=(MEDAL_HEIGHT - 5) * self.font_ratio,
                     pos_hint={"center_y": pos_y},
-                    x=width+10*self.font_ratio*2,
+                    x=width + 10 * self.font_ratio * 2,
                     halign="left",
                     valign="middle"
                 )
@@ -533,8 +549,10 @@ class MedalsCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
+
 
 class SkillsCard(RelativeLayout):
 
@@ -560,12 +578,13 @@ class SkillsCard(RelativeLayout):
         super().__init__(**kw)
 
         if not self.is_folded:
-            total_height = SKILL_HEIGHT * len(self.skills_dict) * self.font_ratio
+            total_height = SKILL_HEIGHT * \
+                len(self.skills_dict) * self.font_ratio
 
             character_skills_layout = CharacterSkillsLayout(
                 skills_dict=self.skills_dict,
                 font_ratio=self.font_ratio,
-                pos_hint={"x":0.05},
+                pos_hint={"x": 0.05},
                 y=MARGIN * self.font_ratio,
                 size_hint=(0.9, None),
                 height=total_height
@@ -574,12 +593,14 @@ class SkillsCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
 
 ###########################
 ### Recrutement widgets ###
 ###########################
+
 
 class CompleteRecruitCard(RelativeLayout):
 
@@ -621,8 +642,8 @@ class CompleteRecruitCard(RelativeLayout):
         character_skills_layout = CharacterSkillsLayout(
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
-            pos_hint={"x":0.05},
-            y=(MARGIN*2 + self.recruit_button_height) * self.font_ratio,
+            pos_hint={"x": 0.05},
+            y=(MARGIN * 2 + self.recruit_button_height) * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )
@@ -630,12 +651,14 @@ class CompleteRecruitCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
 
 ###########################
 ### Inscription widgets ###
 ###########################
+
 
 class CompleteInscriptionCard(RelativeLayout):
 
@@ -680,8 +703,8 @@ class CompleteInscriptionCard(RelativeLayout):
         character_skills_layout = CharacterSkillsLayout(
             skills_dict=self.skills_dict,
             font_ratio=self.font_ratio,
-            pos_hint={"x":0.05},
-            y=(MARGIN*2 + self.button_height) * self.font_ratio,
+            pos_hint={"x": 0.05},
+            y=(MARGIN * 2 + self.button_height) * self.font_ratio,
             size_hint=(0.9, None),
             height=total_height
         )
@@ -689,8 +712,10 @@ class CompleteInscriptionCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
+
 
 class SmallInscriptionCard(RelativeLayout):
 
@@ -720,12 +745,14 @@ class SmallInscriptionCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
 
 #############################
 ### Planification widgets ###
 #############################
+
 
 class CompletePlanificationCard(RelativeLayout):
 
@@ -758,8 +785,10 @@ class CompletePlanificationCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
+
 
 class SmallPlanificationCard(RelativeLayout):
 
@@ -787,12 +816,14 @@ class SmallPlanificationCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
 
 #####################
 ### Rooms widgets ###
 #####################
+
 
 class SmallRoomCard(RelativeLayout):
 
@@ -807,8 +838,10 @@ class SmallRoomCard(RelativeLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
+
 
 class CompleteRoomCard(FloatLayout):
 
@@ -849,9 +882,9 @@ class CompleteRoomCard(FloatLayout):
         title = Label(
             text=title,
             font_name=PATH_TITLE_FONT,
-            font_size=FONTS_SIZES.subtitle*self.font_ratio,
+            font_size=FONTS_SIZES.subtitle * self.font_ratio,
             size_hint=(1, None),
-            height=self.font_ratio*SUBTITLE_HEIGHT
+            height=self.font_ratio * SUBTITLE_HEIGHT
         )
         scrollview_layout.add_widget(title)
 
@@ -864,7 +897,7 @@ class CompleteRoomCard(FloatLayout):
                 content = LabelWithTutorial(
                     text=text,
                     size_hint=(1, None),
-                    height=self.font_ratio*LABEL_HEIGHT,
+                    height=self.font_ratio * LABEL_HEIGHT,
                     release_function=release_function,
                     font_ratio=self.font_ratio
                 )
@@ -873,14 +906,14 @@ class CompleteRoomCard(FloatLayout):
                 content = Label(
                     text=text,
                     font_name=PATH_TEXT_FONT,
-                    font_size=FONTS_SIZES.small_label*self.font_ratio,
+                    font_size=FONTS_SIZES.small_label * self.font_ratio,
                     size_hint=(1, None),
-                    height=self.font_ratio*LABEL_HEIGHT,
+                    height=self.font_ratio * LABEL_HEIGHT,
                     halign="left",
                     valign="middle"
                 )
                 content.bind(size=self.set_label_text_width)
-            
+
             scrollview_layout.add_widget(content)
 
     def fill_scrollview(self, *args):
@@ -915,12 +948,14 @@ class CompleteRoomCard(FloatLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
 
 ######################
 ### Medals widgets ###
 ######################
+
 
 class CompleteMedalsCard(FloatLayout):
 
@@ -965,8 +1000,10 @@ class CompleteMedalsCard(FloatLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
+
 
 class SmallMedalsCard(FloatLayout):
 
@@ -985,12 +1022,14 @@ class SmallMedalsCard(FloatLayout):
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(current_screen_name)
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
         screen.ask_redraw(self)
 
 ####################
 ### Save widgets ###
 ####################
+
 
 class SaveCard(FloatLayout):
 
@@ -1023,7 +1062,8 @@ class SaveCard(FloatLayout):
         max_characters = 8
         margin_between_char = 3
         character_height = self.ids.number_athletes_label.height
-        character_width = (self.width - self.ids.button.x*3 - margin_between_char*self.font_ratio*(max_characters-1) - self.ids.button.width) / max_characters
+        character_width = (self.width - self.ids.button.x * 3 - margin_between_char *
+                           self.font_ratio * (max_characters - 1) - self.ids.button.width) / max_characters
         character_y = self.ids.number_athletes_label.y + \
             character_height + self.ids.button.y
         first_character_x = self.ids.number_athletes_label.x
@@ -1031,16 +1071,18 @@ class SaveCard(FloatLayout):
         # Add each character
         for counter in range(len(self.characters_list)):
             character_id = self.characters_list[counter]
-            character_x = first_character_x+counter*(margin_between_char*self.font_ratio+character_width)
+            character_x = first_character_x + counter * \
+                (margin_between_char * self.font_ratio + character_width)
 
             character_card = CharacterButtonWithIcon(
                 font_ratio=self.font_ratio,
                 size_hint=(None, None),
                 height=character_height,
                 width=character_width,
-                x=self.x+character_x,
-                y=self.y+character_y,
-                image_source=PATH_CHARACTERS_IMAGES+f"{character_id}/neutral.png",
+                x=self.x + character_x,
+                y=self.y + character_y,
+                image_source=PATH_CHARACTERS_IMAGES +
+                f"{character_id}/neutral.png",
                 disable_button=True,
                 line_width=self.line_width
             )
