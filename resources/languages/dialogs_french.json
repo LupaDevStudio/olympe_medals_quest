@@ -12,7 +12,7 @@
             "character": "atlas",
             "expression": "neutral",
             "mystery": false,
-            "text": "En tant que président du Festival International de Glorieux et Héroiques Tournois plus simplement dénommé F.I.G.H.T., c'est un immense honneur pour moi de prendre la parole aujourd'hui. Je tiens à remercier tous les participants, les organisateurs, et les fans qui ont rendu possible cet événement exceptionnel.",
+            "text": "En tant que président du Festival International de Glorieux et Héroiques Tournois plus simplement dénommé FIGHT, c'est un immense honneur pour moi de prendre la parole aujourd'hui. Je tiens à remercier tous les participants, les organisateurs, et les fans qui ont rendu possible cet événement exceptionnel.",
             "background": "president_speech"
         },
         {
@@ -27,7 +27,7 @@
             "character": "atlas",
             "expression": "neutral",
             "mystery": false,
-            "text": "Il est maintenant temps de dévoiler le programme de cette vingt-et-unième édition exceptionnelle du F.I.G.H.T. ! Vous allez être témoins de performances incroyables, de exploits inoubliables, de suspense insoutenable, d'échecs cuisants aussi et de blessures atroces comme à chaque édition !",
+            "text": "Il est maintenant temps de dévoiler le programme de cette vingt-et-unième édition exceptionnelle du FIGHT ! Vous allez être témoins de performances incroyables, de exploits inoubliables, de suspense insoutenable, d'échecs cuisants aussi et de blessures atroces comme à chaque édition !",
             "background": "president_speech"
         },
         {
@@ -151,7 +151,7 @@
             "character": "olympe",
             "expression": "neutral",
             "mystery": false,
-            "text": "Hector, je t'ai attendu ! Mais ce n'est pas grave, tu es là maintenant ! Tu as écouté le discours du président du F.I.G.H.T. ?",
+            "text": "Hector, tu en as mis du temps ! Tu as écouté le discours du président du FIGHT ?",
             "background": "office"
         },
         {
@@ -165,7 +165,7 @@
             "character": "olympe",
             "expression": "neutral",
             "mystery": false,
-            "text": "Quel piètre ministre des sports tu fais, Hector ! Heureusement que je suis là pour prendre en main la situation : je l'ai regardé et c'est notre chance ! Nous allons remporter une médaille cette année !",
+            "text": "Quel piètre ministre des sports tu fais ! Heureusement que je suis là pour prendre en main la situation : je l'ai regardé et c'est notre chance ! Nous allons remporter une médaille cette année !",
             "background": "office"
         },
         {
@@ -193,7 +193,7 @@
             "character": "olympe",
             "expression": "neutral",
             "mystery": false,
-            "text": "Je te charge de trouver un entraîneur sportif qui constituera une incroyable équipe d'athlètes ! Et qui nous rapportera cette belle médaille qui nous tend les bras cette année !",
+            "text": "Je te charge de trouver un entraîneur sportif qui constituera une incroyable équipe d'athlètes ! Et qui nous rapportera cette belle médaille !",
             "background": "office"
         },
         {
