@@ -198,6 +198,7 @@ class DialogLayout(RelativeLayout):
             self,
             **kwargs):
         super().__init__(**kwargs)
+        self.is_thinking = False
 
     def reload(
             self,
@@ -261,6 +262,10 @@ class DialogLayout(RelativeLayout):
         character_id: str = current_dialog_dict["character"]
         voice_id = self.character_dict[character_id]["voice"]
 
+        # Change voice if the character is thinking
+        if self.is_thinking:
+            voice_id = voice_id.replace("voice", "thoughts")
+
         # Extract the sound
         sound = VOICE_MIXER.musics[voice_id]
 
@@ -296,8 +301,10 @@ class DialogLayout(RelativeLayout):
         # Update the display of the label
         if self.dialog_text[self.index_scrolling_label:self.index_scrolling_label + 14] == f"[color={self.color_thought}]":
             self.index_scrolling_label += 15
+            self.is_thinking = True
         elif self.dialog_text[self.index_scrolling_label:self.index_scrolling_label + 8] == f"[/color]":
             self.index_scrolling_label += 9
+            self.is_thinking = False
         else:
             self.index_scrolling_label += 1
 
@@ -408,6 +415,7 @@ class DialogLayout(RelativeLayout):
             # Clock.unschedule(self.update_label)
             self.text = self.dialog_text
             self.index_scrolling_label = len(self.dialog_text) + 1
+            self.sound_mixer.stop()
 
         # Go to the next frame if finished
         else:
