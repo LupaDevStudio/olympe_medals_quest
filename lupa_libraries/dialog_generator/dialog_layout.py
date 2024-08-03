@@ -50,16 +50,22 @@ __version__ = "1.0.0"
 
 CURRENT_FOLDER = os.path.dirname(__file__)
 RESOURCES_FOLDER = os.path.join(CURRENT_FOLDER, "resources")
+SOUNDS_EFFECT_FOLDER = os.path.join(RESOURCES_FOLDER, "sound_effects")
 
 ### Sounds ###
 
-voice_dict = load_sounds(os.listdir(RESOURCES_FOLDER), RESOURCES_FOLDER, 1)
-# for file in os.listdir(RESOURCES_FOLDER):
-#     if "voice" in file:
-#         key = file.split(".")[0]
-#         voice_dict[key] = os.path.join(RESOURCES_FOLDER, file)
+voice_dict = load_sounds(os.listdir(RESOURCES_FOLDER), RESOURCES_FOLDER, 0.3)
+shake_sound_dict = load_sounds(os.listdir(
+    SOUNDS_EFFECT_FOLDER), SOUNDS_EFFECT_FOLDER, 1)
 
 VOICE_MIXER = MusicMixer(voice_dict)
+SHAKE_SOUND_MIXER = MusicMixer(shake_sound_dict)
+
+SHAKE_SOUND_EFFECTS = {
+    "medium": "tchak",
+    "strong": "bom",
+    "weak": "pat"
+}
 
 # TEMP
 BASE_SOUND_FILE = os.path.join(
@@ -391,6 +397,8 @@ class DialogLayout(RelativeLayout):
             shake_animation: Animation = get_shake_animation(
                 self.parent, shake_type=shake_type)
             shake_animation.start(self.parent)
+            if shake_type in SHAKE_SOUND_EFFECTS:
+                SHAKE_SOUND_MIXER.play(SHAKE_SOUND_EFFECTS[shake_type])
 
         # Play the sound effect if needed
         if "sound" in current_dialog_dict:
