@@ -207,6 +207,7 @@ class DialogLayout(RelativeLayout):
             character_dict: dict,
             talking_speed: float,
             talking_speed_dict: dict,
+            sound_mixer: MusicMixer,
             dialog_content_list: list[dict]):
         """
         Reload all the necessary variables to play the dialog.
@@ -223,6 +224,8 @@ class DialogLayout(RelativeLayout):
             Dictionary containing all the information about the characters.
         talking_speed : float
             Base scrolling speed of the text.
+        sound_mixer : MusicMixer
+            Class to play the sound effect of the dialog.
         dialog_content_list : list[dict]
             Content of the dialog.
         """
@@ -235,6 +238,7 @@ class DialogLayout(RelativeLayout):
         self.talking_speed_base = talking_speed
         self.talking_speed_dict = talking_speed_dict
         self.color_thought = color_thought
+        self.sound_mixer = sound_mixer
         self.go_to_next_frame()
 
     def format_text(self):
@@ -380,6 +384,12 @@ class DialogLayout(RelativeLayout):
             shake_animation: Animation = get_shake_animation(
                 self.parent, shake_type=shake_type)
             shake_animation.start(self.parent)
+
+        # Play the sound effect if needed
+        if "sound" in current_dialog_dict:
+            sound_id = current_dialog_dict["sound"]
+            print(sound_id)
+            self.sound_mixer.play(sound_id)
 
     def pass_current_frame(self):
         """

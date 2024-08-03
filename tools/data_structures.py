@@ -160,6 +160,7 @@ TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_2 = 5 * 4
 ### Functions ###
 #################
 
+
 def generate_id() -> str:
     unique_id = uuid.uuid4()
     return str(unique_id)
@@ -193,6 +194,7 @@ def convert_characteristic_to_display(stat_dict: dict) -> dict:
 
 ### Activities ###
 
+
 class Activity():
     """
     A class to store the data of an activity.
@@ -204,7 +206,7 @@ class Activity():
     all_trimester: bool
     price: int
     gain: int
-    condition: None|int
+    condition: None | int
     can_be_done_when_ill: bool
     can_be_done_when_hurt: bool
 
@@ -216,8 +218,10 @@ class Activity():
         self.price = dict_to_load.get("price", 0)
         self.gain = dict_to_load.get("gain", 0)
         self.condition = dict_to_load.get("condition", None)
-        self.can_be_done_when_ill = dict_to_load.get("can_be_done_when_ill", False)
-        self.can_be_done_when_hurt = dict_to_load.get("can_be_done_when_hurt", False)
+        self.can_be_done_when_ill = dict_to_load.get(
+            "can_be_done_when_ill", False)
+        self.can_be_done_when_hurt = dict_to_load.get(
+            "can_be_done_when_hurt", False)
 
     def get_gain(self, athlete) -> int:
         return 0
@@ -235,7 +239,7 @@ class Activity():
                     dict_effects["fatigue"] = 0
                 else:
                     dict_effects["fatigue"] = final_fatigue
-            
+
             # For injury risk
             elif effect[0] == "injury_risk":
                 final_injury_risk = athlete.injury_risk + effect[1]
@@ -253,7 +257,8 @@ class Activity():
                         dict_effects["health"] = copy.deepcopy(athlete.health)
                         dict_effects["health"]["time_absent"] -= 1
                     elif effect[1] == "heal_all":
-                        dict_effects["health"] = copy.deepcopy(DEFAULT_HEALTH_DICT)
+                        dict_effects["health"] = copy.deepcopy(
+                            DEFAULT_HEALTH_DICT)
 
         return dict_effects
 
@@ -267,6 +272,7 @@ class Activity():
                 athlete.injury_risk = consequence
             elif key_effect == "illness":
                 athlete.health = copy.deepcopy(consequence)
+
 
 class InterviewActivity(Activity):
     """
@@ -291,6 +297,7 @@ class InterviewActivity(Activity):
         gain_reputation = self.get_gain_reputation(athlete=athlete)
         athlete.reputation += gain_reputation
 
+
 class SponsorActivity(Activity):
     """
     A class to store the data of the sponsors activities.
@@ -306,6 +313,7 @@ class SponsorActivity(Activity):
         gain_money = FACTOR_SPONSOR_REPUTATION * current_reputation
 
         return gain_money
+
 
 class JobActivity(Activity):
     """
@@ -325,7 +333,7 @@ class JobActivity(Activity):
                 "can_access": True,
                 "gain_money": self.gain
             }
-        
+
         # Activities based on a stat
 
         fix_part = self.gain
@@ -336,25 +344,28 @@ class JobActivity(Activity):
         condition = self.condition
         if athlete_stat < condition:
             return {"can_access": False}
-        
+
         variable_part = int(fix_part * athlete_stat / 70)
 
         return {
-                "can_access": True,
-                "gain_money": fix_part + variable_part,
-                "gain_stats": {} # TODO
-            }
+            "can_access": True,
+            "gain_money": fix_part + variable_part,
+            "gain_stats": {}  # TODO
+        }
 
     def get_gain(self, athlete) -> int:
-        dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
+        dict_effects = self.get_can_access_gain_money_gain_stats(
+            athlete=athlete)
         return dict_effects.get("gain_money", 0)
 
     def apply_activity(self, athlete, game) -> None:
-        dict_effects = self.get_can_access_gain_money_gain_stats(athlete=athlete)
+        dict_effects = self.get_can_access_gain_money_gain_stats(
+            athlete=athlete)
         dict_effects_stats = dict_effects.get("gain_stats", {})
 
         for key in dict_effects_stats:
             athlete.stats[key]["points"] += dict_effects_stats[key]
+
 
 class TribuneActivity(Activity):
     """
@@ -371,19 +382,20 @@ class TribuneActivity(Activity):
         researching_sport_id: str = game.get_current_unlocking_sport()
         if researching_sport_id is None:
             return 0
-        
+
         researching_sport: Sport = SPORTS[researching_sport]
         if self.type_sport == 1 and researching_sport.category == 1:
             return 1 / TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_1
         elif self.type_sport == 2 and researching_sport.category == 2:
             return 1 / TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_2
-        
+
         return 0
 
     def apply_activity(self, athlete, game) -> None:
         researching_sport_id = game.get_current_unlocking_sport()
         gain_research = self.gain_research_in_sport(game=game)
         game.sports_unlocking_progress[researching_sport_id] += gain_research
+
 
 class CompetitionActivity(Activity):
     """
@@ -417,9 +429,10 @@ class CompetitionActivity(Activity):
         result = self.get_result(athlete=athlete)
         # TODO
         # if result == 1:
-        #     if 
+        #     if
 
 ### Sports ###
+
 
 class Sport():
     """
@@ -446,6 +459,7 @@ class Sport():
         self.mode_summer_winter = dict_to_load.get(
             "mode_summer_winter", "summer")
 
+
 class Athlete():
     """
     A class to store the data of an athlete.
@@ -467,7 +481,7 @@ class Athlete():
     current_planning: list[str]
 
     @ property
-    def image(self) -> str:      
+    def image(self) -> str:
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
     @ property
@@ -499,7 +513,8 @@ class Athlete():
         self.reputation = dict_to_load.get("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
-        self.current_planning = dict_to_load.get("current_planning", ["vacation", "vacation", "vacation"])
+        self.current_planning = dict_to_load.get(
+            "current_planning", ["vacation", "vacation", "vacation"])
 
     def get_best_sports(self, number_sports: int = 2):
         # Sort the sports by decreasing points
@@ -591,7 +606,7 @@ class Room():
     @ property
     def activities_unlocked(self) -> list[str]:
         return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["activities_unlocked"]
-    
+
     @ property
     def effects(self) -> list:
         return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["effects"]
@@ -630,7 +645,7 @@ class SportsComplex():
     @ property
     def rooms_unlocked(self) -> dict[str, Room]:
         dict_rooms = {}
-        for level in range(1, self.current_level+1):
+        for level in range(1, self.current_level + 1):
             for element in SPORTS_COMPLEX_EVOLUTION_DICT[str(level)]["rooms_unlocked"]:
                 room_id = element[0]
 
@@ -699,7 +714,7 @@ class Medal():
         if self.type_edition == "summer":
             return self.edition * NB_YEARS_BETWEEN_EDITION
         elif self.type_edition == "winter":
-            return self.edition * NB_YEARS_BETWEEN_EDITION - NB_YEARS_BETWEEN_EDITION//2
+            return self.edition * NB_YEARS_BETWEEN_EDITION - NB_YEARS_BETWEEN_EDITION // 2
 
     def __init__(self, dict_to_load: dict) -> None:
         self.type_medal = dict_to_load.get("type_medal", "gold")
@@ -753,7 +768,7 @@ class Game():
     """
 
     difficulty: Literal["easy", "medium", "difficult"]
-    total_time_played: float # in seconds
+    total_time_played: float  # in seconds
     last_time_played: str
     unlocked_characters: list[str]
     money: int
@@ -798,9 +813,9 @@ class Game():
                 return self.year // NB_YEARS_BETWEEN_EDITION
             return self.year // NB_YEARS_BETWEEN_EDITION + 1
         elif type_edition == "winter":
-            if self.year % NB_YEARS_BETWEEN_EDITION == NB_YEARS_BETWEEN_EDITION//2:
+            if self.year % NB_YEARS_BETWEEN_EDITION == NB_YEARS_BETWEEN_EDITION // 2:
                 return self.year // NB_YEARS_BETWEEN_EDITION
-            return (self.year + NB_YEARS_BETWEEN_EDITION//2) // NB_YEARS_BETWEEN_EDITION
+            return (self.year + NB_YEARS_BETWEEN_EDITION // 2) // NB_YEARS_BETWEEN_EDITION
 
     def __init__(self, dict_to_load: dict = {}) -> None:
 
@@ -912,10 +927,12 @@ class Game():
     def buy_sports_complex(self, room_id: str):
         if room_id == "sports_complex":
             self.sports_complex.increase_level()
-            self.money -= SPORTS_COMPLEX_EVOLUTION_DICT[str(self.sports_complex.current_level)]["price"]
+            self.money -= SPORTS_COMPLEX_EVOLUTION_DICT[str(
+                self.sports_complex.current_level)]["price"]
         else:
             bought_room: Room = self.sports_complex.buy_room(room_id=room_id)
-            self.money -= ROOMS_EVOLUTION_DICT[room_id][str(bought_room.current_level)]["price"]
+            self.money -= ROOMS_EVOLUTION_DICT[room_id][str(
+                bought_room.current_level)]["price"]
 
     def get_medals_from_edition(self, edition: int) -> list[Medal]:
         list_medals = []
@@ -924,7 +941,8 @@ class Game():
                 list_medals.append(medal)
 
         # Sort the list of medals first by sport_id and then by athlete_id
-        list_medals.sort(key=lambda medal: (medal.sport_id, medal.athlete_id), reverse=True)
+        list_medals.sort(key=lambda medal: (
+            medal.sport_id, medal.athlete_id), reverse=True)
 
         return list_medals
 
@@ -935,7 +953,8 @@ class Game():
                 list_medals.append(medal)
 
         # Sort the list of medals first by sport_id and then by edition
-        list_medals.sort(key=lambda medal: (medal.sport_id, medal.edition), reverse=True)
+        list_medals.sort(key=lambda medal: (
+            medal.sport_id, medal.edition), reverse=True)
 
         return list_medals
 
@@ -946,7 +965,8 @@ class Game():
                 list_medals.append(medal)
 
         # Sort the list of medals first by edition and then by athlete_id
-        list_medals.sort(key=lambda medal: (medal.edition, medal.athlete_id), reverse=True)
+        list_medals.sort(key=lambda medal: (
+            medal.edition, medal.athlete_id), reverse=True)
 
         return list_medals
 
@@ -974,7 +994,7 @@ class Game():
                 best_athlete = athlete
         return best_athlete.image
 
-    def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "bronze"], edition: int, type_edition: Literal["summer", "winter"]="summer"):
+    def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "bronze"], edition: int, type_edition: Literal["summer", "winter"] = "summer"):
         new_medal = Medal(
             dict_to_load={
                 "sport_id": sport_id,
@@ -1022,9 +1042,10 @@ class Game():
         list_five_best_athletes = list_athletes_scores
         if len(list_athletes_scores) > 5:
             list_five_best_athletes = list_athletes_scores[:5]
-    
-        average_score = sum(list_five_best_athletes) / len(list_five_best_athletes)
-        
+
+        average_score = sum(list_five_best_athletes) / \
+            len(list_five_best_athletes)
+
         for score_ref in LEVEL_DICT:
             if average_score <= score_ref:
                 return LEVEL_DICT[score_ref]
@@ -1032,7 +1053,7 @@ class Game():
 
     def get_main_action(self) -> str:
 
-        main_action = "plan" # or "being_competition_{mode}"
+        main_action = "plan"  # or "being_competition_{mode}"
 
         # Summer competition trimester 2 each 4 years
         if self.year % NB_YEARS_BETWEEN_EDITION == 0:
@@ -1053,15 +1074,17 @@ class Game():
                 sport: Sport = SPORTS[sport_id]
                 sport_category = sport.category
                 price_sport = PRICE_FIGHT_SELECTION[sport_category]
-                total_money_spent += price_sport * len(self.selected_athletes_summer[sport_id])
+                total_money_spent += price_sport * \
+                    len(self.selected_athletes_summer[sport_id])
 
         elif mode == "winter":
             for sport_id in self.selected_athletes_winter:
                 sport: Sport = SPORTS[sport_id]
                 sport_category = sport.category
                 price_sport = PRICE_FIGHT_SELECTION[sport_category]
-                total_money_spent += price_sport * len(self.selected_athletes_winter[sport_id])
-        
+                total_money_spent += price_sport * \
+                    len(self.selected_athletes_winter[sport_id])
+
         return total_money_spent
 
     def get_price_selection_for_sport(self, sport_id: str, mode: Literal["summer", "winter"] = "summer") -> int:
@@ -1069,7 +1092,7 @@ class Game():
             sport_id=sport_id, mode=mode
         )
         sport: Sport = SPORTS[sport_id]
-        return number_athletes_selected*PRICE_FIGHT_SELECTION[sport.category]
+        return number_athletes_selected * PRICE_FIGHT_SELECTION[sport.category]
 
     def get_number_athletes_selected_for_sport(self, sport_id: str, mode: Literal["summer", "winter"] = "summer") -> int:
         if mode == "summer":
@@ -1081,7 +1104,7 @@ class Game():
             "already_selected": False,
             "can_select": False
         }
-        
+
         # If the athlete is not hurt
         if not athlete.is_hurt:
             athlete_id = athlete.id
@@ -1167,13 +1190,13 @@ class UserData():
         self.tutorial = data["tutorial"]
         self.game_1 = Game(
             dict_to_load=data["game_1"]) if \
-                "game_1" in data and data["game_1"] is not None else None
+            "game_1" in data and data["game_1"] is not None else None
         self.game_2 = Game(
             dict_to_load=data["game_2"]) if \
-                "game_2" in data and data["game_2"] is not None else None
+            "game_2" in data and data["game_2"] is not None else None
         self.game_3 = Game(
             dict_to_load=data["game_3"]) if \
-                "game_3" in data and data["game_3"] is not None else None
+            "game_3" in data and data["game_3"] is not None else None
         self.save_changes()
 
     def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]) -> int:
@@ -1229,6 +1252,7 @@ class UserData():
             file_path=PATH_USER_DATA,
             dict_to_save=data)
 
+
 SPORTS = load_json_file(PATH_SPORTS)
 for sport_id in SPORTS:
     SPORTS[sport_id] = Sport(
@@ -1252,7 +1276,7 @@ for activity_id in ACTIVITIES:
                 "gain": activity_dict["gain"]
             }
         )
-    
+
     # Other activities
     else:
         ACTIVITIES[activity_id] = Activity(

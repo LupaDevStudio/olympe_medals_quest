@@ -6,7 +6,8 @@
             "mystery": true,
             "text": "Mesdames et Messieurs, honorables invités, athlètes exceptionnels, et fans passionnés du monde entier !",
             "background": "president_speech",
-            "shake": "flash"
+            "shake": "flash",
+            "sound": "journalists_camera"
         },
         {
             "character": "atlas",
@@ -21,7 +22,8 @@
             "mystery": false,
             "text": "Sans oublier tous nos extraordinaires sponsors : Choco-Cola, Toy-Yoda, Samsquash, Fauxsa, Alphamega, Hairbnb, Intelephant, Alligagator, McDuck et Poopsy !",
             "background": "president_speech",
-            "shake": "flash"
+            "shake": "flash",
+            "sound": "journalists_camera"
         },
         {
             "character": "atlas",
@@ -453,4 +455,4 @@
             "background": "office"
         }
     ]
-}        
+}

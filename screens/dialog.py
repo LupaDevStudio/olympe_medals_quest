@@ -10,13 +10,6 @@ Module to create the dialog screen.
 
 from functools import partial
 
-### Kivy properties ###
-
-from kivy.clock import Clock
-from kivy.properties import (
-    StringProperty
-)
-from kivy.animation import Animation
 
 ### Local imports ###
 
@@ -41,6 +34,8 @@ from lupa_libraries.dialog_generator.dialog_layout import (
     get_shake_animation,
     DialogLayout
 )
+
+from tools import sound_mixer
 
 #############
 ### Class ###
@@ -79,7 +74,8 @@ class DialogScreen(OlympeScreen):
             path_character_images=PATH_CHARACTERS_IMAGES,
             character_dict=CHARACTERS_DICT[TEXT.language],
             dialog_content_list=self.dialog_content_list,
-            talking_speed_dict=TALKING_SPEED_DICT
+            talking_speed_dict=TALKING_SPEED_DICT,
+            sound_mixer=sound_mixer
         )
 
     def set_background(self, background: str):
