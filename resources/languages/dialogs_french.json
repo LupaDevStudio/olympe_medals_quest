@@ -75,7 +75,8 @@
             "mystery": false,
             "text": "Le [NEW_SPORT] !",
             "background": "president_speech_sheet",
-            "shake": "weak"
+            "shake": "weak",
+            "sound": "journalists_camera"
         },
         {
             "character": "atlas",
@@ -111,7 +112,16 @@
             "expression": "neutral",
             "mystery": true,
             "text": "...",
-            "background": "olympe_phone"
+            "background": "olympe_phone",
+            "sound": "phone_composing"
+        },
+        {
+            "character": "hector",
+            "expression": "neutral",
+            "mystery": true,
+            "text": "...",
+            "background": "olympe_phone",
+            "sound": "phone_ringing"
         },
         {
             "character": "hector",
@@ -259,7 +269,8 @@
             "character": "hector",
             "expression": "sad",
             "text": "...",
-            "background": "corridor_office"
+            "background": "corridor_office",
+            "sound": "door_slam"
         },
         {
             "character": "hector",
