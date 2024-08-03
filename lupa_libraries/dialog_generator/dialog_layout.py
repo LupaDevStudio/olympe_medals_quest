@@ -352,7 +352,7 @@ class DialogLayout(RelativeLayout):
             f"{character_id_for_image}/{expression}.png"
 
         # Hide the name and the title of the character if necessary
-        mystery: bool = current_dialog_dict["mystery"]
+        mystery: bool = current_dialog_dict.get("mystery", False)
         if mystery:
             self.character_title = "???"
             self.character_name = "???"
