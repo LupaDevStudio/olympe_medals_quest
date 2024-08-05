@@ -414,6 +414,7 @@ class DialogLayout(RelativeLayout):
             shake_animation.start(self.parent)
             if shake_type in SHAKE_SOUND_EFFECTS:
                 SHAKE_SOUND_MIXER.play(SHAKE_SOUND_EFFECTS[shake_type])
+            self.ids.next_button.press_button = False
             self.ids.next_button.disable_button = True
             shake_animation.on_complete = self.enable_next_button_when_completed
 
