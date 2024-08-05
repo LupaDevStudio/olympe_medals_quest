@@ -176,7 +176,8 @@ class DialogLayout(RelativeLayout):
 
     ### Fonts ###
 
-    font_size_title = NumericProperty(FONTS_SIZES.subtitle)
+    font_size_character_name = NumericProperty(FONTS_SIZES.subtitle)
+    font_size_character_title = NumericProperty(FONTS_SIZES.small_label)
     font_size_text = NumericProperty(FONTS_SIZES.label)
     font_ratio = NumericProperty(1)
     font_name_title = StringProperty(PATH_TITLE_FONT)
@@ -363,12 +364,14 @@ class DialogLayout(RelativeLayout):
             f"{character_id_for_image}/{expression}.png"
 
         # Hide the name and the title of the character if necessary
-        mystery: bool = current_dialog_dict.get("mystery", False)
-        if mystery:
-            self.character_title = "???"
+        mystery: bool = current_dialog_dict.get("mystery", [False, False])
+        if mystery[0]:
             self.character_name = "???"
         else:
             self.character_name = self.character_dict[character_id]["name"]
+        if mystery[1]:
+            self.character_title = "???"
+        else:
             self.character_title = self.character_dict[character_id]["title"]
 
         # Set the content of the scrolling dialog
