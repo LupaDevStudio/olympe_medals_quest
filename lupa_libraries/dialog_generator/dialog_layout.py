@@ -129,7 +129,7 @@ def get_shake_animation(widget: Widget, shake_type: str) -> Animation:
         shake_distance = 15
         nb_shakes = 4
         shake_speed = 150  # in px per sec
-    elif shake_type == "weak":
+    elif shake_type in ["weak", "weak_no_sound"]:
         shake_distance = 10
         nb_shakes = 2
         shake_speed = 100  # in px per sec

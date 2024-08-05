@@ -75,7 +75,7 @@
             "mystery": false,
             "text": "Le [NEW_SPORT] !",
             "background": "president_speech_sheet",
-            "shake": "weak",
+            "shake": "weak_no_sound",
             "sound": "journalists_camera"
         },
         {
@@ -91,7 +91,7 @@
             "mystery": false,
             "text": "Le [NEW_SPORT] sera présent pour la vingt-et-unième édition de COMPETITION ! C'est incroyable, quelle annonce inattendue !",
             "background": "president_speech",
-            "shake": "weak"
+            "shake": "weak_no_sound"
         },
         {
             "character": "atlas",
