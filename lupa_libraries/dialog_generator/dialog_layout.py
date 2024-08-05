@@ -31,7 +31,8 @@ from kivy.core.audio import Sound, SoundLoader
 
 from tools.path import (
     PATH_TEXT_FONT,
-    PATH_TITLE_FONT
+    PATH_TITLE_FONT,
+    PATH_BACKGROUNDS
 )
 from tools.graphics import (
     COLORS,
@@ -135,7 +136,7 @@ def get_shake_animation(widget: Widget, shake_type: str) -> Animation:
         shake_distance = 15
         nb_shakes = 4
         shake_speed = 150  # in px per sec
-    elif shake_type == "weak":
+    elif shake_type in ["weak", "weak_no_sound"]:
         shake_distance = 10
         nb_shakes = 2
         shake_speed = 100  # in px per sec
@@ -182,7 +183,8 @@ class DialogLayout(RelativeLayout):
 
     ### Fonts ###
 
-    font_size_title = NumericProperty(FONTS_SIZES.subtitle)
+    font_size_character_name = NumericProperty(FONTS_SIZES.subtitle)
+    font_size_character_title = NumericProperty(FONTS_SIZES.small_label)
     font_size_text = NumericProperty(FONTS_SIZES.label)
     font_ratio = NumericProperty(1)
     font_name_title = StringProperty(PATH_TITLE_FONT)
@@ -353,7 +355,6 @@ class DialogLayout(RelativeLayout):
         current_dialog_dict: dict = self.dialog_content_list[self.dialog_frame_counter]
 
         # Set the background of the screen
-        # TODO faire une transition smooth entre les différents backgrounds
         background: str = current_dialog_dict["background"]
         self.parent.set_background(background)
 
@@ -369,12 +370,14 @@ class DialogLayout(RelativeLayout):
             f"{character_id_for_image}/{expression}.png"
 
         # Hide the name and the title of the character if necessary
-        mystery: bool = current_dialog_dict.get("mystery", False)
-        if mystery:
-            self.character_title = "???"
+        mystery: bool = current_dialog_dict.get("mystery", [False, False])
+        if mystery[0]:
             self.character_name = "???"
         else:
             self.character_name = self.character_dict[character_id]["name"]
+        if mystery[1]:
+            self.character_title = "???"
+        else:
             self.character_title = self.character_dict[character_id]["title"]
 
         # Set the content of the scrolling dialog
@@ -382,7 +385,7 @@ class DialogLayout(RelativeLayout):
         self.format_text()
         self.text = ""
         self.index_scrolling_label = 0
-        self.text_delay = self.talking_speed_base / \
+        self.text_delay = 1 / self.talking_speed_base / \
             self.talking_speed_dict["characters"][character_id] / \
             self.talking_speed_dict["emotions"][expression]
         self.voice_delay = self.text_delay * 2
@@ -399,12 +402,17 @@ class DialogLayout(RelativeLayout):
             shake_animation.start(self.parent)
             if shake_type in SHAKE_SOUND_EFFECTS:
                 SHAKE_SOUND_MIXER.play(SHAKE_SOUND_EFFECTS[shake_type])
+            self.ids.next_button.disable_button = True
+            shake_animation.on_complete = self.enable_next_button_when_completed
 
         # Play the sound effect if needed
         if "sound" in current_dialog_dict:
             sound_id = current_dialog_dict["sound"]
             print(sound_id)
             self.sound_mixer.play(sound_id)
+
+    def enable_next_button_when_completed(self, *args):
+        self.ids.next_button.disable_button = False
 
     def pass_current_frame(self):
         """

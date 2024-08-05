@@ -68,7 +68,7 @@ class DialogScreen(OlympeScreen):
 
         dialog_layout: DialogLayout = self.ids.dialog_layout
         dialog_layout.reload(
-            talking_speed=USER_DATA.settings["text_scrolling_speed"],
+            talking_speed=USER_DATA.settings["talking_speed"],
             on_dialog_end=on_dialog_end,
             color_thought=COLOR_THOUGHT,
             path_character_images=PATH_CHARACTERS_IMAGES,
@@ -97,6 +97,3 @@ class DialogScreen(OlympeScreen):
             path_background = PATH_BACKGROUNDS + f"{background}.jpg"
 
         self.set_back_image_path(path_background)
-
-    def pass_current_frame(self):
-        self.ids.dialog_layout.pass_current_frame()

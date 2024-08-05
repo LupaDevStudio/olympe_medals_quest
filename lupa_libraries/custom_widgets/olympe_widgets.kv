@@ -98,7 +98,8 @@
         text: root.header_text
         font_size: root.font_ratio * root.font_size
         font_name: root.text_font_name
-        pos_hint: {"x": 0.025} if not root.image_mode and not root.first_icon_mode else {"x": 0.025*2 + character_image.width/(root.width+1)} if not root.first_icon_mode else {"x": 0.025*2 + first_icon.width/(root.width+1)}
+        # pos_hint: {"x": 0.025} if not root.image_mode and not root.first_icon_mode else {"x": 0.025*2 + character_image.width/(root.width+1)} if not root.first_icon_mode else {"x": 0.025*2 + first_icon.width/(root.width+1)}
+        x: MARGIN*root.font_ratio if not root.image_mode and not root.first_icon_mode else 2*MARGIN*root.font_ratio + character_image.width if not root.first_icon_mode else 2*MARGIN*root.font_ratio + first_icon.width
         y: root.height - root.header_height//2*root.font_ratio - self.height//2
         shorten: False if not root.right_surrounded_label_mode else True
         size_hint: (None, None)

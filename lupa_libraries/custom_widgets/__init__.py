@@ -41,7 +41,8 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     SmallInscriptionCard,
     CompletePlanificationCard,
     SmallPlanificationCard,
-    SaveCard
+    SaveCard,
+    StatBar
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,

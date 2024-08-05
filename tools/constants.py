@@ -60,7 +60,7 @@ if not os.path.exists(PATH_USER_DATA):
             "sound_volume": 0.5,
             "music_volume": 0.5,
             "language": "english",
-            "text_scrolling_speed": 0.03
+            "talking_speed": 35
         },
         "tutorial": {},
         "game": {}
@@ -72,7 +72,7 @@ USER_DATA = UserData()
 
 ### Language ###
 
-DICT_LANGUAGE_CORRESPONDANCE = {
+DICT_LANGUAGE_CODE_TO_NAME = {
     "french": "Français",
     "english": "English"
 }
@@ -80,18 +80,18 @@ DICT_LANGUAGE_NAME_TO_CODE = {
     "Français": "french",
     "English": "english"
 }
-LANGUAGES_LIST = tuple(DICT_LANGUAGE_CORRESPONDANCE.values())
+LANGUAGES_LIST = tuple(DICT_LANGUAGE_CODE_TO_NAME.values())
 TEXT = Text(language=USER_DATA.settings["language"])
 
 ### Game data ###
 
 DIALOGS_DICT = {}
-for language_code in DICT_LANGUAGE_CORRESPONDANCE:
+for language_code in DICT_LANGUAGE_CODE_TO_NAME:
     DIALOGS_DICT[language_code] = load_json_file(
         PATH_LANGUAGE + "dialogs_" + language_code + ".json")
 
 CHARACTERS_DICT = {}
-for language_code in DICT_LANGUAGE_CORRESPONDANCE:
+for language_code in DICT_LANGUAGE_CODE_TO_NAME:
     CHARACTERS_DICT[language_code] = load_json_file(
         PATH_LANGUAGE + "characters_" + language_code + ".json")
 

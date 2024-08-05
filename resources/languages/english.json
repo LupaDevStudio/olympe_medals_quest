@@ -72,7 +72,18 @@
         "fire": "Fire",
         "fatigue": "Fatigue : @ %"
     },
-    "settings": {},
+    "settings": {
+        "language": "Language",
+        "configuration": "Configuration",
+        "music": "Volume de la musique",
+        "sound_effects": "Volume des bruitages",
+        "talking_speed": "Vitesse des dialogues",
+        "achievements": "Accomplissements",
+        "tutorial": "Tutoriel",
+        "see_tutorial": "Lire tutoriel",
+        "credits": "Crédits",
+        "see_credits": "Voir générique"
+    },
     "sports_menu": {
         "title": "Sports"
     },

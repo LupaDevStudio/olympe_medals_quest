@@ -20,6 +20,7 @@ from tools.path import (
 #############
 
 class Text():
+
     def __init__(self, language) -> None:
         self.language = language
         self.change_language(language)
