@@ -32,14 +32,15 @@ from kivy.core.audio import Sound, SoundLoader
 from tools.path import (
     PATH_TEXT_FONT,
     PATH_TITLE_FONT,
-    PATH_BACKGROUNDS
+    PATH_BACKGROUNDS,
+    PATH_MUSICS
 )
 from tools.graphics import (
     COLORS,
     FONTS_SIZES,
     BUTTON_LINE_WIDTH
 )
-from lupa_libraries.sound_manager import MusicMixer, load_sounds
+from lupa_libraries.sound_manager import MusicMixer, load_sounds, DynamicMusicMixer
 
 #################
 ### Constants ###
@@ -216,7 +217,8 @@ class DialogLayout(RelativeLayout):
             character_dict: dict,
             talking_speed: float,
             talking_speed_dict: dict,
-            sound_mixer: MusicMixer,
+            sound_mixer: DynamicMusicMixer,
+            music_mixer: DynamicMusicMixer,
             dialog_content_list: list[dict]):
         """
         Reload all the necessary variables to play the dialog.
@@ -248,6 +250,16 @@ class DialogLayout(RelativeLayout):
         self.talking_speed_dict = talking_speed_dict
         self.color_thought = color_thought
         self.sound_mixer = sound_mixer
+        self.music_mixer = music_mixer
+
+        # Load the required musics for the dialog
+        for dialog_dict in dialog_content_list:
+            if "music" in dialog_dict:
+                if dialog_dict["music"] not in music_mixer.musics:
+                    sound_to_add = SoundLoader.load(os.path.join(
+                        PATH_MUSICS, dialog_dict["music"] + ".mp3"))
+                    music_mixer.add_sound(sound_to_add, dialog_dict["music"])
+
         self.go_to_next_frame()
 
     def format_text(self):
@@ -408,8 +420,16 @@ class DialogLayout(RelativeLayout):
         # Play the sound effect if needed
         if "sound" in current_dialog_dict:
             sound_id = current_dialog_dict["sound"]
-            print(sound_id)
             self.sound_mixer.play(sound_id)
+
+        # Play the music if needed
+        if "music" in current_dialog_dict:
+            music_id = current_dialog_dict["music"]
+            self.music_mixer.play(music_id)
+
+        if "volume" in current_dialog_dict:
+            self.music_mixer.change_volume(
+                self.music_mixer.default_volume * current_dialog_dict["volume"])
 
     def enable_next_button_when_completed(self, *args):
         self.ids.next_button.disable_button = False

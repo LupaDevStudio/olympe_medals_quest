@@ -19,12 +19,12 @@ from lupa_libraries.sound_manager import (
     load_sounds
 )
 
-# MUSIC_DICT = load_sounds(
-#     [USER_DATA.settings["current_music"] + ".mp3"], PATH_MUSICS, USER_DATA.settings["music_volume"])
+MUSIC_DICT = load_sounds(
+    [], PATH_MUSICS, USER_DATA.settings["music_volume"])
 
 SOUND_DICT = load_sounds(os.listdir(PATH_SOUNDS),
                          PATH_SOUNDS, USER_DATA.settings["sound_volume"])
 
 # Create the mixer
-# music_mixer = DynamicMusicMixer(MUSIC_DICT, USER_DATA.settings["music_volume"])
+music_mixer = DynamicMusicMixer(MUSIC_DICT, USER_DATA.settings["music_volume"])
 sound_mixer = DynamicMusicMixer(SOUND_DICT, USER_DATA.settings["sound_volume"])

@@ -97,6 +97,7 @@ class DynamicMusicMixer(MusicMixer):
             dico_frame_state[key] = 0
         self.dico_frame_state = dico_frame_state
         self.volume = volume
+        self.default_volume = volume
 
     def add_sounds(self, sound_dict: dict):
         """

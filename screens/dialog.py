@@ -35,7 +35,7 @@ from lupa_libraries.dialog_generator.dialog_layout import (
     DialogLayout
 )
 
-from tools import sound_mixer
+from tools import sound_mixer, music_mixer
 
 #############
 ### Class ###
@@ -75,7 +75,8 @@ class DialogScreen(OlympeScreen):
             character_dict=CHARACTERS_DICT[TEXT.language],
             dialog_content_list=self.dialog_content_list,
             talking_speed_dict=TALKING_SPEED_DICT,
-            sound_mixer=sound_mixer
+            sound_mixer=sound_mixer,
+            music_mixer=music_mixer
         )
 
     def set_background(self, background: str):

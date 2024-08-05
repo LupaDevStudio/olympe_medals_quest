@@ -3,11 +3,15 @@
         {
             "character": "atlas",
             "expression": "neutral",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "Mesdames et Messieurs, honorables invités, athlètes exceptionnels, et fans passionnés du monde entier !",
             "background": "president_speech",
             "shake": "flash",
-            "sound": "journalists_camera"
+            "sound": "journalists_camera",
+            "music": "fight_ceremony"
         },
         {
             "character": "atlas",
@@ -52,7 +56,8 @@
             "expression": "surprised",
             "text": "Hein ? Comment ?",
             "background": "president_speech",
-            "shake": "medium"
+            "shake": "medium",
+            "volume": 0
         },
         {
             "character": "atlas",
@@ -86,19 +91,27 @@
             "character": "atlas",
             "expression": "neutral",
             "text": "Je... Oui vous avez raison ! Soyons disruptifs et introduisons ce sport si populaire !",
-            "background": "president_speech"
+            "background": "president_speech",
+            "volume": 1
         },
         {
             "character": "olympe",
             "expression": "thinking",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "...",
-            "background": "olympe_tv"
+            "background": "olympe_tv",
+            "volume": 0
         },
         {
             "character": "olympe",
             "expression": "neutral",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "...",
             "background": "olympe_phone",
             "sound": "phone_composing"
@@ -106,7 +119,10 @@
         {
             "character": "hector",
             "expression": "neutral",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "...",
             "background": "hector_phone",
             "sound": "phone_ringing"
@@ -114,28 +130,40 @@
         {
             "character": "hector",
             "expression": "neutral",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "Oui, allo ?",
             "background": "hector_phone"
         },
         {
             "character": "olympe",
             "expression": "neutral",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "Dans mon bureau, tout de suite.",
             "background": "olympe_phone"
         },
         {
             "character": "hector",
             "expression": "surprised",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "Madame la présidente, euh, comment... ?",
             "background": "hector_phone"
         },
         {
             "character": "olympe",
             "expression": "angry",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "Tout de suite.",
             "background": "olympe_phone",
             "shake": "weak"
@@ -143,7 +171,10 @@
         {
             "character": "hector",
             "expression": "surprised",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "... ?",
             "background": "hector_phone",
             "sound": "end_call"
@@ -151,28 +182,42 @@
         {
             "character": "hector",
             "expression": "neutral",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "text": "Madame la présidente ?",
             "background": "office"
         },
         {
             "character": "olympe",
             "expression": "neutral",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "Hector, tu en as mis du temps ! Tu as écouté le discours du président du FIGHT ?",
-            "background": "office"
+            "background": "office",
+            "music": "waterfall",
+            "volume": 1
         },
         {
             "character": "hector",
             "expression": "embarrassed",
-            "mystery": [false, true],
+            "mystery": [
+                false,
+                true
+            ],
             "text": "Euh, non... En quoi cela nous concerne-t-il cette...",
             "background": "office"
         },
         {
             "character": "olympe",
             "expression": "neutral",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "Quel piètre ministre des sports tu fais ! Heureusement que je suis là pour prendre en main la situation : je l'ai regardé et c'est notre chance ! Nous allons remporter une médaille cette année !",
             "background": "office"
         },
@@ -185,7 +230,10 @@
         {
             "character": "olympe",
             "expression": "happy",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "C'était dans la présentation officielle délivrée par le président ; le [NEW_SPORT] était dans la liste, je t'assure ! Il fera partie de la compétition, c'est acté désormais ! C'est notre chance ou jamais d'exister dans l'histoire du FIGHT !",
             "background": "office"
         },
@@ -198,7 +246,10 @@
         {
             "character": "olympe",
             "expression": "neutral",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "Je te charge de trouver un entraîneur sportif qui constituera une incroyable équipe d'athlètes ! Et qui nous rapportera cette belle médaille !",
             "background": "office"
         },
@@ -211,7 +262,10 @@
         {
             "character": "olympe",
             "expression": "neutral",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "File, trouve-moi cet entraîneur et ramène-le ici !",
             "background": "office"
         },
@@ -224,7 +278,10 @@
         {
             "character": "olympe",
             "expression": "angry",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "Un entraîneur sportif, je veux. Et pas n'importe lequel : le meilleur des meilleurs ! Ramène-le ici et vite !",
             "background": "office",
             "shake": "weak"
@@ -239,21 +296,31 @@
             "character": "phil",
             "expression": "neutral",
             "text": "(Bonjour Madame la Présidente, je viens ici pour... pour requérir l'octroi de... non, pour demander la subvention concernant... non, relative au soutien des... Allez, ce n'est pas compliqué pourtant.)",
-            "mystery": [true, true],
-            "background": "corridor_office"
+            "mystery": [
+                true,
+                true
+            ],
+            "background": "corridor_office",
+            "volume": 0
         },
         {
             "character": "phil",
             "expression": "neutral",
             "text": "(Ah, si seulement j'étais aussi doué que toi Diane...)",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "background": "corridor_office"
         },
         {
             "character": "phil",
             "expression": "neutral",
             "text": "(Allez, encore une fois pour être sûr. Bonjour Madame la Présidente, je viens solliciter...)",
-            "mystery": [true, true],
+            "mystery": [
+                true,
+                true
+            ],
             "background": "corridor_office"
         },
         {
@@ -272,7 +339,10 @@
         {
             "character": "phil",
             "expression": "surprised",
-            "mystery": [false, true],
+            "mystery": [
+                false,
+                true
+            ],
             "text": "Euh, Phil ! Je suis ici pour...",
             "background": "corridor_office"
         },
@@ -330,12 +400,16 @@
             "character": "hector",
             "expression": "neutral",
             "text": "Madame la Présidente.",
-            "background": "office"
+            "background": "office",
+            "volume": 1
         },
         {
             "character": "olympe",
             "expression": "neutral",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "text": "Hector, déjà de retour ? Quelle agréable surprise ! Qui est ce jeune homme qui t'accompagne ?",
             "background": "office"
         },
@@ -355,7 +429,10 @@
             "character": "olympe",
             "expression": "happy",
             "text": "Mais c'est merveilleux ! Dis-m'en plus sur toi, mon super entraîneur !",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "background": "office"
         },
         {
@@ -368,7 +445,10 @@
             "character": "olympe",
             "expression": "neutral",
             "text": "Pas encore entraîneur sportif tu veux dire. Quel est ton nom ?",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "background": "office"
         },
         {
@@ -382,7 +462,10 @@
             "expression": "angry",
             "text": "Comment ça tu ne veux pas devenir l'entraîneur sportif de notre équipe pour le FIGHT ? Tu n'es pas prêt à faire ton devoir de citoyen Elysien ?",
             "background": "office",
-            "mystery": [true, false],
+            "mystery": [
+                true,
+                false
+            ],
             "shake": "medium"
         },
         {
