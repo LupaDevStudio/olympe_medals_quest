@@ -418,12 +418,16 @@ class DialogLayout(RelativeLayout):
         -------
         None
         """
+
+        # Reset variables
+        self.sound_mixer.stop()
+        self.is_thinking = False
+
         # Finish the display of the current frame if not finished
         if self.index_scrolling_label < len(self.dialog_text):
             # Clock.unschedule(self.update_label)
             self.text = self.dialog_text
             self.index_scrolling_label = len(self.dialog_text) + 1
-            self.sound_mixer.stop()
 
         # Go to the next frame if finished
         else:
