@@ -60,7 +60,7 @@ if not os.path.exists(PATH_USER_DATA):
             "sound_volume": 0.5,
             "music_volume": 0.5,
             "language": "english",
-            "text_scrolling_speed": 0.03
+            "talking_speed": 35
         },
         "tutorial": {},
         "game": {}

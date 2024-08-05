@@ -379,7 +379,7 @@ class DialogLayout(RelativeLayout):
         self.format_text()
         self.text = ""
         self.index_scrolling_label = 0
-        self.text_delay = self.talking_speed_base / \
+        self.text_delay = 1 / self.talking_speed_base / \
             self.talking_speed_dict["characters"][character_id] / \
             self.talking_speed_dict["emotions"][expression]
         self.voice_delay = self.text_delay * 2

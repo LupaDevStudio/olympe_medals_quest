@@ -35,6 +35,123 @@
         pos_hint: {"center_x": 0.5}
         y: olympe_card_language.y - self.height - root.font_ratio*MARGIN
 
+    # Music
+    Label:
+        id: music_volume
+        text: root.music_label
+        font_size: root.font_ratio * FONTS_SIZES.label
+        font_name: PATH_TEXT_FONT
+        size_hint: (0.4, None)
+        height: root.font_ratio*SKILL_HEIGHT
+        x: olympe_card_configuration.x+2*MARGIN*root.font_ratio
+        y: olympe_card_configuration.y+root.font_ratio*(2*SKILL_HEIGHT+3*MARGIN)
+        shorten: False
+        text_size: self.size
+        halign: "left"
+        valign: "middle"
+
+    IconPressedButton:
+        id: music_minus_button
+        icon_source: PATH_ICONS + "minus.png"
+        size_hint: (None, None)
+        height: music_volume.height
+        width: self.height
+        y: music_volume.y
+        x: music_volume.x + music_volume.width + MARGIN*root.font_ratio
+        font_ratio: root.font_ratio
+        release_function: root.reduce_music
+        disable_button: root.music_level == 0
+
+    IconPressedButton:
+        id: music_plus_button
+        icon_source: PATH_ICONS + "plus.png"
+        size_hint: (None, None)
+        height: music_minus_button.height
+        width: self.height
+        y: music_minus_button.y
+        x: olympe_card_configuration.width+olympe_card_configuration.x-MARGIN*root.font_ratio-self.width
+        font_ratio: root.font_ratio
+        release_function: root.increase_music
+        disable_button: root.music_level == 10
+
+    # Sound effects
+    Label:
+        id: sound_effects_volume
+        text: root.sound_effects_label
+        font_size: music_volume.font_size
+        font_name: music_volume.font_name
+        size_hint: music_volume.size_hint
+        height: music_volume.height
+        x: music_volume.x
+        y: olympe_card_configuration.y+root.font_ratio*(SKILL_HEIGHT+2*MARGIN)
+        shorten: False
+        text_size: self.size
+        halign: "left"
+        valign: "middle"
+
+    IconPressedButton:
+        id: sound_effects_minus_button
+        icon_source: PATH_ICONS + "minus.png"
+        size_hint: (None, None)
+        height: music_minus_button.height
+        width: self.height
+        y: sound_effects_volume.y
+        x: sound_effects_volume.x + sound_effects_volume.width + MARGIN*root.font_ratio
+        font_ratio: root.font_ratio
+        release_function: root.reduce_sound_effects
+        disable_button: root.sound_effects_level == 0
+
+    IconPressedButton:
+        id: sound_effects_plus_button
+        icon_source: PATH_ICONS + "plus.png"
+        size_hint: (None, None)
+        height: sound_effects_minus_button.height
+        width: self.height
+        y: sound_effects_minus_button.y
+        x: olympe_card_configuration.width+olympe_card_configuration.x-MARGIN*root.font_ratio-self.width
+        font_ratio: root.font_ratio
+        release_function: root.increase_sound_effects
+        disable_button: root.sound_effects_level == 10
+
+    # Talking speed
+    Label:
+        id: talking_speed
+        text: root.talking_speed_label
+        font_size: music_volume.font_size
+        font_name: music_volume.font_name
+        size_hint: music_volume.size_hint
+        height: music_volume.height
+        x: music_volume.x
+        y: olympe_card_configuration.y+root.font_ratio*MARGIN
+        shorten: False
+        text_size: self.size
+        halign: "left"
+        valign: "middle"
+
+    IconPressedButton:
+        id: talking_speed_minus_button
+        icon_source: PATH_ICONS + "minus.png"
+        size_hint: (None, None)
+        height: music_minus_button.height
+        width: self.height
+        y: talking_speed.y
+        x: talking_speed.x + talking_speed.width + MARGIN*root.font_ratio
+        font_ratio: root.font_ratio
+        release_function: root.reduce_talking_speed
+        disable_button: root.talking_speed_level == 0
+
+    IconPressedButton:
+        id: talking_speed_plus_button
+        icon_source: PATH_ICONS + "plus.png"
+        size_hint: (None, None)
+        height: talking_speed_minus_button.height
+        width: self.height
+        y: talking_speed_minus_button.y
+        x: olympe_card_configuration.width+olympe_card_configuration.x-MARGIN*root.font_ratio-self.width
+        font_ratio: root.font_ratio
+        release_function: root.increase_talking_speed
+        disable_button: root.talking_speed_level == 10
+
     ### Achievements ###
 
     OlympeCard:
