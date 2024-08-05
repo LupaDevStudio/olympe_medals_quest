@@ -72,7 +72,15 @@
         "fire": "Licencier",
         "fatigue": "Fatigue : @ %"
     },
-    "settings": {},
+    "settings": {
+        "language": "Langue",
+        "configuration": "Configuration",
+        "achievements": "Accomplissements",
+        "tutorial": "Tutoriel",
+        "see_tutorial": "Lire tutoriel",
+        "credits": "Crédits",
+        "see_credits": "Voir générique"
+    },
     "sports_menu": {
         "title": "Sports"
     },

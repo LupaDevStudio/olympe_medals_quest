@@ -353,6 +353,7 @@ class PressedSpinner(ButtonBehavior, RelativeLayout):
 
     press_button = BooleanProperty(False)
     disable_button = BooleanProperty(False)
+    confirm_function = ObjectProperty(lambda: 1 + 1)
 
     ### Spinner variables ###
 
@@ -430,6 +431,7 @@ class PressedSpinner(ButtonBehavior, RelativeLayout):
 
     def _close_dropdown(self, *largs):
         self.is_open = False
+        self.confirm_function(self.text)
 
     def _on_dropdown_select(self, instance, data, *largs):
         self.text = data
