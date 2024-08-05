@@ -97,6 +97,3 @@ class DialogScreen(OlympeScreen):
             path_background = PATH_BACKGROUNDS + f"{background}.jpg"
 
         self.set_back_image_path(path_background)
-
-    def pass_current_frame(self):
-        self.ids.dialog_layout.pass_current_frame()

@@ -31,7 +31,8 @@ from kivy.core.audio import Sound, SoundLoader
 
 from tools.path import (
     PATH_TEXT_FONT,
-    PATH_TITLE_FONT
+    PATH_TITLE_FONT,
+    PATH_BACKGROUNDS
 )
 from tools.graphics import (
     COLORS,
@@ -348,7 +349,6 @@ class DialogLayout(RelativeLayout):
         current_dialog_dict: dict = self.dialog_content_list[self.dialog_frame_counter]
 
         # Set the background of the screen
-        # TODO faire une transition smooth entre les différents backgrounds
         background: str = current_dialog_dict["background"]
         self.parent.set_background(background)
 
@@ -394,12 +394,17 @@ class DialogLayout(RelativeLayout):
             shake_animation: Animation = get_shake_animation(
                 self.parent, shake_type=shake_type)
             shake_animation.start(self.parent)
+            self.ids.next_button.disable_button = True
+            shake_animation.on_complete = self.enable_next_button_when_completed
 
         # Play the sound effect if needed
         if "sound" in current_dialog_dict:
             sound_id = current_dialog_dict["sound"]
             print(sound_id)
             self.sound_mixer.play(sound_id)
+
+    def enable_next_button_when_completed(self, *args):
+        self.ids.next_button.disable_button = False
 
     def pass_current_frame(self):
         """
