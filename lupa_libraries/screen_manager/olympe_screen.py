@@ -37,9 +37,11 @@ from tools.constants import (
     TEXT,
     USER_DATA
 )
+from tools.graphics import (
+    SCROLLVIEW_WIDTH
+)
 from tools.path import (
-    PATH_ICONS,
-    PATH_BACKGROUNDS
+    PATH_ICONS
 )
 from tools.data_structures import (
     Game
@@ -176,23 +178,35 @@ class OlympeScreen(ImprovedScreen):
                 self.title_screen = TEXT.general[code]
 
     def create_message_popup(self, code: str, confirm_function = lambda: 1 + 1):
+        text = TEXT.popup[code]["text"]
+        if len(text) > 300:
+            popup_size_hint = (SCROLLVIEW_WIDTH, 0.8)
+        else:
+            popup_size_hint = (SCROLLVIEW_WIDTH, 0.4)
         popup = OlympeMessagePopup(
             title=TEXT.popup[code]["title"],
-            text=TEXT.popup[code]["text"],
+            text=text,
             font_ratio=self.font_ratio,
             path_background=self.back_image_path,
-            confirm_function=confirm_function
+            confirm_function=confirm_function,
+            popup_size_hint=popup_size_hint
         )
         popup.open()
 
     def create_yes_no_popup(self, code: str, confirm_function = lambda: 1 + 1, cancel_function = lambda: 1 + 1):
+        text = TEXT.popup[code]["text"]
+        if len(text) > 300:
+            popup_size_hint = (SCROLLVIEW_WIDTH, 0.8)
+        else:
+            popup_size_hint = (SCROLLVIEW_WIDTH, 0.4)
         popup = OlympeYesNoPopup(
             title=TEXT.popup[code]["title"],
-            text=TEXT.popup[code]["text"],
+            text=text,
             font_ratio=self.font_ratio,
             path_background=self.back_image_path,
             confirm_function=confirm_function,
-            cancel_function=cancel_function
+            cancel_function=cancel_function,
+            popup_size_hint=popup_size_hint
         )
         popup.open()
 

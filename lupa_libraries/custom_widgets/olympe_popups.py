@@ -121,7 +121,7 @@ class OlympeMessagePopup(OlympePopup):
 
     text = StringProperty()
     font_size_text = StringProperty(FONTS_SIZES.label)
-    text_filling_ratio = NumericProperty(0.9)
+    text_filling_ratio = NumericProperty(0.98)
 
     button_text = StringProperty()
 
@@ -142,7 +142,7 @@ class OlympeYesNoPopup(OlympePopup):
 
     text = StringProperty()
     font_size_text = StringProperty(FONTS_SIZES.label)
-    text_filling_ratio = NumericProperty(0.9)
+    text_filling_ratio = NumericProperty(0.98)
 
     cancel_button_text = StringProperty()
     confirm_button_text = StringProperty()

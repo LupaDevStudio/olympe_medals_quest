@@ -29,13 +29,17 @@
         Label:
             id: popup_label
             text: root.text
-            size_hint: (0.8, 0.5)
-            pos_hint: {"center_x":0.5,"center_y":0.75}
+            size_hint: (1, None)
+            pos_hint: {"center_x": 0.5}
+            height: root.height - cancel_button.height - 4*MARGIN*root.font_ratio - HEADER_HEIGHT*root.font_ratio
+            y: cancel_button.y + cancel_button.height + 2*MARGIN*root.font_ratio
             font_size: root.font_size_text * root.font_ratio
             font_name: root.text_font_name
             color: root.font_color
             shorten: False
-            text_size: (root.width*root.text_filling_ratio,None)
+            text_size: (self.width*root.text_filling_ratio, self.height)
+            valign: "top"
+            halign: "left"
             line_height: 1
 
         PressedButton:
@@ -58,13 +62,13 @@
             text: root.text
             size_hint: (1, None)
             pos_hint: {"center_x": 0.5}
-            height: root.height - cancel_button.height - 4*MARGIN*root.font_ratio
-            y: cancel_button.x + cancel_button.height + 2*MARGIN*root.font_ratio
+            height: root.height - cancel_button.height - 4*MARGIN*root.font_ratio - HEADER_HEIGHT*root.font_ratio
+            y: cancel_button.y + cancel_button.height + 2*MARGIN*root.font_ratio
             font_size: root.font_size_text * root.font_ratio
             font_name: root.text_font_name
             color: root.font_color
             shorten: False
-            text_size: (root.width*root.text_filling_ratio, self.height)
+            text_size: (self.width*root.text_filling_ratio, self.height)
             valign: "top"
             halign: "left"
             line_height: 1
