@@ -2,12 +2,12 @@
     "olympe": {
         "name": "Olympe",
         "title": "Présidente d'Elysia",
-        "voice": "feminine_voice_medium"
+        "voice": "feminine_voice_medium_light"
     },
     "hector": {
         "name": "Hector",
         "title": "Ministre des Sports d'Elysia",
-        "voice": "masculine_voice_medium_heavy"
+        "voice": "masculine_voice_heavy"
     },
     "phil": {
         "name": "Phil",
@@ -22,17 +22,17 @@
     "atlas": {
         "name": "Atlas",
         "title": "Président du FIGHT",
-        "voice": "masculine_voice_heavy"
+        "voice": "masculine_voice_very_heavy"
     },
     "journalist": {
         "name": "Ariane",
         "title": "Journaliste officielle de la Voix des Champions",
-        "voice": "feminine_voice_medium_light"
+        "voice": "feminine_voice_light"
     },
     "ariane": {
         "name": "Ariane",
         "title": "Journaliste d'Elysia News",
-        "voice": "feminine_voice_medium_light"
+        "voice": "feminine_voice_light"
     },
     "theresa": {
         "name": "Thérèse",
@@ -42,16 +42,16 @@
     "diana": {
         "name": "Diane",
         "title": "Petite sœur de Phil, étudiante en médecine",
-        "voice": "feminine_voice_light"
+        "voice": "feminine_voice_very_light"
     },
     "simon": {
         "name": "Simon",
         "title": "TITRE",
-        "voice": "masculine_voice_heavy"
+        "voice": "masculine_voice_very_heavy"
     },
     "narcisse": {
         "name": "Narcisse",
         "title": "TITRE",
-        "voice": "masculine_voice_medium"
+        "voice": "masculine_voice_medium_heavy"
     }
 }

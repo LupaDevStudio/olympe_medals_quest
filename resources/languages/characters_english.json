@@ -2,7 +2,7 @@
     "olympe": {
         "name": "Olympe",
         "title": "President of Elysia",
-        "voice": "feminine_voice_medium"
+        "voice": "feminine_voice_medium_light"
     },
     "hector": {
         "name": "Hector",
@@ -27,12 +27,12 @@
     "journalist": {
         "name": "Ariane",
         "title": "Official journalist of Champions Voice",
-        "voice": "feminine_voice_medium_light"
+        "voice": "feminine_voice_light"
     },
     "ariane": {
         "name": "Ariane",
         "title": "Journalist of Elysia News",
-        "voice": "feminine_voice_medium_light"
+        "voice": "feminine_voice_light"
     },
     "theresa": {
         "name": "Theresa",
@@ -42,7 +42,7 @@
     "diana": {
         "name": "Diana",
         "title": "Phil's little sister, student in medicine",
-        "voice": "feminine_voice_light"
+        "voice": "feminine_voice_very_light"
     },
     "simon": {
         "name": "Simon",
