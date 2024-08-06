@@ -1,0 +1,48 @@
+#:kivy 2.2.1
+
+<OlympePopup>:
+
+    size_hint: self.popup_size_hint
+    # separator_color: (0, 0, 0, 0)
+    # background_color: (0,0,0,0)
+    # background: ""
+    # title_color: root.font_color
+    # title_align: "left"
+    # title_font: root.text_font_name
+    # title_size: root.font_size * self.font_ratio
+    auto_dismiss: False
+    # overlay_color: (0,0,0,0)
+
+    canvas.after:
+        Color:
+            rgba: root.border_color
+        Line:
+            width: root.border_width*self.font_ratio
+            rectangle: (self.x, self.y, self.width, self.height)
+
+<OlympeMessagePopup>:
+
+    FloatLayout:
+        id: popup_layout
+        size_hint: root.popup_size_hint
+
+        Label:
+            id: popup_label
+            text: root.text
+            size_hint: (0.8, 0.5)
+            pos_hint: {"center_x":0.5,"center_y":0.75}
+            font_size: root.font_size_text * root.font_ratio
+            font_name: root.text_font_name
+            color: root.font_color
+            shorten: False
+            text_size: (root.width*root.text_filling_ratio,None)
+            line_height: 1
+
+        PressedButton:
+            text: "Test"
+            size_hint: (0.3, None)
+            height: BUTTON_HEIGHT*root.font_ratio
+            x: root.x + MARGIN*root.font_ratio
+            y: root.y + MARGIN*root.font_ratio
+            font_ratio: root.font_ratio
+            # release_function: root.launch_credits

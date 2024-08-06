@@ -38,7 +38,9 @@ from lupa_libraries.custom_widgets import (
     CompleteMedalsCard,
     SmallMedalsCard,
     SaveCard,
-    StatBar
+    StatBar,
+    OlympeMessagePopup,
+    SeparationLine
 )
 
 ### Dialog generator ###

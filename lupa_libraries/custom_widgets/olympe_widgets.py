@@ -213,6 +213,7 @@ class OlympeCard(RelativeLayout):
 class SeparationLine(RelativeLayout):
 
     font_ratio = NumericProperty(1)
+    line_width = NumericProperty(BUTTON_LINE_WIDTH)
 
 
 class SportLabelButton(ButtonBehavior, RelativeLayout):
