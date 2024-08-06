@@ -301,7 +301,19 @@
         }
     },
     "tutorial": {},
-    "popup": {},
+    "popup": {
+        "close": "Close",
+        "yes": "Oui",
+        "no": "Non",
+        "test": {
+            "title": "Title of the popup",
+            "text": "Text dans la popup"
+        },
+        "fire_athlete": {
+            "title": "Licenciement",
+            "text": "Vous vous apprêtez à licencier un athlète. Il quittera donc votre équipe et vous ne pourrez plus l'entraîner, mais les médailles qu'il vous a rapportées seront conservées dans l'historique.\n\nSouhaitez-vous vraiment poursuivre ? Cette action ne pourra pas être par la suite annulée."
+        }
+    },
     "injuries": {
         "": "En forme"
     }

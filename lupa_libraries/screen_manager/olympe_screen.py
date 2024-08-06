@@ -23,6 +23,10 @@ from kivy.properties import (
 from lupa_libraries.screen_manager import (
     ImprovedScreen
 )
+from lupa_libraries.custom_widgets import (
+    OlympeMessagePopup,
+    OlympeYesNoPopup
+)
 from tools.constants import (
     SCREEN_MONEY_RIGHT,
     SCREEN_SPEND_MONEY_RIGHT,
@@ -170,6 +174,27 @@ class OlympeScreen(ImprovedScreen):
                     "@", str(self.GAME.current_edition))
             else:
                 self.title_screen = TEXT.general[code]
+
+    def create_message_popup(self, code: str, confirm_function = lambda: 1 + 1):
+        popup = OlympeMessagePopup(
+            title=TEXT.popup[code]["title"],
+            text=TEXT.popup[code]["text"],
+            font_ratio=self.font_ratio,
+            path_background=self.back_image_path,
+            confirm_function=confirm_function
+        )
+        popup.open()
+
+    def create_yes_no_popup(self, code: str, confirm_function = lambda: 1 + 1, cancel_function = lambda: 1 + 1):
+        popup = OlympeYesNoPopup(
+            title=TEXT.popup[code]["title"],
+            text=TEXT.popup[code]["text"],
+            font_ratio=self.font_ratio,
+            path_background=self.back_image_path,
+            confirm_function=confirm_function,
+            cancel_function=cancel_function
+        )
+        popup.open()
 
     def on_leave(self, *args):
         super().on_leave(*args)

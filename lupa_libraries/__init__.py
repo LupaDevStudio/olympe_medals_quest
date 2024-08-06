@@ -40,6 +40,7 @@ from lupa_libraries.custom_widgets import (
     SaveCard,
     StatBar,
     OlympeMessagePopup,
+    OlympeYesNoPopup,
     SeparationLine
 )
 

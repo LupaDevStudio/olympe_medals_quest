@@ -39,10 +39,53 @@
             line_height: 1
 
         PressedButton:
-            text: "Test"
-            size_hint: (0.3, None)
+            text: root.button_text
+            size_hint: (0.4, None)
+            height: BUTTON_HEIGHT*root.font_ratio
+            pos_hint: {"center_x": 0.5}
+            y: root.y + MARGIN*root.font_ratio
+            font_ratio: root.font_ratio
+            release_function: root.confirm
+
+<OlympeYesNoPopup>:
+
+    FloatLayout:
+        id: popup_layout
+        size_hint: root.popup_size_hint
+
+        Label:
+            id: popup_label
+            text: root.text
+            size_hint: (1, None)
+            pos_hint: {"center_x": 0.5}
+            height: root.height - cancel_button.height - 4*MARGIN*root.font_ratio
+            y: cancel_button.x + cancel_button.height + 2*MARGIN*root.font_ratio
+            font_size: root.font_size_text * root.font_ratio
+            font_name: root.text_font_name
+            color: root.font_color
+            shorten: False
+            text_size: (root.width*root.text_filling_ratio, self.height)
+            valign: "top"
+            halign: "left"
+            line_height: 1
+
+        PressedButton:
+            id: cancel_button
+            text: root.cancel_button_text
+            size_hint: (None, None)
+            width: (root.width-3*MARGIN*root.font_ratio)/2
             height: BUTTON_HEIGHT*root.font_ratio
             x: root.x + MARGIN*root.font_ratio
             y: root.y + MARGIN*root.font_ratio
             font_ratio: root.font_ratio
-            # release_function: root.launch_credits
+            release_function: root.cancel
+
+        PressedButton:
+            text: root.confirm_button_text
+            size_hint: (None, None)
+            width: cancel_button.width 
+            height: BUTTON_HEIGHT*root.font_ratio
+            x: root.x + self.width + 2*MARGIN*root.font_ratio
+            y: root.y + MARGIN*root.font_ratio
+            font_ratio: root.font_ratio
+            release_function: root.confirm

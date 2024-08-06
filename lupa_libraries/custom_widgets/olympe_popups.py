@@ -123,10 +123,42 @@ class OlympeMessagePopup(OlympePopup):
     font_size_text = StringProperty(FONTS_SIZES.label)
     text_filling_ratio = NumericProperty(0.9)
 
-    def __init__(self, confirm_function=lambda: 1 + 1, **kwargs):
+    button_text = StringProperty()
+
+    confirm_function = ObjectProperty(lambda: 1 + 1)
+
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.confirm_function = confirm_function
+        self.button_text = TEXT.popup["close"]
 
     def confirm(self):
         self.dismiss()
         self.confirm_function()
+
+class OlympeYesNoPopup(OlympePopup):
+    """
+    Class to create a popup with a message and two buttons.
+    """
+
+    text = StringProperty()
+    font_size_text = StringProperty(FONTS_SIZES.label)
+    text_filling_ratio = NumericProperty(0.9)
+
+    cancel_button_text = StringProperty()
+    confirm_button_text = StringProperty()
+
+    cancel_function = ObjectProperty(lambda: 1 + 1)
+    confirm_function = ObjectProperty(lambda: 1 + 1)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.confirm_button_text = TEXT.popup["yes"]
+        self.cancel_button_text = TEXT.popup["no"]
+
+    def confirm(self):
+        self.dismiss()
+        self.confirm_function()
+
+    def cancel(self):
+        self.dismiss()
+        self.cancel_function()

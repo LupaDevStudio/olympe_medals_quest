@@ -158,11 +158,15 @@ class AthleteScreen(OlympeScreen):
             self.medals_card = None
 
     def ask_fire_athlete(self):
-        print("TODO fire athlete")
+        self.create_yes_no_popup(
+            code="fire_athlete",
+            confirm_function=self.fire_athlete
+        )
 
     def fire_athlete(self):
         self.GAME.fire_athlete(athlete_id=self.athlete.id)
         USER_DATA.save_changes()
+        self.go_backwards()
 
     def ask_redraw(self, widget):
         if widget == self.medals_card:

@@ -216,10 +216,4 @@ class SettingsScreen(OlympeScreen):
 
     def launch_tutorial(self):
         print("TODO launch the tutorial")
-        popup = OlympeMessagePopup(
-            title="Absence du projet",
-            text=f"Test de texte",
-            font_ratio=self.font_ratio,
-            path_background=self.back_image_path
-        )
-        popup.open()
+        self.create_message_popup(code="test")

@@ -51,7 +51,8 @@ from lupa_libraries.custom_widgets.custom_scrollview import (
     MyScrollViewVerticalLayout
 )
 from lupa_libraries.custom_widgets.olympe_popups import (
-    OlympeMessagePopup
+    OlympeMessagePopup,
+    OlympeYesNoPopup
 )
 
 ### Popups ###
