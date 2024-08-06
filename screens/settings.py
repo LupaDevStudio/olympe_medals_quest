@@ -126,9 +126,10 @@ class SettingsScreen(OlympeScreen):
                 "level": self.talking_speed_level
             }
         ]
-        small_margin = 5
         offset_x = self.ids.music_minus_button.x + self.ids.music_minus_button.width
-        width = (self.ids.music_plus_button.x - offset_x - 2*MARGIN*self.font_ratio - small_margin*self.font_ratio*9)/10
+        width = (self.ids.music_plus_button.x - offset_x - 2*MARGIN*self.font_ratio)/10
+        small_margin = width / 2
+        width = width - small_margin
 
         for dict_content in list_content:
             y_pos = dict_content["y"]
@@ -140,7 +141,7 @@ class SettingsScreen(OlympeScreen):
                     color = COLORS.black
                 current_bar = StatBar(
                     y=y_pos,
-                    x=offset_x+i*width+self.font_ratio*(MARGIN+i*small_margin),
+                    x=offset_x+i*width+self.font_ratio*MARGIN+i*small_margin,
                     size_hint=(None, None),
                     height=SKILL_HEIGHT*self.font_ratio,
                     width=width*4,

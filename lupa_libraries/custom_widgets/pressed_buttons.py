@@ -375,6 +375,7 @@ class PressedSpinner(ButtonBehavior, RelativeLayout):
         fbind('values', self._update_dropdown)
         fbind('size', self._update_dropdown_size)
         fbind('text_autoupdate', self._update_dropdown)
+        fbind('font_ratio', self._update_dropdown)
         build_dropdown()
 
     def _build_dropdown(self, *largs):
@@ -414,7 +415,7 @@ class PressedSpinner(ButtonBehavior, RelativeLayout):
             cls = Factory.get(cls)
         dp.clear_widgets()
         for value in values:
-            item = cls(text=value)
+            item = cls(text=value, font_ratio=self.font_ratio)
             item.height = self.height if self.sync_height else item.height
             item.bind(on_release=lambda option: dp.select(option.text))
             dp.add_widget(item)

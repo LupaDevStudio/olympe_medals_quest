@@ -12,6 +12,7 @@
         height: root.font_ratio*(HEADER_HEIGHT+BUTTON_HEIGHT+2*MARGIN)
         pos_hint: {"center_x": 0.5}
         y: root.height*(0.975-TOP_BAR_HEIGHT) - self.height
+        font_ratio: root.font_ratio
 
     PressedSpinner:
         id: language_spinner
@@ -34,6 +35,7 @@
         height: root.font_ratio*(HEADER_HEIGHT+SKILL_HEIGHT*3+4*MARGIN)
         pos_hint: {"center_x": 0.5}
         y: olympe_card_language.y - self.height - root.font_ratio*MARGIN
+        font_ratio: root.font_ratio
 
     # Music
     Label:
@@ -166,6 +168,7 @@
         pos_hint: {"center_x": 0.5}
         y: olympe_card_credits.y + olympe_card_credits.height + root.font_ratio*MARGIN
         opacity: 1 if self.height > HEADER_HEIGHT*root.font_ratio else 0
+        font_ratio: root.font_ratio
 
     ### Credits ###
 
@@ -178,6 +181,7 @@
         height: root.font_ratio*(HEADER_HEIGHT+BUTTON_HEIGHT+2*MARGIN)
         pos_hint: {"x": (1-SCROLLVIEW_WIDTH)/2}
         y: root.height*0.025
+        font_ratio: root.font_ratio
 
     PressedButton:
         text: root.see_credits_label
@@ -200,6 +204,7 @@
         height: olympe_card_credits.height
         pos_hint: {"right": 1-((1-SCROLLVIEW_WIDTH)/2)}
         y: olympe_card_credits.y
+        font_ratio: root.font_ratio
 
     PressedButton:
         text: root.see_tutorial_label

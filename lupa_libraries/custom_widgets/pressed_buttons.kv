@@ -177,7 +177,7 @@
 
 <PressedSpinnerOption>:
 
-    font_size: self.parent.parent.font_size if self.parent is not None else 12
+    font_size: self.parent.parent.font_size*self.font_ratio if self.parent is not None else 12
     color: self.parent.parent.text_color if self.parent is not None else (0,0,0,1)
     pressed_color: self.parent.parent.pressed_color if self.parent is not None else (0.5,0.5,0.5,1)
     background_color: self.parent.parent.background_color if self.parent is not None else (0, 0, 0, 1)
