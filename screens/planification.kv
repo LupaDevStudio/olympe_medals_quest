@@ -29,4 +29,5 @@
         size_hint: (0.4, BUTTON_BOTTOM_BAR_HEIGHT*BOTTOM_BAR_HEIGHT)
         pos_hint: {"center_x": 0.5, "y": 0.025/2+(1-BUTTON_BOTTOM_BAR_HEIGHT)/2*BOTTOM_BAR_HEIGHT}
         font_ratio: root.font_ratio
+        disable_button: root.spent_coins > root.money_amount
         release_function: root.ask_validate_planning

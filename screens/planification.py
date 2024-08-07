@@ -132,7 +132,10 @@ class PlanificationScreen(OlympeScreen):
         )
 
     def ask_validate_planning(self):
-        print("TODO ask validation planning")
+        self.create_yes_no_popup(
+            code="validate_planning",
+            confirm_function=self.validate_planning
+        )
 
     def validate_planning(self):
         print("TODO validate planning")

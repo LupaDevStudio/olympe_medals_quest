@@ -336,6 +336,10 @@
         "recruit_athlete": {
             "title": "Recrutement d'un athlète",
             "text": "Êtes-vous sûr de vouloir recruter cet athlète ? Les coûts de recrutement ne seront pas remboursés si vous changez d'avis."
+        },
+        "validate_planning": {
+            "title": "Validation de l'emploi du temps",
+            "text": "Êtes-vous satisfait de l'emploi du temps que vous avez créé pour ce trimestre ? Il ne pourra plus être modifié cette étape de validation passée."
         }
     },
     "difficulty": {

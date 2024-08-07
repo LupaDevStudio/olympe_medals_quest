@@ -216,4 +216,3 @@ class SettingsScreen(OlympeScreen):
 
     def launch_tutorial(self):
         print("TODO launch the tutorial")
-        self.create_message_popup(code="test")

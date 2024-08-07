@@ -65,10 +65,6 @@ class ScheduleScreen(OlympeScreen):
     def reload_kwargs(self, dict_kwargs):
         self.athlete = dict_kwargs["athlete"]
         self.header_text = self.athlete.first_name + " " + self.athlete.name
-        self.spent_coins = - self.GAME.get_trimester_gained_total_money()
-        self.athlete_money_gain = self.athlete.get_trimester_gained_money()
-
-        self.reload_info()
 
     def reload_language(self):
         super().reload_language()
@@ -78,6 +74,10 @@ class ScheduleScreen(OlympeScreen):
         self.change_text = my_text["change"]
 
     def reload_info(self):
+        # Money
+        self.spent_coins = - self.GAME.get_trimester_gained_total_money()
+        self.athlete_money_gain = self.athlete.get_trimester_gained_money()
+
         self.fatigue_label = TEXT.general["fatigue_evolution"].replace(
             " : ", "\n").replace("@", str(self.athlete.fatigue)).replace("€", "10") # TODO
         self.injury_label = TEXT.general["injury_evolution"].replace(
@@ -97,6 +97,7 @@ class ScheduleScreen(OlympeScreen):
 
         self.bind(activities_ids_list=self.update_activities_label)
         self.activities_ids_list = self.athlete.current_planning
+        self.reload_info()
 
     def update_activities_label(self, *args):
         self.ids.first_activity.text = TEXT.activities[self.activities_ids_list[0]]["name"]

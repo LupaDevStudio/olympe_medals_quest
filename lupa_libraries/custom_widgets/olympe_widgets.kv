@@ -720,16 +720,17 @@
         id: rank_indicator
         text: root.text
         pos_hint: {"x":0,"center_y":0.5}
-        size_hint: (0.6, 1)
+        size_hint: (None, 1)
+        width: root.width - tutorial_icon.width - MARGIN*root.font_ratio
         font_size: root.font_ratio * root.font_size
         font_name: root.text_font_name
         color: root.font_color
-        size_hint: (None, None)
-        size: self.texture_size
+        text_size: self.size
         halign: "left"
         valign: "middle"
 
     IconPressedButton:
+        id: tutorial_icon
         icon_source: root.icon_source
         size_hint: (None, 1)
         width: self.height
