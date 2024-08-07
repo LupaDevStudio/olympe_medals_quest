@@ -7,7 +7,7 @@
 
 <PressedThemeBackground>:
     # Background
-    canvas.before:
+    canvas:
         # Pressed rectangle
         Color:
             rgba: self.pressed_color if not self.disable_button else self.pressed_disabled_color
@@ -180,7 +180,7 @@
     font_size: self.parent.parent.font_size*self.font_ratio if self.parent is not None else 12
     color: self.parent.parent.text_color if self.parent is not None else (0,0,0,1)
     pressed_color: self.parent.parent.pressed_color if self.parent is not None else (0.5,0.5,0.5,1)
-    background_color: self.parent.parent.background_color if self.parent is not None else (0, 0, 0, 1)
+    background_color: self.parent.parent.background_disabled_color if self.parent is not None else (0, 0, 0, 1)
 
     size_hint_y: None
     # height: "48dp"
@@ -192,11 +192,6 @@
 
     canvas.before:
         Color:
-            rgba: (0.5,0.5,0.5,1)
-        Line:
-            points: [0+OUTLINE_RECTANGLE/2,self.y,self.width-OUTLINE_RECTANGLE/2,self.y]
-            width: 1
-        Color:
             rgba: self.background_color
         RoundedRectangle:
             pos:self.pos
@@ -206,7 +201,7 @@
 <PressedDropDown>:
 
     font_size: self.attach_to.font_size if self.attach_to is not None else 12
-    background_color: self.attach_to.dropdown_color if self.attach_to is not None else (0, 0, 0, 1)
+    background_color: self.attach_to.background_color if self.attach_to is not None else (0, 0, 0, 1)
     background_disabled_color: self.attach_to.dropdown_color if self.attach_to is not None else (1,1,1,1)
     pressed_color: self.attach_to.pressed_color if self.attach_to is not None else (1,1,1,1)
     pressed_disabled_color: self.attach_to.pressed_disabled_color if self.attach_to is not None else (1,1,1,1)
@@ -217,19 +212,25 @@
     max_height: self.attach_to.pos[1]*0.9 if self.attach_to is not None else None
 
     # Background
-    PressedThemeBackground:
-        pos: (0,0)
-        size: root.size
-        background_color: root.background_color
-        background_disabled_color: root.background_disabled_color
-        pressed_color: root.pressed_color
-        pressed_disabled_color: root.pressed_disabled_color
-        radius: root.radius
-        font_ratio: root.font_ratio
-        disable_button: root.disable_button
-        press_button: root.press_button
+    # PressedThemeBackground:
+    #     pos: (0,0)
+    #     size: root.size
+    #     background_color: root.background_color
+    #     background_disabled_color: root.background_disabled_color
+    #     pressed_color: root.pressed_color
+    #     pressed_disabled_color: root.pressed_disabled_color
+    #     radius: root.radius
+    #     font_ratio: root.font_ratio
+    #     disable_button: root.disable_button
+    #     press_button: root.press_button
     
-    
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        RoundedRectangle:
+            pos:self.pos
+            size:self.size
+            radius: [self.radius * self.font_ratio]*4
 
 <PressedSpinner>:
 

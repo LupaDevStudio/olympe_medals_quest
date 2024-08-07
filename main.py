@@ -137,8 +137,10 @@ class MainApp(App, Widget):
 
     def on_stop(self):
         super().on_stop()
-        USER_DATA.stop_game(id_game = self.root_window.children[0].id_game)
+        # AGATHE : pourquoi ne pas mettre id_game dans les shared data plutôt ?
+        USER_DATA.stop_game(id_game=self.root_window.children[0].id_game)
         USER_DATA.save_changes()
+
 
 # Run the application
 if __name__ == "__main__":
