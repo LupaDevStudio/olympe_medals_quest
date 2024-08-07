@@ -54,18 +54,13 @@ class GameScreen(OlympeScreen):
 
     dict_type_screen = {
         SCREEN_TITLE_YEAR: True,
-        SCREEN_BACK_ARROW: "save",
+        SCREEN_BACK_ARROW: "backwards",
         SCREEN_MONEY_RIGHT: True
     }
     launch_main_action_label = StringProperty()
     main_action = "plan"  # can be "plan" or "begin_competition_{mode}"
     our_country_label = StringProperty()
     notifications_list = ListProperty([])
-
-    def __init__(self, back_image_path=None, **kw):
-        super().__init__(back_image_path, **kw)
-        # Redefine the function for the back arrow
-        self.ids.back_arrow.release_function = self.go_backwards
 
     def reload_kwargs(self, dict_kwargs: dict):
         has_seen_notification = dict_kwargs.get("has_seen_notification", False)
@@ -111,7 +106,9 @@ class GameScreen(OlympeScreen):
     def go_backwards(self):
         self.GAME.set_last_time_played()
         USER_DATA.save_changes()
-        super().go_backwards()
+        self.go_to_next_screen(
+            screen_name="save"
+        )
 
     def update_notification_panel(self):
 
