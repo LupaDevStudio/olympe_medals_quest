@@ -173,8 +173,9 @@ class SaveScreen(OlympeScreen):
             code="choose_difficulty",
             confirm_function=self.start_new_game)
 
-    def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]):
-        id_game = USER_DATA.start_new_game(difficulty=difficulty)
+    def start_new_game(self, name_difficulty: str):
+        code_difficulty: Literal["easy", "medium", "difficult"] = TEXT.difficulty[name_difficulty]
+        id_game = USER_DATA.start_new_game(difficulty=code_difficulty)
         USER_DATA.save_changes()
         self.launch_game(id_game=id_game)
 

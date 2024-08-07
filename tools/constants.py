@@ -47,7 +47,7 @@ __version__ = "0.0.7"
 
 ### Mode ###
 
-DEBUG_MODE = False
+DEV_MODE = True
 FPS = 30
 MSAA_LEVEL = 2
 
@@ -61,9 +61,7 @@ if not os.path.exists(PATH_USER_DATA):
             "music_volume": 0.5,
             "language": "english",
             "talking_speed": 35
-        },
-        "tutorial": {},
-        "game": {}
+        }
     }
     save_json_file(PATH_USER_DATA, default_user_data)
 

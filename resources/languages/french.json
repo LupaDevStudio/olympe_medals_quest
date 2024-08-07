@@ -325,6 +325,11 @@
             "values": ["Facile", "Medium", "Difficile"]
         }
     },
+    "difficulty": {
+        "Facile": "easy",
+        "Medium": "medium",
+        "Difficile": "difficult"
+    },
     "injuries": {
         "": "En forme"
     }

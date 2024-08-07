@@ -10,6 +10,11 @@ Module to create the dialog screen.
 
 from functools import partial
 
+### Kivy imports ###
+
+from kivy.properties import (
+    BooleanProperty
+)
 
 ### Local imports ###
 
@@ -21,7 +26,8 @@ from tools.constants import (
     CHARACTERS_DICT,
     USER_DATA,
     TEXT,
-    TALKING_SPEED_DICT
+    TALKING_SPEED_DICT,
+    DEV_MODE
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -31,11 +37,12 @@ from tools.graphics import (
     COLOR_THOUGHT
 )
 from lupa_libraries.dialog_generator.dialog_layout import (
-    get_shake_animation,
     DialogLayout
 )
-
-from tools import sound_mixer, music_mixer
+from tools import (
+    sound_mixer,
+    music_mixer
+)
 
 #############
 ### Class ###
@@ -47,19 +54,18 @@ class DialogScreen(OlympeScreen):
     Class to manage the screen of dialogs of the game.
     """
 
+    dev_mode = BooleanProperty()
+
     def reload_kwargs(self, dict_kwargs):
         dialog_code = dict_kwargs["dialog_code"]
         next_screen = dict_kwargs["next_screen"]
         next_dict_kwargs = dict_kwargs["next_dict_kwargs"]
 
         on_dialog_end = partial(
-            self.go_to_next_screen,
-            screen_name=next_screen,
-            current_dict_kwargs={
-                "dialog_code": dialog_code,
-                "next_screen": next_screen,
-                "next_dict_kwargs": next_dict_kwargs},
-            next_dict_kwargs=next_dict_kwargs
+            self.dialog_end_function,
+            dialog_code,
+            next_screen,
+            next_dict_kwargs
         )
 
         # Reset the variables and start the dialog
@@ -77,6 +83,23 @@ class DialogScreen(OlympeScreen):
             talking_speed_dict=TALKING_SPEED_DICT,
             sound_mixer=sound_mixer,
             music_mixer=music_mixer
+        )
+
+    def on_pre_enter(self, *args):
+        super().on_pre_enter(*args)
+        self.dev_mode = DEV_MODE
+
+    def dialog_end_function(self, dialog_code, next_screen, next_dict_kwargs):
+
+        USER_DATA.finish_dialog(dialog_code, self.manager.id_game)
+        USER_DATA.save_changes()
+        self.go_to_next_screen(
+            screen_name=next_screen,
+            current_dict_kwargs={
+                "dialog_code": dialog_code,
+                "next_screen": next_screen,
+                "next_dict_kwargs": next_dict_kwargs},
+            next_dict_kwargs=next_dict_kwargs
         )
 
     def set_background(self, background: str):
@@ -98,3 +121,6 @@ class DialogScreen(OlympeScreen):
             path_background = PATH_BACKGROUNDS + f"{background}.jpg"
 
         self.set_back_image_path(path_background)
+
+    def skip_dialog(self):
+        self.ids.dialog_layout.on_dialog_end()

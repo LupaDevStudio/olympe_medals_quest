@@ -1153,6 +1153,10 @@ class Game():
             else:
                 self.selected_athletes_winter[sport_id].append(athlete_id)
 
+    def finish_dialog(self, dialog_code: str):
+        if dialog_code not in self.seen_dialogs:
+            self.seen_dialogs.append(dialog_code)
+
     def export_dict(self):
         return {
             "difficulty": self.difficulty,
@@ -1190,7 +1194,8 @@ class UserData():
     def __init__(self) -> None:
         data = load_json_file(PATH_USER_DATA)
         self.settings = data["settings"]
-        self.tutorial = data["tutorial"]
+        self.tutorial = data.get("tutorial", {})
+        self.seen_dialogs = data.get("seen_dialogs", [])
         self.game_1 = Game(
             dict_to_load=data["game_1"]) if \
             "game_1" in data and data["game_1"] is not None else None
@@ -1201,6 +1206,14 @@ class UserData():
             dict_to_load=data["game_3"]) if \
             "game_3" in data and data["game_3"] is not None else None
         self.save_changes()
+
+    def get_game(self, id_game: int) -> Game:
+        if id_game == 1:
+            return self.game_1
+        elif id_game == 2:
+            return self.game_2
+        else:
+            return self.game_3        
 
     def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]) -> int:
         new_game = Game(
@@ -1228,6 +1241,12 @@ class UserData():
         else:
             self.game_3 = None
 
+    def finish_dialog(self, dialog_code, id_game: int):
+        if dialog_code not in self.seen_dialogs:
+            self.seen_dialogs.append(dialog_code)
+        game: Game = self.get_game(id_game=id_game)
+        game.finish_dialog(dialog_code=dialog_code)
+
     def save_changes(self) -> None:
         """
         Save the changes in the data.
@@ -1247,7 +1266,8 @@ class UserData():
             "tutorial": self.tutorial,
             "game_1": self.game_1.export_dict() if self.game_1 is not None else None,
             "game_2": self.game_2.export_dict() if self.game_2 is not None else None,
-            "game_3": self.game_3.export_dict() if self.game_3 is not None else None
+            "game_3": self.game_3.export_dict() if self.game_3 is not None else None,
+            "seen_dialogs": self.seen_dialogs
         }
 
         # Save this dictionary
