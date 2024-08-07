@@ -238,7 +238,7 @@
         Color:
             rgba: (1,1,1,1)
         Triangle:
-            points: [self.x + self.width*TRIANGLE_REL_OFFSET,self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH),self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH/2),self.y + self.height*0.5 - self.width*TRIANGLE_REL_WIDTH/2]
+            points: [self.x + self.width*TRIANGLE_REL_OFFSET,self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2+self.size[1]*OFFSET_PRESSED//2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH),self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2+self.size[1]*OFFSET_PRESSED//2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH/2),self.y + self.height*0.5 - self.width*TRIANGLE_REL_WIDTH/2+self.size[1]*OFFSET_PRESSED//2] if not self.press_button else [self.x + self.width*TRIANGLE_REL_OFFSET,self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2-self.size[1]*OFFSET_PRESSED//2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH),self.y + self.height*0.5 + self.width*TRIANGLE_REL_WIDTH/2-self.size[1]*OFFSET_PRESSED//2, self.x + self.width*(TRIANGLE_REL_OFFSET+TRIANGLE_REL_WIDTH/2),self.y + self.height*0.5 - self.width*TRIANGLE_REL_WIDTH/2-self.size[1]*OFFSET_PRESSED//2]
 
     # Background
     PressedThemeBackground:
