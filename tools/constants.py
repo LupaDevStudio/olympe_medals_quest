@@ -59,8 +59,7 @@ if not os.path.exists(PATH_USER_DATA):
         "settings": {
             "sound_volume": 0.5,
             "music_volume": 0.5,
-            "language": "english",
-            "talking_speed": 35
+            "language": "english"
         }
     }
     save_json_file(PATH_USER_DATA, default_user_data)
@@ -93,6 +92,7 @@ for language_code in DICT_LANGUAGE_CODE_TO_NAME:
     CHARACTERS_DICT[language_code] = load_json_file(
         PATH_LANGUAGE + "characters_" + language_code + ".json")
 
+TALKING_SPEED = 35
 TALKING_SPEED_DICT = load_json_file(PATH_TALKING_SPEED_DICT)
 
 ### Screens ###

@@ -66,8 +66,6 @@ class SettingsScreen(OlympeScreen):
     music_level = NumericProperty(int(USER_DATA.settings["music_volume"]*10))
     sound_effects_label = StringProperty()
     sound_effects_level = NumericProperty(int(USER_DATA.settings["sound_volume"]*10))
-    talking_speed_label = StringProperty()
-    talking_speed_level = NumericProperty(int((USER_DATA.settings["talking_speed"]-20)/3))
     list_bars = []
 
     ### Achievements ###
@@ -100,7 +98,6 @@ class SettingsScreen(OlympeScreen):
         self.configuration_label = my_text["configuration"]
         self.music_label = my_text["music"]
         self.sound_effects_label = my_text["sound_effects"]
-        self.talking_speed_label = my_text["talking_speed"]
         self.achievements_label = my_text["achievements"]
         self.tutorial_label = my_text["tutorial"]
         self.see_tutorial_label = my_text["see_tutorial"]
@@ -121,10 +118,6 @@ class SettingsScreen(OlympeScreen):
             {
                 "y": self.ids.sound_effects_minus_button.y,
                 "level": self.sound_effects_level
-            },
-            {
-                "y": self.ids.talking_speed_minus_button.y,
-                "level": self.talking_speed_level
             }
         ]
         offset_x = self.ids.music_minus_button.x + self.ids.music_minus_button.width
@@ -193,18 +186,6 @@ class SettingsScreen(OlympeScreen):
     def increase_sound_effects(self):
         self.sound_effects_level += 1
         USER_DATA.settings["sound_volume"] = self.sound_effects_level/10
-        USER_DATA.save_changes()
-        self.rebuild_configuration_bars()
-
-    def reduce_talking_speed(self):
-        self.talking_speed_level -= 1
-        USER_DATA.settings["talking_speed"] = 20+self.talking_speed_level*3
-        USER_DATA.save_changes()
-        self.rebuild_configuration_bars()
-
-    def increase_talking_speed(self):
-        self.talking_speed_level += 1
-        USER_DATA.settings["talking_speed"] = 20+self.talking_speed_level*3
         USER_DATA.save_changes()
         self.rebuild_configuration_bars()
 

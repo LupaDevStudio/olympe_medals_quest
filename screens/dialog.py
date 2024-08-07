@@ -27,7 +27,8 @@ from tools.constants import (
     USER_DATA,
     TEXT,
     TALKING_SPEED_DICT,
-    DEV_MODE
+    DEV_MODE,
+    TALKING_SPEED
 )
 from tools.path import (
     PATH_BACKGROUNDS,
@@ -74,7 +75,7 @@ class DialogScreen(OlympeScreen):
 
         dialog_layout: DialogLayout = self.ids.dialog_layout
         dialog_layout.reload(
-            talking_speed=USER_DATA.settings["talking_speed"],
+            talking_speed=TALKING_SPEED,
             on_dialog_end=on_dialog_end,
             color_thought=COLOR_THOUGHT,
             path_character_images=PATH_CHARACTERS_IMAGES,
