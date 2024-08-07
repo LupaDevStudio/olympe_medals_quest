@@ -129,7 +129,7 @@ class SaveScreen(OlympeScreen):
             font_ratio=self.font_ratio,
             title_card=TEXT.save["save"].replace(
                 "@", str(id_save)).replace("€", TEXT.save[game.difficulty]),
-            delete_function=partial(self.delete_game, id_save),
+            delete_function=partial(self.ask_to_ask_delete_game, id_save),
             launch_function=partial(self.launch_game, id_save),
             size_hint=(None, None),
             width=Window.size[0]*SCROLLVIEW_WIDTH,
@@ -147,12 +147,18 @@ class SaveScreen(OlympeScreen):
         self.number_saves += 1
 
     def ask_to_ask_delete_game(self, id_game: int):
-        print("TODO popup 1")
-        self.ask_delete_game(id_game=id_game)
+        self.create_yes_no_popup(
+            code="delete_game_confirmation_1",
+            confirm_function=partial(self.ask_delete_game, id_game)
+        )
+        # self.ask_delete_game(id_game=id_game)
 
     def ask_delete_game(self, id_game: int):
-        print("TODO popup 2")
-        self.delete_game(id_game=id_game)
+        self.create_yes_no_popup(
+            code="delete_game_confirmation_2",
+            confirm_function=partial(self.delete_game, id_game)
+        )
+        # self.delete_game(id_game=id_game)
 
     def delete_game(self, id_game: int):
         USER_DATA.delete_game(id_game=id_game)

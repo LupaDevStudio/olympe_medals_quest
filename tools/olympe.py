@@ -175,13 +175,13 @@ def generate_recruit_price(salary: int, level: int) -> int:
         multiplying_factor = 100
     elif level == 4:
         multiplying_factor = 500
-    else:
+    elif level == 5:
         multiplying_factor = 1000
     random_margin = rd.randint(-10, 10)
 
     recruit_price = salary * 10 + random_margin * multiplying_factor
     if recruit_price <= 0:
-        recruit_price = salary = 10
+        recruit_price = salary * 10
 
     return recruit_price
 
@@ -279,7 +279,8 @@ def generate_athlete(
 
 def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
 
-    gender = rd.choice(["male", "female"])
+    # Woman athlete at the beginning
+    gender = "female"
     portrait = Portrait(
         gender=gender,
         hairs_behind_face=True,

@@ -26,7 +26,7 @@
         "new_game": "Nouvelle partie",
         "save": "Sauvegarde @ - €",
         "easy": "Facile",
-        "medium": "Moyen",
+        "medium": "Medium",
         "difficult": "Difficile",
         "load": "Charger",
         "information": "Année [YEAR] - Trimestre [TRIMESTER]\nDernière fois : [DATE]"
@@ -66,7 +66,8 @@
     "recruit": {
         "athlete": " athlète",
         "athletes": " athlètes",
-        "team": "Équipe"
+        "team": "Équipe",
+        "no_athlete": "Plus aucun athlète n'est disponible au recrutement. Veuillez revenir au trimestre prochain."
     },
     "athlete": {
         "fire": "Licencier",
@@ -323,6 +324,18 @@
             "text": "Veuillez choisir la difficulté dans laquelle vous souhaitez jouer cette partie. Vous ne pourrez plus changer la difficulté pour cette partie, mais vous pourrez par la suite en recommencer d'autres avec des difficultés différentes.",
             "default_value": "Medium",
             "values": ["Facile", "Medium", "Difficile"]
+        },
+        "delete_game_confirmation_1": {
+            "title": "Suppression des données de la partie",
+            "text": "Vous vous apprêtez à supprimer les données de cette partie. Voulez-vous poursuivre ?"
+        },
+        "delete_game_confirmation_2": {
+            "title": "Suppression des données de la partie",
+            "text": "Les données de cette partie seront définitivement supprimées et cette action ne pourra pas être annulée. Êtes-vous vraiment sûr de vouloir le faire ?"
+        },
+        "recruit_athlete": {
+            "title": "Recrutement d'un athlète",
+            "text": "Êtes-vous sûr de vouloir recruter cet athlète ? Les coûts de recrutement ne seront pas remboursés si vous changez d'avis."
         }
     },
     "difficulty": {

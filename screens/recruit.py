@@ -9,15 +9,13 @@ Module to create the recruit screen.
 ### Python imports ###
 
 from functools import partial
-import time
 
 ### Kivy imports ###
 
 from kivy.properties import (
-    StringProperty,
-    BooleanProperty
+    StringProperty
 )
-from kivy.core.window import Window
+from kivy.uix.label import Label
 
 ### Local imports ###
 
@@ -26,16 +24,15 @@ from lupa_libraries import (
     CharacterInfoWithMainSportsLayout,
     CompleteRecruitCard
 )
-from tools.path import (
-    PATH_BACKGROUNDS,
-    PATH_CHARACTERS_IMAGES
-)
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
     USER_DATA
+)
+from tools.path import (
+    PATH_TEXT_FONT
 )
 from tools.graphics import (
     MARGIN,
@@ -44,7 +41,10 @@ from tools.graphics import (
     CHARACTER_HEIGHT,
     BIG_HEADER_HEIGHT,
     SKILL_HEIGHT,
-    SCROLLVIEW_WIDTH
+    SCROLLVIEW_WIDTH,
+    COLORS,
+    FONTS_SIZES,
+    LABEL_HEIGHT
 )
 from tools.data_structures import (
     Athlete
@@ -85,6 +85,21 @@ class RecruitScreen(OlympeScreen):
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
+
+        # No athlete to recruit
+        if len(self.GAME.recrutable_athletes) == 0:
+            label = Label(
+                text=TEXT.recruit["no_athlete"],
+                font_size=FONTS_SIZES.label * self.font_ratio,
+                font_name=PATH_TEXT_FONT,
+                color=COLORS.white,
+                size_hint=(0.9, None),
+                height=1.5*LABEL_HEIGHT*self.font_ratio,
+                halign="left",
+                valign="middle"
+            )
+            label.bind(size=label.setter('text_size'))
+            scrollview_layout.add_widget(label)
 
         athlete: Athlete
         for athlete in self.GAME.recrutable_athletes:
@@ -155,8 +170,10 @@ class RecruitScreen(OlympeScreen):
         self.fill_scrollview()
 
     def ask_recruit_athlete(self, athlete: Athlete):
-        # TODO popup launching recruit athlete
-        print("Popup of confirmation")
+        self.create_yes_no_popup(
+            code="recruit_athlete",
+            confirm_function=partial(self.recruit_athlete, athlete)
+        )
 
     def recruit_athlete(self, athlete: Athlete):
         self.GAME.recruit_athlete(athlete=athlete)

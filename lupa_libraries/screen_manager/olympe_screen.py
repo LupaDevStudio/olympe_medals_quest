@@ -181,6 +181,9 @@ class OlympeScreen(ImprovedScreen):
             else:
                 self.title_screen = TEXT.general[code]
 
+        elif SCREEN_MONEY_RIGHT in self.dict_type_screen:
+            self.money_amount = self.GAME.money
+
     def create_message_popup(self, code: str, confirm_function = lambda: 1 + 1):
         text = TEXT.popup[code]["text"]
         if len(text) > 450:
@@ -223,6 +226,7 @@ class OlympeScreen(ImprovedScreen):
             values = TEXT.popup[code]["values"]
         if default_value is None:
             default_value = TEXT.popup[code]["default_value"]
+        values = sorted(values)
         popup = OlympeSpinnerPopup(
             popup_size_hint=(SCROLLVIEW_WIDTH, 0.4),
             title=TEXT.popup[code]["title"],
