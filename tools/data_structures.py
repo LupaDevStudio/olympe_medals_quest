@@ -16,6 +16,7 @@ if __name__ == "__main__":
 from typing import Literal
 import uuid
 from datetime import datetime
+import time
 
 ### Local imports ###
 
@@ -822,7 +823,7 @@ class Game():
 
         self.difficulty = dict_to_load.get("difficulty", "medium")
         self.total_time_played = dict_to_load.get("total_time_played", 0)
-        self.last_time_played = dict_to_load.get("last_time_played", "")
+        self.last_time_played = dict_to_load.get("last_time_played", self.set_last_time_played())
         self.unlocked_characters = dict_to_load.get("unlocked_characters", [])
         self.money = dict_to_load.get("money", 0)
         self.year = dict_to_load.get("year", 3)
@@ -1157,11 +1158,14 @@ class Game():
         if dialog_code not in self.seen_dialogs:
             self.seen_dialogs.append(dialog_code)
 
+    def set_last_time_played(self):
+        self.last_time_played = datetime.now().strftime("%m/%d/%Y - %H:%M")
+
     def export_dict(self):
         return {
             "difficulty": self.difficulty,
             "total_time_played": self.total_time_played,
-            "last_time_played": datetime.now().strftime("%m/%d/%Y - %H:%M"),
+            "last_time_played": self.last_time_played,
             "unlocked_characters": self.unlocked_characters,
             "money": self.money,
             "year": self.year,
@@ -1196,6 +1200,8 @@ class UserData():
         self.settings = data["settings"]
         self.tutorial = data.get("tutorial", {})
         self.seen_dialogs = data.get("seen_dialogs", [])
+        self.total_time_played = data.get("total_time_played", 0)
+        self.session_start_time = time.time()
         self.game_1 = Game(
             dict_to_load=data["game_1"]) if \
             "game_1" in data and data["game_1"] is not None else None
@@ -1247,6 +1253,11 @@ class UserData():
         game: Game = self.get_game(id_game=id_game)
         game.finish_dialog(dialog_code=dialog_code)
 
+    def stop_game(self, id_game: int):
+        self.total_time_played += time.time() - self.session_start_time
+        current_game = self.get_game(id_game=id_game)
+        current_game.set_last_time_played()
+
     def save_changes(self) -> None:
         """
         Save the changes in the data.
@@ -1267,7 +1278,8 @@ class UserData():
             "game_1": self.game_1.export_dict() if self.game_1 is not None else None,
             "game_2": self.game_2.export_dict() if self.game_2 is not None else None,
             "game_3": self.game_3.export_dict() if self.game_3 is not None else None,
-            "seen_dialogs": self.seen_dialogs
+            "seen_dialogs": self.seen_dialogs,
+            "total_time_played": self.total_time_played
         }
 
         # Save this dictionary

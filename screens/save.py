@@ -151,14 +151,12 @@ class SaveScreen(OlympeScreen):
             code="delete_game_confirmation_1",
             confirm_function=partial(self.ask_delete_game, id_game)
         )
-        # self.ask_delete_game(id_game=id_game)
 
     def ask_delete_game(self, id_game: int):
         self.create_yes_no_popup(
             code="delete_game_confirmation_2",
             confirm_function=partial(self.delete_game, id_game)
         )
-        # self.delete_game(id_game=id_game)
 
     def delete_game(self, id_game: int):
         USER_DATA.delete_game(id_game=id_game)

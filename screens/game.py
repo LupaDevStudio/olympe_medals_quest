@@ -62,6 +62,11 @@ class GameScreen(OlympeScreen):
     our_country_label = StringProperty()
     notifications_list = ListProperty([])
 
+    def __init__(self, back_image_path=None, **kw):
+        super().__init__(back_image_path, **kw)
+        # Redefine the function for the back arrow
+        self.ids.back_arrow.release_function = self.go_backwards
+
     def reload_kwargs(self, dict_kwargs: dict):
         has_seen_notification = dict_kwargs.get("has_seen_notification", False)
         
@@ -102,6 +107,11 @@ class GameScreen(OlympeScreen):
         self.fill_grid_layout()
 
         self.update_notification_panel()
+
+    def go_backwards(self):
+        self.GAME.set_last_time_played()
+        USER_DATA.save_changes()
+        super().go_backwards()
 
     def update_notification_panel(self):
 
