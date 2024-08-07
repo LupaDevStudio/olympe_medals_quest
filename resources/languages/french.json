@@ -305,6 +305,7 @@
         "close": "Fermer",
         "yes": "Oui",
         "no": "Non",
+        "validate": "Valider",
         "test": {
             "title": "Titre de la popup",
             "text": "Text dans la popup"
@@ -312,6 +313,16 @@
         "fire_athlete": {
             "title": "Licenciement",
             "text": "Vous vous apprêtez à licencier un athlète. Il quittera donc votre équipe et vous ne pourrez plus l'entraîner, mais les médailles qu'il vous a rapportées seront conservées dans l'historique.\n\nSouhaitez-vous vraiment poursuivre ? Cette action ne pourra pas être par la suite annulée."
+        },
+        "choose_language": {
+            "title": "Choix de la langue",
+            "text": "Veuillez choisir la langue dans laquelle vous souhaitez jouer. Vous pourrez changer plus tard au cours de la partie."
+        },
+        "choose_difficulty": {
+            "title": "Choix de la difficulté",
+            "text": "Veuillez choisir la difficulté dans laquelle vous souhaitez jouer cette partie. Vous ne pourrez plus changer la difficulté pour cette partie, mais vous pourrez par la suite en recommencer d'autres avec des difficultés différentes.",
+            "default_value": "Medium",
+            "values": ["Facile", "Medium", "Difficile"]
         }
     },
     "injuries": {

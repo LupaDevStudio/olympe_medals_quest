@@ -41,6 +41,7 @@ from lupa_libraries.custom_widgets import (
     StatBar,
     OlympeMessagePopup,
     OlympeYesNoPopup,
+    OlympeSpinnerPopup,
     SeparationLine
 )
 

@@ -52,7 +52,8 @@ from lupa_libraries.custom_widgets.custom_scrollview import (
 )
 from lupa_libraries.custom_widgets.olympe_popups import (
     OlympeMessagePopup,
-    OlympeYesNoPopup
+    OlympeYesNoPopup,
+    OlympeSpinnerPopup
 )
 
 ### Popups ###

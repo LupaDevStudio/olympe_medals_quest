@@ -25,7 +25,8 @@ from lupa_libraries.screen_manager import (
 )
 from lupa_libraries.custom_widgets import (
     OlympeMessagePopup,
-    OlympeYesNoPopup
+    OlympeYesNoPopup,
+    OlympeSpinnerPopup
 )
 from tools.constants import (
     SCREEN_MONEY_RIGHT,
@@ -137,13 +138,7 @@ class OlympeScreen(ImprovedScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
-        id_game = self.manager.id_game
-        if id_game == 1:
-            self.GAME = USER_DATA.game_1
-        elif id_game == 2:
-            self.GAME = USER_DATA.game_2
-        else:
-            self.GAME = USER_DATA.game_3
+        self.set_game()
 
         self.reload_language()
         if SCREEN_MONEY_RIGHT in self.dict_type_screen:
@@ -156,6 +151,15 @@ class OlympeScreen(ImprovedScreen):
         # Fill scrollview if it exists
         if "scrollview_layout" in self.ids:
             self.fill_scrollview()
+
+    def set_game(self):
+        id_game = self.manager.id_game
+        if id_game == 1:
+            self.GAME = USER_DATA.game_1
+        elif id_game == 2:
+            self.GAME = USER_DATA.game_2
+        else:
+            self.GAME = USER_DATA.game_3
 
     def get_title_year(self):
         year = TEXT.general["year"] + " "
@@ -179,8 +183,10 @@ class OlympeScreen(ImprovedScreen):
 
     def create_message_popup(self, code: str, confirm_function = lambda: 1 + 1):
         text = TEXT.popup[code]["text"]
-        if len(text) > 300:
+        if len(text) > 450:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.8)
+        elif len(text) > 300:
+            popup_size_hint = (SCROLLVIEW_WIDTH, 0.6)
         else:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.4)
         popup = OlympeMessagePopup(
@@ -195,8 +201,10 @@ class OlympeScreen(ImprovedScreen):
 
     def create_yes_no_popup(self, code: str, confirm_function = lambda: 1 + 1, cancel_function = lambda: 1 + 1):
         text = TEXT.popup[code]["text"]
-        if len(text) > 300:
+        if len(text) > 450:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.8)
+        elif len(text) > 300:
+            popup_size_hint = (SCROLLVIEW_WIDTH, 0.6)
         else:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.4)
         popup = OlympeYesNoPopup(
@@ -207,6 +215,23 @@ class OlympeScreen(ImprovedScreen):
             confirm_function=confirm_function,
             cancel_function=cancel_function,
             popup_size_hint=popup_size_hint
+        )
+        popup.open()
+
+    def create_spinner_popup(self, code: str, confirm_function = lambda: 1 + 1, default_value = None, values = None):
+        if values is None:
+            values = TEXT.popup[code]["values"]
+        if default_value is None:
+            default_value = TEXT.popup[code]["default_value"]
+        popup = OlympeSpinnerPopup(
+            popup_size_hint=(SCROLLVIEW_WIDTH, 0.4),
+            title=TEXT.popup[code]["title"],
+            text=TEXT.popup[code]["text"],
+            font_ratio=self.font_ratio,
+            path_background=self.back_image_path,
+            confirm_function=confirm_function,
+            values=values,
+            default_value=default_value
         )
         popup.open()
 

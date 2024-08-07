@@ -353,7 +353,7 @@ class PressedSpinner(ButtonBehavior, RelativeLayout):
 
     press_button = BooleanProperty(False)
     disable_button = BooleanProperty(False)
-    confirm_function = ObjectProperty(lambda: 1 + 1)
+    confirm_function = ObjectProperty(lambda x: 1 + 1)
 
     ### Spinner variables ###
 

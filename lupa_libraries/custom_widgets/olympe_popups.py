@@ -162,3 +162,33 @@ class OlympeYesNoPopup(OlympePopup):
     def cancel(self):
         self.dismiss()
         self.cancel_function()
+
+class OlympeSpinnerPopup(OlympePopup):
+    """
+    Class to create a popup with a message, a spinner and a confirm button.
+    """
+
+    ### Text options ###
+
+    text = StringProperty()
+    font_size_text = StringProperty(FONTS_SIZES.label)
+    text_filling_ratio = NumericProperty(0.98)
+
+    ### Spinner options ###
+
+    default_value = StringProperty()
+    values = ListProperty()
+
+    ### Button options ###
+
+    button_text = StringProperty()
+    confirm_function = ObjectProperty(lambda: 1 + 1)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.button_text = TEXT.popup["validate"]
+        print(self.text)
+
+    def confirm(self):
+        self.dismiss()
+        self.confirm_function(self.ids.spinner.text)

@@ -31,8 +31,8 @@
             text: root.text
             size_hint: (1, None)
             pos_hint: {"center_x": 0.5}
-            height: root.height - cancel_button.height - 4*MARGIN*root.font_ratio - HEADER_HEIGHT*root.font_ratio
-            y: cancel_button.y + cancel_button.height + 2*MARGIN*root.font_ratio
+            height: root.height - confirm_button.height - 4*MARGIN*root.font_ratio - HEADER_HEIGHT*root.font_ratio
+            y: confirm_button.y + confirm_button.height + 2*MARGIN*root.font_ratio
             font_size: root.font_size_text * root.font_ratio
             font_name: root.text_font_name
             color: root.font_color
@@ -43,6 +43,7 @@
             line_height: 1
 
         PressedButton:
+            id: confirm_button
             text: root.button_text
             size_hint: (0.4, None)
             height: BUTTON_HEIGHT*root.font_ratio
@@ -90,6 +91,48 @@
             width: cancel_button.width 
             height: BUTTON_HEIGHT*root.font_ratio
             x: root.x + self.width + 2*MARGIN*root.font_ratio
+            y: root.y + MARGIN*root.font_ratio
+            font_ratio: root.font_ratio
+            release_function: root.confirm
+
+<OlympeSpinnerPopup>:
+
+    FloatLayout:
+        id: popup_layout
+        size_hint: root.popup_size_hint
+
+        Label:
+            id: popup_label
+            text: root.text
+            size_hint: (1, None)
+            pos_hint: {"center_x": 0.5}
+            height: root.height - confirm_button.height - 5*MARGIN*root.font_ratio - HEADER_HEIGHT*root.font_ratio - spinner.height
+            y: spinner.y + spinner.height + MARGIN*root.font_ratio
+            font_size: root.font_size_text * root.font_ratio
+            font_name: root.text_font_name
+            color: root.font_color
+            shorten: False
+            text_size: (self.width*root.text_filling_ratio, self.height)
+            valign: "top"
+            halign: "left"
+            line_height: 1
+
+        PressedSpinner:
+            id: spinner
+            text: root.default_value
+            values: root.values
+            size_hint: (0.4, None)
+            height: BUTTON_HEIGHT*root.font_ratio
+            pos_hint: {"center_x": 0.5}
+            y: confirm_button.y + confirm_button.height + 2*MARGIN*root.font_ratio
+            font_ratio: root.font_ratio
+
+        PressedButton:
+            id: confirm_button
+            text: root.button_text
+            size_hint: (0.4, None)
+            height: BUTTON_HEIGHT*root.font_ratio
+            pos_hint: {"center_x": 0.5}
             y: root.y + MARGIN*root.font_ratio
             font_ratio: root.font_ratio
             release_function: root.confirm

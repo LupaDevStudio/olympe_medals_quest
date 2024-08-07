@@ -82,6 +82,9 @@ class SaveScreen(OlympeScreen):
 
         self.fill_save_cards()
 
+        if USER_DATA.game_1 is None and USER_DATA.game_2 is None and USER_DATA.game_3 is None:
+            self.ask_start_new_game()
+
     def fill_save_cards(self):
         if USER_DATA.game_1 is not None:
             self.add_save_card(id_save=1)
@@ -165,9 +168,10 @@ class SaveScreen(OlympeScreen):
         self.fill_save_cards()
 
     def ask_start_new_game(self):
-        # TODO popup launching creation of the new game with difficulty
-        print("Popup of difficulty")
-        self.start_new_game(difficulty="medium")
+        # Choose the difficulty of the game
+        self.create_spinner_popup(
+            code="choose_difficulty",
+            confirm_function=self.start_new_game)
 
     def start_new_game(self, difficulty: Literal["easy", "medium", "difficult"]):
         id_game = USER_DATA.start_new_game(difficulty=difficulty)
@@ -176,7 +180,18 @@ class SaveScreen(OlympeScreen):
 
     def launch_game(self, id_game=1):
         self.manager.id_game = id_game
-        self.go_to_next_screen(screen_name="game")
+        self.set_game()
+        if "introduction" in self.GAME.seen_dialogs:
+            self.go_to_next_screen(screen_name="game")
+        else:
+            self.go_to_next_screen(
+                screen_name="dialog",
+                next_dict_kwargs={
+                    "dialog_code": "introduction",
+                    "next_screen": "game",
+                    "next_dict_kwargs": {}
+                }
+            )
 
     def on_leave(self, *args):
         # Reset the layout of save cards

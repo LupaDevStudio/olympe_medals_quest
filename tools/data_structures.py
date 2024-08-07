@@ -788,6 +788,7 @@ class Game():
     # Sport id with athlete ids
     selected_athletes_summer: dict[str, list[str]]
     selected_athletes_winter: dict[str, list[str]]
+    seen_dialogs: list[str]
 
     @property
     def sports_unlocked(self) -> list[str]:
@@ -846,6 +847,7 @@ class Game():
             "selected_athletes_summer", {})
         self.selected_athletes_winter = dict_to_load.get(
             "selected_athletes_winter", {})
+        self.seen_dialogs = dict_to_load.get("seen_dialogs", [])
 
     def get_background_image(self) -> int:
         return self.sports_complex.image
@@ -1176,6 +1178,7 @@ class Game():
             "sports_unlocking_progress": self.sports_unlocking_progress,
             "selected_athletes_summer": self.selected_athletes_summer,
             "selected_athletes_winter": self.selected_athletes_winter,
+            "seen_dialogs": self.seen_dialogs
         }
 
 
