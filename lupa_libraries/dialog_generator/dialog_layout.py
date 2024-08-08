@@ -377,7 +377,7 @@ class DialogLayout(RelativeLayout):
             character_id_for_image = "ariane"
         elif character_id == "phil_coach":
             character_id_for_image = "phil"
-        expression: str = current_dialog_dict["expression"]
+        expression: str = current_dialog_dict.get("expression", "neutral")
         self.character_image = self.path_character_images + \
             f"{character_id_for_image}/{expression}.png"
 

@@ -29,7 +29,8 @@ from tools.path import (
     PATH_SPORTS,
     PATH_ACTIVITIES,
     PATH_SPORTS_COMPLEX_DICT,
-    PATH_ROOMS_DICT
+    PATH_ROOMS_DICT,
+    PATH_EVENTS
 )
 from tools.basic_tools import (
     load_json_file,
@@ -156,6 +157,12 @@ FACTOR_SPONSOR_REPUTATION = 300
 TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_1 = 3 * 4
 # 5 years
 TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_2 = 5 * 4
+
+##############
+### Events ###
+##############
+
+EVENTS_DICT = load_json_file(PATH_EVENTS)
 
 #################
 ### Functions ###
@@ -772,6 +779,8 @@ class Game():
     total_time_played: float  # in seconds
     last_time_played: str
     unlocked_characters: list[str]
+    notifications_list: list[str]
+    unlocked_modes: list[str] # "team", "recruit", "sports_complex", "sports_menu", "activities_menu", "medals", "shop"
     money: int
     year: int
     trimester: int
@@ -825,9 +834,11 @@ class Game():
         self.total_time_played = dict_to_load.get("total_time_played", 0)
         self.last_time_played = dict_to_load.get("last_time_played", self.set_last_time_played())
         self.unlocked_characters = dict_to_load.get("unlocked_characters", [])
+        self.notifications_list = dict_to_load.get("notifications_list", [])
+        self.unlocked_modes = dict_to_load.get("unlocked_modes", [])
         self.money = dict_to_load.get("money", 0)
-        self.year = dict_to_load.get("year", 3)
-        self.trimester = dict_to_load.get("trimester", 1)
+        self.year = dict_to_load.get("year", 2)
+        self.trimester = dict_to_load.get("trimester", 4)
         self.team = [
             Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("team", [])]
         self.fired_team = [
@@ -1155,8 +1166,38 @@ class Game():
                 self.selected_athletes_winter[sport_id].append(athlete_id)
 
     def finish_dialog(self, dialog_code: str):
+        # Get the dict of details of the dialog
+        story_events = EVENTS_DICT["story"]
+        random_events = EVENTS_DICT["random_events"]
+        if dialog_code in story_events:
+            dialog_dict = story_events[dialog_code]
+        elif dialog_code in random_events:
+            dialog_dict = random_events[dialog_code]
+
+        # Update the list of seen dialogs
         if dialog_code not in self.seen_dialogs:
             self.seen_dialogs.append(dialog_code)
+
+        # Apply effects of the dialogs if some
+        effects = dialog_dict.get("effects", {})
+        for key_effect in effects:
+            value_effect = effects[key_effect]
+            if key_effect == "money":
+                self.money += value_effect
+
+            elif key_effect == "unlocked_characters":
+                for character_id in value_effect:
+                    if character_id not in self.unlocked_characters:
+                        self.unlocked_characters.append(character_id)
+
+            elif key_effect == "unlocked_modes":
+                for mode_id in value_effect:
+                    if mode_id not in self.unlocked_modes:
+                        self.unlocked_modes.append(mode_id)
+
+        # Remove the dialog from the notifications list
+        if dialog_code in self.notifications_list:
+            self.notifications_list.remove(dialog_code)
 
     def set_last_time_played(self):
         self.last_time_played = datetime.now().strftime("%m/%d/%Y - %H:%M")
@@ -1167,6 +1208,8 @@ class Game():
             "total_time_played": self.total_time_played,
             "last_time_played": self.last_time_played,
             "unlocked_characters": self.unlocked_characters,
+            "notifications_list": self.notifications_list,
+            "unlocked_modes": self.unlocked_modes,
             "money": self.money,
             "year": self.year,
             "trimester": self.trimester,

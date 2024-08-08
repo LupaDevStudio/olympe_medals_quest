@@ -34,12 +34,12 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_YEAR,
-    USER_DATA
+    USER_DATA,
+    GOD_MODE
 )
 from tools.olympe import (
     generate_athlete,
-    generate_and_add_first_athlete,
-    launch_new_phase
+    generate_and_add_first_athlete
 )
 
 #############
@@ -62,14 +62,6 @@ class GameScreen(OlympeScreen):
     our_country_label = StringProperty()
     notifications_list = ListProperty([])
 
-    def reload_kwargs(self, dict_kwargs: dict):
-        has_seen_notification = dict_kwargs.get("has_seen_notification", False)
-        
-        if has_seen_notification:
-            # Remove the notification once seen in self.GAME
-            # TODO self.notifications_list.remove(self.notifications_list[0])
-            pass
-
     def reload_language(self):
         super().reload_language()
         self.my_text = TEXT.game
@@ -79,10 +71,7 @@ class GameScreen(OlympeScreen):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
 
-        # TODO update the notifications_list depending if one of the characters has something to say
-        self.notifications_list = [
-            ["olympe", "introduction"]
-        ]
+        self.notifications_list = self.GAME.notifications_list
         # Update main_action
         self.main_action = self.GAME.get_main_action()
 
@@ -114,21 +103,24 @@ class GameScreen(OlympeScreen):
 
         # Update the notification panel
         if self.notifications_list != []:
-            character = self.notifications_list[0][0]
+            dialog_id = self.notifications_list[0]
+            character = dialog_id.split("_")[0]
             self.ids.notification_button.image_source = PATH_CHARACTERS_IMAGES + \
                 character + "/neutral.png"
 
     def fill_grid_layout(self):
-        # TODO insert in this list only the buttons unlocked depending on tutorial
-        list_buttons = [
-            "team",
-            "recruit",
-            "sports_complex",
-            "sports_menu",
-            "activities_menu",
-            "medals",
-            "shop"
-        ]
+        if GOD_MODE:
+            list_buttons = [
+                "team",
+                "recruit",
+                "sports_complex",
+                "sports_menu",
+                "activities_menu",
+                "medals",
+                "shop"
+            ]
+        else:
+            list_buttons = self.GAME.unlocked_modes
         max_icons = 7
         max_lines = (max_icons // 2) + 1
 
@@ -159,20 +151,16 @@ class GameScreen(OlympeScreen):
             self.go_to_next_screen(screen_name="competition_inscriptions")
 
     def launch_dialog(self):
-        event = self.notifications_list[0]
-        dialog_id = event[1]
+        dialog_id = self.notifications_list[0]
 
         self.go_to_next_screen(
             screen_name="dialog",
             next_dict_kwargs={
                 "dialog_code": dialog_id,
                 "next_screen": "game",
-                "next_dict_kwargs": {
-                    "has_seen_notification": True
-                }
+                "next_dict_kwargs": {}
             }
         )
-
 
     def on_leave(self, *args):
         super().on_leave(*args)

@@ -34,7 +34,8 @@ from tools.data_structures import (
     Athlete,
     Game,
     DEFAULT_STATS_DICT,
-    DEFAULT_STAT_DICT
+    DEFAULT_STAT_DICT,
+    EVENTS_DICT
 )
 from tools.path import (
     PATH_COUNTRIES,
@@ -310,9 +311,34 @@ def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
 ### Game ###
 ############
 
+def update_notifications(GAME: Game):
+
+    ### For story events ###
+
+    list_events = []
+    for event_id in EVENTS_DICT["story"]:
+        if event_id not in GAME.seen_dialogs:
+            event_dict = EVENTS_DICT["story"][event_id]
+            if event_dict["year"] >= GAME.year and event_dict["trimester"] >= GAME.trimester:
+                condition = event_dict.get("condition", {})
+                order = event_dict.get("order", 1)
+                # TODO treat condition
+                list_events.append([order, event_id])
+
+    # Sort the list of events with their order
+    list_events = sorted(list_events)
+
+    ### For random events ###
+
+    GAME.notifications_list = [element[1] for element in list_events]
+
 def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
-    # TODO check if recruit mode is unlocked in the GAME
-    if True:
+
+    # Go to next trimester
+    main_action = GAME.go_to_next_trimester()
+
+    # Handle recrutements
+    if "recruit" in GAME.unlocked_modes:
         new_athletes_list = []
         # Classic generation at random when no particular event
         if mode_new_phase is None:
@@ -343,10 +369,12 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
                     main_sport=mode_new_phase.replace("sport_", "")
                 ))
 
-    main_action = GAME.go_to_next_trimester()
-    GAME.update_recrutable_athletes(
-        new_athletes_list=new_athletes_list)
+        GAME.update_recrutable_athletes(
+            new_athletes_list=new_athletes_list)
     
+    # Update the list of notifications
+    update_notifications(GAME=GAME)
+
     USER_DATA.save_changes()
 
     return main_action

@@ -63,6 +63,7 @@ PATH_TALKING_SPEED_DICT = PATH_RESOURCES + "talking_speed.json"
 PATH_ROOMS_DICT = PATH_RESOURCES + "rooms.json"
 PATH_SPORTS = PATH_RESOURCES + "sports.json"
 PATH_ACTIVITIES = PATH_RESOURCES + "activities.json"
+PATH_EVENTS = PATH_RESOURCES + "events.json"
 
 # Path for the languages
 PATH_LANGUAGE = PATH_RESOURCES + "languages/"

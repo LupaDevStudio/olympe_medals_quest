@@ -47,7 +47,11 @@ __version__ = "0.0.7"
 
 ### Mode ###
 
-DEV_MODE = True
+GOD_MODE = False # Change this value
+if GOD_MODE:
+    DEV_MODE = True
+else:
+    DEV_MODE = True # Change this value
 FPS = 30
 MSAA_LEVEL = 2
 

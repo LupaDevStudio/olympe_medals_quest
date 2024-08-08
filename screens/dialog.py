@@ -44,6 +44,9 @@ from tools import (
     sound_mixer,
     music_mixer
 )
+from tools.olympe import (
+    launch_new_phase
+)
 
 #############
 ### Class ###
@@ -93,6 +96,10 @@ class DialogScreen(OlympeScreen):
     def dialog_end_function(self, dialog_code, next_screen, next_dict_kwargs):
 
         USER_DATA.finish_dialog(dialog_code, self.manager.id_game)
+        # Special case for the introduction
+        if dialog_code == "introduction":
+            launch_new_phase(GAME=self.GAME)
+
         USER_DATA.save_changes()
         self.go_to_next_screen(
             screen_name=next_screen,

@@ -141,7 +141,7 @@ class OlympeScreen(ImprovedScreen):
         self.set_game()
 
         self.reload_language()
-        if SCREEN_MONEY_RIGHT in self.dict_type_screen:
+        if SCREEN_MONEY_RIGHT or SCREEN_SPEND_MONEY_RIGHT in self.dict_type_screen:
             self.money_amount = self.GAME.money
 
         # Fill vertical scrollview if it exists
