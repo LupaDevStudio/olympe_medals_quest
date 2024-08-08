@@ -153,6 +153,7 @@ ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
 NB_YEARS_BETWEEN_EDITION = 4
 
 FACTOR_SPONSOR_REPUTATION = 300
+MAX_REPUTATION = 1000
 
 # 3 years
 TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_1 = 3 * 4
@@ -494,13 +495,30 @@ class Athlete():
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
     @ property
-    def global_score(self) -> str:
-        # TODO prendre en compte le type de sport
-        score = 0
+    def global_score(self) -> float:
+        skills_part = 0
+
+        # Stats part
         for stat in self.stats:
-            score += self.stats[stat]["points"]
-        for sport in self.sports:
-            score += self.sports[sport]["points"]
+            skills_part += self.stats[stat]["points"]
+        
+        # Sports part with the two best sports
+        all_sports = []
+        for sport_id in self.sports:
+            sport: Sport = SPORTS[sport_id]
+            all_sports.append([sport.category, self.sports[sport_id]["points"]])
+        all_sports = sorted(all_sports)
+        
+        for counter in range(min(len(all_sports), 2)):
+            skills_part += all_sports[counter][1]
+
+        skills_part = skills_part / (70 * 7)
+        
+        # Reputation for half the score
+        reputation_part = self.reputation / MAX_REPUTATION
+
+        score = (skills_part + reputation_part) / 2
+
         return score
 
     @ property
@@ -517,8 +535,7 @@ class Athlete():
         self.time_for_recruit = dict_to_load.get("time_for_recruit", 0)
         self.fatigue = dict_to_load.get("fatigue", 0)
         self.injury_risk = dict_to_load.get("injury_risk", 0)
-        self.health = dict_to_load.get(
-            "health", copy.deepcopy(DEFAULT_HEALTH_DICT))
+        self.health = dict_to_load.get("health", copy.deepcopy(DEFAULT_HEALTH_DICT))
         self.reputation = dict_to_load.get("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
@@ -533,6 +550,12 @@ class Athlete():
         # Extract the first sports
         best_sports = dict(sorted_sports[:number_sports])
         return dict(reversed(best_sports.items()))
+
+    def set_salary(self, salary: int):
+        self.salary = salary
+
+    def set_recruit_price(self, recruit_price: int):
+        self.recruit_price = recruit_price
 
     def __str__(self):
         return f"Athlete {self.id}: {self.name} {self.first_name}\n" \
@@ -782,7 +805,7 @@ class Game():
     unlocked_characters: list[str]
     notifications_list: list[str]
     unlocked_menus: list[str] # "team", "recruit", "sports_complex", "sports_menu", "activities_menu", "medals", "shop"
-    unlocked_modes: list[str] # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue"
+    unlocked_modes: list[str] # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue", "salary_augmentation"
     money: int
     year: int
     trimester: int

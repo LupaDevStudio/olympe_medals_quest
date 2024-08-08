@@ -46,8 +46,9 @@ from tools.path import (
 ### Constants ###
 #################
 
-COUNTRY_NAME = "our_country"
+### Countries ###
 
+COUNTRY_NAME = "our_country"
 countries_dict = load_json_file(PATH_COUNTRIES)
 
 ### First names and names ###
@@ -75,14 +76,20 @@ for key in first_names_dict:
         for name in names_dict[key]:
             names_dict[COUNTRY_NAME].append(name)
 
+### Salary and recruit prices ###
+
+BASE_SALARY = 1000
+ARITHMETIC_FACTOR_SALARY = 10
+GEOMETRIC_FACTOR_SALARY = 2
+
 #################
 ### Functions ###
 #################
 
 
-def compute_salary(stats, reputation) -> int:
-    # TODO
-    return 1200
+def compute_salary(athlete: Athlete) -> int:
+    score_athlete = athlete.global_score
+    return BASE_SALARY + (ARITHMETIC_FACTOR_SALARY * score_athlete) ** GEOMETRIC_FACTOR_SALARY
 
 def get_health_string(athlete: Athlete) -> str:
     is_hurt = athlete.is_hurt
@@ -245,24 +252,13 @@ def generate_athlete(
     if portrait is None:
         portrait = Portrait(gender=gender)
 
-    ### Costs ###
-
-    # Salary
-    salary = compute_salary(stats=stats, reputation=reputation)
-
-    # Recruit price
-    if recruit_price is None:
-        recruit_price = generate_recruit_price(
-            salary=salary,
-            level=level)
+    ### Athlete ###
 
     dict_to_load = {
         "first_name": first_name,
         "name": name,
         "age": age,
-        "salary": salary,
         "time_for_recruit": time_for_recruit,
-        "recruit_price": recruit_price,
         "portrait": portrait.get_dict(),
         "reputation": reputation,
         "stats": stats,
@@ -275,6 +271,19 @@ def generate_athlete(
         PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.png"))
     portrait.export_as_json(os.path.join(
         PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.json"))
+
+    ### Costs ###
+
+    # Salary
+    salary = compute_salary(athlete=athlete)
+    athlete.set_salary(salary=salary)
+
+    # Recruit price
+    if recruit_price is None:
+        recruit_price = generate_recruit_price(
+            salary=salary,
+            level=level)
+    athlete.set_recruit_price(recruit_price=recruit_price)
 
     return athlete
 
@@ -439,6 +448,12 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
         GAME.update_recrutable_athletes(
             new_athletes_list=new_athletes_list)
     
+    # Update the salaries at the beginning of the year
+    if "salary_augmentation" in GAME.unlocked_modes and GAME.trimester == 1:
+        for athlete in GAME.team:
+            new_salary = compute_salary(athlete=athlete)
+            athlete.set_salary(salary=new_salary)
+
     # Update the list of notifications
     update_notifications(GAME=GAME)
 
