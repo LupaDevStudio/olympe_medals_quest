@@ -62,7 +62,7 @@ if not os.path.exists(PATH_USER_DATA):
     default_user_data = {
         "settings": {
             "sound_volume": 0.5,
-            "music_volume": 0.5,
+            "music_volume": 0.3,
             "language": "english"
         }
     }

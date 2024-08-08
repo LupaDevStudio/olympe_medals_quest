@@ -19,7 +19,7 @@
         },
         {
             "character": "atlas",
-            "text": "Sans oublier tous nos extraordinaires sponsors : Choco-Cola, Toy-Yoda, Samsquash, Fauxsa, Alphamega, Hairbnb, Intelephant, Alligagator, McDuck et Poopsy !",
+            "text": "Sans oublier tous nos extraordinaires sponsors : Choco-Cola, Toy-Yoda, Samsquash, Fosa, Alphamega, Hairbnb, Intelephant, Alligagator, McDuck et Poopsy !",
             "background": "president_speech",
             "shake": "flash",
             "sound": "journalists_camera"
@@ -31,12 +31,12 @@
         },
         {
             "character": "atlas",
-            "text": "D'abord, auront lieu les traditionnels concours d'athlétisme, où les plus rapides et les plus forts se mesureront dans les épreuves depuis si longtemps connues du 100 mètres, le saut en hauteur, et le lancer de javelot.",
+            "text": "D'abord, auront lieu les traditionnels concours d'athlétisme, où les plus rapides et les plus forts se mesureront dans les épreuves depuis si longtemps connues du 100 mètres, du saut en hauteur et du lancer de javelot.",
             "background": "president_speech"
         },
         {
             "character": "atlas",
-            "text": "Ensuite, nous passerons à la gymnastique et à la danse, où les participants mettront en valeur leur charme et agilité à travers des chorégraphies hors du commun !",
+            "text": "Ensuite, nous passerons à la gymnastique et à la danse, où les participants mettront en valeur leur charme et leur agilité à travers des chorégraphies hors du commun !",
             "background": "president_speech"
         },
         {
@@ -193,7 +193,7 @@
                 false,
                 true
             ],
-            "text": "Euh, non... En quoi cela nous concerne-t-il cette...",
+            "text": "Euh, non... En quoi cette présentation nous...",
             "background": "office"
         },
         {
@@ -217,7 +217,7 @@
                 true,
                 false
             ],
-            "text": "C'était dans la présentation officielle délivrée par le président ; le [NEW_SPORT] était dans la liste, je t'assure ! Il fera partie de la compétition, c'est acté désormais ! C'est notre chance ou jamais d'exister dans l'histoire du FIGHT !",
+            "text": "C'était dans la présentation officielle délivrée par le président ; le [NEW_SPORT] était dans la liste, je t'assure ! Il fera partie de la compétition, c'est acté désormais ! C'est notre chance d'exister dans l'histoire du FIGHT !",
             "background": "office"
         },
         {
@@ -364,7 +364,7 @@
         },
         {
             "character": "phil",
-            "text": "(La présidente ! Il faut que je me reconcentre ! Je viens demander la subvention aux boutiques... Non aux commerces traditionnels !)",
+            "text": "(La présidente ! Il faut que je me reconcentre ! Je viens demander la subvention aux boutiques... Mais non, ce n'est pas ça ! Les commerces traditionnels plutôt !)",
             "background": "corridor_office"
         },
         {
@@ -503,7 +503,7 @@
         {
             "character": "olympe",
             "expression": "happy",
-            "text": "Elle ne manquera de rien pour finir ses études, j'y veillerai personnellement. C'est acté, désormais. Je reviendrais vers vous deux dans trois mois, le temps je complète notre équipe de choc ! Annonce la bonne nouvelle à ta petite sœur, Phil, et fais tes valises !",
+            "text": "Elle ne manquera de rien pour finir ses études, j'y veillerai personnellement. C'est acté, désormais. Je reviendrais vers vous deux dans trois mois, le temps que je complète notre équipe de choc ! Annonce la bonne nouvelle à ta sœur, Phil, et fais tes valises !",
             "background": "office"
         }
     ],
