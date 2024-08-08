@@ -30,6 +30,7 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
+    GOD_MODE,
     USER_DATA
 )
 from tools.graphics import (
@@ -79,6 +80,16 @@ class AthleteScreen(OlympeScreen):
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
+        fire_unlocked = "fire" in self.GAME.unlocked_modes
+        reputation_unlocked = "reputation" in self.GAME.unlocked_modes
+        health_unlocked = "illness" in self.GAME.unlocked_modes or "injury" in self.GAME.unlocked_modes
+        fatigue_unlocked = "fatigue" in self.GAME.unlocked_modes
+        if GOD_MODE:
+            fire_unlocked = True
+            reputation_unlocked = True
+            health_unlocked = True
+            fatigue_unlocked = True
+
         ### Main information card ###
 
         self.main_info_card = CharacterWithMainInfoFireLayout(
@@ -95,7 +106,11 @@ class AthleteScreen(OlympeScreen):
             is_hurt=self.athlete.is_hurt,
             fire_athlete_function=self.ask_fire_athlete,
             size_hint=(SCROLLVIEW_WIDTH, None),
-            height=(MARGIN*3+BUTTON_HEIGHT+CHARACTER_HEIGHT) * self.font_ratio
+            height=(MARGIN*3+BUTTON_HEIGHT+CHARACTER_HEIGHT) * self.font_ratio,
+            fire_unlocked=fire_unlocked,
+            reputation_unlocked=reputation_unlocked,
+            health_unlocked=health_unlocked,
+            fatigue_unlocked=fatigue_unlocked
         )
         scrollview_layout.add_widget(self.main_info_card)
 

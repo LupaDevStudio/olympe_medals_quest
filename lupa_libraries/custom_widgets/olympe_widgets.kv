@@ -269,6 +269,8 @@
         pressed_color: COLORS.red_pressed
         background_color: COLORS.red
         release_function: root.fire_athlete_function
+        disable_button: not root.fire_unlocked
+        opacity: 1 if root.fire_unlocked else 0
 
     ### Information ###
     
@@ -294,7 +296,7 @@
         x: salary_label.x
 
     SurroundedLabel:
-        text: root.reputation
+        text: root.fatigue
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -302,9 +304,10 @@
         pos_hint: {"y": 0.05*3 + 2*0.14}
         y: 3*MARGIN*root.font_ratio + 2*self.height
         x: salary_label.x
+        opacity: 1 if root.fatigue_unlocked else 0
 
     SurroundedLabel:
-        text: root.fatigue
+        text: root.reputation
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -312,6 +315,7 @@
         pos_hint: {"y": 0.05*2 + 0.14}
         y: 2*MARGIN*root.font_ratio + self.height
         x: salary_label.x
+        opacity: 1 if root.reputation_unlocked else 0
 
     SurroundedLabel:
         text: root.health
@@ -322,6 +326,7 @@
         pos_hint: {"y": 0.05}
         y: MARGIN*root.font_ratio
         x: salary_label.x
+        opacity: 1 if root.health_unlocked else 0
 
 <StatBar>:
 
@@ -488,6 +493,7 @@
         width: salary_label.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
+        opacity: 1 if root.reputation_unlocked else 0
 
     # Recruit button
     TextMoneyLayoutPressedButton:

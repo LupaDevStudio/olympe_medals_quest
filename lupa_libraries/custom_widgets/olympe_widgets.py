@@ -305,6 +305,11 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     fatigue = StringProperty()
     health = StringProperty()
 
+    fire_unlocked = BooleanProperty(True)
+    reputation_unlocked = BooleanProperty(True)
+    health_unlocked = BooleanProperty(True)
+    fatigue_unlocked = BooleanProperty(True)
+
     ### Colors ###
 
     background_color = ColorProperty(COLORS.transparent_black)
@@ -317,7 +322,6 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     ### Function ###
 
     fire_athlete_function = ObjectProperty(lambda: 1 + 1)
-
 
 class CharacterStats(RelativeLayout):
 
@@ -612,6 +616,7 @@ class CompleteRecruitCard(RelativeLayout):
     image_source = StringProperty()
     age = StringProperty()
     reputation = StringProperty()
+    reputation_unlocked = BooleanProperty(True)
     salary = NumericProperty()
     recruit_price = NumericProperty()
 

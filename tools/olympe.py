@@ -199,7 +199,6 @@ def generate_athlete(
         age: int | None = None,
         time_for_recruit: int | None = None,
         recruit_price: int | None = None,
-        reputation: int | None = None,
         max_level: int | None = None, # between 1 and 10
         main_sport: str = "random",
         second_sport: str | None = "random",
@@ -243,8 +242,7 @@ def generate_athlete(
 
     ### Reputation ###
 
-    if reputation is None:
-        reputation = generate_reputation(stats["charm"])
+    reputation = generate_reputation(stats["charm"])
 
     ### Portrait ###
 
@@ -309,8 +307,7 @@ def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
         second_sport=None,
         max_level=1,
         gender=gender,
-        portrait=portrait,
-        reputation=0
+        portrait=portrait
     )
     GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
     GAME.recruit_athlete(GAME.recrutable_athletes[0])
@@ -397,7 +394,6 @@ def finish_dialog(GAME: Game, dialog_code: str):
         elif key_effect == "first_athlete":
             generate_and_add_first_athlete(GAME=GAME, main_sport=GAME.first_sport)
 
-
     # Remove the dialog from the notifications list
     if dialog_code in GAME.notifications_list:
         GAME.notifications_list.remove(dialog_code)
@@ -414,7 +410,7 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
     main_action = GAME.go_to_next_trimester()
 
     # Handle recrutements
-    if "recruit" in GAME.unlocked_modes:
+    if "recruit" in GAME.unlocked_menus:
         new_athletes_list = []
         # Classic generation at random when no particular event
         if mode_new_phase is None:
