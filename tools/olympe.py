@@ -226,7 +226,7 @@ def generate_athlete(
 
     if main_sport == "random":
         # Main sport among those unlocked
-        main_sport = rd.choice(GAME.sports_unlocked)
+        main_sport = rd.choice(GAME.unlocked_sports)
     if second_sport == "random":
         # Second sport among all sports of the current category or less
         list_second_sports = GAME.get_all_sports_from_current_category()
@@ -319,7 +319,7 @@ def update_notifications(GAME: Game):
     for event_id in EVENTS_DICT["story"]:
         if event_id not in GAME.seen_dialogs:
             event_dict = EVENTS_DICT["story"][event_id]
-            if event_dict["year"] >= GAME.year and event_dict["trimester"] >= GAME.trimester:
+            if event_dict["year"] == GAME.year and event_dict["trimester"] == GAME.trimester or event_dict["year"] > GAME.year:
                 condition = event_dict.get("condition", {})
                 order = event_dict.get("order", 1)
                 # TODO treat condition
@@ -328,8 +328,21 @@ def update_notifications(GAME: Game):
     # Sort the list of events with their order
     list_events = sorted(list_events)
 
-    ### For random events ###
+    ### For repeatable events ###
+    # TODO
 
+    ### For random events ###
+    # TODO
+
+    ### For endings ###
+    # TODO choose between Olympe and Ariane
+
+    ### For retirements ###
+
+    if "retirement" in GAME.unlocked_modes:
+        print("TODO")
+
+    # Update the list of notifications
     GAME.notifications_list = [element[1] for element in list_events]
 
 def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
@@ -342,7 +355,7 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
         new_athletes_list = []
         # Classic generation at random when no particular event
         if mode_new_phase is None:
-            number_sports_unlocked = len(GAME.sports_unlocked)
+            number_sports_unlocked = len(GAME.unlocked_sports)
             if number_sports_unlocked < 3:
                 number_athletes_to_add = rd.randint(0, 2)
             elif number_sports_unlocked < 8:

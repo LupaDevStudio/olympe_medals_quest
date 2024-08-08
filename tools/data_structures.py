@@ -780,7 +780,8 @@ class Game():
     last_time_played: str
     unlocked_characters: list[str]
     notifications_list: list[str]
-    unlocked_modes: list[str] # "team", "recruit", "sports_complex", "sports_menu", "activities_menu", "medals", "shop"
+    unlocked_menus: list[str] # "team", "recruit", "sports_complex", "sports_menu", "activities_menu", "medals", "shop"
+    unlocked_modes: list[str] # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue"
     money: int
     year: int
     trimester: int
@@ -801,13 +802,13 @@ class Game():
     seen_dialogs: list[str]
 
     @property
-    def sports_unlocked(self) -> list[str]:
-        sports_unlocked = []
+    def unlocked_sports(self) -> list[str]:
+        unlocked_sports = []
         for key in self.sports_unlocking_progress:
             value = self.sports_unlocking_progress[key]
             if value == 1:
-                sports_unlocked.append(key)
-        return sports_unlocked
+                unlocked_sports.append(key)
+        return unlocked_sports
 
     @property
     def number_athletes(self) -> int:
@@ -835,6 +836,7 @@ class Game():
         self.last_time_played = dict_to_load.get("last_time_played", self.set_last_time_played())
         self.unlocked_characters = dict_to_load.get("unlocked_characters", [])
         self.notifications_list = dict_to_load.get("notifications_list", [])
+        self.unlocked_menus = dict_to_load.get("unlocked_menus", [])
         self.unlocked_modes = dict_to_load.get("unlocked_modes", [])
         self.money = dict_to_load.get("money", 0)
         self.year = dict_to_load.get("year", 2)
@@ -1067,18 +1069,25 @@ class Game():
 
     def get_main_action(self) -> str:
 
-        main_action = "plan"  # or "being_competition_{mode}"
+        main_action = "plan"  # or "begin_competition_{mode}"
 
-        # Summer competition trimester 2 each 4 years
+        # Summer competition trimester 3 each 4 years
         if self.year % NB_YEARS_BETWEEN_EDITION == 0:
-            if self.trimester == 2:
-                main_action = "being_competition_summer"
+            if self.trimester == 3:
+                main_action = "begin_competition_summer"
 
         return main_action
 
     def begin_new_year(self):
         for athlete in self.team:
             athlete.age += 1
+
+    def unlock_new_sport(self, sport_id: str, mode: Literal["summer", "winter"] = "summer"):
+        self.sports_unlocking_progress[sport_id] = 1
+        if mode == "summer":
+            self.selected_athletes_summer[sport_id] = []
+        elif mode == "winter":
+            self.selected_athletes_winter[sport_id] = []
 
     def compute_total_spent_money_selection(self, mode: Literal["summer", "winter"] = "summer") -> int:
         total_money_spent = 0
@@ -1195,6 +1204,11 @@ class Game():
                     if mode_id not in self.unlocked_modes:
                         self.unlocked_modes.append(mode_id)
 
+            elif key_effect == "unlocked_menus":
+                for mode_id in value_effect:
+                    if mode_id not in self.unlocked_menus:
+                        self.unlocked_menus.append(mode_id)
+
         # Remove the dialog from the notifications list
         if dialog_code in self.notifications_list:
             self.notifications_list.remove(dialog_code)
@@ -1210,6 +1224,7 @@ class Game():
             "unlocked_characters": self.unlocked_characters,
             "notifications_list": self.notifications_list,
             "unlocked_modes": self.unlocked_modes,
+            "unlocked_menus": self.unlocked_menus,
             "money": self.money,
             "year": self.year,
             "trimester": self.trimester,

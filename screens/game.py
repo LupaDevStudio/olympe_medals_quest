@@ -65,6 +65,7 @@ class GameScreen(OlympeScreen):
     def reload_language(self):
         super().reload_language()
         self.my_text = TEXT.game
+        self.main_action = self.GAME.get_main_action()
         self.launch_main_action_label = self.my_text[self.main_action]
         self.our_country_label = TEXT.countries["our_country"]
 
@@ -78,8 +79,8 @@ class GameScreen(OlympeScreen):
         self.ids.notification_button.trigger_icon_flashing()
 
         # TODO TEMP
-        if self.GAME.sports_unlocked == []:
-            self.GAME.sports_unlocking_progress["cheese_rolling"] = 1
+        if self.GAME.unlocked_sports == []:
+            self.GAME.unlock_new_sport("cheese_rolling")
         # TODO TEMP
         if self.GAME.team == []:
             generate_and_add_first_athlete(GAME=self.GAME, main_sport="cheese_rolling")
@@ -120,7 +121,7 @@ class GameScreen(OlympeScreen):
                 "shop"
             ]
         else:
-            list_buttons = self.GAME.unlocked_modes
+            list_buttons = self.GAME.unlocked_menus
         max_icons = 7
         max_lines = (max_icons // 2) + 1
 
@@ -147,7 +148,7 @@ class GameScreen(OlympeScreen):
     def launch_main_action(self):
         if self.main_action == "plan":
             self.go_to_next_screen(screen_name="planification")
-        elif self.main_action == "begin_competition":
+        elif "begin_competition" in self.main_action:
             self.go_to_next_screen(screen_name="competition_inscriptions")
 
     def launch_dialog(self):

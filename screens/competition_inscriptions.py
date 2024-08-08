@@ -99,8 +99,8 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             self.ids.next_button.text = self.next_label
 
     def on_pre_enter(self, *args):
-        self.list_sports = self.GAME.sports_unlocked
-
+        self.set_game()
+        self.list_sports = self.GAME.unlocked_sports
         super().on_pre_enter(*args)
 
     def fill_scrollview_vertical(self):
@@ -146,7 +146,6 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             scrollview_layout.add_widget(sport_button)
 
     def fill_scrollview(self):
-
         selected_sport_id = self.list_sports[self.selected_sport_counter]
         sport: Sport = SPORTS[selected_sport_id]
         sport_stats = sport.stats

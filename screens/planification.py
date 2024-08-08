@@ -40,6 +40,9 @@ from tools.graphics import (
 from tools.data_structures import (
     Athlete
 )
+from tools.olympe import (
+    launch_new_phase
+)
 
 #############
 ### Class ###
@@ -138,4 +141,7 @@ class PlanificationScreen(OlympeScreen):
         )
 
     def validate_planning(self):
-        print("TODO validate planning")
+        launch_new_phase(GAME=self.GAME)
+        self.go_to_next_screen(
+            screen_name="game"
+        )

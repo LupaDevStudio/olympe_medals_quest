@@ -187,7 +187,6 @@ class OlympeSpinnerPopup(OlympePopup):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.button_text = TEXT.popup["validate"]
-        print(self.text)
 
     def confirm(self):
         self.dismiss()
