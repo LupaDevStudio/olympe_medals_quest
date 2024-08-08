@@ -345,6 +345,60 @@ def update_notifications(GAME: Game):
     # Update the list of notifications
     GAME.notifications_list = [element[1] for element in list_events]
 
+def finish_dialog(GAME: Game, dialog_code: str):
+
+    # Update the USER_DATA
+    if dialog_code not in USER_DATA.seen_dialogs:
+        USER_DATA.seen_dialogs.append(dialog_code)
+
+    # Get the dict of details of the dialog
+    story_events = EVENTS_DICT["story"]
+    random_events = EVENTS_DICT["random_events"]
+    if dialog_code in story_events:
+        dialog_dict = story_events[dialog_code]
+    elif dialog_code in random_events:
+        dialog_dict = random_events[dialog_code]
+
+    # Update the list of seen dialogs
+    if dialog_code not in GAME.seen_dialogs:
+        GAME.seen_dialogs.append(dialog_code)
+
+    # Apply effects of the dialogs if some
+    effects = dialog_dict.get("effects", {})
+    for key_effect in effects:
+        value_effect = effects[key_effect]
+        if key_effect == "money":
+            GAME.money += value_effect
+
+        elif key_effect == "unlocked_characters":
+            for character_id in value_effect:
+                if character_id not in GAME.unlocked_characters:
+                    GAME.unlocked_characters.append(character_id)
+
+        elif key_effect == "unlocked_modes":
+            for mode_id in value_effect:
+                if mode_id not in GAME.unlocked_modes:
+                    GAME.unlocked_modes.append(mode_id)
+
+        elif key_effect == "unlocked_menus":
+            for mode_id in value_effect:
+                if mode_id not in GAME.unlocked_menus:
+                    GAME.unlocked_menus.append(mode_id)
+
+        elif key_effect == "first_athlete":
+            generate_and_add_first_athlete(GAME=GAME, main_sport=GAME.first_sport)
+
+
+    # Remove the dialog from the notifications list
+    if dialog_code in GAME.notifications_list:
+        GAME.notifications_list.remove(dialog_code)
+
+    # Special case for the introduction
+    if dialog_code == "introduction":
+        launch_new_phase(GAME=GAME)
+
+    USER_DATA.save_changes()
+
 def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
 
     # Go to next trimester

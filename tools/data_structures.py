@@ -17,6 +17,7 @@ from typing import Literal
 import uuid
 from datetime import datetime
 import time
+import random as rd
 
 ### Local imports ###
 
@@ -800,6 +801,7 @@ class Game():
     selected_athletes_summer: dict[str, list[str]]
     selected_athletes_winter: dict[str, list[str]]
     seen_dialogs: list[str]
+    first_sport: str # Id of the first sport
 
     @property
     def unlocked_sports(self) -> list[str]:
@@ -862,6 +864,7 @@ class Game():
         self.selected_athletes_winter = dict_to_load.get(
             "selected_athletes_winter", {})
         self.seen_dialogs = dict_to_load.get("seen_dialogs", [])
+        self.first_sport = dict_to_load.get("first_sport", self.generate_first_sport())
 
     def get_background_image(self) -> int:
         return self.sports_complex.image
@@ -902,6 +905,19 @@ class Game():
             if self.sports_unlocking_progress[sport_id] != 1:
                 return sport_id
         return None
+
+    def generate_first_sport(self) -> str:
+        list_possible_sports = []
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            # Take only sports of first category
+            if sport.category == 1:
+                # Remove sports with charm
+                if CHARM not in sport.stats:
+                    list_possible_sports.append(sport_id)
+        first_sport = rd.choice(list_possible_sports)
+        self.unlock_new_sport(sport_id=first_sport)
+        return first_sport
 
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
         # Diminish the time left to recruit and remove those with 0 time left
@@ -1003,11 +1019,13 @@ class Game():
 
     def get_best_athlete_image(self) -> str:
         best_score: int = 0
-        best_athlete: Athlete = None
+        best_athlete: Athlete | None = None
         for athlete in self.team:
             if athlete.global_score >= best_score:
                 best_score = athlete.global_score
                 best_athlete = athlete
+        if best_athlete is None:
+            return ""
         return best_athlete.image
 
     def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "bronze"], edition: int, type_edition: Literal["summer", "winter"] = "summer"):
@@ -1174,45 +1192,6 @@ class Game():
             else:
                 self.selected_athletes_winter[sport_id].append(athlete_id)
 
-    def finish_dialog(self, dialog_code: str):
-        # Get the dict of details of the dialog
-        story_events = EVENTS_DICT["story"]
-        random_events = EVENTS_DICT["random_events"]
-        if dialog_code in story_events:
-            dialog_dict = story_events[dialog_code]
-        elif dialog_code in random_events:
-            dialog_dict = random_events[dialog_code]
-
-        # Update the list of seen dialogs
-        if dialog_code not in self.seen_dialogs:
-            self.seen_dialogs.append(dialog_code)
-
-        # Apply effects of the dialogs if some
-        effects = dialog_dict.get("effects", {})
-        for key_effect in effects:
-            value_effect = effects[key_effect]
-            if key_effect == "money":
-                self.money += value_effect
-
-            elif key_effect == "unlocked_characters":
-                for character_id in value_effect:
-                    if character_id not in self.unlocked_characters:
-                        self.unlocked_characters.append(character_id)
-
-            elif key_effect == "unlocked_modes":
-                for mode_id in value_effect:
-                    if mode_id not in self.unlocked_modes:
-                        self.unlocked_modes.append(mode_id)
-
-            elif key_effect == "unlocked_menus":
-                for mode_id in value_effect:
-                    if mode_id not in self.unlocked_menus:
-                        self.unlocked_menus.append(mode_id)
-
-        # Remove the dialog from the notifications list
-        if dialog_code in self.notifications_list:
-            self.notifications_list.remove(dialog_code)
-
     def set_last_time_played(self):
         self.last_time_played = datetime.now().strftime("%m/%d/%Y - %H:%M")
 
@@ -1244,7 +1223,8 @@ class Game():
             "sports_unlocking_progress": self.sports_unlocking_progress,
             "selected_athletes_summer": self.selected_athletes_summer,
             "selected_athletes_winter": self.selected_athletes_winter,
-            "seen_dialogs": self.seen_dialogs
+            "seen_dialogs": self.seen_dialogs,
+            "first_sport": self.first_sport
         }
 
 
@@ -1304,12 +1284,6 @@ class UserData():
             self.game_2 = None
         else:
             self.game_3 = None
-
-    def finish_dialog(self, dialog_code, id_game: int):
-        if dialog_code not in self.seen_dialogs:
-            self.seen_dialogs.append(dialog_code)
-        game: Game = self.get_game(id_game=id_game)
-        game.finish_dialog(dialog_code=dialog_code)
 
     def stop_game(self, id_game: int):
         self.total_time_played += time.time() - self.session_start_time

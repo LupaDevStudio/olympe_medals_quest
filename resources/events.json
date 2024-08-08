@@ -11,7 +11,8 @@
             "order": 1,
             "effects": {
                 "money": 10000,
-                "unlocked_menus": ["team"]
+                "unlocked_menus": ["team"],
+                "first_athlete": true
             }
         },
         "hector_sports_activities": {

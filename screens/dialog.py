@@ -45,7 +45,8 @@ from tools import (
     music_mixer
 )
 from tools.olympe import (
-    launch_new_phase
+    launch_new_phase,
+    finish_dialog
 )
 
 #############
@@ -58,28 +59,36 @@ class DialogScreen(OlympeScreen):
     Class to manage the screen of dialogs of the game.
     """
 
+    dialog_code = ""
+    name_athlete = ""
     dev_mode = BooleanProperty()
 
     def reload_kwargs(self, dict_kwargs):
-        dialog_code = dict_kwargs["dialog_code"]
+        self.dialog_code = dict_kwargs["dialog_code"]
         next_screen = dict_kwargs["next_screen"]
         next_dict_kwargs = dict_kwargs["next_dict_kwargs"]
+        self.name_athlete = dict_kwargs.get("name_athlete", "")
 
-        on_dialog_end = partial(
+        self.on_dialog_end = partial(
             self.dialog_end_function,
-            dialog_code,
+            self.dialog_code,
             next_screen,
             next_dict_kwargs
         )
 
+    def on_pre_enter(self, *args):
+        super().on_pre_enter(*args)
+        self.dev_mode = DEV_MODE
+
         # Reset the variables and start the dialog
         self.dialog_frame_counter = -1
-        self.dialog_content_list = DIALOGS_DICT[TEXT.language][dialog_code]
+        self.dialog_content_list = DIALOGS_DICT[TEXT.language][self.dialog_code]
+        self.post_treat_dialog_text()
 
         dialog_layout: DialogLayout = self.ids.dialog_layout
         dialog_layout.reload(
             talking_speed=TALKING_SPEED,
-            on_dialog_end=on_dialog_end,
+            on_dialog_end=self.on_dialog_end,
             color_thought=COLOR_THOUGHT,
             path_character_images=PATH_CHARACTERS_IMAGES,
             character_dict=CHARACTERS_DICT[TEXT.language],
@@ -89,18 +98,25 @@ class DialogScreen(OlympeScreen):
             music_mixer=music_mixer
         )
 
-    def on_pre_enter(self, *args):
-        super().on_pre_enter(*args)
-        self.dev_mode = DEV_MODE
+    def post_treat_dialog_text(self):
+        # Replace the between [] codes by their true value
+        for counter_frame in range(len(self.dialog_content_list)):
+            frame = self.dialog_content_list[counter_frame]
+
+            # First sport of category 1
+            if "[NEW_SPORT]" in frame["text"]:
+                self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                    "[NEW_SPORT]", TEXT.sports[self.GAME.first_sport]["name"].lower())
+            
+            # Corresponding athlete
+            if "[NAME_ATHLETE]" in frame["text"]:
+                self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                    "[NAME_ATHLETE]", self.name_athlete)
 
     def dialog_end_function(self, dialog_code, next_screen, next_dict_kwargs):
 
-        USER_DATA.finish_dialog(dialog_code, self.manager.id_game)
-        # Special case for the introduction
-        if dialog_code == "introduction":
-            launch_new_phase(GAME=self.GAME)
+        finish_dialog(GAME=self.GAME, dialog_code=dialog_code)
 
-        USER_DATA.save_changes()
         self.go_to_next_screen(
             screen_name=next_screen,
             current_dict_kwargs={

@@ -117,8 +117,8 @@
             "description": "L'événement où des âmes courageuses poursuivent une roue de fromage dévalant une colline, risquant bosses, contusions et une sérieuse envie de cheddar."
         },
         "buoy_racing": {
-            "name": "Course de Bouées",
-            "description": "Parce que courir sur l'eau, c'est trop banal. Les concurrents se précipitent autour de bouées flottantes dans une course aquatique frénétique vers la victoire."
+            "name": "Course de Bouées Canard",
+            "description": "Parce que courir sur l'eau, c'est trop banal. Les concurrents se précipitent autour d'adorables bouées canard flottantes dans une course aquatique frénétique vers la victoire."
         },
         "treadmill_choregraphy": {
             "name": "Chorégraphie sur Tapis Roulant",
@@ -137,7 +137,7 @@
             "description": "Le test ultime de cerveau et de muscles. Stratégisez comme Kasparov, frappez comme Tyson et n'oubliez pas de respirer entre les rounds."
         },
         "hopscotch": {
-            "name": "Marelle",
+            "name": "Saut à la Marelle",
             "description": "Où les adultes se souviennent de la joie de l'enfance. Sautez à travers des carrés numérotés et essayez de ne pas perdre l'équilibre - ou votre dignité."
         },
         "acrobatic_cup_and_ball": {

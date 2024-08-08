@@ -38,8 +38,7 @@ from tools.constants import (
     GOD_MODE
 )
 from tools.olympe import (
-    generate_athlete,
-    generate_and_add_first_athlete
+    generate_athlete
 )
 
 #############
@@ -71,26 +70,22 @@ class GameScreen(OlympeScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
+        
+        # # TODO TEMP
+        # if self.GAME.recrutable_athletes == []:
+        #     first_athlete = generate_athlete(GAME=self.GAME)
+        #     self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+        #     USER_DATA.save_changes()
 
-        self.notifications_list = self.GAME.notifications_list
         # Update main_action
         self.main_action = self.GAME.get_main_action()
-
-        self.ids.notification_button.trigger_icon_flashing()
-
-        # TODO TEMP
-        if self.GAME.unlocked_sports == []:
-            self.GAME.unlock_new_sport("cheese_rolling")
-        # TODO TEMP
-        if self.GAME.team == []:
-            generate_and_add_first_athlete(GAME=self.GAME, main_sport="cheese_rolling")
-        # TODO TEMP
-        if self.GAME.recrutable_athletes == []:
-            first_athlete = generate_athlete(GAME=self.GAME)
-            self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
-            USER_DATA.save_changes()
+        
+        # Fill the back space with all menus
         self.fill_grid_layout()
 
+        # Update the list of notifications
+        self.notifications_list = self.GAME.notifications_list
+        self.ids.notification_button.trigger_icon_flashing()
         self.update_notification_panel()
 
     def go_backwards(self):
@@ -110,18 +105,13 @@ class GameScreen(OlympeScreen):
                 character + "/neutral.png"
 
     def fill_grid_layout(self):
+        # Menus to display
         if GOD_MODE:
-            list_buttons = [
-                "team",
-                "recruit",
-                "sports_complex",
-                "sports_menu",
-                "activities_menu",
-                "medals",
-                "shop"
-            ]
+            list_buttons = ["team", "recruit", "sports_complex",
+                "sports_menu", "activities_menu", "medals", "shop"]
         else:
             list_buttons = self.GAME.unlocked_menus
+
         max_icons = 7
         max_lines = (max_icons // 2) + 1
 
