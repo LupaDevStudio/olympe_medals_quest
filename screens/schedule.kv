@@ -63,16 +63,18 @@
             id: first_activity
             text: ""
             font_ratio: root.font_ratio
-            size_hint: (0.55, 0.075)
+            size_hint: (0.55, None)
+            height: BUTTON_HEIGHT*root.font_ratio
             pos_hint: {"x": 0.05}
             y: 4*MARGIN*root.font_ratio + 2*self.height
 
         PressedButton:
             id: first_activity_button
             text: root.change_text
-            size_hint: (0.3, 0.075)
+            size_hint: (0.3, None)
             font_ratio: root.font_ratio
             y: first_activity.y
+            height: first_activity.height
             pos_hint: {"x": 0.65}
             release_function: root.change_first_activity
 
@@ -81,6 +83,7 @@
             text: ""
             font_ratio: root.font_ratio
             size_hint: first_activity.size_hint
+            height: first_activity.height
             x: first_activity.x
             y: 3*MARGIN*root.font_ratio + self.height
 
@@ -89,6 +92,7 @@
             size_hint: first_activity_button.size_hint
             font_ratio: root.font_ratio
             y: second_activity.y
+            height: first_activity.height
             pos_hint: first_activity_button.pos_hint
             release_function: root.change_second_activity
 
@@ -97,6 +101,7 @@
             text: ""
             font_ratio: root.font_ratio
             size_hint: first_activity.size_hint
+            height: first_activity.height
             x: first_activity.x
             y: 2*MARGIN*root.font_ratio
 
@@ -105,6 +110,7 @@
             size_hint: first_activity_button.size_hint
             font_ratio: root.font_ratio
             y: third_activity.y
+            height: first_activity.height
             pos_hint: first_activity_button.pos_hint
             release_function: root.change_third_activity
 
