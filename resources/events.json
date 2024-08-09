@@ -12,7 +12,8 @@
             "effects": {
                 "money": 10000,
                 "unlocked_menus": ["team"],
-                "first_athlete": true
+                "first_athlete": true,
+                "unlocked_characters": ["simon"]
             }
         },
         "hector_sports_activities": {

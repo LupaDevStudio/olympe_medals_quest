@@ -137,6 +137,7 @@ class MainApp(App, Widget):
 
     def on_stop(self):
         super().on_stop()
+        # TODO mettre une condition sur écran différent de home, settings, save
         USER_DATA.stop_game(id_game = self.root_window.children[0].id_game)
         USER_DATA.save_changes()
 
@@ -144,6 +145,7 @@ class MainApp(App, Widget):
 if __name__ == "__main__":
     if not ANDROID_MODE:
         Window.size = (405, 720)
+        # Window.size = (550, 850)
         # Window.size = (720, 1080)
         # Window.size = (200, 400)
         # Window.size = (1080, 2340)
