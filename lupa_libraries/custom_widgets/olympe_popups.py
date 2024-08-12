@@ -218,10 +218,9 @@ class OlympePlanificationPopup(OlympePopup):
 
     ### Button options ###
 
-    number_activity = 1
+    number_activity = NumericProperty()
     cancel_button_text = StringProperty()
     confirm_button_text = StringProperty()
-    cancel_function = ObjectProperty(lambda: 1 + 1)
     confirm_function = ObjectProperty(lambda: 1 + 1)
 
     def __init__(self, **kwargs):
@@ -248,11 +247,27 @@ class OlympePlanificationPopup(OlympePopup):
             self.money_minus_mode = False
             self.money_plus_mode = False
 
+    def open_details_category(self):
+        # TODO popup
+        print(self.ids.category_spinner.text)
+
+    def open_details_activity(self):
+        # TODO popup
+        print(self.ids.activity_spinner.text)
+
+    def choose_category(self, category: str):
+        print("TODO")
+
+    def choose_activity(self, activity: str):
+        print("TODO")
+
     def confirm(self):
         self.dismiss()
         # TODO
-        activity_chosen: str = self.ids.spinner.text
+        activity_chosen: str = self.ids.category_spinner.text
         self.confirm_function(
             self.number_activity,
             activity_chosen)
 
+    def cancel(self):
+        self.dismiss()

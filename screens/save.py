@@ -107,7 +107,9 @@ class SaveScreen(OlympeScreen):
             MARGIN*2*self.font_ratio) / 3
         
         date = game.last_time_played
-        if TEXT.language == "french":
+        if date is None:
+            date = ""
+        elif TEXT.language == "french":
 
             date_en_format = '%m/%d/%Y - %H:%M'
             date_fr_format = '%d/%m/%Y - %Hh%M'

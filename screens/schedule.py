@@ -135,6 +135,8 @@ class ScheduleScreen(OlympeScreen):
     def open_planning_popup(self, number_activity: int):
         popup = OlympePlanificationPopup(
             title=self.athlete.first_name + " " + self.athlete.name,
+            category_title=TEXT.schedule["category"],
+            activity_title=TEXT.schedule["activity"],
             font_ratio=self.font_ratio,
             path_background=self.back_image_path,
             confirm_function=self.change_activity,

@@ -56,7 +56,9 @@
     },
     "schedule": {
         "progression": "Progression",
-        "change": "Modifier"
+        "change": "Modifier",
+        "category": "Catégorie",
+        "activity": "Activité"
     },
     "team": {
         "athlete": " athlète",
