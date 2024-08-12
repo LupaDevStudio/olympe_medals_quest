@@ -306,6 +306,7 @@
         "yes": "Oui",
         "no": "Non",
         "validate": "Valider",
+        "cancel": "Annuler",
         "test": {
             "title": "Titre de la popup",
             "text": "Text dans la popup"

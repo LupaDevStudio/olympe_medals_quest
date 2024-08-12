@@ -22,7 +22,8 @@ from kivy.properties import (
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterSkillsLayout
+    CharacterSkillsLayout,
+    OlympePlanificationPopup
 )
 from tools.constants import (
     TEXT,
@@ -132,8 +133,21 @@ class ScheduleScreen(OlympeScreen):
         self.open_planning_popup(3)
 
     def open_planning_popup(self, number_activity: int):
-        print("Planning")
+        popup = OlympePlanificationPopup(
+            title=self.athlete.first_name + " " + self.athlete.name,
+            font_ratio=self.font_ratio,
+            path_background=self.back_image_path,
+            confirm_function=self.change_activity,
+            number_activity=number_activity,
+            values_category=["1", "2", "3"],# TODO
+            default_value_category="1",# TODO
+            values_activity=["1", "2", "3"],# TODO
+            default_value_activity="1"# TODO
+        )
+        popup.open()
 
+    def change_activity(self, number_activity: int, activity_chosen: str):
+        pass
         # update activities_ids_list[number_activity]
 
     def validate_planning(self):

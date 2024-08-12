@@ -42,6 +42,7 @@ from lupa_libraries.custom_widgets import (
     OlympeMessagePopup,
     OlympeYesNoPopup,
     OlympeSpinnerPopup,
+    OlympePlanificationPopup,
     SeparationLine
 )
 

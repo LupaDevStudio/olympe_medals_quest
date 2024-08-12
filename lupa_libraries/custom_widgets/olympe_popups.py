@@ -84,7 +84,7 @@ class OlympePopup(Popup):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-        black_background = OlympeCard(
+        self.black_background = OlympeCard(
             font_ratio=self.font_ratio,
             header_mode=True,
             size_hint=(None, None),
@@ -93,7 +93,7 @@ class OlympePopup(Popup):
             y=(1-self.popup_size_hint[1])/2*Window.size[1],
             header_text=self.title
         )
-        self.ids.popup_layout.add_widget(black_background, 100)
+        self.ids.popup_layout.add_widget(self.black_background, 100)
 
         background_image = Image(
             source=self.path_background,
@@ -191,3 +191,68 @@ class OlympeSpinnerPopup(OlympePopup):
     def confirm(self):
         self.dismiss()
         self.confirm_function(self.ids.spinner.text)
+
+class OlympePlanificationPopup(OlympePopup):
+    """
+    Class to create a popup for the planification.
+    """
+
+    ### Money options ###
+
+    money_amount = NumericProperty(0)
+    money_minus_mode = BooleanProperty(False)
+    money_plus_mode = BooleanProperty(False)
+
+    ### Texts options ###
+
+    category_title = StringProperty()
+    activity_title = StringProperty()
+    font_size_text = StringProperty(FONTS_SIZES.label)
+
+    ### Spinners options ###
+
+    default_value_category = StringProperty()
+    values_category = ListProperty()
+    default_value_activity = StringProperty()
+    values_activity = ListProperty()
+
+    ### Button options ###
+
+    number_activity = 1
+    cancel_button_text = StringProperty()
+    confirm_button_text = StringProperty()
+    cancel_function = ObjectProperty(lambda: 1 + 1)
+    confirm_function = ObjectProperty(lambda: 1 + 1)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.confirm_button_text = TEXT.popup["validate"]
+        self.cancel_button_text = TEXT.popup["cancel"]
+
+        self.black_background.money_mode = True
+        self.black_background.money_amount = self.money_amount
+        self.black_background.money_minus_mode = self.money_minus_mode
+        self.black_background.money_plus_mode = self.money_plus_mode
+
+        self.bind(money_amount = self.update_cost)
+        self.update_cost()
+
+    def update_cost(self, *args):
+        if self.money_amount > 0:
+            self.money_minus_mode = False
+            self.money_plus_mode = True
+        elif self.money_amount < 0:
+            self.money_minus_mode = True
+            self.money_plus_mode = False
+        else:
+            self.money_minus_mode = False
+            self.money_plus_mode = False
+
+    def confirm(self):
+        self.dismiss()
+        # TODO
+        activity_chosen: str = self.ids.spinner.text
+        self.confirm_function(
+            self.number_activity,
+            activity_chosen)
+
