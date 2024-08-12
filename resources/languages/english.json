@@ -58,7 +58,8 @@
         "progression": "Progression",
         "change": "Change",
         "category": "Catégorie",
-        "activity": "Activité"
+        "activity": "Activité",
+        "take_all_trimester": "Cette activité durera l'intégralité du trimestre."
     },
     "team": {
         "athlete": " athlete",
@@ -114,27 +115,27 @@
         "charm": "Charm"
     },
     "sports": {
-        "cheese_rolling": {
+        "cheese-rolling": {
             "name": "Cheese Rolling",
             "description": "The event where brave souls chase a wheel of cheese down a hill, risking bumps, bruises, and a serious craving for cheddar."
         },
-        "buoy_racing": {
+        "buoy-racing": {
             "name": "Duck Buoy Racing",
             "description": "Because running on water is just too mainstream. Competitors dash around cute floating duck buoys in a frantic aquatic race to victory."
         },
-        "treadmill_choregraphy": {
+        "treadmill-choregraphy": {
             "name": "Treadmill Choreography",
             "description": "The art of dancing on a moving treadmill. It's almost like synchronized swimming, but with less splashing and more groove."
         },
-        "iron_toe": {
+        "iron-toe": {
             "name": "Toe Wrestling",
             "description": "Like arm wrestling but for your toes. Contestants showcase their precision in intense toe-to-toe duels, proving that finesse trumps brute strength."
         },
-        "donuts_throwing": {
+        "donuts-throwing": {
             "name": "Donuts Throwing",
             "description": "The sport where accuracy meets deliciousness. Aim your sugary torpedoes through hoops and watch the sprinkles fly!"
         },
-        "chess_boxing": {
+        "chess-boxing": {
             "name": "Chess Boxing",
             "description": "The ultimate test of brains and brawn. Strategize like Kasparov, punch like Tyson, and remember to breathe between rounds."
         },
@@ -142,51 +143,51 @@
             "name": "Hopscotch",
             "description": "Where grown-ups remember the joy of childhood. Skip through numbered squares and try not to lose your balance—or your dignity."
         },
-        "acrobatic_cup_and_ball": {
+        "acrobatic-cup-and-ball": {
             "name": "Acrobatic Cup-and-Ball",
             "description": "Juggle, flip, and balance while keeping a ball on a cup. It's like Cirque du Soleil meets street carnival—minus the clowns."
         },
-        "zipline_bow": {
+        "zipline-bow": {
             "name": "Zipline Bow",
             "description": "Where archery meets adrenaline. Hit targets while zooming down a zipline. It's Robin Hood meets Tarzan, with a splash of bullseye."
         },
-        "jelly_wall_climbing": {
+        "jelly-wall-climbing": {
             "name": "Jelly Wall Climbing",
             "description": "Climb walls covered in wobbly jelly that makes every ascent as slippery as it is perilous. It's like scaling a giant dessert, but beware not to devour it too soon!"
         },
-        "aqua_jogging": {
+        "aqua-jogging": {
             "name": "Aqua Jogging",
             "description": "When you want to run but swimming is your jam. Glide through the water like a ninja, leaving splashes of fitness in your wake."
         },
-        "mermaid_swimming": {
+        "mermaid-swimming": {
             "name": "Mermaid Swimming",
             "description": "Where legs transform into fins and dreams come true. Channel your inner Ariel with graceful dives and underwater twirls."
         },
-        "musical_fencing": {
+        "musical-fencing": {
             "name": "Musical Fencing",
             "description": "Dueling to a beat. En garde to the rhythm and parry with panache. Bonus points for choreographed swordplay and jazz hands."
         },
-        "umbrella_fight": {
+        "umbrella-fight": {
             "name": "Umbrella Fight",
             "description": "Rain or shine, it's time to battle! Grab your brolly, unleash your inner Mary Poppins, and dance-fight your way to victory."
         },
-        "tree_throwing": {
+        "tree-throwing": {
             "name": "Tree Throwing",
             "description": "Because tossing logs is how giants stay fit. Hurl trees for distance and accuracy, proving that strong arms and green thumbs go hand in hand."
         },
-        "jump_boxing": {
+        "jump-boxing": {
             "name": "Jump Boxing",
             "description": "Where pugilism meets plyometrics. Punch your way to fitness with explosive jumps and quick combos. Float like a butterfly, sting like a kangaroo."
         },
-        "slackline_gym": {
+        "slackline-gym": {
             "name": "Slackline Gym",
             "description": "Balance, bounce, and boggle minds. Walk, flip, and pose on a wobbly line—because life's more fun when you're one misstep away from flying."
         },
-        "acrobatic_bow": {
+        "acrobatic-bow": {
             "name": "Acrobatic Bow",
             "description": "Archery on the edge. Perform flips, spins, and mid-air shots while aiming for bullseyes. Cupid meets Cirque du Soleil with a quiver full of style."
         },
-        "arc_escalation": {
+        "arc-escalation": {
             "name": "Arc-Escalation",
             "description": "A daring mix of archery and climbing. Scale walls and obstacles while aiming at targets with precision. It's like being a Spider-Man archer on a mission."
         },
@@ -198,7 +199,7 @@
             "name": "100 meters Sprint",
             "description": "A blink-and-you'll-miss-it race where athletes blast down the track faster than you can say 'Where's the fire?'"
         },
-        "swim_100m": {
+        "swim-100m": {
             "name": "100 meters Swim",
             "description": "A splashy dash across the pool where speed demons race to the finish like they're escaping a school of hungry sharks."
         },
@@ -210,7 +211,7 @@
             "name": "Fencing",
             "description": "A swashbuckling duel where you try to poke your opponent with a sword, all while looking like a fancy Zorro with a shiny mask."
         },
-        "javelin_throwing": {
+        "javelin-throwing": {
             "name": "Javelin Throwing",
             "description": "Where athletes channel their inner spear-wielding warrior and see how far they can chuck a pointy stick without skewering the opposing crew."
         },
@@ -218,7 +219,7 @@
             "name": "Boxing",
             "description": "Where two people punch each other while dancing around the ring, aiming for a knockout and hoping their face doesn't look like a Picasso painting afterward."
         },
-        "high_jump": {
+        "high-jump": {
             "name": "High Jump",
             "description": "The sport of leaping over a bar set increasingly higher, like playing limbo in reverse but with more flailing and less music."
         },
@@ -299,6 +300,44 @@
     "activities": {
         "vacation": {
             "name": "Congés",
+            "description": "TODO"
+        },
+        "sports_training": {
+            "name": "[SPORT_NAME] - Niveau [LEVEL]",
+            "description": "TODO"
+        }
+    },
+    "activity_categories": {
+        "competition": {
+            "name": "Compétitions",
+            "description": "TODO"
+        },
+        "break": {
+            "name": "Repos",
+            "description": "TODO"
+        },
+        "press": {
+            "name": "Journalisme",
+            "description": "TODO"
+        },
+        "sports": {
+            "name": "Entraînement sportif",
+            "description": "TODO"
+        },
+        "job": {
+            "name": "Métiers",
+            "description": "TODO"
+        },
+        "stats": {
+            "name": "Entraînement des compétences",
+            "description": "TODO"
+        },
+        "secrets": {
+            "name": "Affaires secrètes",
+            "description": "TODO"
+        },
+        "others": {
+            "name": "Autres",
             "description": "TODO"
         }
     },

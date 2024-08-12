@@ -68,6 +68,7 @@ class Text():
         self.stats = data["stats"]
         self.rooms = data["rooms"]
         self.activities = data["activities"]
+        self.activity_categories = data["activity_categories"]
         self.difficulty = data["difficulty"]
 
         self.tutorial = data["tutorial"]

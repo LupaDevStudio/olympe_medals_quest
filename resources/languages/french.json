@@ -58,7 +58,8 @@
         "progression": "Progression",
         "change": "Modifier",
         "category": "Catégorie",
-        "activity": "Activité"
+        "activity": "Activité",
+        "take_all_trimester": "Cette activité durera l'intégralité du trimestre."
     },
     "team": {
         "athlete": " athlète",
@@ -114,27 +115,27 @@
         "charm": "Charm"
     },
     "sports": {
-        "cheese_rolling": {
+        "cheese-rolling": {
             "name": "Cheese-Rolling",
             "description": "L'événement où des âmes courageuses poursuivent une roue de fromage dévalant une colline, risquant bosses, contusions et une sérieuse envie de cheddar."
         },
-        "buoy_racing": {
+        "buoy-racing": {
             "name": "Course de Bouées Canard",
             "description": "Parce que courir sur l'eau, c'est trop banal. Les concurrents se précipitent autour d'adorables bouées canard flottantes dans une course aquatique frénétique vers la victoire."
         },
-        "treadmill_choregraphy": {
+        "treadmill-choregraphy": {
             "name": "Chorégraphie sur Tapis Roulant",
             "description": "L'art de danser sur un tapis roulant en mouvement. C'est presque comme de la natation synchronisée, mais avec moins de éclaboussures et plus de groove."
         },
-        "iron_toe": {
+        "iron-toe": {
             "name": "Orteil de Fer",
             "description": "Comme le bras de fer mais avec les orteils. Les participants montrent leur précision dans des duels intenses orteil contre orteil, prouvant que la finesse l'emporte sur la force brute."
         },
-        "donuts_throwing": {
+        "donuts-throwing": {
             "name": "Lancer de Donuts",
             "description": "Le sport où la précision rencontre la gourmandise. Visez vos torpilles sucrées à travers des cerceaux et regardez les éclats de sucre voler !"
         },
-        "chess_boxing": {
+        "chess-boxing": {
             "name": "Chess-Boxing",
             "description": "Le test ultime de cerveau et de muscles. Stratégisez comme Kasparov, frappez comme Tyson et n'oubliez pas de respirer entre les rounds."
         },
@@ -142,51 +143,51 @@
             "name": "Saut à la Marelle",
             "description": "Où les adultes se souviennent de la joie de l'enfance. Sautez à travers des carrés numérotés et essayez de ne pas perdre l'équilibre - ou votre dignité."
         },
-        "acrobatic_cup_and_ball": {
+        "acrobatic-cup-and-ball": {
             "name": "Bilboquet Acrobatique",
             "description": "Jonglez, flippez et équilibrez tout en gardant une balle sur une coupe. C'est comme le Cirque du Soleil rencontre la fête foraine - sans les clowns."
         },
-        "zipline_bow": {
+        "zipline-bow": {
             "name": "Tir à l'Arc en Tyrolienne",
             "description": "Où le tir à l'arc rencontre l'adrénaline. Visez les cibles tout en dévalant une tyrolienne. C'est Robin des Bois qui rencontre Tarzan, avec une touche de technique."
         },
-        "jelly_wall_climbing": {
+        "jelly-wall-climbing": {
             "name": "Escalade de Mur de Gelée",
             "description": "Grimpez des murs recouverts de gelée tremblante qui rend chaque ascension aussi glissante que périlleuse. C'est comme escalader un dessert géant, mais prudence à ne pas le dévorer trop tôt !"
         },
-        "aqua_jogging": {
+        "aqua-jogging": {
             "name": "Aqua Jogging",
             "description": "Quand vous voulez courir mais que la natation est votre truc. Glissez à travers l'eau comme un ninja, laissant des éclaboussures dans votre sillage."
         },
-        "mermaid_swimming": {
+        "mermaid-swimming": {
             "name": "Nage de Sirène",
             "description": "Où les jambes se transforment en nageoires et les rêves deviennent réalité. Canalisez votre Ariel intérieure avec des plongeons gracieux et des tours sous l'eau."
         },
-        "musical_fencing": {
+        "musical-fencing": {
             "name": "Escrime Musicale",
             "description": "Duel au rythme de la musique. En garde au rythme et parez avec panache. Points bonus pour les combats d'épée chorégraphiés et les mouvements jazz."
         },
-        "umbrella_fight": {
+        "umbrella-fight": {
             "name": "Combat de Parapluies",
             "description": "Qu'il pleuve ou qu'il fasse beau, c'est l'heure du combat ! Attrapez votre parapluie, libérez votre Mary Poppins intérieure et combattez en dansant vers la victoire."
         },
-        "tree_throwing": {
+        "tree-throwing": {
             "name": "Lancer de Tronc",
             "description": "Parce que lancer des bûches, c'est comment les géants restent en forme. Lancez des arbres pour la distance et la précision, prouvant que des bras forts et des pouces verts vont de pair."
         },
-        "jump_boxing": {
+        "jump-boxing": {
             "name": "Boxe Sautée",
             "description": "Où la boxe rencontre les exercices de saut. Frayez-vous un chemin vers la forme physique avec des sauts explosifs et des combos rapides. Flottez comme un papillon, piquez comme un kangourou."
         },
-        "slackline_gym": {
+        "slackline-gym": {
             "name": "Slackline Gym",
             "description": "Équilibrez-vous, sautez et émerveillez les esprits. Marchez, flippez et posez-vous sur une ligne instable - parce que la vie est plus amusante quand vous êtes à un faux pas de voler."
         },
-        "acrobatic_bow": {
+        "acrobatic-bow": {
             "name": "Arc Acrobatique",
             "description": "Le tir à l'arc à la limite. Effectuez des flips, des rotations et des tirs en l'air tout en visant les cibles. Cupidon rencontre le Cirque du Soleil avec un carquois plein de style."
         },
-        "arc_escalation": {
+        "arc-escalation": {
             "name": "Arc-Escalade",
             "description": "Un mélange audacieux de tir à l'arc et d'escalade. Grimpez des parois et des obstacles tout en visant des cibles avec précision. C'est comme être un Spider-Man archer en mission."
         },
@@ -198,7 +199,7 @@
             "name": "100 mètres Sprint",
             "description": "Une course où si vous clignez des yeux, vous la ratez. Les athlètes dévalent la piste plus vite que vous ne pouvez dire 'Où est le feu ?'"
         },
-        "swim_100m": {
+        "swim-100m": {
             "name": "100 mètres Nage",
             "description": "Une course effrénée à travers la piscine où les démons de la vitesse nagent jusqu'à la ligne d'arrivée comme s'ils échappaient à un banc de requins affamés."
         },
@@ -210,7 +211,7 @@
             "name": "Escrime",
             "description": "Un duel de cape et d'épée où vous essayez de toucher votre adversaire avec une épée, tout en ressemblant à un Zorro élégant avec un masque brillant."
         },
-        "javelin_throwing": {
+        "javelin-throwing": {
             "name": "Lancer de Javelot",
             "description": "Où les athlètes canalisent leur guerrier intérieur armé de lances et voient jusqu'où ils peuvent lancer un bâton pointu sans empaler l'équipe d'en face."
         },
@@ -218,7 +219,7 @@
             "name": "Boxe",
             "description": "Où deux personnes se frappent tout en dansant autour du ring, visant le KO et espérant que leur visage ne ressemble pas à une peinture de Picasso après."
         },
-        "high_jump": {
+        "high-jump": {
             "name": "Saut en Hauteur",
             "description": "Le sport de sauter par-dessus une barre placée de plus en plus haut, comme jouer au limbo à l'envers mais avec plus de cabrioles et moins de musique."
         },
@@ -299,6 +300,44 @@
     "activities": {
         "vacation": {
             "name": "Congés",
+            "description": "TODO"
+        },
+        "sports_training": {
+            "name": "[SPORT_NAME] - Niveau [LEVEL]",
+            "description": "TODO"
+        }
+    },
+    "activity_categories": {
+        "competition": {
+            "name": "Compétitions",
+            "description": "TODO"
+        },
+        "break": {
+            "name": "Repos",
+            "description": "TODO"
+        },
+        "press": {
+            "name": "Journalisme",
+            "description": "TODO"
+        },
+        "sports": {
+            "name": "Entraînement sportif",
+            "description": "TODO"
+        },
+        "job": {
+            "name": "Métiers",
+            "description": "TODO"
+        },
+        "stats": {
+            "name": "Entraînement des compétences",
+            "description": "TODO"
+        },
+        "secrets": {
+            "name": "Affaires secrètes",
+            "description": "TODO"
+        },
+        "others": {
+            "name": "Autres",
             "description": "TODO"
         }
     },

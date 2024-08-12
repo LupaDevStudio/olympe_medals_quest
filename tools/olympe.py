@@ -391,7 +391,7 @@ def finish_dialog(GAME: Game, dialog_code: str):
                 if mode_id not in GAME.unlocked_menus:
                     GAME.unlocked_menus.append(mode_id)
 
-        elif key_effect == "unlock_activities":
+        elif key_effect == "unlocked_activities":
             for activity_id in value_effect:
                 if activity_id not in GAME.unlocked_activities:
                     GAME.unlocked_activities.append(activity_id)

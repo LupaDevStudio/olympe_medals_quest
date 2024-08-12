@@ -21,7 +21,8 @@
             "trimester": 1,
             "order": 2,
             "effects": {
-                "unlocked_menus": ["activities_menu"]
+                "unlocked_menus": ["activities_menu"],
+                "unlocked_activities": ["sports_1_training_1"]
             }
         }
     },

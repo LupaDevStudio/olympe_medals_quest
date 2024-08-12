@@ -35,7 +35,11 @@ from tools.graphics import (
     SKILL_HEIGHT
 )
 from tools.data_structures import (
-    Athlete
+    Athlete,
+    Activity,
+    Sport,
+    SPORTS,
+    ACTIVITIES
 )
 
 #############
@@ -100,10 +104,23 @@ class ScheduleScreen(OlympeScreen):
         self.activities_ids_list = self.athlete.current_planning
         self.reload_info()
 
+    def get_activity_name(self, full_activity_id: str) -> str:
+        if "sports_" in full_activity_id:
+            list_infos = full_activity_id.split("_") # "sports_2_name_training_4"
+            sport_id = list_infos[2]
+            level_activity = list_infos[4]
+            activity_name = TEXT.activities["sports_training"]["name"].replace(
+                "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
+                "[LEVEL]", str(level_activity))
+        else:
+            activity_name = TEXT.activities[full_activity_id]["name"]
+
+        return activity_name
+
     def update_activities_label(self, *args):
-        self.ids.first_activity.text = TEXT.activities[self.activities_ids_list[0]]["name"]
-        self.ids.second_activity.text = TEXT.activities[self.activities_ids_list[1]]["name"]
-        self.ids.third_activity.text = TEXT.activities[self.activities_ids_list[2]]["name"]
+        self.ids.first_activity.text = self.get_activity_name(self.activities_ids_list[0])
+        self.ids.second_activity.text = self.get_activity_name(self.activities_ids_list[1])
+        self.ids.third_activity.text = self.get_activity_name(self.activities_ids_list[2])
 
     def fill_stats_scrollview(self, athlete_skills):
         scrollview_layout = self.ids.stats_scrollview_layout
@@ -133,18 +150,39 @@ class ScheduleScreen(OlympeScreen):
         self.open_planning_popup(3)
 
     def open_planning_popup(self, number_activity: int):
+        current_activity: Activity = ACTIVITIES[self.athlete.current_planning[number_activity]]
+        current_activity_id = current_activity.id
+
+        code_values_activity = []
+        for activity_id in self.GAME.unlocked_activities:
+            if "sports_" in activity_id:
+                list_infos = activity_id.split("_") # "sports_2_training_4"
+                category_sport = list_infos[1]
+                level_activity = list_infos[3]
+
+                # Add only the sports related to the athlete
+                for sport_id in self.athlete.sports:
+                    sport: Sport = SPORTS[sport_id]
+                    if str(sport.category) == category_sport:
+                        code_values_activity.append(
+                            f"sports_{category_sport}_{sport_id}_training_{level_activity}")
+            else:
+                code_values_activity.append(activity_id)
+
         popup = OlympePlanificationPopup(
             title=self.athlete.first_name + " " + self.athlete.name,
+            athlete=self.athlete,
             category_title=TEXT.schedule["category"],
             activity_title=TEXT.schedule["activity"],
             font_ratio=self.font_ratio,
             path_background=self.back_image_path,
             confirm_function=self.change_activity,
             number_activity=number_activity,
-            values_category=["1", "2", "3"],# TODO
-            default_value_category="1",# TODO
-            values_activity=["1", "2", "3"],# TODO
-            default_value_activity="1"# TODO
+            code_values_category=self.GAME.unlocked_activity_categories,
+            code_default_category=current_activity.category,
+            code_values_activity=code_values_activity,
+            code_default_activity=current_activity_id,
+            get_activity_name_function=self.get_activity_name
         )
         popup.open()
 

@@ -51,6 +51,13 @@ from tools.path import (
     PATH_TEXT_FONT,
     PATH_BACKGROUNDS
 )
+from tools.data_structures import (
+    Athlete,
+    Sport,
+    Activity,
+    SPORTS,
+    ACTIVITIES
+)
 from lupa_libraries.custom_widgets import (
     OlympeCard,
     SeparationLine
@@ -197,6 +204,8 @@ class OlympePlanificationPopup(OlympePopup):
     Class to create a popup for the planification.
     """
 
+    athlete: Athlete = ObjectProperty()
+
     ### Money options ###
 
     money_amount = NumericProperty(0)
@@ -208,13 +217,21 @@ class OlympePlanificationPopup(OlympePopup):
     category_title = StringProperty()
     activity_title = StringProperty()
     font_size_text = StringProperty(FONTS_SIZES.label)
+    take_all_trimester_text = StringProperty()
 
     ### Spinners options ###
 
-    default_value_category = StringProperty()
-    values_category = ListProperty()
-    default_value_activity = StringProperty()
-    values_activity = ListProperty()
+    code_default_category = StringProperty() # code of the default category
+    default_category = StringProperty() # name of the default category
+    code_values_category = ListProperty() # code values of the categories
+    values_category = ListProperty() # name values of the categories
+
+    code_default_activity = StringProperty() # code of the default activity
+    default_activity = StringProperty() # name of the default activity
+    code_values_activity = ListProperty() # code values of the activities
+    values_activity = ListProperty() # name values of the activities
+
+    get_activity_name_function = ObjectProperty(lambda : 1 + 1) # function to get the name of the activity given its id
 
     ### Button options ###
 
@@ -228,6 +245,8 @@ class OlympePlanificationPopup(OlympePopup):
         self.confirm_button_text = TEXT.popup["validate"]
         self.cancel_button_text = TEXT.popup["cancel"]
 
+        # Update the money
+
         self.black_background.money_mode = True
         self.black_background.money_amount = self.money_amount
         self.black_background.money_minus_mode = self.money_minus_mode
@@ -235,6 +254,29 @@ class OlympePlanificationPopup(OlympePopup):
 
         self.bind(money_amount = self.update_cost)
         self.update_cost()
+
+        # Update the values of the spinners
+
+        self.default_category = TEXT.activity_categories[self.code_default_category]["name"]
+        self.values_category = []
+        for id in self.code_values_category:
+            self.values_category.append(TEXT.activity_categories[id]["name"])
+
+        self.default_activity = self.get_activity_name_function(
+            full_activity_id=self.code_default_activity)
+        self.build_values_activity()
+
+    def build_values_activity(self):
+        self.values_activity = []
+        unlocked_activities_code = []
+        for activity_id in self.code_values_activity:
+            activity: Activity = ACTIVITIES[activity_id]
+            # If it's the right category
+            if activity.category == self.code_default_category:
+                unlocked_activities_code.append(activity_id)
+                self.values_activity.append(
+                    self.get_activity_name_function(full_activity_id=activity_id))
+        self.code_values_activity = unlocked_activities_code
 
     def update_cost(self, *args):
         if self.money_amount > 0:
@@ -260,6 +302,11 @@ class OlympePlanificationPopup(OlympePopup):
 
     def choose_activity(self, activity: str):
         print("TODO")
+        # TODO check if the activity takes all the trimester
+        if True:
+            self.take_all_trimester_text = TEXT.schedule["take_all_trimester"]
+        else:
+            self.take_all_trimester_text = ""
 
     def confirm(self):
         self.dismiss()

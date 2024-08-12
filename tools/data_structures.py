@@ -212,7 +212,7 @@ class Activity():
 
     id: str
     effects: list
-    category: str # "sports", "stats", "press", "job", "secret", "break", "competition"
+    category: str # "sports", "stats", "press", "job", "secret", "break", "competition", "others"
     all_trimester: bool
     price: int
     gain: int
@@ -590,7 +590,14 @@ class Athlete():
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
         self.current_planning = dict_to_load.get(
-            "current_planning", ["vacation", "vacation", "vacation"])
+            "current_planning", self.generate_default_planning())
+
+    def generate_default_planning(self) -> list[str]:
+        main_sport_id = list(self.sports.keys())[0]
+        main_sport: Sport = SPORTS[main_sport_id]
+        sport_category = main_sport.category
+        activity_id = f"sports_{sport_category}_{main_sport_id}_training_1"
+        return [activity_id, activity_id, activity_id]
 
     def get_best_sports(self, number_sports: int = 2):
         # Sort the sports by decreasing points
@@ -885,6 +892,24 @@ class Game():
             if value == 1:
                 unlocked_sports.append(key)
         return unlocked_sports
+
+    @property
+    def unlocked_activity_categories(self) -> list[str]:
+        unlocked_activity_categories = []
+        for activity_id in self.unlocked_activities:
+            # Special case for sports
+            if "sports_" in activity_id:
+                list_infos = activity_id.split("_") # "sports_2_training_4"
+                category_sport = list_infos[1]
+                level_activity = list_infos[3]
+                for sport_id in self.unlocked_sports:
+                    sport: Sport = SPORTS[sport_id]
+                    if str(sport.category) == category_sport:
+                        activity_id = f"sports_{category_sport}_{sport_id}_training_{level_activity}"
+            activity: Activity = ACTIVITIES[activity_id]
+            if activity.category not in unlocked_activity_categories:
+                unlocked_activity_categories.append(activity.category)
+        return unlocked_activity_categories
 
     @property
     def number_athletes(self) -> int:
@@ -1182,8 +1207,6 @@ class Game():
         elif mode == "winter":
             self.selected_athletes_winter[sport_id] = []
 
-        # Unlock the activities related to this sport
-
     def compute_total_spent_money_selection(self, mode: Literal["summer", "winter"] = "summer") -> int:
         total_money_spent = 0
 
@@ -1408,9 +1431,10 @@ for sport_id in SPORTS:
         }
     )
 
-ACTIVITIES = load_json_file(PATH_ACTIVITIES)
-for activity_id in ACTIVITIES:
-    activity_dict = ACTIVITIES[activity_id]
+temp_activities = load_json_file(PATH_ACTIVITIES)
+ACTIVITIES = {}
+for activity_id in temp_activities:
+    activity_dict = temp_activities[activity_id]
 
     dict_to_load = {
         "id": activity_id,
@@ -1452,14 +1476,14 @@ for activity_id in ACTIVITIES:
         category_sport = list_infos[2]
         for sport_id in SPORTS:
             sport: Sport = SPORTS[sport_id]
-            if sport.category == category_sport:
-                new_activity_id = "competition_" + type_competition + "_" + sport_id + "_" + category_sport
+            if str(sport.category) == category_sport:
+                new_activity_id = f"competition_{type_competition}_{sport_id}_{category_sport}"
                 new_dict_to_load = copy.deepcopy(dict_to_load)
                 new_dict_to_load["id"] = new_activity_id
                 new_dict_to_load["type_competition"] = type_competition
                 new_dict_to_load["sport_id"] = sport_id
                 new_dict_to_load["category_sport"] = int(category_sport)
-                ACTIVITIES[activity_id] = CompetitionActivity(
+                ACTIVITIES[new_activity_id] = CompetitionActivity(
                     dict_to_load=new_dict_to_load)
 
     # Sports activities
@@ -1469,14 +1493,14 @@ for activity_id in ACTIVITIES:
         level_activity = list_infos[3]
         for sport_id in SPORTS:
             sport: Sport = SPORTS[sport_id]
-            if sport.category == category_sport:
-                new_activity_id = "sports_" + category_sport + "_" + sport_id + "training_" + level_activity
+            if str(sport.category) == category_sport:
+                new_activity_id = f"sports_{category_sport}_{sport_id}_training_{level_activity}"
                 new_dict_to_load = copy.deepcopy(dict_to_load)
                 new_dict_to_load["id"] = new_activity_id
                 new_dict_to_load["level"] = int(level_activity)
                 new_dict_to_load["sport_id"] = sport_id
                 new_dict_to_load["category_sport"] = int(category_sport)
-                ACTIVITIES[activity_id] = SportsActivity(
+                ACTIVITIES[new_activity_id] = SportsActivity(
                     dict_to_load=new_dict_to_load)
 
     # Stats activities

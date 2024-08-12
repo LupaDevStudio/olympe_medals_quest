@@ -162,7 +162,7 @@
 
             PressedSpinner:
                 id: category_spinner
-                text: root.default_value_category
+                text: root.default_category
                 values: root.values_category
                 size_hint: (None, None)
                 width: self.parent.width * 0.95 - category_tutorial.width
@@ -207,7 +207,7 @@
 
             PressedSpinner:
                 id: activity_spinner
-                text: root.default_value_activity
+                text: root.default_activity
                 values: root.values_activity
                 size_hint: (None, None)
                 width: self.parent.width * 0.95 - activity_tutorial.width
@@ -224,6 +224,22 @@
                 font_ratio: root.font_ratio
                 pos_hint: {"center_y": 0.5, "right": 1}
                 release_function: root.open_details_activity
+
+        Label:
+            id: take_all_trimester_label
+            text: root.take_all_trimester_text
+            size_hint: (1, None)
+            pos_hint: {"center_x": 0.5}
+            height: category_label.height
+            y: activity_layout.y - self.height
+            font_size: FONTS_SIZES.small_label * root.font_ratio
+            font_name: root.text_font_name
+            color: root.font_color
+            shorten: False
+            text_size: self.size
+            valign: "middle"
+            halign: "center"
+            line_height: 1
 
         ### Buttons ###
 

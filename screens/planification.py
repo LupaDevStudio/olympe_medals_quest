@@ -99,7 +99,16 @@ class PlanificationScreen(OlympeScreen):
 
                 list_activities_label = []
                 for activity_id in athlete.current_planning:
-                    list_activities_label.append(TEXT.activities[activity_id]["name"])
+                    if "sports_" in activity_id:
+                        list_infos = activity_id.split("_") # "sports_2_name_training_4"
+                        sport_id = list_infos[2]
+                        level_activity = list_infos[4]
+                        activity_name = TEXT.activities["sports_training"]["name"].replace(
+                            "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
+                            "[LEVEL]", str(level_activity))
+                        list_activities_label.append(activity_name)
+                    else:
+                        list_activities_label.append(TEXT.activities[activity_id]["name"])
 
                 athlete_card = CompletePlanificationCard(
                     font_ratio=self.font_ratio,
