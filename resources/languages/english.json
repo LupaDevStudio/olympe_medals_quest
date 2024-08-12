@@ -305,6 +305,86 @@
         "sports_training": {
             "name": "[SPORT_NAME] - Niveau [LEVEL]",
             "description": "TODO"
+        },
+        "stats_strength_1": {
+            "name": "Entraînement force - Niveau 1",
+            "description": "TODO"
+        },
+        "stats_strength_2": {
+            "name": "Entraînement force - Niveau 2",
+            "description": "TODO"
+        },
+        "stats_strength_3": {
+            "name": "Entraînement force - Niveau 3",
+            "description": "TODO"
+        },
+        "stats_strength_4": {
+            "name": "Entraînement force - Niveau 4",
+            "description": "TODO"
+        },
+        "stats_speed_1": {
+            "name": "Entraînement vitesse - Niveau 1",
+            "description": "TODO"
+        },
+        "stats_speed_2": {
+            "name": "Entraînement vitesse - Niveau 2",
+            "description": "TODO"
+        },
+        "stats_speed_3": {
+            "name": "Entraînement vitesse - Niveau 3",
+            "description": "TODO"
+        },
+        "stats_speed_4": {
+            "name": "Entraînement vitesse - Niveau 4",
+            "description": "TODO"
+        },
+        "stats_technique_1": {
+            "name": "Entraînement technique - Niveau 1",
+            "description": "TODO"
+        },
+        "stats_technique_2": {
+            "name": "Entraînement technique - Niveau 2",
+            "description": "TODO"
+        },
+        "stats_technique_3": {
+            "name": "Entraînement technique - Niveau 3",
+            "description": "TODO"
+        },
+        "stats_technique_4": {
+            "name": "Entraînement technique - Niveau 4",
+            "description": "TODO"
+        },
+        "stats_precision_1": {
+            "name": "Entraînement précision - Niveau 1",
+            "description": "TODO"
+        },
+        "stats_precision_2": {
+            "name": "Entraînement précision - Niveau 2",
+            "description": "TODO"
+        },
+        "stats_precision_3": {
+            "name": "Entraînement précision - Niveau 3",
+            "description": "TODO"
+        },
+        "stats_precision_4": {
+            "name": "Entraînement précision - Niveau 4",
+            "description": "TODO"
+        },
+        "stats_charm_1": {
+            "name": "Entraînement charme - Niveau 1",
+            "description": "TODO"
+        },
+        "stats_charm_2": {
+            "name": "Entraînement charme - Niveau 2",
+            "description": "TODO"
+        },
+        "stats_charm_3": {
+            "name": "Entraînement charme - Niveau 3",
+            "description": "TODO"
+        },
+        "stats_charm_4": {
+            "name": "Entraînement charme - Niveau 4",
+            "description": "TODO"
         }
     },
     "activity_categories": {

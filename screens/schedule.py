@@ -180,7 +180,7 @@ class ScheduleScreen(OlympeScreen):
             number_activity=number_activity,
             code_values_category=self.GAME.unlocked_activity_categories,
             code_default_category=current_activity.category,
-            code_values_activity=code_values_activity,
+            all_unlocked_activities=code_values_activity,
             code_default_activity=current_activity_id,
             get_activity_name_function=self.get_activity_name
         )

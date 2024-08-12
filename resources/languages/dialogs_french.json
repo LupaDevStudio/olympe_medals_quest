@@ -522,5 +522,13 @@
             "background": "sports_complex",
             "music": "fight_ceremony"
         }
+    ],
+    "hector_skills_activities": [
+        {
+            "character": "hector",
+            "text": "Test",
+            "background": "sports_complex",
+            "music": "fight_ceremony"
+        }
     ]
 }

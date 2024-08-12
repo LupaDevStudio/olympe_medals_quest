@@ -226,6 +226,7 @@ class OlympePlanificationPopup(OlympePopup):
     code_values_category = ListProperty() # code values of the categories
     values_category = ListProperty() # name values of the categories
 
+    all_unlocked_activities = ListProperty() # code of all unlocked activities
     code_default_activity = StringProperty() # code of the default activity
     default_activity = StringProperty() # name of the default activity
     code_values_activity = ListProperty() # code values of the activities
@@ -268,15 +269,14 @@ class OlympePlanificationPopup(OlympePopup):
 
     def build_values_activity(self):
         self.values_activity = []
-        unlocked_activities_code = []
-        for activity_id in self.code_values_activity:
+        self.code_values_activity = []
+        for activity_id in self.all_unlocked_activities:
             activity: Activity = ACTIVITIES[activity_id]
             # If it's the right category
             if activity.category == self.code_default_category:
-                unlocked_activities_code.append(activity_id)
+                self.code_values_activity.append(activity_id)
                 self.values_activity.append(
                     self.get_activity_name_function(full_activity_id=activity_id))
-        self.code_values_activity = unlocked_activities_code
 
     def update_cost(self, *args):
         if self.money_amount > 0:
@@ -298,7 +298,13 @@ class OlympePlanificationPopup(OlympePopup):
         print(self.ids.activity_spinner.text)
 
     def choose_category(self, category: str):
-        print("TODO")
+        # Get the default category
+        category_index = self.values_category.index(category)
+        self.code_default_category = self.code_values_category[category_index]
+
+        # Update the spinner of activities
+        self.build_values_activity()
+        self.default_activity = self.values_activity[0]
 
     def choose_activity(self, activity: str):
         print("TODO")

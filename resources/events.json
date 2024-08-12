@@ -24,6 +24,19 @@
                 "unlocked_menus": ["activities_menu"],
                 "unlocked_activities": ["sports_1_training_1"]
             }
+        },
+        "hector_skills_activities": {
+            "year": 3,
+            "trimester": 2,
+            "effects": {
+                "unlocked_activities": [
+                    "stats_strength_1",
+                    "stats_speed_1",
+                    "stats_technique_1",
+                    "stats_precision_1",
+                    "stats_charm_1"
+                ]
+            }
         }
     },
     "repeatable_events": {
