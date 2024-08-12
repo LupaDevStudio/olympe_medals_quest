@@ -259,7 +259,7 @@
         disable_button: True
 
     PressedButton:
-        text: root.fire_text
+        text: root.fire_text if root.fire_unlocked else "???"
         size_hint: (None, None)
         height: BUTTON_HEIGHT * root.font_ratio
         width: character.width
@@ -270,7 +270,6 @@
         background_color: COLORS.red
         release_function: root.fire_athlete_function
         disable_button: not root.fire_unlocked
-        opacity: 1 if root.fire_unlocked else 0
 
     ### Information ###
     
@@ -296,7 +295,7 @@
         x: salary_label.x
 
     SurroundedLabel:
-        text: root.fatigue
+        text: root.fatigue if root.fatigue_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -304,10 +303,9 @@
         pos_hint: {"y": 0.05*3 + 2*0.14}
         y: 3*MARGIN*root.font_ratio + 2*self.height
         x: salary_label.x
-        opacity: 1 if root.fatigue_unlocked else 0
 
     SurroundedLabel:
-        text: root.reputation
+        text: root.reputation if root.reputation_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -315,10 +313,9 @@
         pos_hint: {"y": 0.05*2 + 0.14}
         y: 2*MARGIN*root.font_ratio + self.height
         x: salary_label.x
-        opacity: 1 if root.reputation_unlocked else 0
 
     SurroundedLabel:
-        text: root.health
+        text: root.health if root.health_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -326,7 +323,6 @@
         pos_hint: {"y": 0.05}
         y: MARGIN*root.font_ratio
         x: salary_label.x
-        opacity: 1 if root.health_unlocked else 0
 
 <StatBar>:
 
@@ -670,7 +666,7 @@
     # Planning button
     PressedButton:
         id: planning_button
-        text: root.planning_text
+        text: root.planning_text if root.planification_unlocked else "???"
         size_hint: (None, None)
         width: first_activity.width
         height: SKILL_HEIGHT * root.font_ratio
@@ -678,6 +674,7 @@
         x: 0.1*root.width + character.width
         y: MARGIN*root.font_ratio
         release_function: root.release_function
+        disable_button: not root.planification_unlocked
 
 <SmallPlanificationCard>:
 

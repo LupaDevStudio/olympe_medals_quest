@@ -770,6 +770,7 @@ class CompletePlanificationCard(RelativeLayout):
     total_price = NumericProperty(0)
     minus_mode = BooleanProperty()
     planning_text = StringProperty()
+    planification_unlocked = BooleanProperty(True)
     list_activities = ListProperty([])
 
     font_size = NumericProperty(FONTS_SIZES.label)

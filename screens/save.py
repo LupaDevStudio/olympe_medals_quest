@@ -177,7 +177,8 @@ class SaveScreen(OlympeScreen):
         # Choose the difficulty of the game
         self.create_spinner_popup(
             code="choose_difficulty",
-            confirm_function=self.start_new_game)
+            confirm_function=self.start_new_game,
+            sort_values=False)
 
     def start_new_game(self, name_difficulty: str):
         code_difficulty: Literal["easy", "medium", "difficult"] = TEXT.difficulty[name_difficulty]

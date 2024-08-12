@@ -141,13 +141,13 @@ class ScheduleScreen(OlympeScreen):
         scrollview_layout.add_widget(skills_layout)
 
     def change_first_activity(self):
-        self.open_planning_popup(1)
+        self.open_planning_popup(0)
 
     def change_second_activity(self):
-        self.open_planning_popup(2)
+        self.open_planning_popup(1)
 
     def change_third_activity(self):
-        self.open_planning_popup(3)
+        self.open_planning_popup(2)
 
     def open_planning_popup(self, number_activity: int):
         current_activity: Activity = ACTIVITIES[self.athlete.current_planning[number_activity]]
@@ -182,19 +182,19 @@ class ScheduleScreen(OlympeScreen):
             code_default_category=current_activity.category,
             all_unlocked_activities=code_values_activity,
             code_default_activity=current_activity_id,
-            get_activity_name_function=self.get_activity_name
+            get_activity_name_function=self.get_activity_name,
+            create_message_popup_function=self.create_message_popup
         )
         popup.open()
 
     def change_activity(self, number_activity: int, activity_chosen: str):
-        pass
-        # update activities_ids_list[number_activity]
+        self.activities_ids_list[number_activity] = activity_chosen
 
-    def validate_planning(self):
-        # Validate the new planning of the athlete
+        # Save the new activity
         self.athlete.current_planning = self.activities_ids_list
         USER_DATA.save_changes()
 
+    def validate_planning(self):
         self.go_to_next_screen(
             screen_name="planification",
             current_dict_kwargs={"athlete": self.athlete}

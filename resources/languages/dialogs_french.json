@@ -41,7 +41,7 @@
         },
         {
             "character": "atlas",
-            "text": "Cela ne s'arrêtera pas là ! Les athlètes pourront démontrer leur force, leur précision et leur vigueur à travers les épreuves de tir à l'arc, escalade, boxe, escrime, natation et [NEW_SPORT]...",
+            "text": "Cela ne s'arrêtera pas là ! Les athlètes pourront démontrer leur force, leur précision et leur vigueur à travers les épreuves de tir à l'arc, escalade, boxe, escrime, natation et [THE_NEW_SPORT]...",
             "background": "president_speech"
         },
         {
@@ -62,7 +62,7 @@
         {
             "character": "journalist",
             "expression": "happy",
-            "text": "Le [NEW_SPORT] !",
+            "text": "[THE_NEW_SPORT_CAPITALIZE] !",
             "background": "president_speech_sheet",
             "shake": "weak_no_sound",
             "sound": "journalists_camera"
@@ -76,7 +76,7 @@
         {
             "character": "journalist",
             "expression": "happy",
-            "text": "Le [NEW_SPORT] sera présent pour la vingt-et-unième édition du FIGHT ! C'est incroyable, quelle annonce inattendue !",
+            "text": "[THE_NEW_SPORT_CAPITALIZE] sera présent pour la vingt-et-unième édition du FIGHT ! C'est incroyable, quelle annonce inattendue !",
             "background": "president_speech",
             "shake": "weak_no_sound"
         },
@@ -217,7 +217,7 @@
                 true,
                 false
             ],
-            "text": "C'était dans la présentation officielle délivrée par le président ; le [NEW_SPORT] était dans la liste, je t'assure ! Il fera partie de la compétition, c'est acté désormais ! C'est notre chance d'exister dans l'histoire du FIGHT !",
+            "text": "C'était dans la présentation officielle délivrée par le président ; [THE_NEW_SPORT] était dans la liste, je t'assure ! Il fera partie de la compétition, c'est acté désormais ! C'est notre chance d'exister dans l'histoire du FIGHT !",
             "background": "office"
         },
         {

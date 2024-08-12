@@ -121,7 +121,8 @@ class PlanificationScreen(OlympeScreen):
                     minus_mode=trimester_gain < 0,
                     planning_text=TEXT.planification["planning"],
                     list_activities=list_activities_label,
-                    release_function=partial(self.open_schedule_screen, athlete)
+                    release_function=partial(self.open_schedule_screen, athlete),
+                    planification_unlocked="planification" in self.GAME.unlocked_modes
                 )
 
             self.athlete_folded_dict[athlete.id][1] = athlete_card

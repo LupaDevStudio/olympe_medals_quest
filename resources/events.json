@@ -29,6 +29,7 @@
             "year": 3,
             "trimester": 2,
             "effects": {
+                "unlocked_modes": ["planification"],
                 "unlocked_activities": [
                     "stats_strength_1",
                     "stats_speed_1",

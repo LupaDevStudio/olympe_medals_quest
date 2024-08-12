@@ -104,10 +104,16 @@ class DialogScreen(OlympeScreen):
             frame = self.dialog_content_list[counter_frame]
 
             # First sport of category 1
-            if "[NEW_SPORT]" in frame["text"]:
+            if "[THE_NEW_SPORT]" in frame["text"]:
                 self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
-                    "[NEW_SPORT]", TEXT.sports[self.GAME.first_sport]["name"].lower())
+                    "[THE_NEW_SPORT]", TEXT.sports[self.GAME.first_sport]["the_name"])
             
+            # First sport of category 1 with capitale at the beginning
+            if "[THE_NEW_SPORT_CAPITALIZE]" in frame["text"]:
+                sport_name = TEXT.sports[self.GAME.first_sport]["the_name"].capitalize()
+                self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                    "[THE_NEW_SPORT_CAPITALIZE]", sport_name)
+
             # Corresponding athlete
             if "[NAME_ATHLETE]" in frame["text"]:
                 self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(

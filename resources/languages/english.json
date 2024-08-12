@@ -117,122 +117,182 @@
     "sports": {
         "cheese-rolling": {
             "name": "Cheese Rolling",
+            "the_name": "cheese rolling",
+            "a_name": "cheese rolling",
             "description": "The event where brave souls chase a wheel of cheese down a hill, risking bumps, bruises, and a serious craving for cheddar."
         },
         "buoy-racing": {
             "name": "Duck Buoy Racing",
+            "the_name": "duck buoy racing",
+            "a_name": "duck buoy racing",
             "description": "Because running on water is just too mainstream. Competitors dash around cute floating duck buoys in a frantic aquatic race to victory."
         },
         "treadmill-choregraphy": {
             "name": "Treadmill Choreography",
+            "the_name": "treadmill choreography",
+            "a_name": "treadmill choreography",
             "description": "The art of dancing on a moving treadmill. It's almost like synchronized swimming, but with less splashing and more groove."
         },
         "iron-toe": {
             "name": "Toe Wrestling",
+            "the_name": "toe wrestling",
+            "a_name": "toe wrestling",
             "description": "Like arm wrestling but for your toes. Contestants showcase their precision in intense toe-to-toe duels, proving that finesse trumps brute strength."
         },
         "donuts-throwing": {
             "name": "Donuts Throwing",
+            "the_name": "donuts throwing",
+            "a_name": "donuts throwing",
             "description": "The sport where accuracy meets deliciousness. Aim your sugary torpedoes through hoops and watch the sprinkles fly!"
         },
         "chess-boxing": {
             "name": "Chess Boxing",
+            "the_name": "chess boxing",
+            "a_name": "chess boxing",
             "description": "The ultimate test of brains and brawn. Strategize like Kasparov, punch like Tyson, and remember to breathe between rounds."
         },
         "hopscotch": {
             "name": "Hopscotch",
+            "the_name": "hopscotch",
+            "a_name": "hopscotch",
             "description": "Where grown-ups remember the joy of childhood. Skip through numbered squares and try not to lose your balance—or your dignity."
         },
         "acrobatic-cup-and-ball": {
             "name": "Acrobatic Cup-and-Ball",
+            "the_name": "acrobatic cup-and-ball",
+            "a_name": "acrobatic cup-and-ball",
             "description": "Juggle, flip, and balance while keeping a ball on a cup. It's like Cirque du Soleil meets street carnival—minus the clowns."
         },
         "zipline-bow": {
             "name": "Zipline Bow",
+            "the_name": "zipline bow",
+            "a_name": "zipline bow",
             "description": "Where archery meets adrenaline. Hit targets while zooming down a zipline. It's Robin Hood meets Tarzan, with a splash of bullseye."
         },
         "jelly-wall-climbing": {
             "name": "Jelly Wall Climbing",
+            "the_name": "jelly wall climbing",
+            "a_name": "jelly wall climbing",
             "description": "Climb walls covered in wobbly jelly that makes every ascent as slippery as it is perilous. It's like scaling a giant dessert, but beware not to devour it too soon!"
         },
         "aqua-jogging": {
             "name": "Aqua Jogging",
+            "the_name": "aqua jogging",
+            "a_name": "aqua jogging",
             "description": "When you want to run but swimming is your jam. Glide through the water like a ninja, leaving splashes of fitness in your wake."
         },
         "mermaid-swimming": {
             "name": "Mermaid Swimming",
+            "the_name": "mermaid swimming",
+            "a_name": "mermaid swimming",
             "description": "Where legs transform into fins and dreams come true. Channel your inner Ariel with graceful dives and underwater twirls."
         },
         "musical-fencing": {
             "name": "Musical Fencing",
+            "the_name": "musical fencing",
+            "a_name": "musical fencing",
             "description": "Dueling to a beat. En garde to the rhythm and parry with panache. Bonus points for choreographed swordplay and jazz hands."
         },
         "umbrella-fight": {
             "name": "Umbrella Fight",
+            "the_name": "umbrella fight",
+            "a_name": "umbrella fight",
             "description": "Rain or shine, it's time to battle! Grab your brolly, unleash your inner Mary Poppins, and dance-fight your way to victory."
         },
         "tree-throwing": {
             "name": "Tree Throwing",
+            "the_name": "tree throwing",
+            "a_name": "tree throwing",
             "description": "Because tossing logs is how giants stay fit. Hurl trees for distance and accuracy, proving that strong arms and green thumbs go hand in hand."
         },
         "jump-boxing": {
             "name": "Jump Boxing",
+            "the_name": "jump boxing",
+            "a_name": "jump boxing",
             "description": "Where pugilism meets plyometrics. Punch your way to fitness with explosive jumps and quick combos. Float like a butterfly, sting like a kangaroo."
         },
         "slackline-gym": {
             "name": "Slackline Gym",
+            "the_name": "slackline gym",
+            "a_name": "slackline gym",
             "description": "Balance, bounce, and boggle minds. Walk, flip, and pose on a wobbly line—because life's more fun when you're one misstep away from flying."
         },
         "acrobatic-bow": {
             "name": "Acrobatic Bow",
+            "the_name": "acrobatic bow",
+            "a_name": "acrobatic bow",
             "description": "Archery on the edge. Perform flips, spins, and mid-air shots while aiming for bullseyes. Cupid meets Cirque du Soleil with a quiver full of style."
         },
         "arc-escalation": {
             "name": "Arc-Escalation",
+            "the_name": "arc-escalation",
+            "a_name": "arc-escalation",
             "description": "A daring mix of archery and climbing. Scale walls and obstacles while aiming at targets with precision. It's like being a Spider-Man archer on a mission."
         },
         "parkour": {
             "name": "Parkour",
+            "the_name": "parkour",
+            "a_name": "parkour",
             "description": "The art of making your morning commute an extreme sport. Leap, roll, and vault over urban obstacles like a ninja on caffeine."
         },
         "100m": {
             "name": "100 meters Sprint",
+            "the_name": "100 meters sprint",
+            "a_name": "100 meters sprint",
             "description": "A blink-and-you'll-miss-it race where athletes blast down the track faster than you can say 'Where's the fire?'"
         },
         "swim-100m": {
             "name": "100 meters Swim",
+            "the_name": "100 meters swim",
+            "a_name": "100 meters swim",
             "description": "A splashy dash across the pool where speed demons race to the finish like they're escaping a school of hungry sharks."
         },
         "dance": {
             "name": "Dance",
+            "the_name": "dance",
+            "a_name": "dance",
             "description": "Where you groove, shimmy, and shake to the beat, proving that even if you have two left feet, you can still look fabulous."
         },
         "fencing": {
             "name": "Fencing",
+            "the_name": "fencing",
+            "a_name": "fencing",
             "description": "A swashbuckling duel where you try to poke your opponent with a sword, all while looking like a fancy Zorro with a shiny mask."
         },
         "javelin-throwing": {
             "name": "Javelin Throwing",
+            "the_name": "javelin throwing",
+            "a_name": "javelin throwing",
             "description": "Where athletes channel their inner spear-wielding warrior and see how far they can chuck a pointy stick without skewering the opposing crew."
         },
         "boxing": {
             "name": "Boxing",
+            "the_name": "boxing",
+            "a_name": "boxing",
             "description": "Where two people punch each other while dancing around the ring, aiming for a knockout and hoping their face doesn't look like a Picasso painting afterward."
         },
         "high-jump": {
             "name": "High Jump",
+            "the_name": "high jump",
+            "a_name": "high jump",
             "description": "The sport of leaping over a bar set increasingly higher, like playing limbo in reverse but with more flailing and less music."
         },
         "gymnastics": {
             "name": "Gymnastics",
+            "the_name": "gymnastics",
+            "a_name": "gymnastics",
             "description": "Where athletes twist, flip, and contort their bodies in ways that defy gravity and make us mere mortals gasp in awe (and sympathy pain)."
         },
         "archery": {
             "name": "Archery",
+            "the_name": "archery",
+            "a_name": "archery",
             "description": "The skill of shooting arrows at targets, making you feel like a modern-day Robin Hood or Katniss Everdeen, minus the medieval attire or dystopian drama."
         },
         "escalation": {
             "name": "Escalation",
+            "the_name": "escalation",
+            "a_name": "escalation",
             "description": "The thrill of climbing up challenging routes or obstacle courses, battling gravity and channeling your inner Spider-Man."
         }
     },
@@ -303,87 +363,87 @@
             "description": "TODO"
         },
         "sports_training": {
-            "name": "[SPORT_NAME] - Niveau [LEVEL]",
+            "name": "[SPORT_NAME] - Lvl. [LEVEL]",
             "description": "TODO"
         },
         "stats_strength_1": {
-            "name": "Entraînement force - Niveau 1",
+            "name": "Force - Lvl. 1",
             "description": "TODO"
         },
         "stats_strength_2": {
-            "name": "Entraînement force - Niveau 2",
+            "name": "Force - Lvl. 2",
             "description": "TODO"
         },
         "stats_strength_3": {
-            "name": "Entraînement force - Niveau 3",
+            "name": "Force - Lvl. 3",
             "description": "TODO"
         },
         "stats_strength_4": {
-            "name": "Entraînement force - Niveau 4",
+            "name": "Force - Lvl. 4",
             "description": "TODO"
         },
         "stats_speed_1": {
-            "name": "Entraînement vitesse - Niveau 1",
+            "name": "Vitesse - Lvl. 1",
             "description": "TODO"
         },
         "stats_speed_2": {
-            "name": "Entraînement vitesse - Niveau 2",
+            "name": "Vitesse - Lvl. 2",
             "description": "TODO"
         },
         "stats_speed_3": {
-            "name": "Entraînement vitesse - Niveau 3",
+            "name": "Vitesse - Lvl. 3",
             "description": "TODO"
         },
         "stats_speed_4": {
-            "name": "Entraînement vitesse - Niveau 4",
+            "name": "Vitesse - Lvl. 4",
             "description": "TODO"
         },
         "stats_technique_1": {
-            "name": "Entraînement technique - Niveau 1",
+            "name": "Technique - Lvl. 1",
             "description": "TODO"
         },
         "stats_technique_2": {
-            "name": "Entraînement technique - Niveau 2",
+            "name": "Technique - Lvl. 2",
             "description": "TODO"
         },
         "stats_technique_3": {
-            "name": "Entraînement technique - Niveau 3",
+            "name": "Technique - Lvl. 3",
             "description": "TODO"
         },
         "stats_technique_4": {
-            "name": "Entraînement technique - Niveau 4",
+            "name": "Technique - Lvl. 4",
             "description": "TODO"
         },
         "stats_precision_1": {
-            "name": "Entraînement précision - Niveau 1",
+            "name": "Précision - Lvl. 1",
             "description": "TODO"
         },
         "stats_precision_2": {
-            "name": "Entraînement précision - Niveau 2",
+            "name": "Précision - Lvl. 2",
             "description": "TODO"
         },
         "stats_precision_3": {
-            "name": "Entraînement précision - Niveau 3",
+            "name": "Précision - Lvl. 3",
             "description": "TODO"
         },
         "stats_precision_4": {
-            "name": "Entraînement précision - Niveau 4",
+            "name": "Précision - Lvl. 4",
             "description": "TODO"
         },
         "stats_charm_1": {
-            "name": "Entraînement charme - Niveau 1",
+            "name": "Charme - Lvl. 1",
             "description": "TODO"
         },
         "stats_charm_2": {
-            "name": "Entraînement charme - Niveau 2",
+            "name": "Charme - Lvl. 2",
             "description": "TODO"
         },
         "stats_charm_3": {
-            "name": "Entraînement charme - Niveau 3",
+            "name": "Charme - Lvl. 3",
             "description": "TODO"
         },
         "stats_charm_4": {
-            "name": "Entraînement charme - Niveau 4",
+            "name": "Charme - Lvl. 4",
             "description": "TODO"
         }
     },

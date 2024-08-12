@@ -233,6 +233,7 @@ class OlympePlanificationPopup(OlympePopup):
     values_activity = ListProperty() # name values of the activities
 
     get_activity_name_function = ObjectProperty(lambda : 1 + 1) # function to get the name of the activity given its id
+    create_message_popup_function = ObjectProperty(lambda : 1 + 1) # function to open a message popup like in the Olympe screen
 
     ### Button options ###
 
@@ -290,12 +291,24 @@ class OlympePlanificationPopup(OlympePopup):
             self.money_plus_mode = False
 
     def open_details_category(self):
-        # TODO popup
-        print(self.ids.category_spinner.text)
+        category_index = self.values_category.index(self.ids.category_spinner.text)
+        category_id: str = self.code_values_category[category_index]
+        self.create_message_popup_function(
+            title=TEXT.activity_categories[category_id]["name"],
+            text=TEXT.activity_categories[category_id]["description"]
+        )
 
     def open_details_activity(self):
-        # TODO popup
-        print(self.ids.activity_spinner.text)
+        activity_index = self.values_activity.index(self.ids.activity_spinner.text)
+        activity_id: str = self.code_values_activity[activity_index]
+        if "sports_" in activity_id:
+            text = TEXT.activities["sports_training"]["description"]
+        else:
+            text = TEXT.activities[activity_id]["description"]
+        self.create_message_popup_function(
+            title=self.ids.activity_spinner.text,
+            text=text
+        )
 
     def choose_category(self, category: str):
         # Get the default category
@@ -307,17 +320,22 @@ class OlympePlanificationPopup(OlympePopup):
         self.default_activity = self.values_activity[0]
 
     def choose_activity(self, activity: str):
-        print("TODO")
-        # TODO check if the activity takes all the trimester
-        if True:
+        activity_index = self.values_activity.index(self.ids.activity_spinner.text)
+        activity: Activity = ACTIVITIES[self.code_values_activity[activity_index]]
+        
+        # Indicate if it lasts all trimester or not
+        if activity.all_trimester:
             self.take_all_trimester_text = TEXT.schedule["take_all_trimester"]
         else:
             self.take_all_trimester_text = ""
 
+        # Show the effects of this activity
+        print("TODO")
+
     def confirm(self):
         self.dismiss()
-        # TODO
-        activity_chosen: str = self.ids.category_spinner.text
+        activity_index = self.values_activity.index(self.ids.activity_spinner.text)
+        activity_chosen: str = self.code_values_activity[activity_index]
         self.confirm_function(
             self.number_activity,
             activity_chosen)
