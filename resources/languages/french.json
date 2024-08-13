@@ -382,6 +382,18 @@
             "name": "Force - Niv. 4",
             "description": "TODO"
         },
+        "stats_strength_speed": {
+            "name": "Force & Vitesse",
+            "description": "TODO"
+        },
+        "stats_strength_technique": {
+            "name": "Force & Technique",
+            "description": "TODO"
+        },
+        "stats_strength_precision": {
+            "name": "Force & Précision",
+            "description": "TODO"
+        },
         "stats_speed_1": {
             "name": "Vitesse - Niv. 1",
             "description": "TODO"
@@ -396,6 +408,18 @@
         },
         "stats_speed_4": {
             "name": "Vitesse - Niv. 4",
+            "description": "TODO"
+        },
+        "stats_speed_strength": {
+            "name": "Vitesse & Force",
+            "description": "TODO"
+        },
+        "stats_speed_technique": {
+            "name": "Vitesse & Technique",
+            "description": "TODO"
+        },
+        "stats_speed_precision": {
+            "name": "Vitesse & Précision",
             "description": "TODO"
         },
         "stats_technique_1": {
@@ -414,6 +438,18 @@
             "name": "Technique - Niv. 4",
             "description": "TODO"
         },
+        "stats_technique_strength": {
+            "name": "Technique & Force",
+            "description": "TODO"
+        },
+        "stats_technique_speed": {
+            "name": "Technique & Vitesse",
+            "description": "TODO"
+        },
+        "stats_technique_precision": {
+            "name": "Technique & Précision",
+            "description": "TODO"
+        },
         "stats_precision_1": {
             "name": "Précision - Niv. 1",
             "description": "TODO"
@@ -430,6 +466,18 @@
             "name": "Précision - Niv. 4",
             "description": "TODO"
         },
+        "stats_precision_strength": {
+            "name": "Précision & Force",
+            "description": "TODO"
+        },
+        "stats_precision_speed": {
+            "name": "Précision & Vitesse",
+            "description": "TODO"
+        },
+        "stats_precision_technique": {
+            "name": "Précision & Technique",
+            "description": "TODO"
+        },
         "stats_charm_1": {
             "name": "Charme - Niv. 1",
             "description": "TODO"
@@ -444,6 +492,14 @@
         },
         "stats_charm_4": {
             "name": "Charme - Niv. 4",
+            "description": "TODO"
+        },
+        "start_new_sport": {
+            "name": "Apprendre [THE_SPORT]",
+            "description": "TODO"
+        },
+        "transfert_sport": {
+            "name": "Transfert - [SPORT]",
             "description": "TODO"
         }
     },

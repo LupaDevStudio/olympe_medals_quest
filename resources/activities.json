@@ -264,10 +264,18 @@
     "stats_precision_technique": {
         "price": 10
     },
+    "start_new_sport": {
+        "all_trimester": true,
+        "effects": [
+            ["fatigue", 0.6],
+            ["injury_risk", 0.3]
+        ]
+    },
     "transfer_sport": {
         "all_trimester": true,
         "effects": [
-            ["fatigue", 0.5]
+            ["fatigue", 0.6],
+            ["injury_risk", 0.3]
         ]
     }
 }

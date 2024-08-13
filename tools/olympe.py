@@ -31,6 +31,7 @@ from tools.constants import (
     USER_DATA
 )
 from tools.data_structures import (
+    generate_learning_rates,
     Athlete,
     Game,
     DEFAULT_STATS_DICT,
@@ -117,15 +118,6 @@ def generate_age() -> int:
         1] * 6 + [0.75, 0.75, 0.5, 0.5, 0.25]
     age = rd.choices(range(16, 41), weights=weights)
     return age[0]
-
-
-def generate_learning_rates(double_proba=0.15, simple_proba=0.4):
-    random_number = rd.random()
-    if random_number < double_proba:
-        return 2
-    elif random_number < simple_proba:
-        return 1.5
-    return 1
 
 
 def generate_stats(level) -> dict:

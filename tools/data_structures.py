@@ -175,6 +175,13 @@ def generate_id() -> str:
     unique_id = uuid.uuid4()
     return str(unique_id)
 
+def generate_learning_rates(double_proba=0.15, simple_proba=0.4):
+    random_number = rd.random()
+    if random_number < double_proba:
+        return 2
+    elif random_number < simple_proba:
+        return 1.5
+    return 1
 
 def convert_points_to_tier_rank(points):
     tier_rank = points // 10
@@ -490,6 +497,101 @@ class StatsActivity(Activity):
     def apply_activity(self, athlete, game) -> None:
         # TODO rajouter la fatigue et risque de blessure aussi
         pass
+
+class TransferSportActivity(Activity):
+    """
+    A class to store the data of the transfer activity.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "others"
+        self.sport_id = dict_to_load["sport_id"]
+
+    def get_dict_new_sport(self, athlete):
+        new_dict_sport = copy.deepcopy(DEFAULT_STAT_DICT)
+        new_sport: Sport = SPORTS[self.sport_id]
+        requirements = new_sport.requirements
+
+        best_learning_rate = 1
+        points_from_previous_sports = []
+        for required_sport_id in requirements:
+            if required_sport_id in athlete.sports:
+                points_from_previous_sports.append(
+                    athlete.sports[required_sport_id]["points"])
+                learning_rate = athlete.sports[required_sport_id]["learning_rate"]
+                
+                # Take the best learning rate from the two below sports
+                if learning_rate > best_learning_rate:
+                    best_learning_rate = learning_rate
+
+        # If 1 sport learned => 60% from this sport transferred
+        points = 0
+        if len(points_from_previous_sports) == 1:
+            points = points_from_previous_sports[0] * 0.6
+
+        # If 2 sports learned => 60% from the best sports then 20% of the other
+        elif len(points_from_previous_sports) == 2:
+            points_from_previous_sports.sort()
+            points = points_from_previous_sports[0] * 0.2 + \
+                points_from_previous_sports[1] * 0.6
+
+        new_dict_sport["points"] = points
+        new_dict_sport["learning_rate"] = best_learning_rate
+
+        return new_dict_sport
+
+    def apply_activity(self, athlete, game) -> None:
+        # Apply fatigue and injury risk
+        super().apply_activity(athlete, game)
+
+        # Unlock the new sport
+        athlete.sports[self.sport_id] = self.get_dict_new_sport(athlete=athlete)
+
+class StartNewSportActivity(Activity):
+    """
+    A class to store the data of the start a new sport activity.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "others"
+        self.sport_id = dict_to_load["sport_id"]
+
+    def get_dict_new_sport(self, athlete):
+        new_dict_sport = copy.deepcopy(DEFAULT_STAT_DICT)
+        new_sport: Sport = SPORTS[self.sport_id]
+        
+        # Generate the learning rate
+        learning_rate = generate_learning_rates()
+        # Generate the points related to the stats of the sport
+        points = 0
+        for stat in new_sport.stats:
+            if athlete.stats[stat]["points"] > 20:
+                points += 5
+            elif athlete.stats[stat]["points"] > 30:
+                points += 10
+            elif athlete.stats[stat]["points"] > 40:
+                points += 15
+            elif athlete.stats[stat]["points"] > 50:
+                points += 20
+            else:
+                points += 25
+        points /= len(new_sport.stats)
+
+        new_dict_sport["points"] = points
+        new_dict_sport["learning_rate"] = learning_rate
+
+        return new_dict_sport
+
+    def apply_activity(self, athlete, game) -> None:
+        # Apply fatigue and injury risk
+        super().apply_activity(athlete, game)
+
+        # Unlock the new sport
+        athlete.sports[self.sport_id] = self.get_dict_new_sport(athlete=athlete)
 
 ### Sports ###
 
@@ -897,18 +999,19 @@ class Game():
     def unlocked_activity_categories(self) -> list[str]:
         unlocked_activity_categories = []
         for activity_id in self.unlocked_activities:
+            
             # Special case for sports
             if "sports_" in activity_id:
-                list_infos = activity_id.split("_") # "sports_2_training_4"
-                category_sport = list_infos[1]
-                level_activity = list_infos[3]
-                for sport_id in self.unlocked_sports:
-                    sport: Sport = SPORTS[sport_id]
-                    if str(sport.category) == category_sport:
-                        activity_id = f"sports_{category_sport}_{sport_id}_training_{level_activity}"
-            activity: Activity = ACTIVITIES[activity_id]
-            if activity.category not in unlocked_activity_categories:
-                unlocked_activity_categories.append(activity.category)
+                category = "sports"
+            # Special case for competitions
+            elif "competition_" in activity_id:
+                category = "competition"
+            else:
+                activity: Activity = ACTIVITIES[activity_id]
+                category = activity.category
+            
+            if category not in unlocked_activity_categories:
+                unlocked_activity_categories.append(category)
         return unlocked_activity_categories
 
     @property
@@ -1520,6 +1623,29 @@ for activity_id in temp_activities:
             new_dict_to_load["second_stat"] = second_stat
         ACTIVITIES[activity_id] = StatsActivity(
             dict_to_load=new_dict_to_load)
+
+    # Transfer sport activities
+    elif "transfer_sport" in activity_id:
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            if sport.category > 1:
+                new_activity_id = f"transfer_sport_{sport_id}"
+                new_dict_to_load = copy.deepcopy(dict_to_load)
+                new_dict_to_load["id"] = new_activity_id
+                new_dict_to_load["sport_id"] = sport_id
+                ACTIVITIES[new_activity_id] = TransferSportActivity(
+                    dict_to_load=new_dict_to_load)
+
+    # Start new sport activities
+    elif "start_new_sport" in activity_id:
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            new_activity_id = f"start_new_sport_{sport_id}"
+            new_dict_to_load = copy.deepcopy(dict_to_load)
+            new_dict_to_load["id"] = new_activity_id
+            new_dict_to_load["sport_id"] = sport_id
+            ACTIVITIES[new_activity_id] = StartNewSportActivity(
+                dict_to_load=new_dict_to_load)
 
     # Other activities
     else:
