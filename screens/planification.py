@@ -85,6 +85,7 @@ class PlanificationScreen(OlympeScreen):
                     font_ratio=self.font_ratio,
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=self.font_ratio * BIG_HEADER_HEIGHT,
+                    header_height=BIG_HEADER_HEIGHT,
                     title_card=athlete.first_name + "\n" + athlete.name,
                     image_source=athlete.image,
                     is_hurt=athlete.is_hurt,

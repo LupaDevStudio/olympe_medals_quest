@@ -818,6 +818,7 @@ class SmallPlanificationCard(RelativeLayout):
 
     ### Sizes ###
 
+    header_height = NumericProperty(BIG_HEADER_HEIGHT)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
@@ -862,6 +863,8 @@ class CompleteRoomCard(FloatLayout):
     current_level_details = ListProperty()
     next_level_title = StringProperty()
     next_level_details = ListProperty()
+
+    room_details_function = ObjectProperty(lambda: 1 + 1)
 
     font_size = NumericProperty(FONTS_SIZES.subtitle)
     text_font_name = StringProperty(PATH_TITLE_FONT)

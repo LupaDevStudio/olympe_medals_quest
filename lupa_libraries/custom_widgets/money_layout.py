@@ -114,7 +114,7 @@ class MoneyLayout(RelativeLayout):
                 self.coins_count_text += str(round_thousands) + " k"
             elif self.coins_count >= 1000:
                 round_thousands = str(round(self.coins_count / 1000, ndigits=1))
-                if round_thousands[-1] == "0":
+                if round_thousands[-1] == "0" and len(round_thousands) > 3:
                     round_thousands = round_thousands[:-2]
                 self.coins_count_text += str(round_thousands) + " k"
             else:

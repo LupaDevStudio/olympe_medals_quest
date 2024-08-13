@@ -5,9 +5,6 @@ Constants
 ---------
 __version__ : str
     Version of the application.
-
-ANDROID_MODE : bool
-    Whether the application is launched on mobile or not.
 """
 
 ###############
@@ -30,8 +27,7 @@ from tools.basic_tools import (
     load_json_file
 )
 from tools.data_structures import (
-    UserData,
-    Game
+    UserData
 )
 from tools.language import (
     Text
@@ -47,7 +43,7 @@ __version__ = "0.0.7"
 
 ### Mode ###
 
-GOD_MODE = False # Change this value
+GOD_MODE = True # Change this value
 if GOD_MODE:
     DEV_MODE = True
 else:

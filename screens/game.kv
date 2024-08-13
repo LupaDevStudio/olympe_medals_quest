@@ -69,7 +69,7 @@
     ### Main action button ###
 
     PressedButton:
-        text: root.launch_main_action_label
+        text: root.launch_main_action_label if root.planification_unlocked else "???"
         size_hint: (0.7, 0.07)
         pos_hint: {"center_x": 0.5, "y": 0.04}
         font_ratio: root.font_ratio

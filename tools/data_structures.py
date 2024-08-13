@@ -795,12 +795,12 @@ class Room():
         return PATH_BACKGROUNDS + f"{self.id}.jpg"
 
     @ property
-    def activities_unlocked(self) -> list[str]:
-        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["activities_unlocked"]
+    def unlocked_activities(self) -> list[str]:
+        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)].get("unlocked_activities", [])
 
     @ property
     def effects(self) -> list:
-        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["effects"]
+        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)].get("effects", [])
 
     def __init__(self, dict_to_load: dict) -> None:
         self.id = dict_to_load.get("id", "")
@@ -1168,6 +1168,10 @@ class Game():
             bought_room: Room = self.sports_complex.buy_room(room_id=room_id)
             self.money -= ROOMS_EVOLUTION_DICT[room_id][str(
                 bought_room.current_level)]["price"]
+            
+            # Add the activities unlocked with this new room
+            for activity in bought_room.unlocked_activities:
+                self.unlocked_activities.append(activity)
 
     def get_medals_from_edition(self, edition: int) -> list[Medal]:
         list_medals = []

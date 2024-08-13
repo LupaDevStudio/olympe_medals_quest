@@ -14,7 +14,8 @@ from functools import partial
 
 from kivy.properties import (
     StringProperty,
-    ListProperty
+    ListProperty,
+    BooleanProperty
 )
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
@@ -60,6 +61,7 @@ class GameScreen(OlympeScreen):
     main_action = "plan"  # can be "plan" or "begin_competition_{mode}"
     our_country_label = StringProperty()
     notifications_list = ListProperty([])
+    planification_unlocked = BooleanProperty(True)
 
     def reload_language(self):
         super().reload_language()
@@ -71,11 +73,11 @@ class GameScreen(OlympeScreen):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
         
-        # # TODO TEMP
-        # if self.GAME.recrutable_athletes == []:
-        #     first_athlete = generate_athlete(GAME=self.GAME)
-        #     self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
-        #     USER_DATA.save_changes()
+        # TODO TEMP
+        if self.GAME.recrutable_athletes == []:
+            first_athlete = generate_athlete(GAME=self.GAME)
+            self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+            USER_DATA.save_changes()
 
         # Update main_action
         self.main_action = self.GAME.get_main_action()
@@ -103,6 +105,13 @@ class GameScreen(OlympeScreen):
             character = dialog_id.split("_")[0]
             self.ids.notification_button.image_source = PATH_CHARACTERS_IMAGES + \
                 character + "/neutral.png"
+
+        # Hide the planification button at the beginning of the story
+        if self.GAME.year == 3 and self.GAME.trimester == 1:
+            if self.notifications_list != []:
+                self.planification_unlocked = False
+            else:
+                self.planification_unlocked = True
 
     def fill_grid_layout(self):
         # Menus to display

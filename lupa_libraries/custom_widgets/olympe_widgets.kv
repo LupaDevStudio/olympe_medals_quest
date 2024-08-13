@@ -482,14 +482,13 @@
         y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + root.character_height/3 + 4)
 
     SurroundedLabel:
-        text: root.reputation
+        text: root.reputation if root.reputation_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
         width: salary_label.width
         x: root.width * 0.05 * 2 + character.width
         y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + 2)
-        opacity: 1 if root.reputation_unlocked else 0
 
     # Recruit button
     TextMoneyLayoutPressedButton:
@@ -641,27 +640,29 @@
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: root.width*0.85 - character.width
-        height: (root.character_height - 2*7)/3
+        height: (character.height - 2*MARGIN*root.font_ratio)/3
         x: 0.1*root.width + character.width
-        y: (2*7 + MARGIN*2)*root.font_ratio + planning_button.height + 2*self.height
+        y: second_activity.y + second_activity.height + MARGIN*root.font_ratio
 
     SurroundedLabel:
+        id: second_activity
         text: root.list_activities[1]
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: first_activity.width
         height: first_activity.height
         x: 0.1*root.width + character.width
-        y: (1*7 + MARGIN*2)*root.font_ratio + planning_button.height + self.height
+        y: third_activity.y + third_activity.height + MARGIN*root.font_ratio
 
     SurroundedLabel:
+        id: third_activity
         text: root.list_activities[2]
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: first_activity.width
         height: first_activity.height
         x: 0.1*root.width + character.width
-        y: MARGIN*2*root.font_ratio + planning_button.height
+        y: MARGIN*root.font_ratio + planning_button.height + planning_button.y
 
     # Planning button
     PressedButton:
@@ -682,7 +683,7 @@
     OlympeCard:
         header_mode: True
         header_text: root.title_card
-        header_height: root.height
+        header_height: root.header_height
         font_size: FONTS_SIZES.label
         image_mode: True
         image_source: root.image_source
@@ -765,6 +766,7 @@
         height: ROOM_HEIGHT*root.font_ratio
         font_ratio: root.font_ratio
         fit_mode: "cover"
+        release_function: root.room_details_function
 
     TextMoneyLayoutUnderPressedButton:
         coins_amount: root.price
