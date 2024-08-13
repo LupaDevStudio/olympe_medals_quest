@@ -47,7 +47,8 @@ from tools.graphics import (
     CHARACTER_HEIGHT,
     SKILL_HEIGHT,
     MARGIN,
-    BUTTON_HEIGHT
+    BUTTON_HEIGHT,
+    RADIUS_SMALL
 )
 from tools.path import (
     PATH_TITLE_FONT,
@@ -1098,3 +1099,22 @@ class SaveCard(FloatLayout):
             )
 
             self.add_widget(character_card)
+
+##############
+### Sports ###
+##############
+
+class StatsLegend(RelativeLayout):
+
+    text = StringProperty()
+    canvas_color = ColorProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.small_label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    font_ratio = NumericProperty(1)
+    radius = NumericProperty(RADIUS_SMALL)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

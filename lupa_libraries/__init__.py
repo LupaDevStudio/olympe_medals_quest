@@ -44,7 +44,8 @@ from lupa_libraries.custom_widgets import (
     OlympeYesNoPopup,
     OlympeSpinnerPopup,
     OlympePlanificationPopup,
-    SeparationLine
+    SeparationLine,
+    StatsLegend
 )
 
 ### Dialog generator ###

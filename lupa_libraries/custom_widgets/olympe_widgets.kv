@@ -939,3 +939,30 @@
             halign: "left"
             valign: "middle"
             color: root.font_color
+
+##############
+### Sports ###
+##############
+
+<StatsLegend>:
+    canvas.after:
+        Color:
+            rgba: self.canvas_color
+        RoundedRectangle:
+            pos: self.pos[0], self.pos[1] + self.size[1] / 2
+            size: self.size[0], self.size[1] / 2
+            radius: [self.radius*root.font_ratio]
+    
+    Label:
+        text: root.text
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        size_hint: (1, 0.5)
+        pos_hint: {"center_x": 0.5}
+        y: 0
+        shorten: False
+        text_size: (self.width, self.height)
+        size: self.texture_size
+        halign: "center"
+        valign: "middle"
+        color: root.font_color

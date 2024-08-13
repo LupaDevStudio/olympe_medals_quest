@@ -43,7 +43,8 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     SmallPlanificationCard,
     SaveCard,
     StatBar,
-    SeparationLine
+    SeparationLine,
+    StatsLegend
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,

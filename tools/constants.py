@@ -43,7 +43,7 @@ __version__ = "0.0.7"
 
 ### Mode ###
 
-GOD_MODE = False # Change this value
+GOD_MODE = True # Change this value
 if GOD_MODE:
     DEV_MODE = True
 else:

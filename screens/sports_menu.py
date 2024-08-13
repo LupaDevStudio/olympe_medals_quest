@@ -33,7 +33,8 @@ from tools.graphics import (
     SCROLLVIEW_WIDTH,
     BIG_HEADER_HEIGHT,
     SKILL_HEIGHT,
-    MARGIN
+    MARGIN,
+    COLORS
 )
 from tools.data_structures import (
     Athlete
@@ -56,12 +57,23 @@ class SportsMenuScreen(OlympeScreen):
     }
     sports_menu_title = StringProperty()
 
+    strength_label = StringProperty()
+    speed_label = StringProperty()
+    technique_label = StringProperty()
+    precision_label = StringProperty()
+    charm_label = StringProperty()
+
     def reload_language(self):
         super().reload_language()
         my_text = TEXT.sports_menu
         self.sports_menu_title = my_text["title"]
+        self.strength_label = TEXT.stats["strength"].upper()
+        self.speed_label = TEXT.stats["speed"].upper()
+        self.technique_label = TEXT.stats["technique"].upper()
+        self.precision_label = TEXT.stats["precision"].upper()
+        self.charm_label = TEXT.stats["charm"].upper()
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
-        print("TODO fille scrollview")
+        print("TODO fill scrollview")

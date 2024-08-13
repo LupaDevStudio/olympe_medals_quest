@@ -5,6 +5,20 @@ Constants
 ---------
 """
 
+###############
+### Imports ###
+###############
+
+### Local imports ###
+
+from tools.data_structures import (
+    STRENGTH,
+    SPEED,
+    TECHNIQUE,
+    PRECISION,
+    CHARM
+)
+
 #################
 ### Constants ###
 #################
@@ -62,6 +76,20 @@ class Colors():
             "D": self.tier_rank_d,
             "E": self.tier_rank_e,
             "F": self.tier_rank_f,
+        }
+
+        self.stats_strength = (235 / 255, 85 / 255, 92 / 255, 1)
+        self.stats_speed = (50 / 255, 211 / 255, 241 / 255, 1)
+        self.stats_technique = (32 / 255, 210 / 255, 101 / 255, 1)
+        self.stats_precision = (253 / 255, 187 / 255, 45 / 255, 1)
+        self.stats_charm = (212 / 255, 106 / 255, 255 / 255, 1)
+
+        self.stats = {
+            STRENGTH: self.stats_strength,
+            SPEED: self.stats_speed,
+            TECHNIQUE: self.stats_technique,
+            PRECISION: self.stats_precision,
+            CHARM: self.stats_charm
         }
 
 
