@@ -530,5 +530,37 @@
             "background": "sports_complex",
             "music": "fight_ceremony"
         }
+    ],
+    "hector_jobs_activities": [
+        {
+            "character": "hector",
+            "text": "Test",
+            "background": "sports_complex",
+            "music": "fight_ceremony"
+        }
+    ],
+    "olympe_new_funds": [
+        {
+            "character": "olympe",
+            "text": "Test",
+            "background": "sports_complex",
+            "music": "fight_ceremony"
+        }
+    ],
+    "hector_fatigue": [
+        {
+            "character": "hector",
+            "text": "Test",
+            "background": "sports_complex",
+            "music": "fight_ceremony"
+        }
+    ],
+    "olympe_fight": [
+        {
+            "character": "olympe",
+            "text": "Test",
+            "background": "office",
+            "music": "fight_ceremony"
+        }
     ]
 }

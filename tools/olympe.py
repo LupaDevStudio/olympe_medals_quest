@@ -318,7 +318,7 @@ def update_notifications(GAME: Game):
     for event_id in EVENTS_DICT["story"]:
         if event_id not in GAME.seen_dialogs:
             event_dict = EVENTS_DICT["story"][event_id]
-            if event_dict["year"] == GAME.year and event_dict["trimester"] == GAME.trimester or event_dict["year"] > GAME.year:
+            if (event_dict["year"] == GAME.year and GAME.trimester >= event_dict["trimester"]) or GAME.year > event_dict["year"]:
                 condition = event_dict.get("condition", {})
                 order = event_dict.get("order", 1)
                 # TODO treat condition

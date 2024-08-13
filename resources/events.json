@@ -38,6 +38,39 @@
                     "stats_charm_1"
                 ]
             }
+        },
+        "hector_jobs_activities": {
+            "year": 3,
+            "trimester": 3,
+            "effects": {
+                "unlocked_activities": [
+                    "basic_job"
+                ]
+            }
+        },
+        "olympe_new_funds": {
+            "year": 3,
+            "trimester": 4,
+            "effects": {
+                "money": 20000
+            }
+        },
+        "hector_fatigue": {
+            "year": 4,
+            "trimester": 1,
+            "effects": {
+                "unlocked_modes": ["fatigue"],
+                "unlocked_activities": [
+                    "vacation"
+                ]
+            }
+        },
+        "olympe_fight": {
+            "year": 4,
+            "trimester": 3,
+            "effects": {
+                "money": 10000
+            }
         }
     },
     "repeatable_events": {
