@@ -32,17 +32,13 @@ from tools.path import (
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
-    USER_DATA
+    USER_DATA,
+    SHARED_DATA
 )
 from tools.graphics import (
     MARGIN,
     TOP_BAR_HEIGHT,
     BOTTOM_BAR_HEIGHT,
-    BUTTON_HEIGHT,
-    HEADER_HEIGHT,
-    CHARACTER_HEIGHT,
-    BIG_HEADER_HEIGHT,
-    SKILL_HEIGHT,
     SCROLLVIEW_WIDTH
 )
 from tools.data_structures import (
@@ -187,7 +183,7 @@ class SaveScreen(OlympeScreen):
         self.launch_game(id_game=id_game)
 
     def launch_game(self, id_game=1):
-        self.manager.id_game = id_game
+        SHARED_DATA.id_game = id_game
         self.set_game()
         if "introduction" in self.GAME.seen_dialogs:
             self.go_to_next_screen(screen_name="game")

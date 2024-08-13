@@ -43,7 +43,7 @@ __version__ = "0.0.7"
 
 ### Mode ###
 
-GOD_MODE = True # Change this value
+GOD_MODE = False # Change this value
 if GOD_MODE:
     DEV_MODE = True
 else:
@@ -66,6 +66,23 @@ if not os.path.exists(PATH_USER_DATA):
 
 # Load the data of the user
 USER_DATA = UserData()
+
+class SharedData():
+    id_game: int # 1, 2, 3
+    
+    @property
+    def GAME(self):
+        if self.id_game == 1:
+            return USER_DATA.game_1
+        elif self.id_game == 2:
+            return USER_DATA.game_2
+        else:
+            return USER_DATA.game_3
+
+    def __init__(self, id_game: int = 1) -> None:
+        self.id_game = id_game
+
+SHARED_DATA = SharedData()
 
 ### Language ###
 

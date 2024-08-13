@@ -36,7 +36,8 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_CUSTOM_TITLE,
     TEXT,
-    USER_DATA
+    USER_DATA,
+    SHARED_DATA
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH
@@ -152,13 +153,7 @@ class OlympeScreen(ImprovedScreen):
             self.fill_scrollview()
 
     def set_game(self):
-        id_game = self.manager.id_game
-        if id_game == 1:
-            self.GAME = USER_DATA.game_1
-        elif id_game == 2:
-            self.GAME = USER_DATA.game_2
-        else:
-            self.GAME = USER_DATA.game_3
+        self.GAME = SHARED_DATA.GAME
 
     def get_title_year(self):
         year = TEXT.general["year"] + " "

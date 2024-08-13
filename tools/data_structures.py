@@ -1493,10 +1493,11 @@ class UserData():
         else:
             self.game_3 = None
 
-    def stop_game(self, id_game: int):
+    def stop_game(self, id_game: int | None):
         self.total_time_played += time.time() - self.session_start_time
-        current_game = self.get_game(id_game=id_game)
-        current_game.set_last_time_played()
+        if id_game is not None:
+            current_game = self.get_game(id_game=id_game)
+            current_game.set_last_time_played()
 
     def save_changes(self) -> None:
         """

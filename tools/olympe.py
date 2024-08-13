@@ -90,7 +90,8 @@ GEOMETRIC_FACTOR_SALARY = 2
 
 def compute_salary(athlete: Athlete) -> int:
     score_athlete = athlete.global_score
-    return BASE_SALARY + (ARITHMETIC_FACTOR_SALARY * score_athlete) ** GEOMETRIC_FACTOR_SALARY
+    salary = BASE_SALARY + (ARITHMETIC_FACTOR_SALARY * score_athlete) ** GEOMETRIC_FACTOR_SALARY
+    return int(salary)
 
 def get_health_string(athlete: Athlete) -> str:
     is_hurt = athlete.is_hurt
@@ -183,7 +184,7 @@ def generate_recruit_price(salary: int, level: int) -> int:
     if recruit_price <= 0:
         recruit_price = salary * 10
 
-    return recruit_price
+    return int(recruit_price)
 
 def generate_athlete(
         GAME: Game,

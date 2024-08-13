@@ -31,11 +31,13 @@ from tools.path import (
 from tools.constants import (
     FPS,
     MSAA_LEVEL,
-    USER_DATA
+    USER_DATA,
+    SHARED_DATA
 )
 import screens.opening
 from lupa_libraries import (
-    LoadingPopup
+    LoadingPopup,
+    OlympePopup
 )
 
 ###############
@@ -137,15 +139,24 @@ class MainApp(App, Widget):
 
     def on_stop(self):
         super().on_stop()
-        # TODO mettre une condition sur écran différent de home, settings, save
-        USER_DATA.stop_game(id_game = self.root_window.children[0].id_game)
+        current_widget = self.root_window.children[0]
+        if not isinstance(current_widget, OlympePopup):
+            current_screen_name = current_widget.current
+            if current_screen_name not in ["home", "settings", "save"]:
+                id_game = SHARED_DATA.id_game
+            else:
+                id_game = None
+        else:
+            # TODO faire la distinction pour la popup du tuto
+            id_game = SHARED_DATA.id_game
+        USER_DATA.stop_game(id_game=id_game)
         USER_DATA.save_changes()
 
 # Run the application
 if __name__ == "__main__":
     if not ANDROID_MODE:
         Window.size = (405, 720)
-        Window.size = (550, 850)
+        # Window.size = (550, 850)
         # Window.size = (720, 1080)
         # Window.size = (200, 400)
         # Window.size = (1080, 2340)
