@@ -370,67 +370,78 @@ class DialogLayout(RelativeLayout):
         background: str = current_dialog_dict["background"]
         self.parent.set_background(background)
 
-        # Set the character details
-        character_id: str = current_dialog_dict["character"]
-        character_id_for_image: str = character_id
-        if character_id == "journalist":
-            character_id_for_image = "ariane"
-        elif character_id == "phil_coach":
-            character_id_for_image = "phil"
-        expression: str = current_dialog_dict.get("expression", "neutral")
-        self.character_image = self.path_character_images + \
-            f"{character_id_for_image}/{expression}.png"
+        # Get the mode of the current frame (card or simple dialog)
+        mode = current_dialog_dict.get("mode", "")
+        if mode == "card":
 
-        # Hide the name and the title of the character if necessary
-        mystery: bool = current_dialog_dict.get("mystery", [False, False])
-        if mystery[0]:
-            self.character_name = "???"
+            card_type = current_dialog_dict["card_type"]
+
+            if card_type == "first_athlete":
+                self.parent.create_first_athlete_popup()
+
         else:
-            self.character_name = self.character_dict[character_id]["name"]
-        if mystery[1]:
-            self.character_title = "???"
-        else:
-            self.character_title = self.character_dict[character_id]["title"]
 
-        # Set the content of the scrolling dialog
-        self.dialog_text = current_dialog_dict["text"]
-        self.format_text()
-        self.text = ""
-        self.index_scrolling_label = 0
-        self.text_delay = 1 / self.talking_speed_base / \
-            self.talking_speed_dict["characters"][character_id] / \
-            self.talking_speed_dict["emotions"][expression]
-        self.voice_delay = self.text_delay * 2
-        Clock.schedule_once(
-            self.update_label, self.text_delay)
-        Clock.schedule_once(
-            self.update_voice, self.text_delay)
+            # Set the character details
+            character_id: str = current_dialog_dict["character"]
+            character_id_for_image: str = character_id
+            if character_id == "journalist":
+                character_id_for_image = "ariane"
+            elif character_id == "phil_coach":
+                character_id_for_image = "phil"
+            expression: str = current_dialog_dict.get("expression", "neutral")
+            self.character_image = self.path_character_images + \
+                f"{character_id_for_image}/{expression}.png"
 
-        # Apply the animation if needed
-        if "shake" in current_dialog_dict:
-            shake_type = current_dialog_dict["shake"]
-            shake_animation: Animation = get_shake_animation(
-                self.parent, shake_type=shake_type)
-            shake_animation.start(self.parent)
-            if shake_type in SHAKE_SOUND_EFFECTS:
-                SHAKE_SOUND_MIXER.play(SHAKE_SOUND_EFFECTS[shake_type])
-            self.ids.next_button.press_button = False
-            self.ids.next_button.disable_button = True
-            shake_animation.on_complete = self.enable_next_button_when_completed
+            # Hide the name and the title of the character if necessary
+            mystery: bool = current_dialog_dict.get("mystery", [False, False])
+            if mystery[0]:
+                self.character_name = "???"
+            else:
+                self.character_name = self.character_dict[character_id]["name"]
+            if mystery[1]:
+                self.character_title = "???"
+            else:
+                self.character_title = self.character_dict[character_id]["title"]
 
-        # Play the sound effect if needed
-        if "sound" in current_dialog_dict:
-            sound_id = current_dialog_dict["sound"]
-            self.sound_mixer.play(sound_id)
+            # Set the content of the scrolling dialog
+            self.dialog_text = current_dialog_dict["text"]
+            self.format_text()
+            self.text = ""
+            self.index_scrolling_label = 0
+            self.text_delay = 1 / self.talking_speed_base / \
+                self.talking_speed_dict["characters"][character_id] / \
+                self.talking_speed_dict["emotions"][expression]
+            self.voice_delay = self.text_delay * 2
+            Clock.schedule_once(
+                self.update_label, self.text_delay)
+            Clock.schedule_once(
+                self.update_voice, self.text_delay)
 
-        # Play the music if needed
-        if "music" in current_dialog_dict:
-            music_id = current_dialog_dict["music"]
-            self.music_mixer.play(music_id)
+            # Apply the animation if needed
+            if "shake" in current_dialog_dict:
+                shake_type = current_dialog_dict["shake"]
+                shake_animation: Animation = get_shake_animation(
+                    self.parent, shake_type=shake_type)
+                shake_animation.start(self.parent)
+                if shake_type in SHAKE_SOUND_EFFECTS:
+                    SHAKE_SOUND_MIXER.play(SHAKE_SOUND_EFFECTS[shake_type])
+                self.ids.next_button.press_button = False
+                self.ids.next_button.disable_button = True
+                shake_animation.on_complete = self.enable_next_button_when_completed
 
-        if "volume" in current_dialog_dict:
-            self.music_mixer.change_volume(
-                self.music_mixer.default_volume * current_dialog_dict["volume"])
+            # Play the sound effect if needed
+            if "sound" in current_dialog_dict:
+                sound_id = current_dialog_dict["sound"]
+                self.sound_mixer.play(sound_id)
+
+            # Play the music if needed
+            if "music" in current_dialog_dict:
+                music_id = current_dialog_dict["music"]
+                self.music_mixer.play(music_id)
+
+            if "volume" in current_dialog_dict:
+                self.music_mixer.change_volume(
+                    self.music_mixer.default_volume * current_dialog_dict["volume"])
 
     def enable_next_button_when_completed(self, *args):
         self.ids.next_button.disable_button = False

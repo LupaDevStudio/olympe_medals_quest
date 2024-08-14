@@ -60,7 +60,8 @@ from tools.data_structures import (
 )
 from lupa_libraries.custom_widgets import (
     OlympeCard,
-    SeparationLine
+    SeparationLine,
+    CharacterSkillsLayout
 )
 
 ###############
@@ -342,3 +343,43 @@ class OlympePlanificationPopup(OlympePopup):
 
     def cancel(self):
         self.dismiss()
+
+class OlympeAthletePopup(OlympePopup):
+    """
+    Class to create a popup with an athlete card and a confirm button.
+    """
+
+    ### Athlete information ###
+
+    title_skills = StringProperty()
+    age = StringProperty()
+    salary = NumericProperty()
+    image = StringProperty()
+    skills_dict = ObjectProperty({})
+
+    ### Text options ###
+
+    font_size_text = StringProperty(FONTS_SIZES.label)
+
+    ### Button options ###
+
+    button_text = StringProperty()
+    confirm_function = ObjectProperty(lambda: 1 + 1)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.button_text = TEXT.popup["close"]
+
+        skills_card = CharacterSkillsLayout(
+            font_ratio=self.font_ratio,
+            skills_dict=self.skills_dict,
+            size_hint=(0.9, None),
+            height=(SKILL_HEIGHT*6 + MARGIN*5)*self.font_ratio,
+            pos_hint={"center_x": 0.5},
+            y=((1-self.popup_size_hint[1])/2)*Window.size[1]+8*self.font_ratio + self.ids.confirm_button.height*self.font_ratio + 3*MARGIN*self.font_ratio
+        )
+        self.ids.popup_layout.add_widget(skills_card)
+
+    def confirm(self):
+        self.dismiss()
+        self.confirm_function()

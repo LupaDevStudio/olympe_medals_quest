@@ -71,7 +71,7 @@ class AthleteScreen(OlympeScreen):
 
     def reload_kwargs(self, dict_kwargs):
         self.athlete: Athlete = dict_kwargs["athlete"]
-        self.athlete_title = self.athlete.first_name + " " + self.athlete.name
+        self.athlete_title = self.athlete.full_name
 
     def reload_language(self):
         super().reload_language()
@@ -119,7 +119,7 @@ class AthleteScreen(OlympeScreen):
         if not self.skills_folded:
             stats_dict = self.athlete.stats
             sports_dict = self.athlete.sports
-            athlete_skills = dict(stats_dict)
+            athlete_skills = stats_dict
             athlete_skills.update(sports_dict)
 
             # Sort reverse

@@ -56,7 +56,8 @@ from lupa_libraries.custom_widgets.olympe_popups import (
     OlympeMessagePopup,
     OlympeYesNoPopup,
     OlympeSpinnerPopup,
-    OlympePlanificationPopup
+    OlympePlanificationPopup,
+    OlympeAthletePopup
 )
 
 ### Popups ###

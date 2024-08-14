@@ -510,9 +510,86 @@
     "olympe_first_donation": [
         {
             "character": "olympe",
-            "text": "Test",
-            "background": "office",
-            "music": "fight_ceremony"
+            "expression": "happy",
+            "text": "Ma chère équipe, je suis si heureuse de vous retrouver en cette belle matinée où j'ai plein de bonnes nouvelles à vous annoncer ! Permettez-moi tout d'abord de vous présenter Simon, le meilleur maçon d'Elysia qui m'a aidée à mettre en forme notre tout premier complexe sportif !",
+            "background": "office"
+        },
+        {
+            "character": "simon",
+            "expression": "neutral",
+            "text": "...",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "text": "Suivez-moi je vais vous le présenter !",
+            "background": "office"
+        },
+        {
+            "character": "olympe",
+            "expression": "happy",
+            "text": "Et voilà votre nouveau chez-vous !",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil",
+            "expression": "neutral",
+            "text": "(En gros c'est un vieux hangar dans lequel elle a mis un ballon à moitié dégonflé et un vélo mal en point... Quel est mon rôle dans tout ça ?)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "happy",
+            "text": "Vous êtes si émerveillés que vous en avez perdu la parole, je comprends parfaitement !",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "neutral",
+            "text": "...",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "happy",
+            "text": "Laissez-moi maintenant vous présenter notre toute première sportive, excellant dans la discipline [A_NEW_SPORT] ! [NAME_ATHLETE] !",
+            "background": "sports_complex"
+        },
+        {
+            "mode": "card",
+            "card_type": "first_athlete",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil",
+            "expression": "surprised",
+            "text": "(Elle a bien dit [THE_NEW_SPORT] ? C'est un sport renommé du FIGHT ça ? Je croyais que c'était pour les enfants de cinq ans.)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "text": "Phil, je compte sur toi pour mener [NAME_ATHLETE] à la victoire et décrocher une belle médaille. Quant à Hector, je te charge d'aider au mieux Phil dans ce rôle grâce à toutes tes connaissances.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "surprised",
+            "text": "Mais, Madame la Présidente, je...",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "text": "Il n'y a pas de mais, Hector ! Voici 10 000 dollars que j'ai réunis au cours des dernières semaines pour vous aider à démarrer sereinement et payer décemment notre merveilleuse athlète ! Sur ce, je vous laisse, je dois retourner à mes obligations de présidente !",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil",
+            "expression": "surprised",
+            "text": "(Elle a vraiment dit décemment là ? Mais dans quoi est-ce que je me suis embarqué, moi ?)",
+            "background": "sports_complex"
         }
     ],
     "hector_sports_activities": [

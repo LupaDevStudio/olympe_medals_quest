@@ -643,6 +643,10 @@ class Athlete():
     current_planning: list[str]
 
     @ property
+    def full_name(self) -> str:
+        return self.first_name + " " + self.name
+
+    @ property
     def image(self) -> str:
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 

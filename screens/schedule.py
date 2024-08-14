@@ -69,7 +69,7 @@ class ScheduleScreen(OlympeScreen):
 
     def reload_kwargs(self, dict_kwargs):
         self.athlete = dict_kwargs["athlete"]
-        self.header_text = self.athlete.first_name + " " + self.athlete.name
+        self.header_text = self.athlete.full_name
 
     def reload_language(self):
         super().reload_language()
@@ -92,7 +92,7 @@ class ScheduleScreen(OlympeScreen):
 
         stats_dict = self.athlete.stats
         sports_dict = self.athlete.sports
-        athlete_skills = dict(stats_dict)
+        athlete_skills = dict(reversed(list(stats_dict.items())))
         athlete_skills.update(sports_dict)
 
         self.fill_stats_scrollview(athlete_skills=athlete_skills)
@@ -170,7 +170,7 @@ class ScheduleScreen(OlympeScreen):
                 code_values_activity.append(activity_id)
 
         popup = OlympePlanificationPopup(
-            title=self.athlete.first_name + " " + self.athlete.name,
+            title=self.athlete.full_name,
             athlete=self.athlete,
             category_title=TEXT.schedule["category"],
             activity_title=TEXT.schedule["activity"],

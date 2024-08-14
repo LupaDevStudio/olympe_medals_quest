@@ -28,7 +28,8 @@ from lupa_libraries import (
 )
 from tools.path import (
     PATH_CHARACTERS_IMAGES,
-    PATH_ICONS
+    PATH_ICONS,
+    PATH_BACKGROUNDS
 )
 from tools.constants import (
     TEXT,
@@ -38,8 +39,13 @@ from tools.constants import (
     USER_DATA,
     GOD_MODE
 )
+from tools.data_structures import (
+    Athlete
+)
 from tools.olympe import (
-    generate_athlete
+    generate_athlete,
+    generate_and_add_first_athlete,
+    EVENTS_DICT
 )
 
 #############
@@ -108,7 +114,12 @@ class GameScreen(OlympeScreen):
 
         # Hide the planification button at the beginning of the story
         if self.GAME.year == 3 and self.GAME.trimester == 1:
-            if self.notifications_list != []:
+            if len(self.notifications_list) > 0:
+                if len(self.notifications_list) == 1:
+                    self.set_back_image_path(self.GAME.get_background_image())
+                # Olympe's office at the beginning of the story
+                elif len(self.notifications_list) == 2:
+                    self.set_back_image_path(PATH_BACKGROUNDS + "office.jpg")
                 self.planification_unlocked = False
             else:
                 self.planification_unlocked = True
@@ -152,11 +163,27 @@ class GameScreen(OlympeScreen):
 
     def launch_dialog(self):
         dialog_id = self.notifications_list[0]
+        name_athlete = ""
+
+        # Get the dict of details of the dialog
+        story_events = EVENTS_DICT["story"]
+        if dialog_id in story_events:
+            dialog_dict = story_events[dialog_id]
+
+            if "first_athlete" in dialog_dict["effects"] and self.GAME.team == []:
+                generate_and_add_first_athlete(
+                    GAME=self.GAME,
+                    main_sport=self.GAME.first_sport)
+        
+            if "pass_athlete_name" in dialog_dict:
+                if dialog_dict["pass_athlete_name"] == "first_athlete":
+                    name_athlete = self.GAME.team[0].full_name
 
         self.go_to_next_screen(
             screen_name="dialog",
             next_dict_kwargs={
                 "dialog_code": dialog_id,
+                "name_athlete": name_athlete,
                 "next_screen": "game",
                 "next_dict_kwargs": {}
             }

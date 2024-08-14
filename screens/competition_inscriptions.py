@@ -220,7 +220,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
                         "@", "5") # TODO
 
                     inscription_card = CompleteInscriptionCard(
-                        title_card=athlete.first_name + " " + athlete.name,
+                        title_card=athlete.full_name,
                         font_ratio=self.font_ratio,
                         skills_dict=athlete_skills,
                         image_source=athlete.image,

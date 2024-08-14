@@ -9,6 +9,7 @@
             "year": 3,
             "trimester": 1,
             "order": 1,
+            "pass_athlete_name": "first_athlete",
             "effects": {
                 "money": 10000,
                 "unlocked_menus": ["team"],

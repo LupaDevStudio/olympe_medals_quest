@@ -44,6 +44,7 @@ from lupa_libraries.custom_widgets import (
     OlympeYesNoPopup,
     OlympeSpinnerPopup,
     OlympePlanificationPopup,
+    OlympeAthletePopup,
     SeparationLine,
     StatsLegend
 )

@@ -389,9 +389,6 @@ def finish_dialog(GAME: Game, dialog_code: str):
                 if activity_id not in GAME.unlocked_activities:
                     GAME.unlocked_activities.append(activity_id)
 
-        elif key_effect == "first_athlete":
-            generate_and_add_first_athlete(GAME=GAME, main_sport=GAME.first_sport)
-
     # Remove the dialog from the notifications list
     if dialog_code in GAME.notifications_list:
         GAME.notifications_list.remove(dialog_code)

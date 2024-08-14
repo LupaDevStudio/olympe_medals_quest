@@ -108,11 +108,11 @@
         "number_athletes": "@ / € athlètes"
     },
     "stats": {
-        "strength": "Strength",
-        "speed": "Speed",
+        "strength": "Force",
+        "speed": "Vitesse",
         "technique": "Technique",
-        "precision": "Precision",
-        "charm": "Charm"
+        "precision": "Précision",
+        "charm": "Charme"
     },
     "sports": {
         "cheese-rolling": {
