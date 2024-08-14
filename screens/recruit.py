@@ -29,7 +29,8 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    USER_DATA
+    USER_DATA,
+    GOD_MODE
 )
 from tools.path import (
     PATH_TEXT_FONT
@@ -139,6 +140,11 @@ class RecruitScreen(OlympeScreen):
 
                 # Sort reverse
                 athlete_skills = dict(reversed(athlete_skills.items()))
+                
+                # Display reputation or not
+                reputation_unlocked = "reputation" in self.GAME.unlocked_modes
+                if GOD_MODE:
+                    reputation_unlocked = True
 
                 character_card = CompleteRecruitCard(
                     image_source=athlete.image,
@@ -152,6 +158,7 @@ class RecruitScreen(OlympeScreen):
                     reputation=TEXT.general["reputation"].replace(
                         "@", str(int(athlete.reputation))),
                     recruit_price=athlete.recruit_price,
+                    reputation_unlocked=reputation_unlocked,
                     disable_button=not(self.GAME.can_recruit_athlete(athlete=athlete)),
                     recruit_release_function=partial(self.ask_recruit_athlete, athlete)
                 )

@@ -259,7 +259,7 @@
         disable_button: True
 
     PressedButton:
-        text: root.fire_text
+        text: root.fire_text if root.fire_unlocked else "???"
         size_hint: (None, None)
         height: BUTTON_HEIGHT * root.font_ratio
         width: character.width
@@ -269,6 +269,7 @@
         pressed_color: COLORS.red_pressed
         background_color: COLORS.red
         release_function: root.fire_athlete_function
+        disable_button: not root.fire_unlocked
 
     ### Information ###
     
@@ -294,7 +295,7 @@
         x: salary_label.x
 
     SurroundedLabel:
-        text: root.reputation
+        text: root.fatigue if root.fatigue_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -304,7 +305,7 @@
         x: salary_label.x
 
     SurroundedLabel:
-        text: root.fatigue
+        text: root.reputation if root.reputation_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -314,7 +315,7 @@
         x: salary_label.x
 
     SurroundedLabel:
-        text: root.health
+        text: root.health if root.health_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: salary_label.width
@@ -481,7 +482,7 @@
         y: root.font_ratio * (MARGIN * 3 + len(root.skills_dict) * SKILL_HEIGHT + root.recruit_button_height + root.character_height/3 + 4)
 
     SurroundedLabel:
-        text: root.reputation
+        text: root.reputation if root.reputation_unlocked else "???"
         font_ratio: root.font_ratio
         size_hint: (None, None)
         height: root.character_height*root.font_ratio / 3 - 8*root.font_ratio
@@ -639,32 +640,34 @@
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: root.width*0.85 - character.width
-        height: (root.character_height - 2*7)/3
+        height: (character.height - 2*MARGIN*root.font_ratio)/3
         x: 0.1*root.width + character.width
-        y: (2*7 + MARGIN*2)*root.font_ratio + planning_button.height + 2*self.height
+        y: second_activity.y + second_activity.height + MARGIN*root.font_ratio
 
     SurroundedLabel:
+        id: second_activity
         text: root.list_activities[1]
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: first_activity.width
         height: first_activity.height
         x: 0.1*root.width + character.width
-        y: (1*7 + MARGIN*2)*root.font_ratio + planning_button.height + self.height
+        y: third_activity.y + third_activity.height + MARGIN*root.font_ratio
 
     SurroundedLabel:
+        id: third_activity
         text: root.list_activities[2]
         font_ratio: root.font_ratio
         size_hint: (None, None)
         width: first_activity.width
         height: first_activity.height
         x: 0.1*root.width + character.width
-        y: MARGIN*2*root.font_ratio + planning_button.height
+        y: MARGIN*root.font_ratio + planning_button.height + planning_button.y
 
     # Planning button
     PressedButton:
         id: planning_button
-        text: root.planning_text
+        text: root.planning_text if root.planification_unlocked else "???"
         size_hint: (None, None)
         width: first_activity.width
         height: SKILL_HEIGHT * root.font_ratio
@@ -672,6 +675,7 @@
         x: 0.1*root.width + character.width
         y: MARGIN*root.font_ratio
         release_function: root.release_function
+        disable_button: not root.planification_unlocked
 
 <SmallPlanificationCard>:
 
@@ -679,7 +683,7 @@
     OlympeCard:
         header_mode: True
         header_text: root.title_card
-        header_height: root.height
+        header_height: root.header_height
         font_size: FONTS_SIZES.label
         image_mode: True
         image_source: root.image_source
@@ -762,6 +766,7 @@
         height: ROOM_HEIGHT*root.font_ratio
         font_ratio: root.font_ratio
         fit_mode: "cover"
+        release_function: root.room_details_function
 
     TextMoneyLayoutUnderPressedButton:
         coins_amount: root.price
@@ -873,6 +878,7 @@
             font_ratio: root.font_ratio
             line_width: root.line_width
             disable_button: True
+            opacity: 0 if root.best_athlete_image == "" else 1
 
         PressedButton:
             id: button
@@ -933,3 +939,30 @@
             halign: "left"
             valign: "middle"
             color: root.font_color
+
+##############
+### Sports ###
+##############
+
+<StatsLegend>:
+    canvas.after:
+        Color:
+            rgba: self.canvas_color
+        RoundedRectangle:
+            pos: self.pos[0], self.pos[1] + self.size[1] / 2
+            size: self.size[0], self.size[1] / 2
+            radius: [self.radius*root.font_ratio]
+    
+    Label:
+        text: root.text
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        size_hint: (1, 0.5)
+        pos_hint: {"center_x": 0.5}
+        y: 0
+        shorten: False
+        text_size: (self.width, self.height)
+        size: self.texture_size
+        halign: "center"
+        valign: "middle"
+        color: root.font_color

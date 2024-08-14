@@ -98,14 +98,16 @@ class MoneyLayout(RelativeLayout):
                 round_thousands = math.floor(self.coins_count / 1000)
                 previous_text = str(round_thousands) + " k"
             else:
-                previous_text = str(previous_count)
+                round_number = math.floor(previous_count)
+                previous_text = str(round_number)
 
             next_count = self.coins_count - self.spent_coins_count
             if next_count >= 1000:
                 round_thousands = math.floor(next_count / 1000)
                 next_text = str(round_thousands) + " k"
             else:
-                next_text = str(next_count)
+                round_number = math.floor(next_count)
+                next_text = str(round_number)
 
             self.coins_count_text += previous_text + " -> " + next_text
         else:
@@ -114,8 +116,9 @@ class MoneyLayout(RelativeLayout):
                 self.coins_count_text += str(round_thousands) + " k"
             elif self.coins_count >= 1000:
                 round_thousands = str(round(self.coins_count / 1000, ndigits=1))
-                if round_thousands[-1] == "0":
+                if round_thousands[-1] == "0" and len(round_thousands) > 3:
                     round_thousands = round_thousands[:-2]
                 self.coins_count_text += str(round_thousands) + " k"
             else:
-                self.coins_count_text += str(self.coins_count)
+                round_number = math.floor(self.coins_count)
+                self.coins_count_text += str(round_number)

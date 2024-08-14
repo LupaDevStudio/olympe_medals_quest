@@ -14,7 +14,8 @@ from functools import partial
 
 from kivy.properties import (
     StringProperty,
-    ListProperty
+    ListProperty,
+    BooleanProperty
 )
 from kivy.core.window import Window
 from kivy.uix.gridlayout import GridLayout
@@ -34,12 +35,11 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_YEAR,
-    USER_DATA
+    USER_DATA,
+    GOD_MODE
 )
 from tools.olympe import (
-    generate_athlete,
-    generate_and_add_first_athlete,
-    launch_new_phase
+    generate_athlete
 )
 
 #############
@@ -54,84 +54,73 @@ class GameScreen(OlympeScreen):
 
     dict_type_screen = {
         SCREEN_TITLE_YEAR: True,
-        SCREEN_BACK_ARROW: "save",
+        SCREEN_BACK_ARROW: "backwards",
         SCREEN_MONEY_RIGHT: True
     }
     launch_main_action_label = StringProperty()
     main_action = "plan"  # can be "plan" or "begin_competition_{mode}"
     our_country_label = StringProperty()
     notifications_list = ListProperty([])
-
-    def __init__(self, back_image_path=None, **kw):
-        super().__init__(back_image_path, **kw)
-        # Redefine the function for the back arrow
-        self.ids.back_arrow.release_function = self.go_backwards
-
-    def reload_kwargs(self, dict_kwargs: dict):
-        has_seen_notification = dict_kwargs.get("has_seen_notification", False)
-        
-        if has_seen_notification:
-            # Remove the notification once seen in self.GAME
-            # TODO self.notifications_list.remove(self.notifications_list[0])
-            pass
+    planification_unlocked = BooleanProperty(True)
 
     def reload_language(self):
         super().reload_language()
         self.my_text = TEXT.game
+        self.main_action = self.GAME.get_main_action()
         self.launch_main_action_label = self.my_text[self.main_action]
         self.our_country_label = TEXT.countries["our_country"]
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
+        
+        # # TODO TEMP
+        # if self.GAME.recrutable_athletes == []:
+        #     first_athlete = generate_athlete(GAME=self.GAME)
+        #     self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+        #     USER_DATA.save_changes()
 
-        # TODO update the notifications_list depending if one of the characters has something to say
-        self.notifications_list = [
-            ["olympe", "introduction"]
-        ]
         # Update main_action
         self.main_action = self.GAME.get_main_action()
-
-        self.ids.notification_button.trigger_icon_flashing()
-
-        # TODO TEMP
-        if self.GAME.sports_unlocked == []:
-            self.GAME.sports_unlocking_progress["cheese_rolling"] = 1
-        # TODO TEMP
-        if self.GAME.team == []:
-            generate_and_add_first_athlete(GAME=self.GAME, main_sport="cheese_rolling")
-        # TODO TEMP
-        if self.GAME.recrutable_athletes == []:
-            first_athlete = generate_athlete(GAME=self.GAME)
-            self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
-            USER_DATA.save_changes()
+        
+        # Fill the back space with all menus
         self.fill_grid_layout()
 
+        # Update the list of notifications
+        self.notifications_list = self.GAME.notifications_list
+        self.ids.notification_button.trigger_icon_flashing()
         self.update_notification_panel()
 
     def go_backwards(self):
         self.GAME.set_last_time_played()
         USER_DATA.save_changes()
-        super().go_backwards()
+        self.go_to_next_screen(
+            screen_name="save"
+        )
 
     def update_notification_panel(self):
 
         # Update the notification panel
         if self.notifications_list != []:
-            character = self.notifications_list[0][0]
+            dialog_id = self.notifications_list[0]
+            character = dialog_id.split("_")[0]
             self.ids.notification_button.image_source = PATH_CHARACTERS_IMAGES + \
                 character + "/neutral.png"
 
+        # Hide the planification button at the beginning of the story
+        if self.GAME.year == 3 and self.GAME.trimester == 1:
+            if self.notifications_list != []:
+                self.planification_unlocked = False
+            else:
+                self.planification_unlocked = True
+
     def fill_grid_layout(self):
-        # TODO insert in this list only the buttons unlocked depending on tutorial
-        list_buttons = [
-            "team",
-            "recruit",
-            "sports_complex",
-            "sports_menu",
-            "activities_menu",
-            "medals",
-            "shop"
-        ]
+        # Menus to display
+        if GOD_MODE:
+            list_buttons = ["team", "recruit", "sports_complex",
+                "sports_menu", "activities_menu", "medals", "shop"]
+        else:
+            list_buttons = self.GAME.unlocked_menus
+
         max_icons = 7
         max_lines = (max_icons // 2) + 1
 
@@ -158,24 +147,20 @@ class GameScreen(OlympeScreen):
     def launch_main_action(self):
         if self.main_action == "plan":
             self.go_to_next_screen(screen_name="planification")
-        elif self.main_action == "begin_competition":
+        elif "begin_competition" in self.main_action:
             self.go_to_next_screen(screen_name="competition_inscriptions")
 
     def launch_dialog(self):
-        event = self.notifications_list[0]
-        dialog_id = event[1]
+        dialog_id = self.notifications_list[0]
 
         self.go_to_next_screen(
             screen_name="dialog",
             next_dict_kwargs={
                 "dialog_code": dialog_id,
                 "next_screen": "game",
-                "next_dict_kwargs": {
-                    "has_seen_notification": True
-                }
+                "next_dict_kwargs": {}
             }
         )
-
 
     def on_leave(self, *args):
         super().on_leave(*args)

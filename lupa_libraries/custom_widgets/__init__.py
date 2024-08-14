@@ -43,7 +43,8 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     SmallPlanificationCard,
     SaveCard,
     StatBar,
-    SeparationLine
+    SeparationLine,
+    StatsLegend
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,
@@ -51,9 +52,11 @@ from lupa_libraries.custom_widgets.custom_scrollview import (
     MyScrollViewVerticalLayout
 )
 from lupa_libraries.custom_widgets.olympe_popups import (
+    OlympePopup,
     OlympeMessagePopup,
     OlympeYesNoPopup,
-    OlympeSpinnerPopup
+    OlympeSpinnerPopup,
+    OlympePlanificationPopup
 )
 
 ### Popups ###

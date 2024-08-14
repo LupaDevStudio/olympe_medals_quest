@@ -47,7 +47,8 @@ from tools.graphics import (
     CHARACTER_HEIGHT,
     SKILL_HEIGHT,
     MARGIN,
-    BUTTON_HEIGHT
+    BUTTON_HEIGHT,
+    RADIUS_SMALL
 )
 from tools.path import (
     PATH_TITLE_FONT,
@@ -305,6 +306,11 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     fatigue = StringProperty()
     health = StringProperty()
 
+    fire_unlocked = BooleanProperty(True)
+    reputation_unlocked = BooleanProperty(True)
+    health_unlocked = BooleanProperty(True)
+    fatigue_unlocked = BooleanProperty(True)
+
     ### Colors ###
 
     background_color = ColorProperty(COLORS.transparent_black)
@@ -317,7 +323,6 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
     ### Function ###
 
     fire_athlete_function = ObjectProperty(lambda: 1 + 1)
-
 
 class CharacterStats(RelativeLayout):
 
@@ -612,6 +617,7 @@ class CompleteRecruitCard(RelativeLayout):
     image_source = StringProperty()
     age = StringProperty()
     reputation = StringProperty()
+    reputation_unlocked = BooleanProperty(True)
     salary = NumericProperty()
     recruit_price = NumericProperty()
 
@@ -765,6 +771,7 @@ class CompletePlanificationCard(RelativeLayout):
     total_price = NumericProperty(0)
     minus_mode = BooleanProperty()
     planning_text = StringProperty()
+    planification_unlocked = BooleanProperty(True)
     list_activities = ListProperty([])
 
     font_size = NumericProperty(FONTS_SIZES.label)
@@ -812,6 +819,7 @@ class SmallPlanificationCard(RelativeLayout):
 
     ### Sizes ###
 
+    header_height = NumericProperty(BIG_HEADER_HEIGHT)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
@@ -856,6 +864,8 @@ class CompleteRoomCard(FloatLayout):
     current_level_details = ListProperty()
     next_level_title = StringProperty()
     next_level_details = ListProperty()
+
+    room_details_function = ObjectProperty(lambda: 1 + 1)
 
     font_size = NumericProperty(FONTS_SIZES.subtitle)
     text_font_name = StringProperty(PATH_TITLE_FONT)
@@ -1089,3 +1099,22 @@ class SaveCard(FloatLayout):
             )
 
             self.add_widget(character_card)
+
+##############
+### Sports ###
+##############
+
+class StatsLegend(RelativeLayout):
+
+    text = StringProperty()
+    canvas_color = ColorProperty()
+
+    font_size = NumericProperty(FONTS_SIZES.small_label)
+    text_font_name = StringProperty(PATH_TEXT_FONT)
+    font_color = ColorProperty(COLORS.white)
+
+    font_ratio = NumericProperty(1)
+    radius = NumericProperty(RADIUS_SMALL)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

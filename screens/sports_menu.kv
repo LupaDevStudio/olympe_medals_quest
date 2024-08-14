@@ -1,12 +1,13 @@
 #:kivy 2.2.1
+#:set BOTTOM_BAR_RATIO 1.4
 
 <SportsMenuScreen>:
 
     OlympeCard:
         header_mode: True
         header_text: root.sports_menu_title
-        pos_hint: {"center_x":0.5, "y": 0.025}
-        size_hint: (SCROLLVIEW_WIDTH, 0.95 - TOP_BAR_HEIGHT)
+        pos_hint: {"center_x":0.5, "y": 0.025+BOTTOM_BAR_RATIO*TOP_BAR_HEIGHT}
+        size_hint: (SCROLLVIEW_WIDTH, 0.95 - TOP_BAR_HEIGHT*(1+BOTTOM_BAR_RATIO))
         font_ratio: root.font_ratio
 
         CustomScrollview:
@@ -23,3 +24,70 @@
                 cols: 1
                 spacing: (10*root.font_ratio, 10*root.font_ratio)
                 padding: (10*root.font_ratio, 5*root.font_ratio, 20*root.font_ratio, SCROLL_VIEW_SPACING_VERTICAL*root.font_ratio)
+
+    RelativeLayout:
+        id: bottom_bar
+        size_hint: (1, BOTTOM_BAR_RATIO*TOP_BAR_HEIGHT)
+        pos_hint: {"center_x": 0.5, "y": 0}
+
+        canvas.before:
+            Color:
+                rgba: COLORS.dark_transparent_black
+            Rectangle:
+                pos: 0, 0
+                size: self.size
+            Color:
+                rgba: COLORS.white
+            Line:
+                points: [0, self.height, self.width, self.height]
+                width: LARGE_LINE_WIDTH*root.font_ratio
+
+        StatsLegend:
+            id: strength_legend
+            font_ratio: root.font_ratio
+            text: root.strength_label
+            canvas_color: COLORS.stats_strength
+            size_hint: (None, 0.8)
+            pos_hint: {"center_y": 0.4}
+            width: (self.parent.width - 6*MARGIN*root.font_ratio) / 5
+            x: MARGIN*root.font_ratio
+
+        StatsLegend:
+            id: speed_legend
+            font_ratio: root.font_ratio
+            text: root.speed_label
+            canvas_color: COLORS.stats_speed
+            size_hint: strength_legend.size_hint
+            pos_hint: strength_legend.pos_hint
+            width: strength_legend.width
+            x: MARGIN*root.font_ratio + strength_legend.x + strength_legend.width
+
+        StatsLegend:
+            id: technique_legend
+            font_ratio: root.font_ratio
+            text: root.technique_label
+            canvas_color: COLORS.stats_technique
+            size_hint: strength_legend.size_hint
+            pos_hint: strength_legend.pos_hint
+            width: strength_legend.width
+            x: MARGIN*root.font_ratio + speed_legend.x + speed_legend.width
+
+        StatsLegend:
+            id: precision_legend
+            font_ratio: root.font_ratio
+            text: root.precision_label
+            canvas_color: COLORS.stats_precision
+            size_hint: strength_legend.size_hint
+            pos_hint: strength_legend.pos_hint
+            width: strength_legend.width
+            x: MARGIN*root.font_ratio + technique_legend.x + technique_legend.width
+
+        StatsLegend:
+            id: charm_legend
+            font_ratio: root.font_ratio
+            text: root.charm_label
+            canvas_color: COLORS.stats_charm
+            size_hint: strength_legend.size_hint
+            pos_hint: strength_legend.pos_hint
+            width: strength_legend.width
+            x: MARGIN*root.font_ratio + precision_legend.x + precision_legend.width

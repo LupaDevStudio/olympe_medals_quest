@@ -86,7 +86,7 @@ class MedalsScreen(OlympeScreen):
 
         if self.sports_view:
 
-            for sport_id in self.GAME.sports_unlocked:
+            for sport_id in self.GAME.unlocked_sports:
 
                 # Initialisation of the folded dictionary
                 if sport_id not in self.medals_per_sport_folded_dict:

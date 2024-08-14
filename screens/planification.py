@@ -40,6 +40,9 @@ from tools.graphics import (
 from tools.data_structures import (
     Athlete
 )
+from tools.olympe import (
+    launch_new_phase
+)
 
 #############
 ### Class ###
@@ -82,6 +85,7 @@ class PlanificationScreen(OlympeScreen):
                     font_ratio=self.font_ratio,
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=self.font_ratio * BIG_HEADER_HEIGHT,
+                    header_height=BIG_HEADER_HEIGHT,
                     title_card=athlete.first_name + "\n" + athlete.name,
                     image_source=athlete.image,
                     is_hurt=athlete.is_hurt,
@@ -96,7 +100,16 @@ class PlanificationScreen(OlympeScreen):
 
                 list_activities_label = []
                 for activity_id in athlete.current_planning:
-                    list_activities_label.append(TEXT.activities[activity_id]["name"])
+                    if "sports_" in activity_id:
+                        list_infos = activity_id.split("_") # "sports_2_name_training_4"
+                        sport_id = list_infos[2]
+                        level_activity = list_infos[4]
+                        activity_name = TEXT.activities["sports_training"]["name"].replace(
+                            "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
+                            "[LEVEL]", str(level_activity))
+                        list_activities_label.append(activity_name)
+                    else:
+                        list_activities_label.append(TEXT.activities[activity_id]["name"])
 
                 athlete_card = CompletePlanificationCard(
                     font_ratio=self.font_ratio,
@@ -109,7 +122,8 @@ class PlanificationScreen(OlympeScreen):
                     minus_mode=trimester_gain < 0,
                     planning_text=TEXT.planification["planning"],
                     list_activities=list_activities_label,
-                    release_function=partial(self.open_schedule_screen, athlete)
+                    release_function=partial(self.open_schedule_screen, athlete),
+                    planification_unlocked="planification" in self.GAME.unlocked_modes
                 )
 
             self.athlete_folded_dict[athlete.id][1] = athlete_card
@@ -138,4 +152,7 @@ class PlanificationScreen(OlympeScreen):
         )
 
     def validate_planning(self):
-        print("TODO validate planning")
+        launch_new_phase(GAME=self.GAME)
+        self.go_to_next_screen(
+            screen_name="game"
+        )

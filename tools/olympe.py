@@ -31,10 +31,12 @@ from tools.constants import (
     USER_DATA
 )
 from tools.data_structures import (
+    generate_learning_rates,
     Athlete,
     Game,
     DEFAULT_STATS_DICT,
-    DEFAULT_STAT_DICT
+    DEFAULT_STAT_DICT,
+    EVENTS_DICT
 )
 from tools.path import (
     PATH_COUNTRIES,
@@ -45,8 +47,9 @@ from tools.path import (
 ### Constants ###
 #################
 
-COUNTRY_NAME = "our_country"
+### Countries ###
 
+COUNTRY_NAME = "our_country"
 countries_dict = load_json_file(PATH_COUNTRIES)
 
 ### First names and names ###
@@ -74,14 +77,21 @@ for key in first_names_dict:
         for name in names_dict[key]:
             names_dict[COUNTRY_NAME].append(name)
 
+### Salary and recruit prices ###
+
+BASE_SALARY = 1000
+ARITHMETIC_FACTOR_SALARY = 10
+GEOMETRIC_FACTOR_SALARY = 2
+
 #################
 ### Functions ###
 #################
 
 
-def compute_salary(stats, reputation) -> int:
-    # TODO
-    return 1200
+def compute_salary(athlete: Athlete) -> int:
+    score_athlete = athlete.global_score
+    salary = BASE_SALARY + (ARITHMETIC_FACTOR_SALARY * score_athlete) ** GEOMETRIC_FACTOR_SALARY
+    return int(salary)
 
 def get_health_string(athlete: Athlete) -> str:
     is_hurt = athlete.is_hurt
@@ -109,15 +119,6 @@ def generate_age() -> int:
         1] * 6 + [0.75, 0.75, 0.5, 0.5, 0.25]
     age = rd.choices(range(16, 41), weights=weights)
     return age[0]
-
-
-def generate_learning_rates(double_proba=0.15, simple_proba=0.4):
-    random_number = rd.random()
-    if random_number < double_proba:
-        return 2
-    elif random_number < simple_proba:
-        return 1.5
-    return 1
 
 
 def generate_stats(level) -> dict:
@@ -183,7 +184,7 @@ def generate_recruit_price(salary: int, level: int) -> int:
     if recruit_price <= 0:
         recruit_price = salary * 10
 
-    return recruit_price
+    return int(recruit_price)
 
 def generate_athlete(
         GAME: Game,
@@ -191,7 +192,6 @@ def generate_athlete(
         age: int | None = None,
         time_for_recruit: int | None = None,
         recruit_price: int | None = None,
-        reputation: int | None = None,
         max_level: int | None = None, # between 1 and 10
         main_sport: str = "random",
         second_sport: str | None = "random",
@@ -225,7 +225,7 @@ def generate_athlete(
 
     if main_sport == "random":
         # Main sport among those unlocked
-        main_sport = rd.choice(GAME.sports_unlocked)
+        main_sport = rd.choice(GAME.unlocked_sports)
     if second_sport == "random":
         # Second sport among all sports of the current category or less
         list_second_sports = GAME.get_all_sports_from_current_category()
@@ -235,8 +235,7 @@ def generate_athlete(
 
     ### Reputation ###
 
-    if reputation is None:
-        reputation = generate_reputation(stats["charm"])
+    reputation = generate_reputation(stats["charm"])
 
     ### Portrait ###
 
@@ -244,24 +243,13 @@ def generate_athlete(
     if portrait is None:
         portrait = Portrait(gender=gender)
 
-    ### Costs ###
-
-    # Salary
-    salary = compute_salary(stats=stats, reputation=reputation)
-
-    # Recruit price
-    if recruit_price is None:
-        recruit_price = generate_recruit_price(
-            salary=salary,
-            level=level)
+    ### Athlete ###
 
     dict_to_load = {
         "first_name": first_name,
         "name": name,
         "age": age,
-        "salary": salary,
         "time_for_recruit": time_for_recruit,
-        "recruit_price": recruit_price,
         "portrait": portrait.get_dict(),
         "reputation": reputation,
         "stats": stats,
@@ -274,6 +262,19 @@ def generate_athlete(
         PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.png"))
     portrait.export_as_json(os.path.join(
         PATH_ATHLETES_IMAGES, f"athlete_{athlete.id}.json"))
+
+    ### Costs ###
+
+    # Salary
+    salary = compute_salary(athlete=athlete)
+    athlete.set_salary(salary=salary)
+
+    # Recruit price
+    if recruit_price is None:
+        recruit_price = generate_recruit_price(
+            salary=salary,
+            level=level)
+    athlete.set_recruit_price(recruit_price=recruit_price)
 
     return athlete
 
@@ -299,8 +300,7 @@ def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
         second_sport=None,
         max_level=1,
         gender=gender,
-        portrait=portrait,
-        reputation=0
+        portrait=portrait
     )
     GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
     GAME.recruit_athlete(GAME.recrutable_athletes[0])
@@ -310,13 +310,109 @@ def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
 ### Game ###
 ############
 
+def update_notifications(GAME: Game):
+
+    ### For story events ###
+
+    list_events = []
+    for event_id in EVENTS_DICT["story"]:
+        if event_id not in GAME.seen_dialogs:
+            event_dict = EVENTS_DICT["story"][event_id]
+            if (event_dict["year"] == GAME.year and GAME.trimester >= event_dict["trimester"]) or GAME.year > event_dict["year"]:
+                condition = event_dict.get("condition", {})
+                order = event_dict.get("order", 1)
+                # TODO treat condition
+                list_events.append([order, event_id])
+
+    # Sort the list of events with their order
+    list_events = sorted(list_events)
+
+    ### For repeatable events ###
+    # TODO
+
+    ### For random events ###
+    # TODO
+
+    ### For endings ###
+    # TODO choose between Olympe and Ariane
+
+    ### For retirements ###
+
+    if "retirement" in GAME.unlocked_modes:
+        print("TODO")
+
+    # Update the list of notifications
+    GAME.notifications_list = [element[1] for element in list_events]
+
+def finish_dialog(GAME: Game, dialog_code: str):
+
+    # Update the USER_DATA
+    if dialog_code not in USER_DATA.seen_dialogs:
+        USER_DATA.seen_dialogs.append(dialog_code)
+
+    # Get the dict of details of the dialog
+    story_events = EVENTS_DICT["story"]
+    random_events = EVENTS_DICT["random_events"]
+    if dialog_code in story_events:
+        dialog_dict = story_events[dialog_code]
+    elif dialog_code in random_events:
+        dialog_dict = random_events[dialog_code]
+
+    # Update the list of seen dialogs
+    if dialog_code not in GAME.seen_dialogs:
+        GAME.seen_dialogs.append(dialog_code)
+
+    # Apply effects of the dialogs if some
+    effects = dialog_dict.get("effects", {})
+    for key_effect in effects:
+        value_effect = effects[key_effect]
+        if key_effect == "money":
+            GAME.money += value_effect
+
+        elif key_effect == "unlocked_characters":
+            for character_id in value_effect:
+                if character_id not in GAME.unlocked_characters:
+                    GAME.unlocked_characters.append(character_id)
+
+        elif key_effect == "unlocked_modes":
+            for mode_id in value_effect:
+                if mode_id not in GAME.unlocked_modes:
+                    GAME.unlocked_modes.append(mode_id)
+
+        elif key_effect == "unlocked_menus":
+            for mode_id in value_effect:
+                if mode_id not in GAME.unlocked_menus:
+                    GAME.unlocked_menus.append(mode_id)
+
+        elif key_effect == "unlocked_activities":
+            for activity_id in value_effect:
+                if activity_id not in GAME.unlocked_activities:
+                    GAME.unlocked_activities.append(activity_id)
+
+        elif key_effect == "first_athlete":
+            generate_and_add_first_athlete(GAME=GAME, main_sport=GAME.first_sport)
+
+    # Remove the dialog from the notifications list
+    if dialog_code in GAME.notifications_list:
+        GAME.notifications_list.remove(dialog_code)
+
+    # Special case for the introduction
+    if dialog_code == "introduction":
+        launch_new_phase(GAME=GAME)
+
+    USER_DATA.save_changes()
+
 def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
-    # TODO check if recruit mode is unlocked in the GAME
-    if True:
+
+    # Go to next trimester
+    main_action = GAME.go_to_next_trimester()
+
+    # Handle recrutements
+    if "recruit" in GAME.unlocked_menus:
         new_athletes_list = []
         # Classic generation at random when no particular event
         if mode_new_phase is None:
-            number_sports_unlocked = len(GAME.sports_unlocked)
+            number_sports_unlocked = len(GAME.unlocked_sports)
             if number_sports_unlocked < 3:
                 number_athletes_to_add = rd.randint(0, 2)
             elif number_sports_unlocked < 8:
@@ -343,10 +439,18 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
                     main_sport=mode_new_phase.replace("sport_", "")
                 ))
 
-    main_action = GAME.go_to_next_trimester()
-    GAME.update_recrutable_athletes(
-        new_athletes_list=new_athletes_list)
+        GAME.update_recrutable_athletes(
+            new_athletes_list=new_athletes_list)
     
+    # Update the salaries at the beginning of the year
+    if "salary_augmentation" in GAME.unlocked_modes and GAME.trimester == 1:
+        for athlete in GAME.team:
+            new_salary = compute_salary(athlete=athlete)
+            athlete.set_salary(salary=new_salary)
+
+    # Update the list of notifications
+    update_notifications(GAME=GAME)
+
     USER_DATA.save_changes()
 
     return main_action

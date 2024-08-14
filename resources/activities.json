@@ -4,6 +4,7 @@
             ["fatigue", -0.1],
             ["injury_risk", -0.1]
         ],
+        "category": "break",
         "can_be_done_when_ill": true,
         "can_be_done_when_hurt": true
     },
@@ -11,6 +12,7 @@
         "effects": [
             ["illness", "heal_one_trimester"]
         ],
+        "category": "break",
         "all_trimester": true,
         "price": 10,
         "can_be_done_when_ill": true
@@ -19,6 +21,7 @@
         "effects": [
             ["illness", "heal_all"]
         ],
+        "category": "break",
         "all_trimester": true,
         "can_be_done_when_ill": true,
         "price": 10
@@ -27,6 +30,7 @@
         "effects": [
             ["fatigue", -0.2]
         ],
+        "category": "break",
         "price": 10
     },
     "therapeutic_massage": {
@@ -34,12 +38,14 @@
             ["fatigue", -0.2],
             ["injury_risk", -0.2]
         ],
+        "category": "break",
         "price": 10
     },
     "reeducation": {
         "effects": [
             ["injury", "heal_all"]
         ],
+        "category": "break",
         "all_trimester": true,
         "can_be_done_when_hurt": true,
         "price": 10
@@ -85,43 +91,37 @@
         "can_be_done_when_ill": true,
         "can_be_done_when_hurt": true,
         "all_trimester": true,
-        "price": 10
+        "price": 0
     },
     "tribune_2": {
         "can_be_done_when_ill": true,
         "can_be_done_when_hurt": true,
         "all_trimester": true,
-        "price": 10
+        "price": 0
     },
     "cryotherapy_1": {
         "effects": [
             ["fatigue", -0.2]
         ],
+        "category": "break",
         "price": 10
     },
     "cryotherapy_2": {
         "effects": [
             ["fatigue", -0.4]
         ],
+        "category": "break",
         "price": 10
     },
     "cryotherapy_3": {
         "effects": [
             ["fatigue", -0.8]
         ],
+        "category": "break",
         "price": 10
-    },
-    "competition_national_1": {
-        "price": 1000
-    },
-    "competition_continental_1": {
-        "price": 5000
     },
     "competition_world_1": {
         "price": 10000
-    },
-    "competition_national_2": {
-        "price": 5000
     },
     "competition_continental_2": {
         "price": 10
@@ -137,5 +137,145 @@
     },
     "competition_world_3": {
         "price": 10
+    },
+    "sports_1_training_1": {
+        "price": 0
+    },
+    "sports_1_training_2": {
+        "price": 10
+    },
+    "sports_1_training_3": {
+        "price": 10
+    },
+    "sports_1_training_4": {
+        "price": 10
+    },
+    "sports_2_training_1": {
+        "price": 10
+    },
+    "sports_2_training_2": {
+        "price": 10
+    },
+    "sports_2_training_3": {
+        "price": 10
+    },
+    "sports_2_training_4": {
+        "price": 10
+    },
+    "sports_3_training_1": {
+        "price": 10
+    },
+    "sports_3_training_2": {
+        "price": 10
+    },
+    "stats_strength_1": {
+        "price": 0
+    },
+    "stats_strength_2": {
+        "price": 10
+    },
+    "stats_strength_3": {
+        "price": 10
+    },
+    "stats_strength_4": {
+        "price": 10
+    },
+    "stats_speed_1": {
+        "price": 0
+    },
+    "stats_speed_2": {
+        "price": 10
+    },
+    "stats_speed_3": {
+        "price": 10
+    },
+    "stats_speed_4": {
+        "price": 10
+    },
+    "stats_technique_1": {
+        "price": 0
+    },
+    "stats_technique_2": {
+        "price": 10
+    },
+    "stats_technique_3": {
+        "price": 10
+    },
+    "stats_technique_4": {
+        "price": 10
+    },
+    "stats_precision_1": {
+        "price": 0
+    },
+    "stats_precision_2": {
+        "price": 10
+    },
+    "stats_precision_3": {
+        "price": 10
+    },
+    "stats_precision_4": {
+        "price": 10
+    },
+    "stats_charm_1": {
+        "price": 0
+    },
+    "stats_charm_2": {
+        "price": 10
+    },
+    "stats_charm_3": {
+        "price": 10
+    },
+    "stats_charm_4": {
+        "price": 10
+    },
+    "stats_strength_speed": {
+        "price": 10
+    },
+    "stats_strength_technique": {
+        "price": 10
+    },
+    "stats_strength_precision": {
+        "price": 10
+    },
+    "stats_speed_strength": {
+        "price": 10
+    },
+    "stats_speed_technique": {
+        "price": 10
+    },
+    "stats_speed_precision": {
+        "price": 10
+    },
+    "stats_technique_strength": {
+        "price": 10
+    },
+    "stats_technique_speed": {
+        "price": 10
+    },
+    "stats_technique_precision": {
+        "price": 10
+    },
+    "stats_precision_strength": {
+        "price": 10
+    },
+    "stats_precision_speed": {
+        "price": 10
+    },
+    "stats_precision_technique": {
+        "price": 10
+    },
+    "start_new_sport": {
+        "all_trimester": true,
+        "effects": [
+            ["fatigue", 0.6],
+            ["injury_risk", 0.3]
+        ]
+    },
+    "transfer_sport": {
+        "all_trimester": true,
+        "effects": [
+            ["fatigue", 0.6],
+            ["injury_risk", 0.3]
+        ]
     }
 }

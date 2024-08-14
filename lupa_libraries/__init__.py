@@ -39,10 +39,13 @@ from lupa_libraries.custom_widgets import (
     SmallMedalsCard,
     SaveCard,
     StatBar,
+    OlympePopup,
     OlympeMessagePopup,
     OlympeYesNoPopup,
     OlympeSpinnerPopup,
-    SeparationLine
+    OlympePlanificationPopup,
+    SeparationLine,
+    StatsLegend
 )
 
 ### Dialog generator ###

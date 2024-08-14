@@ -180,8 +180,9 @@ class SportsComplexScreen(OlympeScreen):
                 button_text = TEXT.sports_complex["buy"]
                 current_level_details = []
                 current_level_title = ""
+                next_level = room.current_level
 
-                if room.current_level != 1:
+                if next_level > 1:
                     button_text = TEXT.sports_complex["expand"]
                     current_level_title = TEXT.general["level"] + " " + str(next_level-1)
                     current_level_details = []
@@ -203,7 +204,8 @@ class SportsComplexScreen(OlympeScreen):
                     current_level_title=current_level_title,
                     current_level_details=current_level_details,
                     next_level_title=next_level_title,
-                    next_level_details=next_level_details
+                    next_level_details=next_level_details,
+                    room_details_function=partial(self.open_tutorial_popup_room, room_id)
                 )
 
             self.rooms_folded_dict[room_id][1] = room_card
@@ -220,7 +222,10 @@ class SportsComplexScreen(OlympeScreen):
         self.fill_scrollview()
 
     def open_tutorial_popup_room(self, room_id: str):
-        print("Open popup room")
+        self.create_message_popup(
+            title=TEXT.rooms[room_id]["name"],
+            text=TEXT.rooms[room_id]["description"]
+        )
 
     def open_tutorial_popup_activity(self, activity_id: str):
         print("Open popup activity")

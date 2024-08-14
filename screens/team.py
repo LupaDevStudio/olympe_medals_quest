@@ -59,12 +59,14 @@ class TeamScreen(OlympeScreen):
     team_title = StringProperty()
     grid_view = BooleanProperty(False) # detailed view by default
     recruit_label = StringProperty()
+    has_unlocked_recruit = BooleanProperty(False)
 
     def reload_language(self):
         super().reload_language()
         my_text = TEXT.team
 
         self.recruit_label = my_text["recruit"]
+        self.has_unlocked_recruit = "recruit" in self.GAME.unlocked_modes
 
         number_athletes_current = self.GAME.number_athletes
         if number_athletes_current <= 1:

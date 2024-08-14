@@ -5,9 +5,6 @@ Constants
 ---------
 __version__ : str
     Version of the application.
-
-ANDROID_MODE : bool
-    Whether the application is launched on mobile or not.
 """
 
 ###############
@@ -30,8 +27,7 @@ from tools.basic_tools import (
     load_json_file
 )
 from tools.data_structures import (
-    UserData,
-    Game
+    UserData
 )
 from tools.language import (
     Text
@@ -47,7 +43,11 @@ __version__ = "0.0.10"
 
 ### Mode ###
 
-DEV_MODE = True
+GOD_MODE = False # Change this value
+if GOD_MODE:
+    DEV_MODE = True
+else:
+    DEV_MODE = True # Change this value
 FPS = 30
 MSAA_LEVEL = 2
 
@@ -58,7 +58,7 @@ if not os.path.exists(PATH_USER_DATA):
     default_user_data = {
         "settings": {
             "sound_volume": 0.5,
-            "music_volume": 0.5,
+            "music_volume": 0.3,
             "language": "english"
         }
     }
@@ -66,6 +66,23 @@ if not os.path.exists(PATH_USER_DATA):
 
 # Load the data of the user
 USER_DATA = UserData()
+
+class SharedData():
+    id_game: int # 1, 2, 3
+    
+    @property
+    def GAME(self):
+        if self.id_game == 1:
+            return USER_DATA.game_1
+        elif self.id_game == 2:
+            return USER_DATA.game_2
+        else:
+            return USER_DATA.game_3
+
+    def __init__(self, id_game: int = 1) -> None:
+        self.id_game = id_game
+
+SHARED_DATA = SharedData()
 
 ### Language ###
 

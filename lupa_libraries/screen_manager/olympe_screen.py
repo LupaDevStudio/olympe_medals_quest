@@ -36,7 +36,8 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_CUSTOM_TITLE,
     TEXT,
-    USER_DATA
+    USER_DATA,
+    SHARED_DATA
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH
@@ -139,9 +140,8 @@ class OlympeScreen(ImprovedScreen):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
         self.set_game()
-
         self.reload_language()
-        if SCREEN_MONEY_RIGHT in self.dict_type_screen:
+        if SCREEN_MONEY_RIGHT in self.dict_type_screen or SCREEN_SPEND_MONEY_RIGHT in self.dict_type_screen:
             self.money_amount = self.GAME.money
 
         # Fill vertical scrollview if it exists
@@ -153,13 +153,7 @@ class OlympeScreen(ImprovedScreen):
             self.fill_scrollview()
 
     def set_game(self):
-        id_game = self.manager.id_game
-        if id_game == 1:
-            self.GAME = USER_DATA.game_1
-        elif id_game == 2:
-            self.GAME = USER_DATA.game_2
-        else:
-            self.GAME = USER_DATA.game_3
+        self.GAME = SHARED_DATA.GAME
 
     def get_title_year(self):
         year = TEXT.general["year"] + " "
@@ -184,8 +178,12 @@ class OlympeScreen(ImprovedScreen):
         elif SCREEN_MONEY_RIGHT in self.dict_type_screen:
             self.money_amount = self.GAME.money
 
-    def create_message_popup(self, code: str, confirm_function = lambda: 1 + 1):
-        text = TEXT.popup[code]["text"]
+    def create_message_popup(self, code: str | None = None, confirm_function = lambda: 1 + 1, title: str | None = None, text: str | None = None):
+        if text is None:
+            text = TEXT.popup[code]["text"]
+        if title is None:
+            title = TEXT.popup[code]["title"]
+
         if len(text) > 450:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.8)
         elif len(text) > 300:
@@ -193,7 +191,7 @@ class OlympeScreen(ImprovedScreen):
         else:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.4)
         popup = OlympeMessagePopup(
-            title=TEXT.popup[code]["title"],
+            title=title,
             text=text,
             font_ratio=self.font_ratio,
             path_background=self.back_image_path,
@@ -221,12 +219,13 @@ class OlympeScreen(ImprovedScreen):
         )
         popup.open()
 
-    def create_spinner_popup(self, code: str, confirm_function = lambda: 1 + 1, default_value = None, values = None):
+    def create_spinner_popup(self, code: str, confirm_function = lambda: 1 + 1, default_value = None, values = None, sort_values: bool = True):
         if values is None:
             values = TEXT.popup[code]["values"]
         if default_value is None:
             default_value = TEXT.popup[code]["default_value"]
-        values = sorted(values)
+        if sort_values:
+            values = sorted(values)
         popup = OlympeSpinnerPopup(
             popup_size_hint=(SCROLLVIEW_WIDTH, 0.4),
             title=TEXT.popup[code]["title"],

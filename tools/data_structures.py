@@ -17,6 +17,7 @@ from typing import Literal
 import uuid
 from datetime import datetime
 import time
+import random as rd
 
 ### Local imports ###
 
@@ -29,7 +30,8 @@ from tools.path import (
     PATH_SPORTS,
     PATH_ACTIVITIES,
     PATH_SPORTS_COMPLEX_DICT,
-    PATH_ROOMS_DICT
+    PATH_ROOMS_DICT,
+    PATH_EVENTS
 )
 from tools.basic_tools import (
     load_json_file,
@@ -151,11 +153,18 @@ ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
 NB_YEARS_BETWEEN_EDITION = 4
 
 FACTOR_SPONSOR_REPUTATION = 300
+MAX_REPUTATION = 1000
 
 # 3 years
 TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_1 = 3 * 4
 # 5 years
 TIME_NUMBER_TRIMESTERS_LOBBYING_SPORTS_2 = 5 * 4
+
+##############
+### Events ###
+##############
+
+EVENTS_DICT = load_json_file(PATH_EVENTS)
 
 #################
 ### Functions ###
@@ -166,6 +175,13 @@ def generate_id() -> str:
     unique_id = uuid.uuid4()
     return str(unique_id)
 
+def generate_learning_rates(double_proba=0.15, simple_proba=0.4):
+    random_number = rd.random()
+    if random_number < double_proba:
+        return 2
+    elif random_number < simple_proba:
+        return 1.5
+    return 1
 
 def convert_points_to_tier_rank(points):
     tier_rank = points // 10
@@ -203,7 +219,7 @@ class Activity():
 
     id: str
     effects: list
-    category: str
+    category: str # "sports", "stats", "press", "job", "secret", "break", "competition", "others"
     all_trimester: bool
     price: int
     gain: int
@@ -283,7 +299,7 @@ class InterviewActivity(Activity):
     def __init__(self, dict_to_load: dict):
         super().__init__(dict_to_load)
 
-        self.category = "interview"
+        self.category = "press"
 
     def get_gain_reputation(self, athlete) -> int:
         current_reputation = athlete.reputation
@@ -307,7 +323,7 @@ class SponsorActivity(Activity):
     def __init__(self, dict_to_load: dict):
         super().__init__(dict_to_load)
 
-        self.category = "sponsor"
+        self.category = "press"
 
     def get_gain(self, athlete) -> int:
         current_reputation = athlete.reputation
@@ -376,7 +392,7 @@ class TribuneActivity(Activity):
     def __init__(self, dict_to_load: dict):
         super().__init__(dict_to_load)
 
-        self.category = "tribune"
+        self.category = "press"
         self.type_sport = int(self.id.replace("tribune_", ""))
 
     def gain_research_in_sport(self, game):
@@ -411,10 +427,9 @@ class CompetitionActivity(Activity):
         super().__init__(dict_to_load)
 
         self.category = "competition"
-        list_infos = self.id.split("_")
-        self.type_competition = list_infos[1]
-        self.sport_id = list_infos[2]
-        self.category_sport = int(list_infos[3])
+        self.type_competition = dict_to_load["type_competition"]
+        self.sport_id = dict_to_load["sport_id"]
+        self.category_sport = dict_to_load["category_sport"]
 
     def get_gain_sport(self, athlete):
         return {}
@@ -431,6 +446,152 @@ class CompetitionActivity(Activity):
         # TODO
         # if result == 1:
         #     if
+
+class SportsActivity(Activity):
+    """
+    A class to store the data of the sports activities.
+    """
+
+    sport_id: str
+    category_sport: int
+    level: int
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "sports"
+        self.level = dict_to_load["level"]
+        self.sport_id = dict_to_load["sport_id"]
+        self.category_sport = dict_to_load["category_sport"]
+
+    def get_gain_sport(self, athlete):
+        return {}
+
+    def get_gain_stats(self, athlete):
+        return {}
+
+    def apply_activity(self, athlete, game) -> None:
+        # TODO rajouter la fatigue et risque de blessure aussi
+        pass
+
+class StatsActivity(Activity):
+    """
+    A class to store the data of the stats activities.
+    """
+
+    level: int
+    first_stat: str
+    second_stat: str | None
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "stats"
+        self.level = dict_to_load.get("level", 1)
+        self.first_stat = dict_to_load["first_stat"]
+        self.second_stat = dict_to_load.get("second_stat", None)
+
+    def get_gain_stats(self, athlete):
+        return {}
+
+    def apply_activity(self, athlete, game) -> None:
+        # TODO rajouter la fatigue et risque de blessure aussi
+        pass
+
+class TransferSportActivity(Activity):
+    """
+    A class to store the data of the transfer activity.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "others"
+        self.sport_id = dict_to_load["sport_id"]
+
+    def get_dict_new_sport(self, athlete):
+        new_dict_sport = copy.deepcopy(DEFAULT_STAT_DICT)
+        new_sport: Sport = SPORTS[self.sport_id]
+        requirements = new_sport.requirements
+
+        best_learning_rate = 1
+        points_from_previous_sports = []
+        for required_sport_id in requirements:
+            if required_sport_id in athlete.sports:
+                points_from_previous_sports.append(
+                    athlete.sports[required_sport_id]["points"])
+                learning_rate = athlete.sports[required_sport_id]["learning_rate"]
+                
+                # Take the best learning rate from the two below sports
+                if learning_rate > best_learning_rate:
+                    best_learning_rate = learning_rate
+
+        # If 1 sport learned => 60% from this sport transferred
+        points = 0
+        if len(points_from_previous_sports) == 1:
+            points = points_from_previous_sports[0] * 0.6
+
+        # If 2 sports learned => 60% from the best sports then 20% of the other
+        elif len(points_from_previous_sports) == 2:
+            points_from_previous_sports.sort()
+            points = points_from_previous_sports[0] * 0.2 + \
+                points_from_previous_sports[1] * 0.6
+
+        new_dict_sport["points"] = points
+        new_dict_sport["learning_rate"] = best_learning_rate
+
+        return new_dict_sport
+
+    def apply_activity(self, athlete, game) -> None:
+        # Apply fatigue and injury risk
+        super().apply_activity(athlete, game)
+
+        # Unlock the new sport
+        athlete.sports[self.sport_id] = self.get_dict_new_sport(athlete=athlete)
+
+class StartNewSportActivity(Activity):
+    """
+    A class to store the data of the start a new sport activity.
+    """
+
+    def __init__(self, dict_to_load: dict):
+        super().__init__(dict_to_load)
+
+        self.category = "others"
+        self.sport_id = dict_to_load["sport_id"]
+
+    def get_dict_new_sport(self, athlete):
+        new_dict_sport = copy.deepcopy(DEFAULT_STAT_DICT)
+        new_sport: Sport = SPORTS[self.sport_id]
+        
+        # Generate the learning rate
+        learning_rate = generate_learning_rates()
+        # Generate the points related to the stats of the sport
+        points = 0
+        for stat in new_sport.stats:
+            if athlete.stats[stat]["points"] > 20:
+                points += 5
+            elif athlete.stats[stat]["points"] > 30:
+                points += 10
+            elif athlete.stats[stat]["points"] > 40:
+                points += 15
+            elif athlete.stats[stat]["points"] > 50:
+                points += 20
+            else:
+                points += 25
+        points /= len(new_sport.stats)
+
+        new_dict_sport["points"] = points
+        new_dict_sport["learning_rate"] = learning_rate
+
+        return new_dict_sport
+
+    def apply_activity(self, athlete, game) -> None:
+        # Apply fatigue and injury risk
+        super().apply_activity(athlete, game)
+
+        # Unlock the new sport
+        athlete.sports[self.sport_id] = self.get_dict_new_sport(athlete=athlete)
 
 ### Sports ###
 
@@ -486,13 +647,30 @@ class Athlete():
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
     @ property
-    def global_score(self) -> str:
-        # TODO prendre en compte le type de sport
-        score = 0
+    def global_score(self) -> float:
+        skills_part = 0
+
+        # Stats part
         for stat in self.stats:
-            score += self.stats[stat]["points"]
-        for sport in self.sports:
-            score += self.sports[sport]["points"]
+            skills_part += self.stats[stat]["points"]
+        
+        # Sports part with the two best sports
+        all_sports = []
+        for sport_id in self.sports:
+            sport: Sport = SPORTS[sport_id]
+            all_sports.append([sport.category, self.sports[sport_id]["points"]])
+        all_sports = sorted(all_sports)
+        
+        for counter in range(min(len(all_sports), 2)):
+            skills_part += all_sports[counter][1]
+
+        skills_part = skills_part / (70 * 7)
+        
+        # Reputation for half the score
+        reputation_part = self.reputation / MAX_REPUTATION
+
+        score = (skills_part + reputation_part) / 2
+
         return score
 
     @ property
@@ -509,13 +687,19 @@ class Athlete():
         self.time_for_recruit = dict_to_load.get("time_for_recruit", 0)
         self.fatigue = dict_to_load.get("fatigue", 0)
         self.injury_risk = dict_to_load.get("injury_risk", 0)
-        self.health = dict_to_load.get(
-            "health", copy.deepcopy(DEFAULT_HEALTH_DICT))
+        self.health = dict_to_load.get("health", copy.deepcopy(DEFAULT_HEALTH_DICT))
         self.reputation = dict_to_load.get("reputation", 0)
         self.stats = dict_to_load.get("stats", {})
         self.sports = dict_to_load.get("sports", {})
         self.current_planning = dict_to_load.get(
-            "current_planning", ["vacation", "vacation", "vacation"])
+            "current_planning", self.generate_default_planning())
+
+    def generate_default_planning(self) -> list[str]:
+        main_sport_id = list(self.sports.keys())[0]
+        main_sport: Sport = SPORTS[main_sport_id]
+        sport_category = main_sport.category
+        activity_id = f"sports_{sport_category}_{main_sport_id}_training_1"
+        return [activity_id, activity_id, activity_id]
 
     def get_best_sports(self, number_sports: int = 2):
         # Sort the sports by decreasing points
@@ -525,6 +709,12 @@ class Athlete():
         # Extract the first sports
         best_sports = dict(sorted_sports[:number_sports])
         return dict(reversed(best_sports.items()))
+
+    def set_salary(self, salary: int):
+        self.salary = salary
+
+    def set_recruit_price(self, recruit_price: int):
+        self.recruit_price = recruit_price
 
     def __str__(self):
         return f"Athlete {self.id}: {self.name} {self.first_name}\n" \
@@ -605,12 +795,12 @@ class Room():
         return PATH_BACKGROUNDS + f"{self.id}.jpg"
 
     @ property
-    def activities_unlocked(self) -> list[str]:
-        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["activities_unlocked"]
+    def unlocked_activities(self) -> list[str]:
+        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)].get("unlocked_activities", [])
 
     @ property
     def effects(self) -> list:
-        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)]["effects"]
+        return ROOMS_EVOLUTION_DICT[self.id][str(self.current_level)].get("effects", [])
 
     def __init__(self, dict_to_load: dict) -> None:
         self.id = dict_to_load.get("id", "")
@@ -772,6 +962,10 @@ class Game():
     total_time_played: float  # in seconds
     last_time_played: str
     unlocked_characters: list[str]
+    notifications_list: list[str]
+    unlocked_menus: list[str] # "team", "recruit", "sports_complex", "sports_menu", "activities_menu", "medals", "shop"
+    unlocked_modes: list[str] # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue", "salary_augmentation"
+    unlocked_activities: list[str]
     money: int
     year: int
     trimester: int
@@ -790,15 +984,35 @@ class Game():
     selected_athletes_summer: dict[str, list[str]]
     selected_athletes_winter: dict[str, list[str]]
     seen_dialogs: list[str]
+    first_sport: str # Id of the first sport
 
     @property
-    def sports_unlocked(self) -> list[str]:
-        sports_unlocked = []
+    def unlocked_sports(self) -> list[str]:
+        unlocked_sports = []
         for key in self.sports_unlocking_progress:
             value = self.sports_unlocking_progress[key]
             if value == 1:
-                sports_unlocked.append(key)
-        return sports_unlocked
+                unlocked_sports.append(key)
+        return unlocked_sports
+
+    @property
+    def unlocked_activity_categories(self) -> list[str]:
+        unlocked_activity_categories = []
+        for activity_id in self.unlocked_activities:
+            
+            # Special case for sports
+            if "sports_" in activity_id:
+                category = "sports"
+            # Special case for competitions
+            elif "competition_" in activity_id:
+                category = "competition"
+            else:
+                activity: Activity = ACTIVITIES[activity_id]
+                category = activity.category
+            
+            if category not in unlocked_activity_categories:
+                unlocked_activity_categories.append(category)
+        return unlocked_activity_categories
 
     @property
     def number_athletes(self) -> int:
@@ -825,9 +1039,13 @@ class Game():
         self.total_time_played = dict_to_load.get("total_time_played", 0)
         self.last_time_played = dict_to_load.get("last_time_played", self.set_last_time_played())
         self.unlocked_characters = dict_to_load.get("unlocked_characters", [])
+        self.notifications_list = dict_to_load.get("notifications_list", [])
+        self.unlocked_menus = dict_to_load.get("unlocked_menus", [])
+        self.unlocked_modes = dict_to_load.get("unlocked_modes", [])
+        self.unlocked_activities = dict_to_load.get("unlocked_activities", [])
         self.money = dict_to_load.get("money", 0)
-        self.year = dict_to_load.get("year", 3)
-        self.trimester = dict_to_load.get("trimester", 1)
+        self.year = dict_to_load.get("year", 2)
+        self.trimester = dict_to_load.get("trimester", 4)
         self.team = [
             Athlete(dict_to_load=athlete_dict) for athlete_dict in dict_to_load.get("team", [])]
         self.fired_team = [
@@ -849,6 +1067,7 @@ class Game():
         self.selected_athletes_winter = dict_to_load.get(
             "selected_athletes_winter", {})
         self.seen_dialogs = dict_to_load.get("seen_dialogs", [])
+        self.first_sport = dict_to_load.get("first_sport", self.generate_first_sport())
 
     def get_background_image(self) -> int:
         return self.sports_complex.image
@@ -889,6 +1108,19 @@ class Game():
             if self.sports_unlocking_progress[sport_id] != 1:
                 return sport_id
         return None
+
+    def generate_first_sport(self) -> str:
+        list_possible_sports = []
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            # Take only sports of first category
+            if sport.category == 1:
+                # Remove sports with charm
+                if CHARM not in sport.stats:
+                    list_possible_sports.append(sport_id)
+        first_sport = rd.choice(list_possible_sports)
+        self.unlock_new_sport(sport_id=first_sport)
+        return first_sport
 
     def update_recrutable_athletes(self, new_athletes_list: list[Athlete]) -> None:
         # Diminish the time left to recruit and remove those with 0 time left
@@ -936,6 +1168,10 @@ class Game():
             bought_room: Room = self.sports_complex.buy_room(room_id=room_id)
             self.money -= ROOMS_EVOLUTION_DICT[room_id][str(
                 bought_room.current_level)]["price"]
+            
+            # Add the activities unlocked with this new room
+            for activity in bought_room.unlocked_activities:
+                self.unlocked_activities.append(activity)
 
     def get_medals_from_edition(self, edition: int) -> list[Medal]:
         list_medals = []
@@ -990,11 +1226,13 @@ class Game():
 
     def get_best_athlete_image(self) -> str:
         best_score: int = 0
-        best_athlete: Athlete = None
+        best_athlete: Athlete | None = None
         for athlete in self.team:
             if athlete.global_score >= best_score:
                 best_score = athlete.global_score
                 best_athlete = athlete
+        if best_athlete is None:
+            return ""
         return best_athlete.image
 
     def win_medal(self, sport_id, athlete_id, type: Literal["gold", "silver", "bronze"], edition: int, type_edition: Literal["summer", "winter"] = "summer"):
@@ -1056,18 +1294,25 @@ class Game():
 
     def get_main_action(self) -> str:
 
-        main_action = "plan"  # or "being_competition_{mode}"
+        main_action = "plan"  # or "begin_competition_{mode}"
 
-        # Summer competition trimester 2 each 4 years
+        # Summer competition trimester 3 each 4 years
         if self.year % NB_YEARS_BETWEEN_EDITION == 0:
-            if self.trimester == 2:
-                main_action = "being_competition_summer"
+            if self.trimester == 3:
+                main_action = "begin_competition_summer"
 
         return main_action
 
     def begin_new_year(self):
         for athlete in self.team:
             athlete.age += 1
+
+    def unlock_new_sport(self, sport_id: str, mode: Literal["summer", "winter"] = "summer"):
+        self.sports_unlocking_progress[sport_id] = 1
+        if mode == "summer":
+            self.selected_athletes_summer[sport_id] = []
+        elif mode == "winter":
+            self.selected_athletes_winter[sport_id] = []
 
     def compute_total_spent_money_selection(self, mode: Literal["summer", "winter"] = "summer") -> int:
         total_money_spent = 0
@@ -1154,10 +1399,6 @@ class Game():
             else:
                 self.selected_athletes_winter[sport_id].append(athlete_id)
 
-    def finish_dialog(self, dialog_code: str):
-        if dialog_code not in self.seen_dialogs:
-            self.seen_dialogs.append(dialog_code)
-
     def set_last_time_played(self):
         self.last_time_played = datetime.now().strftime("%m/%d/%Y - %H:%M")
 
@@ -1167,6 +1408,10 @@ class Game():
             "total_time_played": self.total_time_played,
             "last_time_played": self.last_time_played,
             "unlocked_characters": self.unlocked_characters,
+            "notifications_list": self.notifications_list,
+            "unlocked_modes": self.unlocked_modes,
+            "unlocked_menus": self.unlocked_menus,
+            "unlocked_activities": self.unlocked_activities,
             "money": self.money,
             "year": self.year,
             "trimester": self.trimester,
@@ -1186,7 +1431,8 @@ class Game():
             "sports_unlocking_progress": self.sports_unlocking_progress,
             "selected_athletes_summer": self.selected_athletes_summer,
             "selected_athletes_winter": self.selected_athletes_winter,
-            "seen_dialogs": self.seen_dialogs
+            "seen_dialogs": self.seen_dialogs,
+            "first_sport": self.first_sport
         }
 
 
@@ -1247,16 +1493,11 @@ class UserData():
         else:
             self.game_3 = None
 
-    def finish_dialog(self, dialog_code, id_game: int):
-        if dialog_code not in self.seen_dialogs:
-            self.seen_dialogs.append(dialog_code)
-        game: Game = self.get_game(id_game=id_game)
-        game.finish_dialog(dialog_code=dialog_code)
-
-    def stop_game(self, id_game: int):
+    def stop_game(self, id_game: int | None):
         self.total_time_played += time.time() - self.session_start_time
-        current_game = self.get_game(id_game=id_game)
-        current_game.set_last_time_played()
+        if id_game is not None:
+            current_game = self.get_game(id_game=id_game)
+            current_game.set_last_time_played()
 
     def save_changes(self) -> None:
         """
@@ -1298,30 +1539,120 @@ for sport_id in SPORTS:
         }
     )
 
-ACTIVITIES = load_json_file(PATH_ACTIVITIES)
-for activity_id in ACTIVITIES:
-    activity_dict = ACTIVITIES[activity_id]
+temp_activities = load_json_file(PATH_ACTIVITIES)
+ACTIVITIES = {}
+for activity_id in temp_activities:
+    activity_dict = temp_activities[activity_id]
+
+    dict_to_load = {
+        "id": activity_id,
+        "effects": activity_dict.get("effects", []),
+        "category": activity_dict.get("category", ""),
+        "type_activity": activity_dict.get("type_activity", ""),
+        "all_trimester": activity_dict.get("all_trimester", False),
+        "price": activity_dict.get("price", 0),
+        "gain": activity_dict.get("gain", 0),
+        "condition": activity_dict.get("condition", None),
+        "can_be_done_when_hurt": activity_dict.get("can_be_done_when_hurt", False),
+        "can_be_done_when_ill": activity_dict.get("can_be_done_when_ill", False)
+    }
 
     # Job activities
     if "_job" in activity_id:
         ACTIVITIES[activity_id] = JobActivity(
-            dict_to_load={
-                "id": activity_id,
-                "condition": activity_dict.get("condition", None),
-                "gain": activity_dict["gain"]
-            }
-        )
+            dict_to_load=dict_to_load)
+
+    # Interview activities
+    elif activity_id == "interview":
+        ACTIVITIES[activity_id] = InterviewActivity(
+            dict_to_load=dict_to_load)
+
+    # Sponsor activities
+    elif activity_id == "sponsor":
+        ACTIVITIES[activity_id] = SponsorActivity(
+            dict_to_load=dict_to_load)
+
+    # Tribune activities
+    elif "tribune" in activity_id:
+        ACTIVITIES[activity_id] = TribuneActivity(
+            dict_to_load=dict_to_load)
+
+    # Competition activities
+    elif "competition" in activity_id:
+        list_infos = activity_id.split("_")
+        type_competition = list_infos[1]
+        category_sport = list_infos[2]
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            if str(sport.category) == category_sport:
+                new_activity_id = f"competition_{type_competition}_{sport_id}_{category_sport}"
+                new_dict_to_load = copy.deepcopy(dict_to_load)
+                new_dict_to_load["id"] = new_activity_id
+                new_dict_to_load["type_competition"] = type_competition
+                new_dict_to_load["sport_id"] = sport_id
+                new_dict_to_load["category_sport"] = int(category_sport)
+                ACTIVITIES[new_activity_id] = CompetitionActivity(
+                    dict_to_load=new_dict_to_load)
+
+    # Sports activities
+    elif "sports_" in activity_id:
+        list_infos = activity_id.split("_") # "sports_2_training_4"
+        category_sport = list_infos[1]
+        level_activity = list_infos[3]
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            if str(sport.category) == category_sport:
+                new_activity_id = f"sports_{category_sport}_{sport_id}_training_{level_activity}"
+                new_dict_to_load = copy.deepcopy(dict_to_load)
+                new_dict_to_load["id"] = new_activity_id
+                new_dict_to_load["level"] = int(level_activity)
+                new_dict_to_load["sport_id"] = sport_id
+                new_dict_to_load["category_sport"] = int(category_sport)
+                ACTIVITIES[new_activity_id] = SportsActivity(
+                    dict_to_load=new_dict_to_load)
+
+    # Stats activities
+    elif "stats_" in activity_id:
+        list_infos = activity_id.split("_") # "stats_speed_2", "stats_speed_strength"
+        first_stat = list_infos[1]
+        second_element = list_infos[2]
+        try:
+            level = int(second_element)
+            new_dict_to_load = copy.deepcopy(dict_to_load)
+            new_dict_to_load["level"] = level
+            new_dict_to_load["first_stat"] = first_stat
+        except:
+            second_stat = second_element
+            new_dict_to_load = copy.deepcopy(dict_to_load)
+            new_dict_to_load["first_stat"] = first_stat
+            new_dict_to_load["second_stat"] = second_stat
+        ACTIVITIES[activity_id] = StatsActivity(
+            dict_to_load=new_dict_to_load)
+
+    # Transfer sport activities
+    elif "transfer_sport" in activity_id:
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            if sport.category > 1:
+                new_activity_id = f"transfer_sport_{sport_id}"
+                new_dict_to_load = copy.deepcopy(dict_to_load)
+                new_dict_to_load["id"] = new_activity_id
+                new_dict_to_load["sport_id"] = sport_id
+                ACTIVITIES[new_activity_id] = TransferSportActivity(
+                    dict_to_load=new_dict_to_load)
+
+    # Start new sport activities
+    elif "start_new_sport" in activity_id:
+        for sport_id in SPORTS:
+            sport: Sport = SPORTS[sport_id]
+            new_activity_id = f"start_new_sport_{sport_id}"
+            new_dict_to_load = copy.deepcopy(dict_to_load)
+            new_dict_to_load["id"] = new_activity_id
+            new_dict_to_load["sport_id"] = sport_id
+            ACTIVITIES[new_activity_id] = StartNewSportActivity(
+                dict_to_load=new_dict_to_load)
 
     # Other activities
     else:
         ACTIVITIES[activity_id] = Activity(
-            dict_to_load={
-                "id": activity_id,
-                "effects": activity_dict.get("effects", []),
-                "category": activity_dict.get("category", ""),
-                "all_trimester": activity_dict.get("all_trimester", False),
-                "price": activity_dict.get("price", 0),
-                "gain": activity_dict.get("gain", 0),
-                "condition": activity_dict.get("condition", None)
-            }
-        )
+            dict_to_load=dict_to_load)

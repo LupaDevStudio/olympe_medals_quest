@@ -1,0 +1,96 @@
+{
+    "story": {
+        "introduction": {
+            "effects": {
+                "unlocked_characters": ["phil", "olympe", "hector"]
+            }
+        },
+        "olympe_first_donation": {
+            "year": 3,
+            "trimester": 1,
+            "order": 1,
+            "effects": {
+                "money": 10000,
+                "unlocked_menus": ["team"],
+                "first_athlete": true,
+                "unlocked_characters": ["simon"]
+            }
+        },
+        "hector_sports_activities": {
+            "year": 3,
+            "trimester": 1,
+            "order": 2,
+            "effects": {
+                "unlocked_menus": ["activities_menu"],
+                "unlocked_activities": ["sports_1_training_1"]
+            }
+        },
+        "hector_skills_activities": {
+            "year": 3,
+            "trimester": 2,
+            "effects": {
+                "unlocked_modes": ["planification"],
+                "unlocked_activities": [
+                    "stats_strength_1",
+                    "stats_speed_1",
+                    "stats_technique_1",
+                    "stats_precision_1",
+                    "stats_charm_1"
+                ]
+            }
+        },
+        "hector_jobs_activities": {
+            "year": 3,
+            "trimester": 3,
+            "effects": {
+                "unlocked_activities": [
+                    "basic_job"
+                ]
+            }
+        },
+        "olympe_new_funds": {
+            "year": 3,
+            "trimester": 4,
+            "effects": {
+                "money": 20000
+            }
+        },
+        "hector_fatigue": {
+            "year": 4,
+            "trimester": 1,
+            "effects": {
+                "unlocked_modes": ["fatigue"],
+                "unlocked_activities": [
+                    "vacation"
+                ]
+            }
+        },
+        "olympe_fight": {
+            "year": 4,
+            "trimester": 3,
+            "effects": {
+                "money": 10000
+            }
+        }
+    },
+    "repeatable_events": {
+        "hector_bankrupt": {
+            "conditions": {
+                "min_money": 20000,
+                "number_athletes": 0
+            },
+            "effects": {
+                "money": 20000
+            }
+        }
+    },
+    "random_events": {
+        "diana_potions_bad": {
+            "conditions": {
+                "unlocked_characters" : ["diana", "theresa"]
+            },
+            "probability": 0.05,
+            "effects": {}
+        }
+    }
+}

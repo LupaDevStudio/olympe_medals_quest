@@ -32,17 +32,13 @@ from tools.path import (
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
-    USER_DATA
+    USER_DATA,
+    SHARED_DATA
 )
 from tools.graphics import (
     MARGIN,
     TOP_BAR_HEIGHT,
     BOTTOM_BAR_HEIGHT,
-    BUTTON_HEIGHT,
-    HEADER_HEIGHT,
-    CHARACTER_HEIGHT,
-    BIG_HEADER_HEIGHT,
-    SKILL_HEIGHT,
     SCROLLVIEW_WIDTH
 )
 from tools.data_structures import (
@@ -107,7 +103,9 @@ class SaveScreen(OlympeScreen):
             MARGIN*2*self.font_ratio) / 3
         
         date = game.last_time_played
-        if TEXT.language == "french":
+        if date is None:
+            date = ""
+        elif TEXT.language == "french":
 
             date_en_format = '%m/%d/%Y - %H:%M'
             date_fr_format = '%d/%m/%Y - %Hh%M'
@@ -175,7 +173,8 @@ class SaveScreen(OlympeScreen):
         # Choose the difficulty of the game
         self.create_spinner_popup(
             code="choose_difficulty",
-            confirm_function=self.start_new_game)
+            confirm_function=self.start_new_game,
+            sort_values=False)
 
     def start_new_game(self, name_difficulty: str):
         code_difficulty: Literal["easy", "medium", "difficult"] = TEXT.difficulty[name_difficulty]
@@ -184,7 +183,7 @@ class SaveScreen(OlympeScreen):
         self.launch_game(id_game=id_game)
 
     def launch_game(self, id_game=1):
-        self.manager.id_game = id_game
+        SHARED_DATA.id_game = id_game
         self.set_game()
         if "introduction" in self.GAME.seen_dialogs:
             self.go_to_next_screen(screen_name="game")

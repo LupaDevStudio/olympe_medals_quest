@@ -2,22 +2,22 @@
     "1": {
         "max_number_athletes": 5,
         "rooms_unlocked": [
-            ["canteen", 1],
-            ["polyvalente_room", 1],
             ["hospital", 1],
-            ["conference_room", 1]
+            ["conference_room", 1],
+            ["canteen", 1],
+            ["polyvalente_room", 1]
         ],
         "price": 0
     },
     "2": {
         "max_number_athletes": 10,
         "rooms_unlocked": [
-            ["canteen", 2],
-            ["polyvalente_room", 2],
             ["conference_room", 2],
             ["job_room", 1],
             ["massage_room", 1],
             ["secret_affairs_room", 1],
+            ["canteen", 2],
+            ["polyvalente_room", 2],
             ["multisports_room", 1],
             ["strength_room", 1],
             ["speed_room", 1],
@@ -30,12 +30,13 @@
     "3": {
         "max_number_athletes": 20,
         "rooms_unlocked": [
-            ["canteen", 3],
-            ["polyvalente_room", 3],
+            ["conference_room", 3],
             ["job_room", 2],
             ["massage_room", 2],
             ["cryotherapy_room", 1],
             ["secret_affairs_room", 2],
+            ["canteen", 3],
+            ["polyvalente_room", 3],
             ["multisports_room", 2],
             ["strength_room", 2],
             ["speed_room", 2],
@@ -48,11 +49,13 @@
     "4": {
         "max_number_athletes": 50,
         "rooms_unlocked": [
-            ["canteen", 4],
-            ["polyvalente_room", 4],
             ["hospital", 2],
             ["massage_room", 3],
             ["cryotherapy_room", 2],
+            ["secret_affairs_room", 3],
+            ["canteen", 4],
+            ["polyvalente_room", 4],
+            ["multisports_room", 3],
             ["strength_room", 3],
             ["speed_room", 3],
             ["technique_room", 3],
@@ -65,14 +68,15 @@
     "5": {
         "max_number_athletes": 100,
         "rooms_unlocked": [
+            ["cryotherapy_room", 3],
             ["canteen", 5],
             ["polyvalente_room", 5],
-            ["cryotherapy_room", 3],
-            ["multisports_room", 3],
+            ["multisports_room", 4],
             ["strength_room", 4],
             ["speed_room", 4],
             ["technique_room", 4],
-            ["precision_room", 4]
+            ["precision_room", 4],
+            ["sports_3_room", 2]
         ],
         "price": 2000000
     }

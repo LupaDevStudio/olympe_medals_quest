@@ -85,7 +85,7 @@ class CompetitionResultsScreen(OlympeScreen):
             self.ids.next_button.text = self.next_label
 
     def on_pre_enter(self, *args):
-        self.list_sports = self.GAME.sports_unlocked
+        self.list_sports = self.GAME.unlocked_sports
 
         super().on_pre_enter(*args)
 
