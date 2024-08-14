@@ -45,8 +45,12 @@ from tools import (
     sound_mixer,
     music_mixer
 )
-from tools.olympe import (
+from tools.data_structures import (
     Athlete,
+    Sport,
+    SPORTS
+)
+from tools.olympe import (
     finish_dialog
 )
 
@@ -121,6 +125,12 @@ class DialogScreen(OlympeScreen):
                 if "[A_NEW_SPORT]" in frame["text"]:
                     self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
                         "[A_NEW_SPORT]", TEXT.sports[self.GAME.first_sport]["a_name"])
+
+                # Skill of the first sport
+                if "[SKILL_NEW_SPORT]" in frame["text"]:
+                    sport: Sport = SPORTS[self.GAME.first_sport]
+                    self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                        "[SKILL_NEW_SPORT]", TEXT.stats[sport.stats[0]].lower())
 
                 # Corresponding athlete
                 if "[NAME_ATHLETE]" in frame["text"]:

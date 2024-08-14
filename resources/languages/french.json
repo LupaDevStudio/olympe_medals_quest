@@ -501,6 +501,10 @@
         "transfert_sport": {
             "name": "Transfert - [SPORT]",
             "description": "TODO"
+        },
+        "basic_job": {
+            "name": "Serveur chez McDuck",
+            "description": "TODO"
         }
     },
     "activity_categories": {

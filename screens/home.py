@@ -43,7 +43,7 @@ class HomeScreen(OlympeScreen):
         super().__init__(
             back_image_path=PATH_BACKGROUNDS + "office.jpg",
             **kw)
-
+        
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
 

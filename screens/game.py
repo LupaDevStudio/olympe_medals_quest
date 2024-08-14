@@ -78,7 +78,7 @@ class GameScreen(OlympeScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
-        
+
         # # TODO TEMP
         # if self.GAME.recrutable_athletes == []:
         #     first_athlete = generate_athlete(GAME=self.GAME)

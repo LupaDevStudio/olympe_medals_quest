@@ -968,7 +968,7 @@ class Game():
     unlocked_characters: list[str]
     notifications_list: list[str]
     unlocked_menus: list[str] # "team", "recruit", "sports_complex", "sports_menu", "activities_menu", "medals", "shop"
-    unlocked_modes: list[str] # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue", "salary_augmentation"
+    unlocked_modes: list[str] # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue", "salary_augmentation", "unlock_sports"
     unlocked_activities: list[str]
     money: int
     year: int
@@ -1071,7 +1071,9 @@ class Game():
         self.selected_athletes_winter = dict_to_load.get(
             "selected_athletes_winter", {})
         self.seen_dialogs = dict_to_load.get("seen_dialogs", [])
-        self.first_sport = dict_to_load.get("first_sport", self.generate_first_sport())
+        self.first_sport = dict_to_load.get("first_sport", "")
+        if self.first_sport == "":
+            self.first_sport = self.generate_first_sport()
 
     def get_background_image(self) -> int:
         return self.sports_complex.image

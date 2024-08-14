@@ -523,17 +523,19 @@
         {
             "character": "olympe",
             "expression": "neutral",
-            "text": "Suivez-moi je vais vous le présenter !",
+            "text": "Suivez-moi, je vais vous présenter le complexe sportif !",
             "background": "office"
         },
         {
             "character": "olympe",
             "expression": "happy",
             "text": "Et voilà votre nouveau chez-vous !",
-            "background": "sports_complex"
+            "background": "sports_complex",
+            "shake": "flash",
+            "sound": "journalists_camera"
         },
         {
-            "character": "phil",
+            "character": "phil_coach",
             "expression": "neutral",
             "text": "(En gros c'est un vieux hangar dans lequel elle a mis un ballon à moitié dégonflé et un vélo mal en point... Quel est mon rôle dans tout ça ?)",
             "background": "sports_complex"
@@ -542,7 +544,8 @@
             "character": "olympe",
             "expression": "happy",
             "text": "Vous êtes si émerveillés que vous en avez perdu la parole, je comprends parfaitement !",
-            "background": "sports_complex"
+            "background": "sports_complex",
+            "shake": "weak"
         },
         {
             "character": "hector",
@@ -562,15 +565,16 @@
             "background": "sports_complex"
         },
         {
-            "character": "phil",
+            "character": "phil_coach",
             "expression": "surprised",
             "text": "(Elle a bien dit [THE_NEW_SPORT] ? C'est un sport renommé du FIGHT ça ? Je croyais que c'était pour les enfants de cinq ans.)",
-            "background": "sports_complex"
+            "background": "sports_complex",
+            "shake": "weak"
         },
         {
             "character": "olympe",
             "expression": "neutral",
-            "text": "Phil, je compte sur toi pour mener [NAME_ATHLETE] à la victoire et décrocher une belle médaille. Quant à Hector, je te charge d'aider au mieux Phil dans ce rôle grâce à toutes tes connaissances.",
+            "text": "Phil, arrête de bâiller ; je compte sur toi pour mener [NAME_ATHLETE] à la victoire et décrocher une belle médaille. Quant à Hector, je te charge d'aider au mieux Phil dans ce rôle grâce à toutes tes connaissances.",
             "background": "sports_complex"
         },
         {
@@ -583,10 +587,11 @@
             "character": "olympe",
             "expression": "neutral",
             "text": "Il n'y a pas de mais, Hector ! Voici 10 000 dollars que j'ai réunis au cours des dernières semaines pour vous aider à démarrer sereinement et payer décemment notre merveilleuse athlète ! Sur ce, je vous laisse, je dois retourner à mes obligations de présidente !",
-            "background": "sports_complex"
+            "background": "sports_complex",
+            "shake": "weak"
         },
         {
-            "character": "phil",
+            "character": "phil_coach",
             "expression": "surprised",
             "text": "(Elle a vraiment dit décemment là ? Mais dans quoi est-ce que je me suis embarqué, moi ?)",
             "background": "sports_complex"
@@ -595,49 +600,323 @@
     "hector_sports_activities": [
         {
             "character": "hector",
-            "text": "Test",
-            "background": "sports_complex",
-            "music": "fight_ceremony"
+            "expression": "sad",
+            "text": "Et elle est partie... Bref...",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "neutral",
+            "text": "Ton rôle d'entraîneur sportif est de planifier les activités que feront chacun des athlètes de l'équipe. Bon, pour l'instant, notre unique athlète. Ah... pourquoi j'explique cela ? De toute façon, dans un an et demi c'est fini, quand elle sera revenue à la réalité en voyant notre défaite... Que connais-tu sur les activités des athlètes ?",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "Honnêtement, rien, parce que je ne suis pas entraîneur sportif. Je suis potier et je n'ai jamais postulé à ça.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "neutral",
+            "text": "Ah oui j'oubliais. Bref. Il faut que les athlètes progressent dans l'exercice de leur sport de prédilection. Ici [THE_NEW_SPORT] pour [NAME_ATHLETE]. Bon, assigne notre nouvelle recrue à l'entraînement pendant trois mois, ça devrait lui faire du bien.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "sad",
+            "text": "(Et il est vraiment ministre des sports ? Ah Diane... j'espère vraiment qu'Olympe va tenir sa promesse...)",
+            "background": "sports_complex"
         }
     ],
     "hector_skills_activities": [
         {
             "character": "hector",
-            "text": "Test",
-            "background": "sports_complex",
-            "music": "fight_ceremony"
+            "expression": "neutral",
+            "text": "J'ai cru comprendre que tu avais besoin de mon aide ?",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "[NAME_ATHLETE] pense que ce n'est pas la meilleure façon de s'entraîner que de seulement pratiquer [THE_NEW_SPORT]. Je voulais ton avis plus expérimenté sur la question, si tu l'acceptes.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "neutral",
+            "text": "Hum, [NAME_ATHLETE] a peut-être raison. Il faut qu'elle progresse aussi en [SKILL_NEW_SPORT]. C'est essentiel pour bien pratiquer [THE_NEW_SPORT]. Entraîne-la à fond sur là-dessus pour qu'elle rattrape son retard. Après cela, je te conseille d'équilibrer au mieux ces deux types d'entraînement, tu me comprends ?",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "Tout est clair, merci pour votre avis. (Et merci pour l'intérêt que vous portez au projet dans lequel vous m'avez enrôlé de force... Heureusement que ça paye tes études, Diane...)",
+            "background": "sports_complex"
         }
     ],
     "hector_jobs_activities": [
         {
             "character": "hector",
-            "text": "Test",
+            "expression": "surprised",
+            "text": "C'est une catastrophe !",
             "background": "sports_complex",
-            "music": "fight_ceremony"
+            "shake": "strong"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "surprised",
+            "text": "Comment ? Que vous arrive-t-il ?",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "Les caisses sont vides ! Vous avez dépensé tout l'argent qu'Olympe nous avait donné ! Vous êtes fou ou quoi ?!",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "surprised",
+            "text": "Mais... je n'ai pas dépensé d'argent... C'est vous qui payez [NAME_ATHLETE] et les activités que vous m'avez préconisé de lui faire faire étaient toutes gratuites.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "Qu'importe, le fait est que nous n'avons plus d'argent ! Olympe va nous tuer... Elle va me licencier... et je vais finir encore plus bas que terre... Et dire que mon cousin lui...",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "surprised",
+            "text": "Votre cousin ?",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "Assez ! Je cherche une idée pour nous sortir de ce mauvais pas sans avoir à en informer Olympe.",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "olympe",
+            "expression": "surprised",
+            "text": "Vous parlez de moi ?",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "surprised",
+            "text": "Madame la Présidente !! Que... que faites-vous ici ?",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "olympe",
+            "expression": "happy",
+            "text": "Je suis venue vous rendre visite pour savoir comment l'entraînement de ma meilleure athlète se passait ! Alors, Phil ?",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "Très bien, nous avons travaillé sur la maîtrise [A_NEW_SPORT] ainsi que sur sa compétence de [SKILL_NEW_SPORT].",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "happy",
+            "text": "Oh, ne t'embête pas avec tous ces détails techniques, je suis sûre que tu fais un travail extraordinaire ! Après tout, tu as été choisi avec le plus grand soin !",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "disinterested",
+            "text": "(Avec le plus grand soin, bien sûr... Elle a l'air totalement déconnectée de la réalité, et c'est bien le seul point sur lequel je suis d'accord avec Hector...)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "D'ailleurs, Olympe, nous avons un problème...",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "sad",
+            "text": "Comment cela ? Quelque chose qui menace notre programme ?",
+            "background": "sports_complex",
+            "shake": "weak_no_sound"
+        },
+        {
+            "character": "hector",
+            "expression": "surprised",
+            "text": "Aucun problème, ne vous inquiétez pas, Madame la Présidente.",
+            "background": "sports_complex",
+            "shake": "weak"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "Les caisses sont vides et je crains que nous ne puissions pas payer [NAME_ATHLETE] pour les trois prochains mois.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "...",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "olympe",
+            "expression": "surprised",
+            "text": "Comment ?! Vous avez déjà dépensé l'intégralité du budget ?!",
+            "background": "sports_complex",
+            "shake": "weak"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "(Va-t-elle me virer ? Peut-être que je pourrais reprendre mon travail... ?)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "text": "Ce n'est pas grave, je suis sûre que c'est pour une bonne cause. Je vais m'occuper de ce problème, ne t'inquiète pas, Phil. Néanmoins en attendant que je trouve de nouveaux financements, peut-être que tu pourrais envoyer [NAME_ATHLETE] travailler chez McDuck, ça devrait suffire à payer son propre salaire pour les mois qui suivent.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "Très bien. Merci, Olympe. (Mais attends c'est de l'exploitation ?! [NAME_ATHLETE] va travailler et nous verser son salaire pour qu'on puisse la payer encore moins ?)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "text": "Je vous laisse alors, et je reviens vers vous au plus vite. Bon courage !",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "Ne refais jamais ça.",
+            "background": "sports_complex",
+            "shake": "weak_no_sound"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "Elle a résolu le problème.",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "sad",
+            "text": "J'étais parfaitement capable de trouver une solution par moi-même. Ah... pourquoi ne me fait-elle jamais confiance... ?",
+            "background": "sports_complex"
         }
     ],
     "olympe_new_funds": [
         {
             "character": "olympe",
-            "text": "Test",
+            "expression": "happy",
+            "text": "Phil, j'ai une merveilleuse nouvelle à t'annoncer ! J'ai débloqué 30 000 dollars pour te permettre de poursuivre le plus sereinement possible l'entraînement de [NAME_ATHLETE]. Cela devrait suffire jusqu'au FIGHT où nous remporterons une belle médaille ! Et de nouveaux fonds bien sûr !",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "Merci, Olympe, on va faire de notre mieux ! (Je comprends mieux maintenant cette pub de yaourts sur le palais présidentiel...)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "olympe",
+            "expression": "neutral",
+            "text": "Allez au boulot, ramenez-moi cette médaille !",
             "background": "sports_complex",
-            "music": "fight_ceremony"
+            "shake": "weak_no_sound"
         }
     ],
     "hector_fatigue": [
         {
             "character": "hector",
-            "text": "Test",
+            "expression": "angry",
+            "text": "[NAME_ATHLETE] s'est fait arrêter par la police hier en rentrant chez elle. Elle s'était endormie au feu rouge. Depuis combien de temps exactement n'a-t'elle pas eu de jours de congé ?",
             "background": "sports_complex",
-            "music": "fight_ceremony"
+            "shake": "medium"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "embarrassed",
+            "text": "Des jours de congé ? (Mince... J'ai pas géré sur ce coup-là...)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "Je sais bien qu'on n'a pas de code du travail ici mais les droits de l'homme ça existe !",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "embarrassed",
+            "text": "Mais c'est vous qui...",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "Trêve de bavardages ! Elle va finir par se blesser si ça continue. Accorde lui trois mois de congés et fais attention à l'avenir !",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "neutral",
+            "text": "(Ah moi aussi j'aimerais avoir des congés de temps en temps...)",
+            "background": "sports_complex"
         }
     ],
     "olympe_fight": [
         {
             "character": "olympe",
-            "text": "Test",
-            "background": "office",
-            "music": "fight_ceremony"
+            "expression": "happy",
+            "text": "Phil, Hector ! C'est le jour J ! Tant attendu depuis plus d'un an et demi ! Nous avons beaucoup travaillé pour en arriver là, j'espère que nous décrocherons une belle médaille ! D'ailleurs, voici 10 000 dollars pour inscrire [NAME_ATHLETE] à la compétition, au cas vous auriez déjà épuisé le budget. Allez, je vous laisse. Je compte sur vous !",
+            "background": "sports_complex",
+            "shake": "weak_no_sound"
+        },
+        {
+            "character": "hector",
+            "expression": "sad",
+            "text": "Le jour de mon licenciement se rapproche... Et dire que mon cousin...",
+            "background": "sports_complex"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "surprised",
+            "text": "Qu'est-ce qu'il a votre cousin ? (Il est en coloc avec lui ou quoi ?)",
+            "background": "sports_complex"
+        },
+        {
+            "character": "hector",
+            "expression": "angry",
+            "text": "Ça ne te concerne pas ! Qu'est-ce que tu fais encore là ?! Il faut que tu ailles inscrire [NAME_ATHLETE] au FIGHT. On se revoit en tribunes.",
+            "background": "sports_complex",
+            "shake": "medium"
+        },
+        {
+            "character": "phil_coach",
+            "expression": "disinterested",
+            "text": "(Je ferai mieux de le laisser seul avec ses tourments...)",
+            "background": "sports_complex"
         }
     ]
 }
