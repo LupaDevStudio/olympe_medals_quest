@@ -443,12 +443,8 @@ class PressedSpinner(ButtonBehavior, RelativeLayout):
         if value:
             self._dropdown.open(self)
             self.press_button = True
-            self.ids.background.height = self.size[1] + self._dropdown.height
-            self.ids.background.y = self.pos[1] - self._dropdown.height
 
         else:
             if self._dropdown.attach_to:
                 self._dropdown.dismiss()
             self.press_button = False
-            self.ids.background.height = self.size[1]
-            self.ids.background.y = self.pos[1]

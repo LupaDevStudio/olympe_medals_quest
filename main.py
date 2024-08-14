@@ -152,6 +152,7 @@ class MainApp(App, Widget):
         USER_DATA.stop_game(id_game=id_game)
         USER_DATA.save_changes()
 
+
 # Run the application
 if __name__ == "__main__":
     if not ANDROID_MODE:
