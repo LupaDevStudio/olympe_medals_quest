@@ -209,6 +209,7 @@ class OlympePlanificationPopup(OlympePopup):
 
     ### Money options ###
 
+    gain = NumericProperty(0)
     money_amount = NumericProperty(0)
     money_minus_mode = BooleanProperty(False)
     money_plus_mode = BooleanProperty(False)
@@ -248,16 +249,6 @@ class OlympePlanificationPopup(OlympePopup):
         self.confirm_button_text = TEXT.popup["validate"]
         self.cancel_button_text = TEXT.popup["cancel"]
 
-        # Update the money
-
-        self.black_background.money_mode = True
-        self.black_background.money_amount = self.money_amount
-        self.black_background.money_minus_mode = self.money_minus_mode
-        self.black_background.money_plus_mode = self.money_plus_mode
-
-        self.bind(money_amount = self.update_cost)
-        self.update_cost()
-
         # Update the values of the spinners
 
         self.default_category = TEXT.activity_categories[self.code_default_category]["name"]
@@ -268,6 +259,12 @@ class OlympePlanificationPopup(OlympePopup):
         self.default_activity = self.get_activity_name_function(
             full_activity_id=self.code_default_activity)
         self.build_values_activity()
+        self.choose_activity(activity=self.default_activity)
+
+        # Update the money
+
+        self.black_background.money_mode = True
+        self.update_cost()
 
     def build_values_activity(self):
         self.values_activity = []
@@ -280,16 +277,21 @@ class OlympePlanificationPopup(OlympePopup):
                 self.values_activity.append(
                     self.get_activity_name_function(full_activity_id=activity_id))
 
-    def update_cost(self, *args):
-        if self.money_amount > 0:
+    def update_cost(self):
+        self.money_amount = abs(self.gain)
+        if self.gain > 0:
             self.money_minus_mode = False
             self.money_plus_mode = True
-        elif self.money_amount < 0:
+        elif self.gain < 0:
             self.money_minus_mode = True
             self.money_plus_mode = False
         else:
             self.money_minus_mode = False
             self.money_plus_mode = False
+
+        self.black_background.money_amount = self.money_amount
+        self.black_background.money_minus_mode = self.money_minus_mode
+        self.black_background.money_plus_mode = self.money_plus_mode
 
     def open_details_category(self):
         category_index = self.values_category.index(self.ids.category_spinner.text)
@@ -319,6 +321,7 @@ class OlympePlanificationPopup(OlympePopup):
         # Update the spinner of activities
         self.build_values_activity()
         self.default_activity = self.values_activity[0]
+        self.choose_activity(activity=self.default_activity)
 
     def choose_activity(self, activity: str):
         activity_index = self.values_activity.index(self.ids.activity_spinner.text)
@@ -329,6 +332,10 @@ class OlympePlanificationPopup(OlympePopup):
             self.take_all_trimester_text = TEXT.schedule["take_all_trimester"]
         else:
             self.take_all_trimester_text = ""
+
+        # Update the counter of money
+        self.gain = activity.gain - activity.price
+        self.update_cost()
 
         # Show the effects of this activity
         print("TODO")
