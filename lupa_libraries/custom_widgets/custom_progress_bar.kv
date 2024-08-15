@@ -1,0 +1,18 @@
+#:kivy 2.2.1
+
+<CustomProgressBar>:
+
+    # Background
+    canvas.before:
+        Color:
+            rgba: self.secondary_color
+        RoundedRectangle:
+            pos:self.pos
+            size:self.size
+            radius: [self.radius * self.font_ratio]*4
+        Color:
+            rgba: self.primary_color
+        RoundedRectangle:
+            pos:self.pos
+            size:(self.size[0]*self.value, self.size[1])
+            radius: [self.radius * self.font_ratio]*4

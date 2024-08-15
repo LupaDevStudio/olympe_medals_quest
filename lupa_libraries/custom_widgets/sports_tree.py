@@ -38,10 +38,13 @@ from tools.data_structures import (
     Sport
 )
 from tools.constants import (
-    TEXT
+    TEXT,
+    SHARED_DATA
 )
 from ._common import hide_widget
-
+from lupa_libraries.custom_widgets.olympe_popups import (
+    OlympeYesNoPopup
+)
 
 #################
 ### Constants ###
@@ -66,11 +69,11 @@ def compute_sport_card_position(sport_class_id: int, sport_id_in_class: int, fon
     return x * font_ratio, y * font_ratio
 
 
-def get_sport_state(sport_id, sports_unlocking_progress):
-    if sport_id not in sports_unlocking_progress:
+def get_sport_state(sport_id):
+    if sport_id not in SHARED_DATA.GAME.sports_unlocking_progress:
         unlocking_progress = 0
     else:
-        unlocking_progress = sports_unlocking_progress[sport_id]
+        unlocking_progress = SHARED_DATA.GAME.sports_unlocking_progress[sport_id]
     if unlocking_progress == 1:
         return "unlocked"
     elif unlocking_progress > 0:
@@ -79,7 +82,7 @@ def get_sport_state(sport_id, sports_unlocking_progress):
         # List the requirements
         requirements = SPORTS[sport_id].requirements
         for requirement in requirements:
-            if requirement not in sports_unlocking_progress or sports_unlocking_progress[requirement] < 1:
+            if requirement not in SHARED_DATA.GAME.sports_unlocking_progress or SHARED_DATA.GAME.sports_unlocking_progress[requirement] < 1:
                 return "unknown"
         return "locked"
 
@@ -101,11 +104,13 @@ class SportCard(RelativeLayout):
     second_skill_color = ColorProperty(COLORS.blue_olympe)
     third_skill_color = ColorProperty(COLORS.blue_olympe)
     sport_icon_source = StringProperty()
+    research_progress = NumericProperty()
 
     # Text
     unlock_button_text = StringProperty()
     sport_name_text = StringProperty()
     unlocked_text = StringProperty()
+    unlocking_text = StringProperty()
 
     # Font
     font_size = FONTS_SIZES.button
@@ -119,14 +124,12 @@ class SportCard(RelativeLayout):
             self,
             sport_id: str,
             sport_skills: list[str],
-            state: Literal["unknown", "in_research", "unlocked", "locked"],
             **kwargs):
         super().__init__(**kwargs)
 
         # Store the parameters
         self.sport_id = sport_id
         self.sport_skills = sport_skills
-        self.state = state
         self.sport_class: Literal[1, 2, 3] = len(sport_skills)
 
         # Set the colors for the skill rectangles
@@ -141,16 +144,39 @@ class SportCard(RelativeLayout):
 
         self.unlock_button_text = TEXT.general["unlock"]
         self.unlocked_text = TEXT.general["unlocked"]
+        self.unlocking_text = TEXT.general["unlocking"]
         self.sport_icon_source = PATH_SPORTS_ICONS + sport_id + ".png"
 
-        self.update_sport_name_text()
-        self.update_display_unlock_button()
+        self.update_display()
 
     def start_researching(self):
-        pass
+        # Check if a sport is already in research
+        sport_in_research = SHARED_DATA.GAME.get_current_unlocking_sport()
+        if sport_in_research is not None:
+            popup = OlympeYesNoPopup(
+                title=TEXT.sports_menu["cancel_research_title"],
+                text=TEXT.sports_menu["cancel_research_text"].replace(
+                    "@", TEXT.sports[self.sport_id]["name"]),
+                confirm_function=self.research
+            )
+            popup.open()
+        else:
+            self.research()
 
-    def unlock(self):
-        pass
+    def research(self):
+        # Reset the progress of the current research
+        sport_in_research = SHARED_DATA.GAME.get_current_unlocking_sport()
+        if sport_in_research is not None:
+            print(sport_in_research)
+            SHARED_DATA.GAME.sports_unlocking_progress[sport_in_research] = 0
+        SHARED_DATA.GAME.sports_unlocking_progress[self.sport_id] = 0.001
+        self.parent.update_all_sports_cards()
+
+    def update_display(self):
+        self.update_state()
+        self.update_research_progress()
+        self.update_sport_name_text()
+        self.update_display_buttons()
 
     def update_sport_name_text(self):
         if self.state == "unknown":
@@ -158,24 +184,27 @@ class SportCard(RelativeLayout):
         else:
             self.sport_name_text = TEXT.sports[self.sport_id]["name"]
 
-    def remove_unknow(self):
-        pass
+    def update_research_progress(self):
+        if self.sport_id in SHARED_DATA.GAME.sports_unlocking_progress:
+            self.research_progress = SHARED_DATA.GAME.sports_unlocking_progress[self.sport_id]
+        else:
+            self.research_progress = 0
 
-    def update_display_unlock_button(self):
+    def update_state(self):
+        self.state = get_sport_state(self.sport_id)
+
+    def update_display_buttons(self):
         if self.state == "unknown":
             hide_widget(self.ids.unlock_button, do_hide=True)
             hide_widget(self.ids.info_button, do_hide=True)
             hide_widget(self.ids.sport_icon, do_hide=True)
         else:
-            if self.state == "unlocked":
+            if self.state == "unlocked" or self.state == "in_research":
                 hide_widget(self.ids.unlock_button, do_hide=True)
             else:
                 hide_widget(self.ids.unlock_button, do_hide=False)
             hide_widget(self.ids.info_button, do_hide=False)
             hide_widget(self.ids.sport_icon, do_hide=False)
-
-    def update_display_info_button(self):
-        pass
 
     def open_info(self):
         pass
@@ -208,6 +237,7 @@ class SportsTreeContent(Widget):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.size_hint = (None, None)
+        self.sport_cards_dict = {}
 
     def build_tree(self, sports_unlocking_progress: dict):
         self.sports_unlocking_progress = sports_unlocking_progress
@@ -218,8 +248,6 @@ class SportsTreeContent(Widget):
             if len(SPORTS[sport].requirements) == 0:
                 sport_classes[0].append(sport)
             else:
-                print(sport_classes)
-                print(sport)
                 requirement = SPORTS[sport].requirements[0]
                 for i in range(len(sport_classes)):
                     if requirement in sport_classes[i]:
@@ -238,16 +266,16 @@ class SportsTreeContent(Widget):
                 pos = compute_sport_card_position(i, j, self.font_ratio)
                 size = (X_SIZE_SPORT_CARD * self.font_ratio,
                         Y_SIZE_SPORT_CARD * self.font_ratio)
-                state = get_sport_state(
-                    sport_id=sport, sports_unlocking_progress=self.sports_unlocking_progress)
+
+                # Create the widget and add it
                 current_sport_card = SportCard(
                     sport_skills=SPORTS[sport].stats,
-                    state=state,
                     pos=pos,
                     size=size,
                     font_ratio=self.font_ratio,
-                    sport_id=sport
+                    sport_id=sport,
                 )
+                self.sport_cards_dict[sport] = current_sport_card
                 self.add_widget(current_sport_card)
 
         # Set the size of the widget
@@ -257,6 +285,10 @@ class SportsTreeContent(Widget):
             sport_class_id=len(sport_classes), sport_id_in_class=0, font_ratio=self.font_ratio)
         self.size = (x_size + (X_SIZE_SPORT_CARD +
                      X_SPACING_SPORT_CARDS) * self.font_ratio / 2, y_size - Y_SPACING_SPORT_CARDS * self.font_ratio / 2)
+
+    def update_all_sports_cards(self):
+        for sport_id in self.sport_cards_dict:
+            self.sport_cards_dict[sport_id].update_display()
 
 
 class SportTree(Widget):

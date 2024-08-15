@@ -8,6 +8,10 @@ from lupa_libraries.custom_widgets.surronded_label import (
     SurroundedLabel
 )
 
+### ProgressBar ###
+
+from .custom_progress_bar import CustomProgressBar
+
 ### Buttons ###
 
 from lupa_libraries.custom_widgets.pressed_buttons import (
