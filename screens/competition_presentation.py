@@ -24,7 +24,7 @@ from lupa_libraries.dialog_generator.dialog_layout import (
 )
 from tools.constants import (
     TEXT,
-    DEV_MODE,
+    SHARED_DATA,
     TALKING_SPEED
 )
 from tools.path import (
@@ -57,7 +57,7 @@ class CompetitionPresentationScreen(OlympeScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
-        self.dev_mode = DEV_MODE
+        self.dev_mode = SHARED_DATA.dev_mode
 
         self.dialog_frame_counter = -1
         self.dialog_content_list = TEXT.fight

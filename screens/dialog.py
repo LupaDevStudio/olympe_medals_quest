@@ -25,10 +25,9 @@ from lupa_libraries import (
 from tools.constants import (
     DIALOGS_DICT,
     CHARACTERS_DICT,
-    USER_DATA,
     TEXT,
     TALKING_SPEED_DICT,
-    DEV_MODE,
+    SHARED_DATA,
     TALKING_SPEED
 )
 from tools.path import (
@@ -83,7 +82,7 @@ class DialogScreen(OlympeScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
-        self.dev_mode = DEV_MODE
+        self.dev_mode = SHARED_DATA.dev_mode
 
         # Reset the variables and start the dialog
         self.dialog_frame_counter = -1

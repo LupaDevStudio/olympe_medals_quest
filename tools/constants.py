@@ -43,11 +43,6 @@ __version__ = "0.0.10"
 
 ### Mode ###
 
-GOD_MODE = False # Change this value
-if GOD_MODE:
-    DEV_MODE = True
-else:
-    DEV_MODE = True # Change this value
 FPS = 30
 MSAA_LEVEL = 2
 
@@ -69,6 +64,8 @@ USER_DATA = UserData()
 
 class SharedData():
     id_game: int # 1, 2, 3
+    dev_mode: bool
+    god_mode: bool
     
     @property
     def GAME(self):
@@ -81,6 +78,16 @@ class SharedData():
 
     def __init__(self, id_game: int = 1) -> None:
         self.id_game = id_game
+        self.god_mode = False # change here
+        if self.god_mode:
+            self.dev_mode = True
+        else:
+            self.dev_mode = True # change here
+
+    def set_god_mode(self, god_mode: bool):
+        self.god_mode = god_mode
+        if self.god_mode:
+            self.dev_mode = True
 
 SHARED_DATA = SharedData()
 

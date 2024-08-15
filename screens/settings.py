@@ -27,6 +27,7 @@ from tools.path import (
 from tools.constants import (
     TEXT,
     USER_DATA,
+    SHARED_DATA,
     SCREEN_TITLE_ICON,
     SCREEN_BACK_ARROW,
     DICT_LANGUAGE_CODE_TO_NAME,
@@ -197,3 +198,6 @@ class SettingsScreen(OlympeScreen):
 
     def launch_tutorial(self):
         print("TODO launch the tutorial")
+
+    def switch_to_god_mode(self):
+        SHARED_DATA.set_god_mode(god_mode=not SHARED_DATA.god_mode)

@@ -30,7 +30,7 @@ from tools.constants import (
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
     USER_DATA,
-    GOD_MODE
+    SHARED_DATA
 )
 from tools.path import (
     PATH_TEXT_FONT
@@ -143,7 +143,7 @@ class RecruitScreen(OlympeScreen):
                 
                 # Display reputation or not
                 reputation_unlocked = "reputation" in self.GAME.unlocked_modes
-                if GOD_MODE:
+                if SHARED_DATA.god_mode:
                     reputation_unlocked = True
 
                 character_card = CompleteRecruitCard(
