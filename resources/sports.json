@@ -79,10 +79,6 @@
         "stats": ["speed", "technique"],
         "requirements": ["jelly-wall-climbing", "cheese-rolling"]
     },
-    "100m": {
-        "stats": ["strength", "speed", "technique"],
-        "requirements": ["parkour", "aqua-jogging"]
-    },
     "swim-100m": {
         "stats": ["strength", "speed", "precision"],
         "requirements": ["aqua-jogging", "mermaid-swimming"]
@@ -118,5 +114,9 @@
     "escalation": {
         "stats": ["speed", "technique", "precision"],
         "requirements": ["arc-escalation", "parkour"]
+    },
+    "100m": {
+        "stats": ["strength", "speed", "technique"],
+        "requirements": ["parkour", "aqua-jogging"]
     }
 }
