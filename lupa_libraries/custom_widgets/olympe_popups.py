@@ -383,7 +383,7 @@ class OlympeAthletePopup(OlympePopup):
             size_hint=(0.9, None),
             height=(SKILL_HEIGHT*6 + MARGIN*5)*self.font_ratio,
             pos_hint={"center_x": 0.5},
-            y=((1-self.popup_size_hint[1])/2)*Window.size[1]+8*self.font_ratio + self.ids.confirm_button.height*self.font_ratio + 3*MARGIN*self.font_ratio
+            y=((1-self.popup_size_hint[1])/2)*Window.size[1]+8*self.font_ratio + self.ids.confirm_button.height + 3*MARGIN*self.font_ratio
         )
         self.ids.popup_layout.add_widget(skills_card)
 
