@@ -599,5 +599,13 @@
     },
     "injuries": {
         "": "En forme"
-    }
+    },
+    "fight": [
+        "Les athlètes se tiennent prêts, muscles tendus, le regard acéré comme celui d'un aigle fixant sa proie.",
+        "Le souffle court, ils sentent l'adrénaline monter, chaque battement de cœur résonnant comme un tambour de guerre.",
+        "Les supporters retiennent leur respiration, l'atmosphère est électrique, chargée d'une tension palpable.",
+        "Quand le moment décisif arrive, chaque athlète se lance avec une puissance et une conviction inébranlables, conscient que l'heure de faire ses preuves est venue.",
+        "Les épreuves s'enchaînent, chacune apportant son lot de drames et de triomphes, les spectateurs captivés par ce défilé ininterrompu de prouesses.",
+        "Puis vient le verdict final. La cérémonie de clôture de cette extraordinaire édition du FIGHT."
+    ]
 }

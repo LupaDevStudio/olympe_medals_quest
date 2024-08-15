@@ -71,5 +71,7 @@ class Text():
         self.activity_categories = data["activity_categories"]
         self.difficulty = data["difficulty"]
 
+        self.fight = data["fight"]
+
         self.tutorial = data["tutorial"]
         self.popup = data["popup"]

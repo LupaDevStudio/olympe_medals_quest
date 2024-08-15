@@ -30,8 +30,8 @@ from tools.constants import (
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_ICON,
-    GOD_MODE,
-    USER_DATA
+    USER_DATA,
+    SHARED_DATA
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
@@ -84,7 +84,7 @@ class AthleteScreen(OlympeScreen):
         reputation_unlocked = "reputation" in self.GAME.unlocked_modes
         health_unlocked = "illness" in self.GAME.unlocked_modes or "injury" in self.GAME.unlocked_modes
         fatigue_unlocked = "fatigue" in self.GAME.unlocked_modes
-        if GOD_MODE:
+        if SHARED_DATA.god_mode:
             fire_unlocked = True
             reputation_unlocked = True
             health_unlocked = True

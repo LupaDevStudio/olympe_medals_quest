@@ -37,7 +37,7 @@ from tools.constants import (
     SCREEN_MONEY_RIGHT,
     SCREEN_TITLE_YEAR,
     USER_DATA,
-    GOD_MODE
+    SHARED_DATA
 )
 from tools.data_structures import (
     Athlete
@@ -126,7 +126,7 @@ class GameScreen(OlympeScreen):
 
     def fill_grid_layout(self):
         # Menus to display
-        if GOD_MODE:
+        if SHARED_DATA.god_mode:
             list_buttons = ["team", "recruit", "sports_complex",
                 "sports_menu", "activities_menu", "medals", "shop"]
         else:

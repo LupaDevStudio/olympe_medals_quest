@@ -17,6 +17,7 @@ from screens.recruit import RecruitScreen
 from screens.athlete import AthleteScreen
 from screens.competition_inscriptions import CompetitionInscriptionsScreen
 from screens.competition_results import CompetitionResultsScreen
+from screens.competition_presentation import CompetitionPresentationScreen
 from screens.planification import PlanificationScreen
 from screens.sports_complex import SportsComplexScreen
 from screens.sports_menu import SportsMenuScreen
@@ -37,6 +38,7 @@ SCREENS_DICT = {
     "athlete": AthleteScreen,
     "competition_inscriptions": CompetitionInscriptionsScreen,
     "competition_results": CompetitionResultsScreen,
+    "competition_presentation": CompetitionPresentationScreen,
     "planification": PlanificationScreen,
     "sports_complex": SportsComplexScreen,
     "sports_menu": SportsMenuScreen,

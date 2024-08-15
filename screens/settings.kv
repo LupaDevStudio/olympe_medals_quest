@@ -8,6 +8,9 @@
         id: olympe_card_language
         header_mode: True
         header_text: root.language_label
+        icon_mode: True
+        icon_source: PATH_ICONS + "skip.png"
+        icon_function: root.switch_to_god_mode
         size_hint: (SCROLLVIEW_WIDTH, None)
         height: root.font_ratio*(HEADER_HEIGHT+BUTTON_HEIGHT+2*MARGIN)
         pos_hint: {"center_x": 0.5}
