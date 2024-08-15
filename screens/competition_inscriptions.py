@@ -30,7 +30,8 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_SPEND_MONEY_RIGHT,
-    SCREEN_CUSTOM_TITLE
+    SCREEN_CUSTOM_TITLE,
+    USER_DATA
 )
 from tools.graphics import (
     HEADER_HEIGHT,
@@ -279,6 +280,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         self.reset_screen()
 
     def go_to_previous_sport(self):
+        USER_DATA.save_changes()
         if self.selected_sport_counter != 0:
             self.selected_sport_counter -= 1
             self.change_previous_next_buttons_text()
@@ -287,9 +289,12 @@ class CompetitionInscriptionsScreen(OlympeScreen):
             self.go_to_next_screen(screen_name="game")
 
     def go_to_next_sport(self):
+        USER_DATA.save_changes()
         if self.selected_sport_counter != len(self.list_sports) - 1:
             self.selected_sport_counter += 1
             self.change_previous_next_buttons_text()
             self.reset_screen()
         else:
-            ... # TODO validate
+            self.go_to_next_screen(
+                screen_name="competition_presentation"
+            )
