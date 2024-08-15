@@ -17,7 +17,9 @@
         "previous": "Previous",
         "level": "Niveau",
         "fatigue_evolution": "Fatigue : @% -> €%",
-        "injury_evolution": "Risque de blessure : @%"
+        "injury_evolution": "Risque de blessure : @%",
+        "unlock": "Débloquer",
+        "unlocked": "Débloqué"
     },
     "home": {
         "play": "Play"
@@ -504,7 +506,11 @@
             "title": "Choix de la difficulté",
             "text": "Veuillez choisir la difficulté dans laquelle vous souhaitez jouer cette partie. Vous ne pourrez plus changer la difficulté pour cette partie, mais vous pourrez par la suite en recommencer d'autres avec des difficultés différentes.",
             "default_value": "Medium",
-            "values": ["Easy", "Medium", "Difficult"]
+            "values": [
+                "Easy",
+                "Medium",
+                "Difficult"
+            ]
         },
         "delete_game_confirmation_1": {
             "title": "Suppression des données de la partie",

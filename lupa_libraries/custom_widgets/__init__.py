@@ -58,6 +58,10 @@ from lupa_libraries.custom_widgets.olympe_popups import (
     OlympeSpinnerPopup,
     OlympePlanificationPopup
 )
+from .sports_tree import (
+    SportsScrollView,
+    SportsTreeContent,
+)
 
 ### Popups ###
 

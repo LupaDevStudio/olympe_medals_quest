@@ -51,9 +51,9 @@ class SportsMenuScreen(OlympeScreen):
     """
 
     dict_type_screen = {
-        SCREEN_TITLE_ICON : "sports_menu",
-        SCREEN_BACK_ARROW : "game",
-        SCREEN_MONEY_RIGHT : True
+        SCREEN_TITLE_ICON: "sports_menu",
+        SCREEN_BACK_ARROW: "game",
+        SCREEN_MONEY_RIGHT: True
     }
     sports_menu_title = StringProperty()
 
@@ -72,6 +72,11 @@ class SportsMenuScreen(OlympeScreen):
         self.technique_label = TEXT.stats["technique"].upper()
         self.precision_label = TEXT.stats["precision"].upper()
         self.charm_label = TEXT.stats["charm"].upper()
+
+    def on_pre_enter(self, *args):
+        super().on_pre_enter(*args)
+
+        self.ids.sport_tree.build_tree(self.GAME.sports_unlocking_progress)
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]

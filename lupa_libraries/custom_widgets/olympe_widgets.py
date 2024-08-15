@@ -324,6 +324,7 @@ class CharacterWithMainInfoFireLayout(RelativeLayout):
 
     fire_athlete_function = ObjectProperty(lambda: 1 + 1)
 
+
 class CharacterStats(RelativeLayout):
 
     learning_rate = NumericProperty()
@@ -1103,6 +1104,7 @@ class SaveCard(FloatLayout):
 ##############
 ### Sports ###
 ##############
+
 
 class StatsLegend(RelativeLayout):
 

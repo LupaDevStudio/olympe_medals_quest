@@ -1,0 +1,177 @@
+#:kivy 2.2.1
+#:set SKILL_RECT_HEIGHT_HINT 0.25
+
+<SportCard>:
+
+    canvas.before:
+        # Background
+        Color:
+            rgba: COLORS.black
+        Rectangle:
+            pos: (0,0)
+            size: self.size
+
+        # Border
+        Color:
+            rgba: COLORS.white
+        Line:
+            rectangle: [0,0,self.size[0], self.size[1]]
+            width: self.line_width*self.font_ratio
+    
+    canvas:
+        # Single skill rectangle
+        Color:
+            rgba: self.first_skill_color if self.sport_class == 1 else COLORS.transparent
+        Rectangle:
+            pos: (0,0)
+            size: (self.size[0],self.size[1]*SKILL_RECT_HEIGHT_HINT)
+        Color:
+            rgba: COLORS.white if self.sport_class == 1 else COLORS.transparent
+        Line:
+            rectangle: [0,0,self.size[0], self.size[1]*SKILL_RECT_HEIGHT_HINT]
+            width: self.line_width*self.font_ratio
+
+        # Double skill rectangle
+        Color:
+            rgba: self.first_skill_color if self.sport_class == 2 else COLORS.transparent
+        Rectangle:
+            pos: (0,0)
+            size: (self.size[0]/2,self.size[1]*SKILL_RECT_HEIGHT_HINT)
+        Color:
+            rgba: self.second_skill_color if self.sport_class == 2 else COLORS.transparent
+        Rectangle:
+            pos: (0 + self.size[0]/2, 0)
+            size: (self.size[0]/2,self.size[1]*SKILL_RECT_HEIGHT_HINT)
+        Color:
+            rgba: COLORS.white if self.sport_class == 2 else COLORS.transparent
+        Line:
+            rectangle: [0,0,self.size[0]/2, self.size[1]*SKILL_RECT_HEIGHT_HINT]
+            width: self.line_width*self.font_ratio
+        Line:
+            rectangle: [0+ self.size[0]/2,0,self.size[0]/2, self.size[1]*SKILL_RECT_HEIGHT_HINT]
+            width: self.line_width*self.font_ratio
+
+        # Triple skill rectangle
+        Color:
+            rgba: self.first_skill_color if self.sport_class == 3 else COLORS.transparent
+        Rectangle:
+            pos: (0,0)
+            size: (self.size[0]/3,self.size[1]*SKILL_RECT_HEIGHT_HINT)
+        Color:
+            rgba: self.second_skill_color if self.sport_class == 3 else COLORS.transparent
+        Rectangle:
+            pos: (0 + self.size[0]/3, 0)
+            size: (self.size[0]/3,self.size[1]*SKILL_RECT_HEIGHT_HINT)
+        Color:
+            rgba: self.third_skill_color if self.sport_class == 3 else COLORS.transparent
+        Rectangle:
+            pos: (0 + 2*self.size[0]/3, 0)
+            size: (self.size[0]/3,self.size[1]*SKILL_RECT_HEIGHT_HINT)
+        Color:
+            rgba: COLORS.white if self.sport_class == 3 else COLORS.transparent
+        Line:
+            rectangle: [0,0,self.size[0]/3, self.size[1]*SKILL_RECT_HEIGHT_HINT]
+            width: self.line_width*self.font_ratio
+        Line:
+            rectangle: [0+ self.size[0]/3,0,self.size[0]/3, self.size[1]*SKILL_RECT_HEIGHT_HINT]
+            width: self.line_width*self.font_ratio
+        Line:
+            rectangle: [0+ 2*self.size[0]/3,0,self.size[0]/3, self.size[1]*SKILL_RECT_HEIGHT_HINT]
+            width: self.line_width*self.font_ratio
+
+    Label:
+        id: label
+        text: root.sport_name_text
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        pos_hint: {"center_x":0.5,"center_y":0.8}
+        size_hint: (0.7,None)
+        shorten: False
+        text_size: (self.width, None)
+        size: self.texture_size
+        halign: "center"
+        valign: "middle"
+        color: root.font_color
+    
+    PressedButton:
+        id: unlock_button
+        text: root.unlock_button_text
+        size_hint: (0.8, 0.25)
+        font_ratio: root.font_ratio
+        pos_hint: {"center_x":0.5,"center_y":0.45}
+        disable_button: root.state == "locked"
+        release_function: root.start_researching
+
+    Label:
+        id: unlocked_label
+        text: root.unlocked_text
+        size_hint: (0.8, 0.25)
+        font_size: root.font_ratio * FONTS_SIZES.label
+        pos_hint: {"center_x":0.5,"center_y":0.45}
+        opacity: 1 if root.state == "unlocked" else 0
+        font_name: root.text_font_name
+
+    IconPressedButton:
+        id: info_button
+        icon_source: PATH_ICONS + "tutorial.png"
+        size_hint: (None, 0.2)
+        width: self.height
+        pos_hint: {"right": 0.95, "center_y": 0.8}
+        font_ratio: root.font_ratio
+        release_function: root.open_info
+        radius: RADIUS_SMALL
+    
+    Image:
+        id: sport_icon
+        source: root.sport_icon_source
+        pos_hint: {"x": 0.05, "center_y": 0.8}
+        size_hint: (None, 0.2)
+        width: self.height
+        color: COLORS.white
+
+<SportsTreeContent>:
+
+
+<SportsScrollView>:
+    bar_margin: 0
+    bar_width: 6
+    scroll_type:['bars', 'content']
+    do_scroll_x: True
+    do_scroll_y: False
+
+
+<SportsTree>:
+
+    canvas.before:
+        # Background
+        Color:
+            rgba: COLORS.transparent_black
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+        # Séparation
+        Color:
+            rgba: COLORS.white
+        Line:
+            points: [self.pos[0],self.pos[1]+ self.size[1]*0.8,self.pos[0] + self.size[0],self.pos[1]+ self.size[1]*0.8]
+
+    Label:
+        id: label
+        text: "Sports"
+        font_size: root.font_ratio * root.font_size
+        font_name: root.text_font_name
+        pos_hint: {"center_x":0.5,"top":0.9}
+        shorten: False
+        size_hint: (None, None)
+        text_size: (None, None)
+        size: self.texture_size
+        halign: "left"
+        valign: "middle"
+        color: root.font_color
+    
+    SportsScrollView:
+        font_ratio: root.font_ratio
+        size_hint: (1,0.8)
+        pos_hint: {"x":0,"y":0}
+
