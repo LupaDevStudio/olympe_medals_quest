@@ -1,5 +1,7 @@
 # Ignore Xara files
 *.xar
+test.py
+test.kv
 
 athletes/**
 

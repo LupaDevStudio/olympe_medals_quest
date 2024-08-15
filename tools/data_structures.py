@@ -651,6 +651,10 @@ class Athlete():
     current_planning: list[str]
 
     @ property
+    def full_name(self) -> str:
+        return self.first_name + " " + self.name
+
+    @ property
     def image(self) -> str:
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
@@ -975,7 +979,7 @@ class Game():
     notifications_list: list[str]
     # "team", "recruit", "sports_complex", "sports_menu", "activities_menu", "medals", "shop"
     unlocked_menus: list[str]
-    # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue", "salary_augmentation"
+    # "retirement", "grow_old", "fire", "reputation", "injury", "illness", "fatigue", "salary_augmentation", "unlock_sports"
     unlocked_modes: list[str]
     unlocked_activities: list[str]
     money: int
@@ -1080,8 +1084,9 @@ class Game():
         self.selected_athletes_winter = dict_to_load.get(
             "selected_athletes_winter", {})
         self.seen_dialogs = dict_to_load.get("seen_dialogs", [])
-        self.first_sport = dict_to_load.get(
-            "first_sport", self.generate_first_sport())
+        self.first_sport = dict_to_load.get("first_sport", "")
+        if self.first_sport == "":
+            self.first_sport = self.generate_first_sport()
 
     def get_background_image(self) -> int:
         return self.sports_complex.image

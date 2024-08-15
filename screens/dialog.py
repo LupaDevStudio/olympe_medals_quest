@@ -19,7 +19,8 @@ from kivy.properties import (
 ### Local imports ###
 
 from lupa_libraries import (
-    OlympeScreen
+    OlympeScreen,
+    OlympeAthletePopup
 )
 from tools.constants import (
     DIALOGS_DICT,
@@ -44,8 +45,12 @@ from tools import (
     sound_mixer,
     music_mixer
 )
+from tools.data_structures import (
+    Athlete,
+    Sport,
+    SPORTS
+)
 from tools.olympe import (
-    launch_new_phase,
     finish_dialog
 )
 
@@ -102,22 +107,35 @@ class DialogScreen(OlympeScreen):
         # Replace the between [] codes by their true value
         for counter_frame in range(len(self.dialog_content_list)):
             frame = self.dialog_content_list[counter_frame]
+            mode = frame.get("mode", "")
 
-            # First sport of category 1
-            if "[THE_NEW_SPORT]" in frame["text"]:
-                self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
-                    "[THE_NEW_SPORT]", TEXT.sports[self.GAME.first_sport]["the_name"])
-            
-            # First sport of category 1 with capitale at the beginning
-            if "[THE_NEW_SPORT_CAPITALIZE]" in frame["text"]:
-                sport_name = TEXT.sports[self.GAME.first_sport]["the_name"].capitalize()
-                self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
-                    "[THE_NEW_SPORT_CAPITALIZE]", sport_name)
+            if mode == "":
+                # First sport of category 1
+                if "[THE_NEW_SPORT]" in frame["text"]:
+                    self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                        "[THE_NEW_SPORT]", TEXT.sports[self.GAME.first_sport]["the_name"])
+                
+                # First sport of category 1 with capitale at the beginning
+                if "[THE_NEW_SPORT_CAPITALIZE]" in frame["text"]:
+                    sport_name = TEXT.sports[self.GAME.first_sport]["the_name"].capitalize()
+                    self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                        "[THE_NEW_SPORT_CAPITALIZE]", sport_name)
 
-            # Corresponding athlete
-            if "[NAME_ATHLETE]" in frame["text"]:
-                self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
-                    "[NAME_ATHLETE]", self.name_athlete)
+                # First sport of category 1
+                if "[A_NEW_SPORT]" in frame["text"]:
+                    self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                        "[A_NEW_SPORT]", TEXT.sports[self.GAME.first_sport]["a_name"])
+
+                # Skill of the first sport
+                if "[SKILL_NEW_SPORT]" in frame["text"]:
+                    sport: Sport = SPORTS[self.GAME.first_sport]
+                    self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                        "[SKILL_NEW_SPORT]", TEXT.stats[sport.stats[0]].lower())
+
+                # Corresponding athlete
+                if "[NAME_ATHLETE]" in frame["text"]:
+                    self.dialog_content_list[counter_frame]["text"] = frame["text"].replace(
+                        "[NAME_ATHLETE]", self.name_athlete)
 
     def dialog_end_function(self, dialog_code, next_screen, next_dict_kwargs):
 
@@ -154,3 +172,22 @@ class DialogScreen(OlympeScreen):
 
     def skip_dialog(self):
         self.ids.dialog_layout.on_dialog_end()
+
+    def create_first_athlete_popup(self):
+        first_athlete: Athlete = self.GAME.team[0]
+        stats_dict = first_athlete.stats
+        sports_dict = first_athlete.sports
+        athlete_skills = dict(reversed(list(stats_dict.items())))
+        athlete_skills.update(sports_dict)
+        popup = OlympeAthletePopup(
+            font_ratio=self.font_ratio,
+            title=first_athlete.full_name,
+            path_background=self.back_image_path,
+            image=first_athlete.image,
+            age=TEXT.general["age"].replace("@", str(first_athlete.age)),
+            salary=first_athlete.salary,
+            title_skills=TEXT.general["skills"],
+            skills_dict=athlete_skills,
+            confirm_function=self.ids.dialog_layout.go_to_next_frame
+        )
+        popup.open()

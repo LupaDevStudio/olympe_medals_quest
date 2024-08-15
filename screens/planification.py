@@ -115,7 +115,7 @@ class PlanificationScreen(OlympeScreen):
                     font_ratio=self.font_ratio,
                     size_hint=(SCROLLVIEW_WIDTH, None),
                     height=height,
-                    title_card=athlete.first_name + " " + athlete.name,
+                    title_card=athlete.full_name,
                     image_source=athlete.image,
                     is_hurt=athlete.is_hurt,
                     total_price=abs(trimester_gain),

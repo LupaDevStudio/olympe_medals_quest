@@ -129,7 +129,7 @@ class RecruitScreen(OlympeScreen):
 
                 stats_dict = athlete.stats
                 sports_dict = athlete.sports
-                athlete_skills = dict(stats_dict)
+                athlete_skills = stats_dict
                 athlete_skills.update(sports_dict)
                 if len(athlete_skills) > 0:
                     height = self.font_ratio * (
@@ -152,7 +152,7 @@ class RecruitScreen(OlympeScreen):
                     height=height,
                     font_ratio=self.font_ratio,
                     skills_dict=athlete_skills,
-                    title_card=athlete.first_name + " " + athlete.name,
+                    title_card=athlete.full_name,
                     salary=athlete.salary,
                     age=TEXT.general["age"].replace("@", str(athlete.age)),
                     reputation=TEXT.general["reputation"].replace(

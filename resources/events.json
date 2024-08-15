@@ -9,6 +9,7 @@
             "year": 3,
             "trimester": 1,
             "order": 1,
+            "pass_athlete_name": "first_athlete",
             "effects": {
                 "money": 10000,
                 "unlocked_menus": ["team"],
@@ -20,6 +21,7 @@
             "year": 3,
             "trimester": 1,
             "order": 2,
+            "pass_athlete_name": "first_athlete",
             "effects": {
                 "unlocked_menus": ["activities_menu"],
                 "unlocked_activities": ["sports_1_training_1"]
@@ -28,8 +30,10 @@
         "hector_skills_activities": {
             "year": 3,
             "trimester": 2,
+            "pass_athlete_name": "first_athlete",
             "effects": {
                 "unlocked_modes": ["planification"],
+                "unlocked_menus": ["sports_menu"],
                 "unlocked_activities": [
                     "stats_strength_1",
                     "stats_speed_1",
@@ -42,6 +46,7 @@
         "hector_jobs_activities": {
             "year": 3,
             "trimester": 3,
+            "pass_athlete_name": "first_athlete",
             "effects": {
                 "unlocked_activities": [
                     "basic_job"
@@ -51,13 +56,15 @@
         "olympe_new_funds": {
             "year": 3,
             "trimester": 4,
+            "pass_athlete_name": "first_athlete",
             "effects": {
-                "money": 20000
+                "money": 30000
             }
         },
         "hector_fatigue": {
             "year": 4,
             "trimester": 1,
+            "pass_athlete_name": "first_athlete",
             "effects": {
                 "unlocked_modes": ["fatigue"],
                 "unlocked_activities": [
@@ -68,6 +75,7 @@
         "olympe_fight": {
             "year": 4,
             "trimester": 3,
+            "pass_athlete_name": "first_athlete",
             "effects": {
                 "money": 10000
             }

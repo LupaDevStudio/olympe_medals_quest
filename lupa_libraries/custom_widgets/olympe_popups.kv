@@ -263,3 +263,63 @@
             y: root.y + MARGIN*root.font_ratio
             font_ratio: root.font_ratio
             release_function: root.confirm
+
+<OlympeAthletePopup>:
+
+    FloatLayout:
+        id: popup_layout
+        size_hint: root.popup_size_hint
+
+        CharacterButtonWithIcon:
+            id: character
+            font_ratio: root.font_ratio
+            image_source: root.image
+            size_hint: (None, None)
+            height: root.height - skills_card_background.height - skills_card_background.y - MARGIN*root.font_ratio
+            y: skills_card_background.y + skills_card_background.height + MARGIN*root.font_ratio
+            width: self.height
+            x: root.x + 2*MARGIN*root.font_ratio
+
+        SurroundedLabel:
+            text: root.age
+            font_ratio: root.font_ratio
+            size_hint: (None, None)
+            width: salary_label.width
+            height: salary_label.height
+            x: salary_label.x
+            y: salary_label.y + salary_label.height + MARGIN*root.font_ratio
+            font_size: root.font_size_text
+            text_font_name: root.text_font_name
+
+        MoneyLayout:
+            id: salary_label
+            coins_count: root.salary
+            salary_mode: True
+            font_ratio: root.font_ratio
+            size_hint: (None, None)
+            width: root.width - 5*MARGIN*root.font_ratio - character.width
+            height: (character.height - MARGIN*root.font_ratio) / 2
+            x: character.x + character.width + MARGIN*root.font_ratio
+            y: character.y
+            font_size: root.font_size_text
+            text_font_name: root.text_font_name
+
+        OlympeCard:
+            id: skills_card_background
+            header_mode: True
+            header_text: root.title_skills
+            font_ratio: root.font_ratio
+            size_hint: 1, None
+            height: (SKILL_HEIGHT*6 + MARGIN*6 + HEADER_HEIGHT)*root.font_ratio
+            pos_hint: {"center_x": 0.5}
+            y: confirm_button.y + confirm_button.height + 2*MARGIN*root.font_ratio
+
+        PressedButton:
+            id: confirm_button
+            text: root.button_text
+            size_hint: (0.4, None)
+            height: BUTTON_HEIGHT*root.font_ratio
+            pos_hint: {"center_x": 0.5}
+            y: root.y + MARGIN*root.font_ratio
+            font_ratio: root.font_ratio
+            release_function: root.confirm
