@@ -56,6 +56,7 @@ SOUNDS_EFFECT_FOLDER = os.path.join(RESOURCES_FOLDER, "sound_effects")
 
 ### Sounds ###
 
+# Note : the volume will be updated at each reload
 voice_dict = load_sounds(os.listdir(RESOURCES_FOLDER), RESOURCES_FOLDER, 0.3)
 shake_sound_dict = load_sounds(os.listdir(
     SOUNDS_EFFECT_FOLDER), SOUNDS_EFFECT_FOLDER, 1)
@@ -254,6 +255,10 @@ class DialogLayout(RelativeLayout):
                     sound_to_add = SoundLoader.load(os.path.join(
                         PATH_MUSICS, dialog_dict["music"] + ".mp3"))
                     music_mixer.add_sound(sound_to_add, dialog_dict["music"])
+
+        # Update the volume of the mixers
+        VOICE_MIXER.change_volume(self.sound_mixer.volume * 0.3)
+        SHAKE_SOUND_MIXER.change_volume(self.sound_mixer.volume)
 
         self.go_to_next_frame()
 
