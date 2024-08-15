@@ -69,11 +69,6 @@ SHAKE_SOUND_EFFECTS = {
     "weak": "pat"
 }
 
-# TEMP
-BASE_SOUND_FILE = os.path.join(
-    RESOURCES_FOLDER, "test_y_single.wav")
-t_sound: Sound = SoundLoader.load(BASE_SOUND_FILE)
-
 
 #################
 ### Functions ###
