@@ -19,7 +19,8 @@
         "fatigue_evolution": "Fatigue : @% -> €%",
         "injury_evolution": "Risque de blessure : @%",
         "unlock": "Débloquer",
-        "unlocked": "Débloqué"
+        "unlocked": "Débloqué",
+        "unlocking": "En cours de débloquage"
     },
     "home": {
         "play": "Jouer"
@@ -90,7 +91,9 @@
         "see_credits": "Voir générique"
     },
     "sports_menu": {
-        "title": "Sports"
+        "title": "Sports",
+        "cancel_research_title": "Annuler la recherche en cours",
+        "cancel_research_text": "Une recherche est déjà en cours, souhaitez-vous l'annuler pour rechercher @ ?"
     },
     "activities_menu": {
         "title": "Activités"

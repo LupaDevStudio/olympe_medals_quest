@@ -1124,7 +1124,7 @@ class Game():
 
     def get_current_unlocking_sport(self) -> str | None:
         for sport_id in self.sports_unlocking_progress:
-            if self.sports_unlocking_progress[sport_id] != 1:
+            if 1 > self.sports_unlocking_progress[sport_id] > 0:
                 return sport_id
         return None
 

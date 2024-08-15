@@ -95,15 +95,8 @@ class MainApp(App, Widget):
     def build(self):
         """
         Build the application.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
         """
+
         Window.clearcolor = (1, 1, 1, 1)
         self.icon = PATH_IMAGES + "logo.png"
 
