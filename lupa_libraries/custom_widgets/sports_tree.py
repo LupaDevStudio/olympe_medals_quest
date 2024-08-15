@@ -210,8 +210,9 @@ class SportCard(RelativeLayout):
         pass
 
 
-class SportLink(Widget):
+class SportCardLink(Widget):
     font_ratio = NumericProperty(1)
+    mode = StringProperty("right")
 
 
 class SportsScrollView(ScrollView):
@@ -277,6 +278,26 @@ class SportsTreeContent(Widget):
                 )
                 self.sport_cards_dict[sport] = current_sport_card
                 self.add_widget(current_sport_card)
+
+                # Add the links if needed
+                if i != len(sport_classes) - 1:
+                    if not (len(sport_classes[i]) != len(sport_classes[i + 1]) and j == len(sport_classes[i]) - 1):
+                        right_link = SportCardLink(
+                            pos=(pos[0] + X_SIZE_SPORT_CARD /
+                                 2, pos[1] + Y_SIZE_SPORT_CARD),
+                            size=(
+                                (X_SPACING_SPORT_CARDS + X_SIZE_SPORT_CARD) / 2, Y_SPACING_SPORT_CARDS)
+                        )
+                        self.add_widget(right_link)
+                    if j != 0:
+                        left_link = SportCardLink(
+                            mode="left",
+                            pos=(pos[0] - X_SPACING_SPORT_CARDS /
+                                 2, pos[1] + Y_SIZE_SPORT_CARD),
+                            size=(
+                                (X_SPACING_SPORT_CARDS + X_SIZE_SPORT_CARD) / 2, Y_SPACING_SPORT_CARDS)
+                        )
+                        self.add_widget(left_link)
 
         # Set the size of the widget
         x_size, _ = compute_sport_card_position(

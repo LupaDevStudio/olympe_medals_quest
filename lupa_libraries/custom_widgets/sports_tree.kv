@@ -149,6 +149,15 @@
         primary_color: COLORS.blue_olympe
         secondary_color: COLORS.transparent
 
+<SportCardLink>:
+    canvas:
+        Color:
+            rgba: COLORS.white
+        Line:
+            width: 2*self.font_ratio
+            bezier: [self.x, self.y, self.x, self.top, self.right, self.y, self.right, self.top] if self.mode == "right" else [self.x, self.top, self.x, self.y, self.right, self.top, self.right, self.y]
+            cap: "none"
+
 <SportsTreeContent>:
 
 
