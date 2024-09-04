@@ -134,6 +134,19 @@ TIER_RANK_DICT = {
     5: "A",
     6: "S"
 }
+
+### Experience ###
+
+MAX_XP: int = 70
+FACTOR_XP_SPORT_COMPETITION = 0.5
+FACTOR_XP_SPORT_SPORT = 1
+FACTOR_XP_STAT_SPORT = 0.5
+FACTOR_XP_STAT_STAT = 1.2
+FACTOR_XP_FIRST_STAT_STAT = 0.9
+FACTOR_XP_SECOND_STAT_STAT = 0.6
+FACTOR_XP_STAT_JOB_1 = 0.3
+FACTOR_XP_STAT_JOB_2 = 0.5
+
 # TODO changer les clés
 LEVEL_DICT = {
     1000: 1,
@@ -207,6 +220,65 @@ def convert_characteristic_to_display(stat_dict: dict) -> dict:
         "level": level,
         "learning_rate": learning_rate}
 
+def compute_xp_gain(current_xp: float, fatigue: float, factor: int, activity_level: int | None = None):
+    """
+    Compute the gain in experience after an activity.
+    
+    Parameters
+    ----------
+    current_xp : float
+        Current experience of the athlete in the corresponding skill.
+    fatigue : float
+        Current fatigue of the athlete. The more the athlete is tired, the less the training will be efficient.
+    factor : int
+        Factor to multiply the gain in experience. The reference is the gain in sport for activities for sports.
+    activity_level : int | None, optional (default is None)
+        Level of the activity, when the activity is a sports or stats training.
+    
+    Returns
+    -------
+    float
+        Gain in experience in the current skill.
+    """
+
+    def f(x: float, pow: float, y0: float) -> float:
+        return y0 * (1 - (x / MAX_XP)**pow)
+
+    # Take into account the fatigue
+    FATIGUE_FACTOR: float = 0.5
+
+    if activity_level is not None:
+
+        # Set the quality of the training depending of the level of the activity
+        if activity_level == 1:
+            n = 0.5
+            y0 = 2.5
+            # The first level activity is not useful to train a skill that is above 40.
+            if current_xp >= 40:
+                return 0
+        elif activity_level == 2:
+            n = 1
+            y0 = 2
+            if current_xp < 10 or current_xp >= 50:
+                return 0
+        elif activity_level == 3:
+            n = 1.5
+            y0 = 1.75
+            if current_xp < 20 or current_xp >= 60:
+                return 0
+        else:
+            n = 2
+            y0 = 1.5
+            if current_xp < 30:
+                return 0
+
+    else:
+        n = 1
+        y0 = 2
+
+    gross_xp: float = f(current_xp, n, activity_level*y0)
+    return factor * gross_xp * (1 - FATIGUE_FACTOR * fatigue)
+
 ###############
 ### Classes ###
 ###############
@@ -225,7 +297,7 @@ class Activity():
     all_trimester: bool
     price: int
     gain: int
-    condition: None | int
+    condition: int
     can_be_done_when_ill: bool
     can_be_done_when_hurt: bool
 
@@ -236,7 +308,7 @@ class Activity():
         self.all_trimester = dict_to_load.get("all_trimester", False)
         self.price = dict_to_load.get("price", 0)
         self.gain = dict_to_load.get("gain", 0)
-        self.condition = dict_to_load.get("condition", None)
+        self.condition = dict_to_load.get("condition", 0)
         self.can_be_done_when_ill = dict_to_load.get(
             "can_be_done_when_ill", False)
         self.can_be_done_when_hurt = dict_to_load.get(
@@ -343,33 +415,39 @@ class JobActivity(Activity):
         super().__init__(dict_to_load)
 
         self.category = "job"
+        self.level_job = dict_to_load.get("level_job", 1)
 
     def get_can_access_gain_money_gain_stats(self, athlete) -> dict:
 
-        # Activities not based on stats
+        ### Activities not based on stats ###
         if self.id in ["basic_job", "best_job"]:
             return {
                 "can_access": True,
                 "gain_money": self.gain
             }
 
-        # Activities based on a stat
+        ### Activities based on a stat ###
 
         fix_part = self.gain
-        stat = self.id.replace("_job", "")
+        stat = self.id.split("_")[0]
         athlete_stat = athlete.stats[stat]["points"]
 
         # The athlete is not skilled enough to perform the job
-        condition = self.condition
-        if athlete_stat < condition:
+        if athlete_stat < self.condition:
             return {"can_access": False}
 
-        variable_part = int(fix_part * athlete_stat / 70)
+        variable_part = int(fix_part * athlete_stat / MAX_XP)
+
+        gain_stat = compute_xp_gain(
+            current_xp=athlete_stat,
+            factor=FACTOR_XP_STAT_JOB_1 if self.level_job == 1 else FACTOR_XP_STAT_JOB_2,
+            fatigue=athlete.fatigue
+        )
 
         return {
             "can_access": True,
             "gain_money": fix_part + variable_part,
-            "gain_stats": {}  # TODO
+            "gain_stats": {stat : gain_stat}
         }
 
     def get_gain(self, athlete) -> int:
@@ -434,7 +512,12 @@ class CompetitionActivity(Activity):
         self.category_sport = dict_to_load["category_sport"]
 
     def get_gain_sport(self, athlete):
-        return {}
+        gain_sport = compute_xp_gain(
+            current_xp=athlete.sports[self.sport_id]["points"],
+            factor=FACTOR_XP_SPORT_COMPETITION,
+            fatigue=athlete.fatigue
+        )
+        return {self.sport_id : gain_sport}
 
     def get_result(self, athlete) -> int:
         # TODO
@@ -448,6 +531,11 @@ class CompetitionActivity(Activity):
         # TODO
         # if result == 1:
         #     if
+
+        # Gain in sports
+        dict_gain_sports = self.get_gain_sport(athlete=athlete)
+        for key in dict_gain_sports:
+            athlete.sports[key]["points"] += dict_gain_sports[key]
 
 
 class SportsActivity(Activity):
@@ -468,14 +556,37 @@ class SportsActivity(Activity):
         self.category_sport = dict_to_load["category_sport"]
 
     def get_gain_sport(self, athlete):
-        return {}
+        gain_sport = compute_xp_gain(
+            current_xp=athlete.sports[self.sport_id]["points"],
+            factor=FACTOR_XP_SPORT_SPORT,
+            fatigue=athlete.fatigue,
+            level_activity=self.level
+        )
+        return {self.sport_id : gain_sport}
 
     def get_gain_stats(self, athlete):
-        return {}
+        dict_stats = {}
+        for stat in SPORTS[self.sport_id].stats:
+            dict_stats[stat] = compute_xp_gain(
+                current_xp=athlete.stats[stat]["points"],
+                factor=FACTOR_XP_STAT_SPORT,
+                fatigue=athlete.fatigue,
+                level_activity=self.level
+            )
+        return dict_stats
 
     def apply_activity(self, athlete, game) -> None:
         # TODO rajouter la fatigue et risque de blessure aussi
-        pass
+
+        # Gain in sports
+        dict_gain_sports = self.get_gain_sport(athlete=athlete)
+        for key in dict_gain_sports:
+            athlete.sports[key]["points"] += dict_gain_sports[key]
+
+        # Gain in stats
+        dict_gain_stats = self.get_gain_stats(athlete=athlete)
+        for key in dict_gain_stats:
+            athlete.stats[key]["points"] += dict_gain_stats[key]
 
 
 class StatsActivity(Activity):
@@ -496,11 +607,35 @@ class StatsActivity(Activity):
         self.second_stat = dict_to_load.get("second_stat", None)
 
     def get_gain_stats(self, athlete):
-        return {}
+        dict_stats = {}
+
+        # Compute the gain for the main stat involved
+        first_factor = FACTOR_XP_STAT_STAT if self.second_stat is None else FACTOR_XP_FIRST_STAT_STAT
+        dict_stats[self.first_stat] = compute_xp_gain(
+            current_xp=athlete.stats[self.first_stat]["points"],
+            factor=first_factor,
+            fatigue=athlete.fatigue,
+            level_activity=self.level
+        )
+
+        # Compute the gain for the second stat involved if some
+        if self.second_stat is not None:
+            dict_stats[self.second_stat] = compute_xp_gain(
+                current_xp=athlete.stats[self.second_stat]["points"],
+                factor=FACTOR_XP_SECOND_STAT_STAT,
+                fatigue=athlete.fatigue,
+                level_activity=self.level
+            )
+
+        return dict_stats
 
     def apply_activity(self, athlete, game) -> None:
         # TODO rajouter la fatigue et risque de blessure aussi
-        pass
+
+        # Gain in stats
+        dict_gain_stats = self.get_gain_stats(athlete=athlete)
+        for key in dict_gain_stats:
+            athlete.stats[key]["points"] += dict_gain_stats[key]
 
 
 class TransferSportActivity(Activity):
@@ -677,7 +812,7 @@ class Athlete():
         for counter in range(min(len(all_sports), 2)):
             skills_part += all_sports[counter][1]
 
-        skills_part = skills_part / (70 * 7)
+        skills_part = skills_part / (MAX_XP * 7)
 
         # Reputation for half the score
         reputation_part = self.reputation / MAX_REPUTATION
@@ -1289,6 +1424,7 @@ class Game():
         for athlete in self.team:
             athlete.update_trimester_performance()
 
+    # TODO ne pas convertir en entier pas besoin de LEVEL_DICT
     def compute_average_level(self) -> int:
         if self.team == []:
             return 1
@@ -1653,6 +1789,7 @@ for activity_id in temp_activities:
             new_dict_to_load = copy.deepcopy(dict_to_load)
             new_dict_to_load["first_stat"] = first_stat
             new_dict_to_load["second_stat"] = second_stat
+            new_dict_to_load["level"] = 3
         ACTIVITIES[activity_id] = StatsActivity(
             dict_to_load=new_dict_to_load)
 
