@@ -46,8 +46,9 @@
             id: fatigue
             text: root.fatigue_label
             font_ratio: root.font_ratio
-            size_hint: (0.425, 0.1)
+            size_hint: (0.425, None)
             pos_hint: {"x": 0.05}
+            height: first_activity.height
             y: 6*MARGIN*root.font_ratio + 3*first_activity.height
 
         SurroundedLabel:
@@ -55,6 +56,7 @@
             font_ratio: root.font_ratio
             size_hint: fatigue.size_hint
             pos_hint: {"x": 0.525}
+            height: fatigue.height
             y: fatigue.y
 
         ### Activities ###

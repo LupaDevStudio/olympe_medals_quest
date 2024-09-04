@@ -220,7 +220,7 @@ def convert_characteristic_to_display(stat_dict: dict) -> dict:
         "level": level,
         "learning_rate": learning_rate}
 
-def compute_xp_gain(current_xp: float, fatigue: float, factor: int, activity_level: int | None = None):
+def compute_xp_gain(current_xp: float, fatigue: float, factor: int, learning_rate: float, level_activity: int | None = None):
     """
     Compute the gain in experience after an activity.
     
@@ -232,7 +232,7 @@ def compute_xp_gain(current_xp: float, fatigue: float, factor: int, activity_lev
         Current fatigue of the athlete. The more the athlete is tired, the less the training will be efficient.
     factor : int
         Factor to multiply the gain in experience. The reference is the gain in sport for activities for sports.
-    activity_level : int | None, optional (default is None)
+    level_activity : int | None, optional (default is None)
         Level of the activity, when the activity is a sports or stats training.
     
     Returns
@@ -247,21 +247,21 @@ def compute_xp_gain(current_xp: float, fatigue: float, factor: int, activity_lev
     # Take into account the fatigue
     FATIGUE_FACTOR: float = 0.5
 
-    if activity_level is not None:
+    if level_activity is not None:
 
         # Set the quality of the training depending of the level of the activity
-        if activity_level == 1:
+        if level_activity == 1:
             n = 0.5
             y0 = 2.5
             # The first level activity is not useful to train a skill that is above 40.
             if current_xp >= 40:
                 return 0
-        elif activity_level == 2:
+        elif level_activity == 2:
             n = 1
             y0 = 2
             if current_xp < 10 or current_xp >= 50:
                 return 0
-        elif activity_level == 3:
+        elif level_activity == 3:
             n = 1.5
             y0 = 1.75
             if current_xp < 20 or current_xp >= 60:
@@ -276,8 +276,9 @@ def compute_xp_gain(current_xp: float, fatigue: float, factor: int, activity_lev
         n = 1
         y0 = 2
 
-    gross_xp: float = f(current_xp, n, activity_level*y0)
-    return factor * gross_xp * (1 - FATIGUE_FACTOR * fatigue)
+    gross_xp: float = f(current_xp, n, level_activity*y0)
+    gain_xp = factor * learning_rate * gross_xp * (1 - FATIGUE_FACTOR * fatigue)
+    return round(gain_xp, 3)
 
 ###############
 ### Classes ###
@@ -313,6 +314,73 @@ class Activity():
             "can_be_done_when_ill", False)
         self.can_be_done_when_hurt = dict_to_load.get(
             "can_be_done_when_hurt", False)
+
+    def compute_virtual_progress_previous_activities(self, athlete, activity_pos_in_planning: int) -> dict:
+        stats_dict = {}
+        sports_dict = {}
+        fatigue = athlete.fatigue
+
+        for stat in athlete.stats:
+            stats_dict[stat] = athlete.stats[stat]["points"]
+        for sport in athlete.sports:
+            sports_dict[sport] = athlete.sports[sport]["points"]
+
+        # Apply the virtual effects of the previous activities of the planning
+        if activity_pos_in_planning >= 1:
+            previous_activity_id = athlete.current_planning[activity_pos_in_planning - 1]
+            previous_activity: Activity = ACTIVITIES[previous_activity_id]
+
+            # Gain in stats
+            gain_stats = previous_activity.get_gain_stats(
+                athlete=athlete,
+                activity_pos_in_planning=activity_pos_in_planning - 1
+            )
+            for stat in gain_stats:
+                stats_dict[stat] += gain_stats[stat]
+
+            # Gain in sports
+            gain_sports = previous_activity.get_gain_sports(
+                athlete=athlete,
+                activity_pos_in_planning=activity_pos_in_planning - 1
+            )
+            for sport in gain_sports:
+                sports_dict[sport] += gain_sports[sport]
+
+            # TODO fatigue
+
+            if activity_pos_in_planning >= 2:
+                previous_activity_id = athlete.current_planning[activity_pos_in_planning - 2]
+                previous_activity: Activity = ACTIVITIES[previous_activity_id]
+
+                # Gain in stats
+                gain_stats = previous_activity.get_gain_stats(
+                    athlete=athlete,
+                    activity_pos_in_planning=activity_pos_in_planning - 2
+                )
+                for stat in gain_stats:
+                    stats_dict[stat] += gain_stats[stat]
+
+                # Gain in sports
+                gain_sports = previous_activity.get_gain_sports(
+                    athlete=athlete,
+                    activity_pos_in_planning=activity_pos_in_planning - 2
+                )
+                for sport in gain_sports:
+                    sports_dict[sport] += gain_sports[sport]
+
+                # TODO fatigue
+        return {
+            "stats": stats_dict,
+            "sports": sports_dict,
+            "fatigue": fatigue
+        }
+
+
+    def get_gain_stats(self, athlete, activity_pos_in_planning: int) -> dict:
+        return {}
+    
+    def get_gain_sports(self, athlete, activity_pos_in_planning: int) -> dict:
+        return {}
 
     def get_gain(self, athlete) -> int:
         return 0
@@ -353,7 +421,7 @@ class Activity():
 
         return dict_effects
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         dict_effects = self.get_effects(athlete=athlete)
         for key_effect in dict_effects:
             consequence = dict_effects[key_effect]
@@ -384,7 +452,7 @@ class InterviewActivity(Activity):
 
         return gain_reputation
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         gain_reputation = self.get_gain_reputation(athlete=athlete)
         athlete.reputation += gain_reputation
 
@@ -417,9 +485,10 @@ class JobActivity(Activity):
         self.category = "job"
         self.level_job = dict_to_load.get("level_job", 1)
 
-    def get_can_access_gain_money_gain_stats(self, athlete) -> dict:
+    def get_can_access_gain_money_gain_stats(self, athlete, activity_pos_in_planning: int) -> dict:
 
         ### Activities not based on stats ###
+
         if self.id in ["basic_job", "best_job"]:
             return {
                 "can_access": True,
@@ -430,7 +499,14 @@ class JobActivity(Activity):
 
         fix_part = self.gain
         stat = self.id.split("_")[0]
-        athlete_stat = athlete.stats[stat]["points"]
+
+        current_skills = self.compute_virtual_progress_previous_activities(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning
+        )
+        current_stats = current_skills["stats"]
+        current_fatigue = current_skills["fatigue"]
+        athlete_stat = current_stats[stat]
 
         # The athlete is not skilled enough to perform the job
         if athlete_stat < self.condition:
@@ -441,7 +517,8 @@ class JobActivity(Activity):
         gain_stat = compute_xp_gain(
             current_xp=athlete_stat,
             factor=FACTOR_XP_STAT_JOB_1 if self.level_job == 1 else FACTOR_XP_STAT_JOB_2,
-            fatigue=athlete.fatigue
+            fatigue=current_fatigue,
+            learning_rate=athlete.stats[stat]["learning_rate"]
         )
 
         return {
@@ -455,9 +532,9 @@ class JobActivity(Activity):
             athlete=athlete)
         return dict_effects.get("gain_money", 0)
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         dict_effects = self.get_can_access_gain_money_gain_stats(
-            athlete=athlete)
+            athlete=athlete, activity_pos_in_planning=activity_pos_in_planning)
         dict_effects_stats = dict_effects.get("gain_stats", {})
 
         for key in dict_effects_stats:
@@ -488,7 +565,7 @@ class TribuneActivity(Activity):
 
         return 0
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         researching_sport_id = game.get_current_unlocking_sport()
         gain_research = self.gain_research_in_sport(game=game)
         game.sports_unlocking_progress[researching_sport_id] += gain_research
@@ -511,11 +588,19 @@ class CompetitionActivity(Activity):
         self.sport_id = dict_to_load["sport_id"]
         self.category_sport = dict_to_load["category_sport"]
 
-    def get_gain_sport(self, athlete):
+    def get_gain_sports(self, athlete, activity_pos_in_planning: int):
+        current_skills = self.compute_virtual_progress_previous_activities(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning
+        )
+        current_sports = current_skills["sports"]
+        current_fatigue = current_skills["fatigue"]
+
         gain_sport = compute_xp_gain(
-            current_xp=athlete.sports[self.sport_id]["points"],
+            current_xp=current_sports[self.sport_id],
             factor=FACTOR_XP_SPORT_COMPETITION,
-            fatigue=athlete.fatigue
+            fatigue=current_fatigue,
+            learning_rate=athlete.sports[self.sport_id]["learning_rate"]
         )
         return {self.sport_id : gain_sport}
 
@@ -523,7 +608,7 @@ class CompetitionActivity(Activity):
         # TODO
         return 1
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         # TODO rajouter la fatigue et risque de blessure aussi
 
         # Gain of the competition
@@ -533,7 +618,9 @@ class CompetitionActivity(Activity):
         #     if
 
         # Gain in sports
-        dict_gain_sports = self.get_gain_sport(athlete=athlete)
+        dict_gain_sports = self.get_gain_sports(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning)
         for key in dict_gain_sports:
             athlete.sports[key]["points"] += dict_gain_sports[key]
 
@@ -555,36 +642,54 @@ class SportsActivity(Activity):
         self.sport_id = dict_to_load["sport_id"]
         self.category_sport = dict_to_load["category_sport"]
 
-    def get_gain_sport(self, athlete):
+    def get_gain_sports(self, athlete, activity_pos_in_planning: int):
+        current_skills = self.compute_virtual_progress_previous_activities(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning
+        )
+        current_sports = current_skills["sports"]
+        current_fatigue = current_skills["fatigue"]
         gain_sport = compute_xp_gain(
-            current_xp=athlete.sports[self.sport_id]["points"],
+            current_xp=current_sports[self.sport_id],
             factor=FACTOR_XP_SPORT_SPORT,
-            fatigue=athlete.fatigue,
-            level_activity=self.level
+            fatigue=current_fatigue,
+            level_activity=self.level,
+            learning_rate=athlete.sports[self.sport_id]["learning_rate"]
         )
         return {self.sport_id : gain_sport}
 
-    def get_gain_stats(self, athlete):
+    def get_gain_stats(self, athlete, activity_pos_in_planning: int):
+        current_skills = self.compute_virtual_progress_previous_activities(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning
+        )
+        current_stats = current_skills["stats"]
+        current_fatigue = current_skills["fatigue"]
         dict_stats = {}
         for stat in SPORTS[self.sport_id].stats:
             dict_stats[stat] = compute_xp_gain(
-                current_xp=athlete.stats[stat]["points"],
+                current_xp=current_stats[stat],
                 factor=FACTOR_XP_STAT_SPORT,
-                fatigue=athlete.fatigue,
-                level_activity=self.level
+                fatigue=current_fatigue,
+                level_activity=self.level,
+                learning_rate=athlete.stats[stat]["learning_rate"]
             )
         return dict_stats
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         # TODO rajouter la fatigue et risque de blessure aussi
 
         # Gain in sports
-        dict_gain_sports = self.get_gain_sport(athlete=athlete)
+        dict_gain_sports = self.get_gain_sports(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning)
         for key in dict_gain_sports:
             athlete.sports[key]["points"] += dict_gain_sports[key]
 
         # Gain in stats
-        dict_gain_stats = self.get_gain_stats(athlete=athlete)
+        dict_gain_stats = self.get_gain_stats(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning)
         for key in dict_gain_stats:
             athlete.stats[key]["points"] += dict_gain_stats[key]
 
@@ -606,34 +711,45 @@ class StatsActivity(Activity):
         self.first_stat = dict_to_load["first_stat"]
         self.second_stat = dict_to_load.get("second_stat", None)
 
-    def get_gain_stats(self, athlete):
+    def get_gain_stats(self, athlete, activity_pos_in_planning: int):
         dict_stats = {}
+
+        current_skills = self.compute_virtual_progress_previous_activities(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning
+        )
+        current_stats = current_skills["stats"]
+        current_fatigue = current_skills["fatigue"]
 
         # Compute the gain for the main stat involved
         first_factor = FACTOR_XP_STAT_STAT if self.second_stat is None else FACTOR_XP_FIRST_STAT_STAT
         dict_stats[self.first_stat] = compute_xp_gain(
-            current_xp=athlete.stats[self.first_stat]["points"],
+            current_xp=current_stats[self.first_stat],
             factor=first_factor,
-            fatigue=athlete.fatigue,
-            level_activity=self.level
+            fatigue=current_fatigue,
+            level_activity=self.level,
+            learning_rate=athlete.stats[self.first_stat]["learning_rate"]
         )
 
         # Compute the gain for the second stat involved if some
         if self.second_stat is not None:
             dict_stats[self.second_stat] = compute_xp_gain(
-                current_xp=athlete.stats[self.second_stat]["points"],
+                current_xp=current_stats[self.second_stat],
                 factor=FACTOR_XP_SECOND_STAT_STAT,
-                fatigue=athlete.fatigue,
-                level_activity=self.level
+                fatigue=current_fatigue,
+                level_activity=self.level,
+                learning_rate=athlete.stats[self.second_stat]["learning_rate"]
             )
 
         return dict_stats
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         # TODO rajouter la fatigue et risque de blessure aussi
 
         # Gain in stats
-        dict_gain_stats = self.get_gain_stats(athlete=athlete)
+        dict_gain_stats = self.get_gain_stats(
+            athlete=athlete,
+            activity_pos_in_planning=activity_pos_in_planning)
         for key in dict_gain_stats:
             athlete.stats[key]["points"] += dict_gain_stats[key]
 
@@ -682,7 +798,7 @@ class TransferSportActivity(Activity):
 
         return new_dict_sport
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         # Apply fatigue and injury risk
         super().apply_activity(athlete, game)
 
@@ -728,7 +844,7 @@ class StartNewSportActivity(Activity):
 
         return new_dict_sport
 
-    def apply_activity(self, athlete, game) -> None:
+    def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
         # Apply fatigue and injury risk
         super().apply_activity(athlete, game)
 
@@ -1411,11 +1527,14 @@ class Game():
 
         # Update the stats of the athletes and the game depending on the activities performed
         for athlete in self.team:
+            counter_activity = 0
             for activity_id in athlete.current_planning:
                 activity: Activity = ACTIVITIES[activity_id]
                 activity.apply_activity(
                     athlete=athlete,
-                    game=self)
+                    game=self,
+                    activity_pos_in_planning=counter_activity)
+                counter_activity += 1
 
         # Update the amount of money due to salaries and activities
         self.money += self.get_trimester_gained_total_money()
