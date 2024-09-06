@@ -89,7 +89,7 @@ HAIR_COLOR_FEMALE = [
     "#7700db",  # purple
     "#080072",  # dark blue
     "#006e03",  # green
-    "#00947a",  # turquoise 
+    "#00947a",  # turquoise
 ]
 HAIR_COLOR_MALE = [
     "#3c3c3c",  # gray
@@ -108,7 +108,7 @@ HAIR_COLOR_MALE = [
     "#247a91",  # blue lupa
     "#080072",  # dark blue
     "#006e03",  # green
-    "#00947a",  # turquoise 
+    "#00947a",  # turquoise
 ]
 
 HAIRCUT_MALE_SHAPES = [name.replace(".png", "")
@@ -176,7 +176,8 @@ EYES_SHAPES = [name.replace(".png", "") for name in os.listdir(EYES_FOLDER)]
 
 FACE_FILE = os.path.join(SKIN_FOLDER, "face.png")
 LOWER_FACE_FILE = os.path.join(SKIN_FOLDER, "lower_face.png")
-LOWER_FACE_PONYTAILS_FILE = os.path.join(SKIN_FOLDER, "lower_face_ponytails.png")
+LOWER_FACE_PONYTAILS_FILE = os.path.join(
+    SKIN_FOLDER, "lower_face_ponytails.png")
 
 ### Body ###
 
@@ -854,9 +855,11 @@ class Body:
         self.right_arm.paste_on_image(image)
         self.t_shirt.paste_on_image(image)
 
+
 class LowerFacePonytails(Face):
 
     image_src = LOWER_FACE_PONYTAILS_FILE
+
 
 class LowerFace(Face):
 
@@ -1189,18 +1192,32 @@ if __name__ == "__main__":
     #     )
     #     portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/olympe{i}.png"))
 
-    for i in range(20):
-        portrait = Portrait(
-            gender="male",
-            hair_color="#a30000",
-            hair_shape="man_5",
-            eyes_color="#03661e",
-            skin_color=("#ffe0b1", "#d2ac73"),
-            nose_shape="nose_3",
-            mouth_shape="mouth_straight",
-            clothes_color=("#004800", "#003d00"),
-            shirt_shape="shirt_2",
-            hairs_behind_face=False
-        )
-        portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/hector{i}.png"))
+    # for i in range(20):
+    #     portrait = Portrait(
+    #         gender="male",
+    #         hair_color="#a30000",
+    #         hair_shape="man_5",
+    #         eyes_color="#03661e",
+    #         skin_color=("#ffe0b1", "#d2ac73"),
+    #         nose_shape="nose_3",
+    #         mouth_shape="mouth_straight",
+    #         clothes_color=("#004800", "#003d00"),
+    #         shirt_shape="shirt_2",
+    #         hairs_behind_face=False
+    #     )
+    #     portrait.export_as_png(os.path.join(CURRENT_FOLDER, f"draft/hector{i}.png"))
 
+    portrait = Portrait(
+        gender="male",
+        hair_color="#d4a60f",
+        hair_shape="man_14",
+        eyes_color="#529ad1",
+        skin_color=("#faefd7", "#f2dfb1"),
+        nose_shape="nose_2",
+        mouth_shape="mouth_happy",
+        clothes_color=("#faf8f5", "#1c36c9"),
+        shirt_shape="shirt_5",
+        hairs_behind_face=False
+    )
+    portrait.export_as_png(os.path.join(
+        CURRENT_FOLDER, f"draft_tiktok/face.png"))
