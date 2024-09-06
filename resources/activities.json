@@ -82,6 +82,7 @@
     },
     "charm_job_2": {
         "condition": 50,
+        "level_job": 2,
         "gain": 3000
     },
     "best_job": {

@@ -95,6 +95,9 @@ class ScheduleScreen(OlympeScreen):
         athlete_skills = dict(reversed(list(stats_dict.items())))
         athlete_skills.update(sports_dict)
 
+        # Reset scrollview
+        self.ids.stats_scrollview_layout.reset_scrollview()
+        # Fill scrollview
         self.fill_stats_scrollview(athlete_skills=athlete_skills)
 
     def on_pre_enter(self, *args):
@@ -129,8 +132,33 @@ class ScheduleScreen(OlympeScreen):
             SKILL_HEIGHT * len(athlete_skills)
         )
 
+        gain_skills_dict = {}
+        for counter_activity in range(len(self.athlete.current_planning)):
+            activity_id: str = self.athlete.current_planning[counter_activity]
+            activity: Activity = ACTIVITIES[activity_id]
+
+            gain_stats_dict = activity.get_gain_stats(
+                athlete=self.athlete,
+                activity_pos_in_planning=counter_activity)
+            for stat in gain_stats_dict:
+                if stat not in gain_skills_dict:
+                    gain_skills_dict[stat] = gain_stats_dict[stat]
+                else:
+                    gain_skills_dict[stat] += gain_stats_dict[stat]
+
+            gain_sports_dict = activity.get_gain_sports(
+                athlete=self.athlete,
+                activity_pos_in_planning=counter_activity)
+
+            for sport in gain_sports_dict:
+                if sport not in gain_skills_dict:
+                    gain_skills_dict[sport] = gain_sports_dict[sport]
+                else:
+                    gain_skills_dict[sport] += gain_sports_dict[sport]
+
         skills_layout = CharacterSkillsLayout(
             skills_dict=athlete_skills,
+            gain_skills_dict=gain_skills_dict,
             font_ratio=self.font_ratio,
             pos_hint={"x": 0.05},
             size_hint=(0.9, None),
@@ -193,6 +221,9 @@ class ScheduleScreen(OlympeScreen):
         # Save the new activity
         self.athlete.current_planning = self.activities_ids_list
         USER_DATA.save_changes()
+
+        # Change the display of the consequences of this new activity
+        self.reload_info()
 
     def validate_planning(self):
         self.go_to_next_screen(

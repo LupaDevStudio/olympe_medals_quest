@@ -337,7 +337,7 @@ class CharacterStats(RelativeLayout):
     def __init__(
             self,
             stat_dict: dict,
-            expected_points_after_training: float | None = None,
+            gained_points: float = 0,
             ** kw):
         super().__init__(**kw)
 
@@ -347,12 +347,9 @@ class CharacterStats(RelativeLayout):
         # Determine if the athlete will level up
         self.current_rank, self.current_level = convert_points_to_tier_rank(
             stat_dict["points"])
-        if expected_points_after_training is not None:
-            self.expected_rank, self.expected_level = convert_points_to_tier_rank(
-                expected_points_after_training)
-        else:
-            self.expected_rank = self.current_rank
-            self.expected_level = self.current_level
+        self.expected_rank, self.expected_level = convert_points_to_tier_rank(
+            gained_points+stat_dict["points"])
+
         if self.expected_rank != self.current_rank:
             self.will_level_up = True
         else:
@@ -384,6 +381,7 @@ class CharacterSkillsLayout(RelativeLayout):
     ### Information on the skills ###
 
     skills_dict = ObjectProperty({})
+    gain_skills_dict = ObjectProperty({})
     show_level_up = BooleanProperty(False)
 
     font_size = NumericProperty(FONTS_SIZES.label)
@@ -432,6 +430,7 @@ class CharacterSkillsLayout(RelativeLayout):
 
             skill_widget = CharacterStats(
                 stat_dict=self.skills_dict[skill],
+                gained_points=self.gain_skills_dict.get(skill, 0),
                 size_hint=(0.6, None),
                 height=(self.skill_height - 5) * self.font_ratio,
                 pos_hint=pos_hint,
