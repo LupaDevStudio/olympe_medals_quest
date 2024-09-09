@@ -79,10 +79,12 @@ class GameScreen(OlympeScreen):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
 
-        # # TODO TEMP
+        # TODO TEMP
         # if self.GAME.recrutable_athletes == []:
-        #     first_athlete = generate_athlete(GAME=self.GAME)
-        #     self.GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
+        #     list_athletes = []
+        #     for i in range(5):
+        #         list_athletes.append(generate_athlete(GAME=self.GAME))
+        #     self.GAME.update_recrutable_athletes(new_athletes_list=list_athletes)
         #     USER_DATA.save_changes()
 
         # Update main_action

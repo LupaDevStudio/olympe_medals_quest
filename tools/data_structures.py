@@ -134,6 +134,9 @@ TIER_RANK_DICT = {
     5: "A",
     6: "S"
 }
+MIN_LEVEL_ATHLETE = 0.2
+MIN_LEVEL_SPECIALIST = 0.4
+MIN_LEVEL_BI_SPECIALIST = 0.6
 
 ### Experience ###
 
@@ -147,19 +150,6 @@ FACTOR_XP_SECOND_STAT_STAT = 0.6
 FACTOR_XP_STAT_JOB_1 = 0.3
 FACTOR_XP_STAT_JOB_2 = 0.5
 
-# TODO changer les clés
-LEVEL_DICT = {
-    1000: 1,
-    2000: 2,
-    3000: 3,
-    4000: 4,
-    5000: 5,
-    6000: 6,
-    7000: 7,
-    8000: 8,
-    9000: 9,
-    10000: 10
-}
 SPORTS_COMPLEX_EVOLUTION_DICT = load_json_file(PATH_SPORTS_COMPLEX_DICT)
 ROOMS_EVOLUTION_DICT = load_json_file(PATH_ROOMS_DICT)
 
@@ -189,7 +179,7 @@ def generate_id() -> str:
     return str(unique_id)
 
 
-def generate_learning_rates(double_proba=0.15, simple_proba=0.4):
+def generate_learning_rates(double_proba=0.05, simple_proba=0.2):
     random_number = rd.random()
     if random_number < double_proba:
         return 2
@@ -254,17 +244,17 @@ def compute_xp_gain(current_xp: float, fatigue: float, factor: int, learning_rat
             n = 0.5
             y0 = 2.5
             # The first level activity is not useful to train a skill that is above 40.
-            if current_xp >= 40:
+            if current_xp >= 50:
                 return 0
         elif level_activity == 2:
             n = 1
             y0 = 2
-            if current_xp < 10 or current_xp >= 50:
+            if current_xp < 10 or current_xp >= 60:
                 return 0
         elif level_activity == 3:
             n = 1.5
             y0 = 1.75
-            if current_xp < 20 or current_xp >= 60:
+            if current_xp < 20:
                 return 0
         else:
             n = 2
@@ -382,7 +372,7 @@ class Activity():
     def get_gain_sports(self, athlete, activity_pos_in_planning: int) -> dict:
         return {}
 
-    def get_gain(self, athlete) -> int:
+    def get_gain(self, athlete, activity_pos_in_planning: int) -> int:
         return 0
 
     def get_effects(self, athlete) -> dict:
@@ -467,7 +457,7 @@ class SponsorActivity(Activity):
 
         self.category = "press"
 
-    def get_gain(self, athlete) -> int:
+    def get_gain(self, athlete, activity_pos_in_planning: int) -> int:
         current_reputation = athlete.reputation
         gain_money = FACTOR_SPONSOR_REPUTATION * current_reputation
 
@@ -527,9 +517,9 @@ class JobActivity(Activity):
             "gain_stats": {stat : gain_stat}
         }
 
-    def get_gain(self, athlete) -> int:
+    def get_gain(self, athlete, activity_pos_in_planning: int) -> int:
         dict_effects = self.get_can_access_gain_money_gain_stats(
-            athlete=athlete)
+            athlete=athlete, activity_pos_in_planning=activity_pos_in_planning)
         return dict_effects.get("gain_money", 0)
 
     def apply_activity(self, athlete, game, activity_pos_in_planning: int) -> None:
@@ -910,7 +900,7 @@ class Athlete():
         return PATH_ATHLETES_IMAGES + f"athlete_{self.id}.png"
 
     @ property
-    def global_score(self) -> float:
+    def global_score_for_salary(self) -> float:
         skills_part = 0
 
         # Stats part
@@ -925,15 +915,50 @@ class Athlete():
                 [sport.category, self.sports[sport_id]["points"]])
         all_sports = sorted(all_sports)
 
-        for counter in range(min(len(all_sports), 2)):
+        number_sports_to_take = min(len(all_sports), 2)
+        for counter in range(number_sports_to_take):
             skills_part += all_sports[counter][1]
 
-        skills_part = skills_part / (MAX_XP * 7)
+        skills_part = skills_part / (MAX_XP * (5+number_sports_to_take))
 
-        # Reputation for half the score
+        # Reputation for 1/4 of the score
         reputation_part = self.reputation / MAX_REPUTATION
+        score = 0.75*skills_part + 0.25*reputation_part
 
-        score = (skills_part + reputation_part) / 2
+        return score
+
+    @ property
+    def global_score(self) -> float:
+        """
+        Global score of the athlete that only takes the stats into account not the reputation.
+        
+        Parameters
+        ----------
+        
+        Returns
+        -------
+        float
+            Score of the athlete.
+        """
+        score = 0
+
+        # Stats part
+        for stat in self.stats:
+            score += self.stats[stat]["points"]
+
+        # Sports part with the two best sports
+        all_sports = []
+        for sport_id in self.sports:
+            sport: Sport = SPORTS[sport_id]
+            all_sports.append(
+                [sport.category, self.sports[sport_id]["points"]])
+        all_sports = sorted(all_sports)
+
+        number_sports_to_take = min(len(all_sports), 2)
+        for counter in range(number_sports_to_take):
+            score += all_sports[counter][1]
+
+        score = score / (MAX_XP * (5+number_sports_to_take))
 
         return score
 
@@ -1019,13 +1044,16 @@ class Athlete():
         # Salary of the athlete
         trimester_payment = - self.salary
 
-        for activity_id in self.current_planning:
+        for counter in range(len(self.current_planning)):
+            activity_id = self.current_planning[counter]
             activity: Activity = ACTIVITIES[activity_id]
 
             # Potential price of the activity
             trimester_payment -= activity.price
             # Potential gain of the activity
-            trimester_payment += activity.get_gain(athlete=self)
+            trimester_payment += activity.get_gain(
+                athlete=self,
+                activity_pos_in_planning=counter)
 
         return trimester_payment
 
@@ -1364,7 +1392,7 @@ class Game():
                         return current_category
         return current_category
 
-    def get_all_sports_from_current_category(self) -> list[str]:
+    def get_all_sports_from_current_category_or_less(self) -> list[str]:
         current_category = self.get_current_sports_category()
         list_sports: list[str] = []
         for sport_id in SPORTS:
@@ -1498,8 +1526,8 @@ class Game():
         best_score: int = 0
         best_athlete: Athlete | None = None
         for athlete in self.team:
-            if athlete.global_score >= best_score:
-                best_score = athlete.global_score
+            if athlete.global_score_for_salary >= best_score:
+                best_score = athlete.global_score_for_salary
                 best_athlete = athlete
         if best_athlete is None:
             return ""
@@ -1543,10 +1571,9 @@ class Game():
         for athlete in self.team:
             athlete.update_trimester_performance()
 
-    # TODO ne pas convertir en entier pas besoin de LEVEL_DICT
     def compute_average_level(self) -> int:
         if self.team == []:
-            return 1
+            return MIN_LEVEL_ATHLETE
 
         # Take the average of the 5 best athletes
         list_athletes_scores = []
@@ -1561,10 +1588,7 @@ class Game():
         average_score = sum(list_five_best_athletes) / \
             len(list_five_best_athletes)
 
-        for score_ref in LEVEL_DICT:
-            if average_score <= score_ref:
-                return LEVEL_DICT[score_ref]
-        return 10
+        return max(average_score, MIN_LEVEL_ATHLETE)
 
     def get_main_action(self) -> str:
 
