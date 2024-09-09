@@ -437,7 +437,7 @@ class DialogLayout(RelativeLayout):
             # Play the music if needed
             if "music" in current_dialog_dict:
                 music_id = current_dialog_dict["music"]
-                self.music_mixer.play(music_id)
+                self.music_mixer.play(music_id, loop=True)
 
             if "volume" in current_dialog_dict:
                 self.music_mixer.change_volume(

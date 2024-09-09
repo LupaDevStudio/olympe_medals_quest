@@ -82,21 +82,29 @@ for key in first_names_dict:
         for name in names_dict[key]:
             names_dict[COUNTRY_NAME].append(name)
 
-### Salary and recruit prices ###
-
-BASE_SALARY = 1000
-ARITHMETIC_FACTOR_SALARY = 10
-GEOMETRIC_FACTOR_SALARY = 2
-
 #################
 ### Functions ###
 #################
 
 
-def compute_salary(athlete: Athlete) -> int:
+def compute_salary(athlete: Athlete, game_difficulty: Literal["easy", "medium", "difficult"]) -> int:
+    # Take into account the difficulty of the game
+    if game_difficulty == "easy":
+        base_salary = 500
+        arithmetic_factor_salary = 9
+        geometric_factor_salary = 1.9
+    elif game_difficulty == "medium":
+        base_salary = 1000
+        arithmetic_factor_salary = 10
+        geometric_factor_salary = 2
+    else:
+        base_salary = 1500
+        arithmetic_factor_salary = 11
+        geometric_factor_salary = 2.1
+
     score_athlete = athlete.global_score_for_salary
-    salary = BASE_SALARY + ((ARITHMETIC_FACTOR_SALARY * score_athlete) ** GEOMETRIC_FACTOR_SALARY)*1000
-    print("SCORE ATHLETE FOR SALARY", score_athlete, salary)
+    salary = base_salary + ((arithmetic_factor_salary * score_athlete) ** geometric_factor_salary)*1000
+
     return int(salary)
 
 def get_health_string(athlete: Athlete) -> str:
@@ -231,7 +239,8 @@ def generate_stats_sports(main_sport: str, second_sport: str | None, level: floa
 
 def generate_reputation(charm_dict: dict) -> int:
     charm = charm_dict["points"]
-    basis_reputation = 0.5 * charm * MAX_REPUTATION / 70
+    # Maximum 250 points of reputation (to avoid very high salaries at the beginning)
+    basis_reputation = 0.25 * charm * MAX_REPUTATION / 70
     random_number = rd.random() * MAX_REPUTATION * 0.05
     plus_mode = rd.randint(0, 1) == 1
     if plus_mode:
@@ -244,7 +253,15 @@ def generate_reputation(charm_dict: dict) -> int:
         return MAX_REPUTATION
     return reputation
 
-def generate_recruit_price(salary: int, level: float) -> int:
+def generate_recruit_price(salary: int, level: float, game_difficulty: Literal["easy", "medium", "difficult"]) -> int:
+    # Basis of the recruit price
+    if game_difficulty == "easy":
+        basis_factor = 8
+    elif game_difficulty == "medium":
+        basis_factor = 10
+    else:
+        basis_factor = 12
+    
     # Random margin between -10.000 and 10.000 depending on level
     multiplying_factor = 10
     if level > 0.8:
@@ -257,18 +274,19 @@ def generate_recruit_price(salary: int, level: float) -> int:
         multiplying_factor = 50
     random_margin = rd.randint(-50, 50)
 
-    recruit_price = salary * 10 + random_margin * multiplying_factor
+    recruit_price = salary * basis_factor + random_margin * multiplying_factor
     if recruit_price <= 0:
-        recruit_price = salary * 10
+        recruit_price = salary * basis_factor
 
     return int(recruit_price)
 
 def generate_athlete(
         GAME: Game,
-        country: str = "our_country",
+        country: str = COUNTRY_NAME,
         age: int | None = None,
         time_for_recruit: int | None = None,
         recruit_price: int | None = None,
+        salary: int | None = None,
         main_sport: str = "random",
         second_sport: str | None = "random",
         gender: Literal["male", "female"] | None = None,
@@ -288,20 +306,33 @@ def generate_athlete(
     if time_for_recruit is None:
         time_for_recruit = rd.randint(2, 4)
 
+    ### Level and profile ###
+
+    # Choose the level
     max_level = GAME.compute_average_level()
     a = max(MIN_LEVEL_ATHLETE, (max_level-MIN_LEVEL_ATHLETE))
     b = min(max_level, 1)
     level = rd.random()*(b-a) + a
 
-    ### Stats and sports ###
+    # Change the level of the athlete depending on the difficulty of the game / country
+    if country == COUNTRY_NAME:
+        if GAME.difficulty == "easy":
+            level = min(level*1.05, 1)
+        elif GAME.difficulty == "difficult":
+            level *= 0.95
+    else:
+        # TODO change accordingly to the strength of the country
+        level = level
 
-    # Choose the profile
+    # Choose the profile of the athlete
     list_profiles = ["homogeneous"]
     if level > MIN_LEVEL_SPECIALIST:
         list_profiles.append("specialist")
     if level > MIN_LEVEL_BI_SPECIALIST:
         list_profiles.append("bi-specialist")
     profile = rd.choice(list_profiles)
+
+    ### Stats and sports ###
 
     if main_sport == "random":
         # Main sport among those unlocked
@@ -350,16 +381,21 @@ def generate_athlete(
 
     ### Costs ###
 
-    # Salary
-    salary = compute_salary(athlete=athlete)
-    athlete.set_salary(salary=salary)
+    # Generate the salary and the recruit price only for the athletes of our country
+    if country == COUNTRY_NAME:
 
-    # Recruit price
-    if recruit_price is None:
-        recruit_price = generate_recruit_price(
-            salary=salary,
-            level=level)
-    athlete.set_recruit_price(recruit_price=recruit_price)
+        # Salary
+        if salary is None:
+            salary = compute_salary(athlete=athlete, game_difficulty=GAME.difficulty)
+        athlete.set_salary(salary=salary)
+
+        # Recruit price
+        if recruit_price is None:
+            recruit_price = generate_recruit_price(
+                salary=salary,
+                level=level,
+                game_difficulty=GAME.difficulty)
+        athlete.set_recruit_price(recruit_price=recruit_price)
 
     return athlete
 
@@ -382,6 +418,7 @@ def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
         GAME=GAME,
         age=rd.randint(16, 22),
         recruit_price=0,
+        salary=3500,
         main_sport=main_sport,
         second_sport=None,
         gender=gender,
@@ -528,7 +565,7 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
     # Update the salaries at the beginning of the year
     if "salary_augmentation" in GAME.unlocked_modes and GAME.trimester == 1:
         for athlete in GAME.team:
-            new_salary = compute_salary(athlete=athlete)
+            new_salary = compute_salary(athlete=athlete, game_difficulty=GAME.difficulty)
             athlete.set_salary(salary=new_salary)
 
     # Update the list of notifications

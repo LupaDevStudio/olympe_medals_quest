@@ -1,0 +1,44 @@
+{
+    "musics": {
+        "game": {
+            "title": "Challenging Victory",
+            "author": "Musictown",
+            "link": "https://pixabay.com/fr/music/titre-principal-challenging-victory-full-mix-117952/"
+        },
+        "game_title": {
+            "title": "Background inspiring",
+            "author": "Dmytro Kuvalin",
+            "link": "https://pixabay.com/music/corporate-background-inspiring-207551/"
+        },
+        "olympe": {
+            "title": "Corporate Rhythm",
+            "author": "Roman Senyk",
+            "link": "https://pixabay.com/fr/music/entreprise-corporate-rhythm-140895/"
+        },
+        "fight": {
+            "title": "Award",
+            "author": "SoundGalleryByDmitryTaras",
+            "link": "https://pixabay.com/music/main-title-award-adventure-epic-inspiring-cinematic-orchestra-214102/"
+        },
+        "fight_ceremony": {
+            "title": "Award Ceremony Nomination",
+            "author": "SoundGalleryByDmitryTaras",
+            "link": "https://pixabay.com/fr/music/titre-principal-award-ceremony-nomination-solemn-winner-triumphant-victory-123485/"
+        },
+        "ariane": {
+            "title": "Ambiant Documentary",
+            "author": "Yurii Semchyshyn",
+            "link": "https://pixabay.com/fr/music/ambiant-documentary-11052/"
+        },
+        "catch_it": {
+            "title": "Catch it",
+            "author": "Yurii Semchyshyn",
+            "link": "https://pixabay.com/fr/music/optimiste-catch-it-117676/"
+        },
+        "canteen": {
+            "title": "Ragtime Piano",
+            "author": "Trygve Larsen",
+            "link": "https://pixabay.com/fr/music/piano-solo-ragtime-piano-southern-rag-medley-2-by-john-w-boone-1909-112100/"
+        }
+    }
+}

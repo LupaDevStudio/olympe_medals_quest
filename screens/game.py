@@ -47,6 +47,9 @@ from tools.olympe import (
     generate_and_add_first_athlete,
     EVENTS_DICT
 )
+from tools import (
+    music_mixer
+)
 
 #############
 ### Class ###
@@ -97,6 +100,13 @@ class GameScreen(OlympeScreen):
         self.notifications_list = self.GAME.notifications_list
         self.ids.notification_button.trigger_icon_flashing()
         self.update_notification_panel()
+
+    def on_enter(self, *args):
+        super().on_enter(*args)
+
+        # Launch the music of the game
+        if music_mixer.musics["game"].state == "stop":
+            music_mixer.play("game", loop=True)
 
     def go_backwards(self):
         self.GAME.set_last_time_played()

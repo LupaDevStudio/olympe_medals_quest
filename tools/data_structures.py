@@ -141,9 +141,9 @@ MIN_LEVEL_BI_SPECIALIST = 0.6
 ### Experience ###
 
 MAX_XP: int = 70
-FACTOR_XP_SPORT_COMPETITION = 0.5
+FACTOR_XP_SPORT_COMPETITION = 0.3
 FACTOR_XP_SPORT_SPORT = 1
-FACTOR_XP_STAT_SPORT = 0.5
+FACTOR_XP_STAT_SPORT = 0.3
 FACTOR_XP_STAT_STAT = 1.2
 FACTOR_XP_FIRST_STAT_STAT = 0.9
 FACTOR_XP_SECOND_STAT_STAT = 0.6
@@ -921,9 +921,9 @@ class Athlete():
 
         skills_part = skills_part / (MAX_XP * (5+number_sports_to_take))
 
-        # Reputation for 1/4 of the score
+        # Reputation for half the score
         reputation_part = self.reputation / MAX_REPUTATION
-        score = 0.75*skills_part + 0.25*reputation_part
+        score = 0.5*skills_part + 0.5*reputation_part
 
         return score
 
