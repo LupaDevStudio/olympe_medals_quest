@@ -6,10 +6,6 @@ Module to create the athlete screen.
 ### Imports ###
 ###############
 
-### Python imports ###
-
-from functools import partial
-
 ### Kivy imports ###
 
 from kivy.properties import (
@@ -77,6 +73,61 @@ class AthleteScreen(OlympeScreen):
         super().reload_language()
         self.my_text = TEXT.athlete
 
+    def get_information_skills_card(self):
+
+        if not self.skills_folded:
+            stats_dict = self.athlete.stats
+            sports_dict = self.athlete.sports
+            athlete_skills = stats_dict
+            athlete_skills.update(sports_dict)
+
+            # Sort reverse
+            athlete_skills = dict(reversed(athlete_skills.items()))
+
+            if len(athlete_skills) > 0:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + MARGIN*2 + SKILL_HEIGHT * len(athlete_skills))
+            else:
+                height = self.font_ratio * HEADER_HEIGHT * 2
+        else:
+            athlete_skills = {}
+            height = self.font_ratio * HEADER_HEIGHT
+
+        return height, athlete_skills
+
+    def get_information_medals_card(self):
+
+        if not self.medals_folded:
+            athlete_medals = self.GAME.get_medals_from_athlete(
+                athlete_id=self.athlete.id)
+            if len(athlete_medals) > 0:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + MARGIN*2 + MEDAL_HEIGHT * len(athlete_medals))
+            else:
+                height = self.font_ratio * HEADER_HEIGHT * 2
+        
+        else:
+            athlete_medals = []
+            height = self.font_ratio * HEADER_HEIGHT
+
+        return height, athlete_medals
+
+    def update_skills_card(self):
+        
+        height, athlete_skills = self.get_information_skills_card()
+
+        self.skills_card.height = height
+        self.skills_card.is_folded = self.skills_folded
+        self.skills_card.skills_dict = athlete_skills
+
+    def update_medals_card(self):
+
+        height, athlete_medals = self.get_information_medals_card()
+
+        self.medals_card.height = height
+        self.medals_card.is_folded = self.skills_folded
+        self.medals_card.medals_list = athlete_medals
+
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
@@ -116,23 +167,7 @@ class AthleteScreen(OlympeScreen):
 
         ### Skills ###
 
-        if not self.skills_folded:
-            stats_dict = self.athlete.stats
-            sports_dict = self.athlete.sports
-            athlete_skills = stats_dict
-            athlete_skills.update(sports_dict)
-
-            # Sort reverse
-            athlete_skills = dict(reversed(athlete_skills.items()))
-
-            if len(athlete_skills) > 0:
-                height = self.font_ratio * (
-                    HEADER_HEIGHT + MARGIN*2 + SKILL_HEIGHT * len(athlete_skills))
-            else:
-                height = self.font_ratio * HEADER_HEIGHT * 2
-        else:
-            athlete_skills = {}
-            height = self.font_ratio * HEADER_HEIGHT
+        height, athlete_skills = self.get_information_skills_card()
 
         self.skills_card = SkillsCard(
             font_ratio=self.font_ratio,
@@ -150,16 +185,8 @@ class AthleteScreen(OlympeScreen):
 
         # Display the medals card only if the athlete has some
         if athlete_medals != []:
-            if not self.medals_folded:
-                if len(athlete_medals) > 0:
-                    height = self.font_ratio * (
-                        HEADER_HEIGHT + MARGIN*2 + MEDAL_HEIGHT * len(athlete_medals))
-                else:
-                    height = self.font_ratio * HEADER_HEIGHT * 2
-            else:
-                athlete_medals = []
-                height = self.font_ratio * HEADER_HEIGHT
-
+            height, athlete_medals = self.get_information_medals_card()
+            
             self.medals_card = MedalsCard(
                 font_ratio=self.font_ratio,
                 size_hint=(SCROLLVIEW_WIDTH, None),
@@ -186,9 +213,7 @@ class AthleteScreen(OlympeScreen):
     def ask_redraw(self, widget):
         if widget == self.medals_card:
             self.medals_folded = not self.medals_folded
+            self.update_medals_card()
         elif widget == self.skills_card:
             self.skills_folded = not self.skills_folded
-
-        # Reset scrollview
-        self.ids.scrollview_layout.reset_scrollview()
-        self.fill_scrollview()
+            self.update_skills_card()

@@ -583,11 +583,15 @@ class SkillsCard(RelativeLayout):
     def __init__(self, **kw):
         super().__init__(**kw)
 
+        self.character_skills_layout = None
+        self.bind(skills_dict=self.update_skills_dict)
+        self.update_skills_dict()
+
+    def update_skills_dict(self, *args):
         if not self.is_folded:
             total_height = SKILL_HEIGHT * \
                 len(self.skills_dict) * self.font_ratio
-
-            character_skills_layout = CharacterSkillsLayout(
+            self.character_skills_layout = CharacterSkillsLayout(
                 skills_dict=self.skills_dict,
                 font_ratio=self.font_ratio,
                 pos_hint={"x": 0.05},
@@ -595,7 +599,10 @@ class SkillsCard(RelativeLayout):
                 size_hint=(0.9, None),
                 height=total_height
             )
-            self.add_widget(character_skills_layout)
+            self.add_widget(self.character_skills_layout)
+        else:
+            if self.character_skills_layout is not None:
+                self.remove_widget(self.character_skills_layout)
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
