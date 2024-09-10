@@ -48,6 +48,8 @@ TECHNIQUE = "technique"
 PRECISION = "precision"
 CHARM = "charm"
 
+COUNTRY_NAME = "our_country"
+
 MAX_ATHLETES_TO_SELECT = 3
 PRICE_FIGHT_SELECTION = {
     1: 10000,
@@ -877,6 +879,7 @@ class Athlete():
     """
 
     id: str
+    nationality: str # name of the country
     name: str
     first_name: str
     age: int
@@ -968,6 +971,7 @@ class Athlete():
 
     def __init__(self, dict_to_load: dict) -> None:
         self.id = dict_to_load.get("id", generate_id())
+        self.nationality = dict_to_load.get("nationality", COUNTRY_NAME)
         self.name = dict_to_load.get("name", "")
         self.first_name = dict_to_load.get("first_name", "")
         self.age = dict_to_load.get("age", 0)
@@ -1060,6 +1064,7 @@ class Athlete():
     def export_dict(self) -> dict:
         return {
             "id": self.id,
+            "nationality": self.nationality,
             "name": self.name,
             "first_name": self.first_name,
             "age": self.age,
@@ -1415,6 +1420,9 @@ class Game():
             if 1 > self.sports_unlocking_progress[sport_id] > 0:
                 return sport_id
         return None
+
+    def compute_results_fight_from_sport(self, sport_id: str) -> list[Athlete]:
+        return [self.team[0], self.team[0], self.team[0], self.team[0], self.team[0], self.team[0], self.team[0], self.team[0], self.team[0], self.team[0]]
 
     def generate_first_sport(self) -> str:
         list_possible_sports = []

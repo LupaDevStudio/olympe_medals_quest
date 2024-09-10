@@ -41,7 +41,8 @@ from tools.data_structures import (
     MIN_LEVEL_SPECIALIST,
     MIN_LEVEL_BI_SPECIALIST,
     SPORTS,
-    MAX_REPUTATION
+    MAX_REPUTATION,
+    COUNTRY_NAME
 )
 from tools.path import (
     PATH_COUNTRIES,
@@ -54,7 +55,6 @@ from tools.path import (
 
 ### Countries ###
 
-COUNTRY_NAME = "our_country"
 countries_dict = load_json_file(PATH_COUNTRIES)
 
 ### First names and names ###
@@ -363,6 +363,7 @@ def generate_athlete(
 
     dict_to_load = {
         "first_name": first_name,
+        "nationality": country,
         "name": name,
         "age": age,
         "time_for_recruit": time_for_recruit,
