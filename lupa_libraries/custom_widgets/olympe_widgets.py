@@ -866,6 +866,86 @@ class SmallInscriptionCard(RelativeLayout):
 #############################
 
 
+class PlanificationCard(RelativeLayout):
+
+    athlete: Athlete = ObjectProperty(None)
+    planification_unlocked = BooleanProperty(False)
+    planification_release_function = ObjectProperty(lambda: 1 + 1)
+
+    is_folded = BooleanProperty(True)
+    font_ratio = NumericProperty(1)
+
+    complete_planification_card = None
+    small_planification_card = None
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.bind(is_folded=self.update_card)
+        self.bind(athlete=self.update_card)
+        self.update_card()
+
+    def update_card(self, *args):
+        trimester_gain = self.athlete.get_trimester_gained_money()
+
+        # Reduced card when folded
+        if self.is_folded:
+            if self.complete_planification_card is not None:
+                self.remove_widget(self.complete_planification_card)
+            
+            self.small_planification_card = SmallPlanificationCard(
+                font_ratio=self.font_ratio,
+                size_hint=(1, 1),
+                header_height=BIG_HEADER_HEIGHT,
+                title_card=self.athlete.first_name + "\n" + self.athlete.name,
+                image_source=self.athlete.image,
+                is_hurt=self.athlete.is_hurt,
+                total_price=abs(trimester_gain),
+                minus_mode=trimester_gain < 0,
+                ask_redraw_function=self.ask_redraw
+            )
+            self.add_widget(self.small_planification_card)
+        
+        # Complete card when not folded
+        else:
+            if self.small_planification_card is not None:
+                self.remove_widget(self.small_planification_card)
+
+            list_activities_label = []
+            for activity_id in self.athlete.current_planning:
+                if "sports_" in activity_id:
+                    list_infos = activity_id.split("_") # "sports_2_name_training_4"
+                    sport_id = list_infos[2]
+                    level_activity = list_infos[4]
+                    activity_name = TEXT.activities["sports_training"]["name"].replace(
+                        "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
+                        "[LEVEL]", str(level_activity))
+                    list_activities_label.append(activity_name)
+                else:
+                    list_activities_label.append(TEXT.activities[activity_id]["name"])
+
+            self.complete_planification_card = CompletePlanificationCard(
+                font_ratio=self.font_ratio,
+                size_hint=(1, 1),
+                title_card=self.athlete.full_name,
+                image_source=self.athlete.image,
+                is_hurt=self.athlete.is_hurt,
+                total_price=abs(trimester_gain),
+                minus_mode=trimester_gain < 0,
+                planning_text=TEXT.planification["planning"],
+                list_activities=list_activities_label,
+                release_function=self.planification_release_function,
+                planification_unlocked=self.planification_unlocked,
+                ask_redraw_function=self.ask_redraw
+            )
+            self.add_widget(self.complete_planification_card)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
+        screen.ask_redraw(self)
+
 class CompletePlanificationCard(RelativeLayout):
 
     ### Information on the athlete ###
@@ -895,12 +975,16 @@ class CompletePlanificationCard(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
     release_function = ObjectProperty(lambda: 1 + 1)
+    ask_redraw_function = ObjectProperty(None)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 
 class SmallPlanificationCard(RelativeLayout):
@@ -927,12 +1011,16 @@ class SmallPlanificationCard(RelativeLayout):
     header_height = NumericProperty(BIG_HEADER_HEIGHT)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
+    ask_redraw_function = ObjectProperty(None)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 #####################
 ### Rooms widgets ###

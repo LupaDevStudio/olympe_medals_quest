@@ -22,8 +22,6 @@ from kivy.uix.label import Label
 from lupa_libraries import (
     OlympeScreen,
     RecruitCard
-    # CharacterInfoWithMainSportsLayout,
-    # CompleteRecruitCard
 )
 from tools.constants import (
     TEXT,

@@ -21,8 +21,7 @@ from kivy.properties import (
 
 from lupa_libraries import (
     OlympeScreen,
-    SmallPlanificationCard,
-    CompletePlanificationCard
+    PlanificationCard
 )
 from tools.constants import (
     TEXT,
@@ -61,7 +60,7 @@ class PlanificationScreen(OlympeScreen):
     validate_label = StringProperty()
     spent_coins = NumericProperty()
     header_text = StringProperty()
-    athlete_folded_dict = {}
+    folded_dict = {}
 
     def reload_language(self):
         super().reload_language()
@@ -69,76 +68,57 @@ class PlanificationScreen(OlympeScreen):
         self.validate_label = TEXT.general["validate"]
         self.header_text = my_text["planification"]
 
+    def get_information_planification_card(self, athlete: Athlete):
+
+        if self.folded_dict[athlete.id][0]:
+            height = self.font_ratio * BIG_HEADER_HEIGHT
+
+        else:
+            height = self.font_ratio * (
+                HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN)
+
+        return height
+
+    def update_planification_card(self, athlete: Athlete):
+
+        height = self.get_information_planification_card(athlete=athlete)
+
+        self.folded_dict[athlete.id][1].height = height
+        self.folded_dict[athlete.id][1].is_folded = self.folded_dict[athlete.id][0]
+
     def fill_scrollview(self):
         self.spent_coins = - self.GAME.get_trimester_gained_total_money()
         scrollview_layout = self.ids["scrollview_layout"]
 
         athlete: Athlete
         for athlete in self.GAME.team:
-            trimester_gain = athlete.get_trimester_gained_money()
 
-            if athlete.id not in self.athlete_folded_dict:
-                self.athlete_folded_dict[athlete.id] = [False, None]
+            if athlete.id not in self.folded_dict:
+                self.folded_dict[athlete.id] = [False, None]
 
-            if self.athlete_folded_dict[athlete.id][0]:
-                athlete_card = SmallPlanificationCard(
-                    font_ratio=self.font_ratio,
-                    size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=self.font_ratio * BIG_HEADER_HEIGHT,
-                    header_height=BIG_HEADER_HEIGHT,
-                    title_card=athlete.first_name + "\n" + athlete.name,
-                    image_source=athlete.image,
-                    is_hurt=athlete.is_hurt,
-                    total_price=abs(trimester_gain),
-                    minus_mode=trimester_gain < 0
-                )
+            height = self.get_information_planification_card(athlete=athlete)
 
-            else:
-                height = self.font_ratio * (
-                    HEADER_HEIGHT + CHARACTER_HEIGHT + SKILL_HEIGHT + 3*MARGIN
-                )
+            athlete_card = PlanificationCard(
+                font_ratio=self.font_ratio,
+                size_hint=(SCROLLVIEW_WIDTH, None),
+                height=height,
+                is_folded=self.folded_dict[athlete.id][0],
+                athlete=athlete,
+                planification_unlocked="planification" in self.GAME.unlocked_modes,
+                planification_release_function=partial(self.open_schedule_screen, athlete)
+            )
 
-                list_activities_label = []
-                for activity_id in athlete.current_planning:
-                    if "sports_" in activity_id:
-                        list_infos = activity_id.split("_") # "sports_2_name_training_4"
-                        sport_id = list_infos[2]
-                        level_activity = list_infos[4]
-                        activity_name = TEXT.activities["sports_training"]["name"].replace(
-                            "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
-                            "[LEVEL]", str(level_activity))
-                        list_activities_label.append(activity_name)
-                    else:
-                        list_activities_label.append(TEXT.activities[activity_id]["name"])
-
-                athlete_card = CompletePlanificationCard(
-                    font_ratio=self.font_ratio,
-                    size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=height,
-                    title_card=athlete.full_name,
-                    image_source=athlete.image,
-                    is_hurt=athlete.is_hurt,
-                    total_price=abs(trimester_gain),
-                    minus_mode=trimester_gain < 0,
-                    planning_text=TEXT.planification["planning"],
-                    list_activities=list_activities_label,
-                    release_function=partial(self.open_schedule_screen, athlete),
-                    planification_unlocked="planification" in self.GAME.unlocked_modes
-                )
-
-            self.athlete_folded_dict[athlete.id][1] = athlete_card
+            self.folded_dict[athlete.id][1] = athlete_card
             scrollview_layout.add_widget(athlete_card)
 
     def ask_redraw(self, widget):
-        for athlete_id in self.athlete_folded_dict:
-            if widget == self.athlete_folded_dict[athlete_id][1]:
-                self.athlete_folded_dict[athlete_id][0] = not self.athlete_folded_dict[athlete_id][0]
+        for athlete_id in self.folded_dict:
+            if widget == self.folded_dict[athlete_id][1]:
+                self.folded_dict[athlete_id][0] = not self.folded_dict[athlete_id][0]
+                athlete: Athlete = self.GAME.get_athlete_from_id(athlete_id=athlete_id)
+                self.update_planification_card(athlete=athlete)
                 break
         
-        # Rebuild scrollview
-        self.ids.scrollview_layout.reset_scrollview()
-        self.fill_scrollview()
-
     def open_schedule_screen(self, athlete: Athlete):
         self.go_to_next_screen(
             screen_name="schedule",
