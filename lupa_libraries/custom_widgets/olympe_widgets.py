@@ -32,6 +32,7 @@ from tools.constants import (
 )
 from tools.data_structures import (
     Medal,
+    Athlete,
     convert_points_to_tier_rank
 )
 from tools.graphics import (
@@ -48,7 +49,8 @@ from tools.graphics import (
     SKILL_HEIGHT,
     MARGIN,
     BUTTON_HEIGHT,
-    RADIUS_SMALL
+    RADIUS_SMALL,
+    SCROLLVIEW_WIDTH
 )
 from tools.path import (
     PATH_TITLE_FONT,
@@ -466,6 +468,8 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
+    ask_redraw_function = ObjectProperty(None)
+
     def __init__(self, **kw):
         super().__init__(**kw)
 
@@ -482,11 +486,13 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
         self.add_widget(character_skills_layout)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
-
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 class MedalsCard(RelativeLayout):
 
@@ -614,6 +620,93 @@ class SkillsCard(RelativeLayout):
 ### Recrutement widgets ###
 ###########################
 
+class RecruitCard(RelativeLayout):
+
+    athlete: Athlete = ObjectProperty(None)
+    reputation_unlocked = BooleanProperty(True)
+    can_recruit_athlete = BooleanProperty(True)
+    recruit_release_function = ObjectProperty(lambda: 1 + 1)
+
+    is_folded = BooleanProperty(True)
+    font_ratio = NumericProperty(1)
+
+    complete_recruit_card = None
+    reduced_recruit_card = None
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.bind(is_folded=self.update_card)
+        self.bind(athlete=self.update_card)
+        self.bind(can_recruit_athlete=self.update_card)
+        self.update_card()
+
+    def update_card(self, *args):
+        # Reduced card when folded
+        if self.is_folded:
+            if self.complete_recruit_card is not None:
+                self.remove_widget(self.complete_recruit_card)
+            
+            athlete_skills = self.athlete.get_best_sports()
+            height = self.font_ratio * (
+                BIG_HEADER_HEIGHT + len(athlete_skills) * SKILL_HEIGHT + MARGIN*2)
+            self.reduced_recruit_card = CharacterInfoWithMainSportsLayout(
+                    image_source=self.athlete.image,
+                    is_hurt=self.athlete.is_hurt,
+                    title_card=self.athlete.first_name + "\n" + self.athlete.name,
+                    salary=self.athlete.salary,
+                    skills_dict=athlete_skills,
+                    font_ratio=self.font_ratio,
+                    size_hint=(1, None),
+                    height=height,
+                    foldable_mode=True,
+                    ask_redraw_function=self.ask_redraw
+                )
+            self.add_widget(self.reduced_recruit_card)
+        
+        # Complete card when not folded
+        else:
+            if self.reduced_recruit_card is not None:
+                self.remove_widget(self.reduced_recruit_card)
+
+            stats_dict = self.athlete.stats
+            sports_dict = self.athlete.sports
+            athlete_skills = stats_dict
+            athlete_skills.update(sports_dict)
+            if len(athlete_skills) > 0:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+            else:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*3 + BUTTON_HEIGHT)
+
+            # Sort reverse
+            athlete_skills = dict(reversed(athlete_skills.items()))
+
+            self.complete_recruit_card = CompleteRecruitCard(
+                image_source=self.athlete.image,
+                size_hint=(1, None),
+                height=height,
+                font_ratio=self.font_ratio,
+                skills_dict=athlete_skills,
+                title_card=self.athlete.full_name,
+                salary=self.athlete.salary,
+                age=TEXT.general["age"].replace("@", str(self.athlete.age)),
+                reputation=TEXT.general["reputation"].replace(
+                    "@", str(int(self.athlete.reputation))),
+                recruit_price=self.athlete.recruit_price,
+                reputation_unlocked=self.reputation_unlocked,
+                disable_button=not(self.can_recruit_athlete),
+                recruit_release_function=self.recruit_release_function,
+                ask_redraw_function=self.ask_redraw
+            )
+            self.add_widget(self.complete_recruit_card)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
+        screen.ask_redraw(self)
 
 class CompleteRecruitCard(RelativeLayout):
 
@@ -648,6 +741,8 @@ class CompleteRecruitCard(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
+    ask_redraw_function = ObjectProperty(None)
+
     def __init__(self, **kw):
         super().__init__(**kw)
 
@@ -664,10 +759,13 @@ class CompleteRecruitCard(RelativeLayout):
         self.add_widget(character_skills_layout)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 ###########################
 ### Inscription widgets ###

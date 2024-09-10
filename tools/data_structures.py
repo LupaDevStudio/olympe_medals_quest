@@ -1371,7 +1371,16 @@ class Game():
         return self.sports_complex.image
 
     def get_athlete_from_id(self, athlete_id) -> Athlete:
+        # For the main team
         for athlete in self.team:
+            if athlete.id == athlete_id:
+                return athlete
+        # For the athletes to recruit
+        for athlete in self.recrutable_athletes:
+            if athlete.id == athlete_id:
+                return athlete
+        # For the retired team
+        for athlete in self.retired_team:
             if athlete.id == athlete_id:
                 return athlete
 
