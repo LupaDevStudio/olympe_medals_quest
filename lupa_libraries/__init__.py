@@ -46,7 +46,8 @@ from lupa_libraries.custom_widgets import (
     OlympePlanificationPopup,
     OlympeAthletePopup,
     SeparationLine,
-    StatsLegend
+    StatsLegend,
+    SportsTreeContent
 )
 
 ### Dialog generator ###

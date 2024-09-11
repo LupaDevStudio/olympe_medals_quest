@@ -6,7 +6,7 @@
     canvas.before:
         # Background
         Color:
-            rgba: COLORS.black
+            rgba: COLORS.dark_transparent_black
         Rectangle:
             pos: (0,0)
             size: self.size
@@ -85,7 +85,8 @@
         font_size: root.font_ratio * root.font_size
         font_name: root.text_font_name
         pos_hint: {"center_x":0.5,"center_y":0.8}
-        size_hint: (0.7,None)
+        size_hint: (None,None)
+        width: root.width*0.8 - sport_icon.width - info_button.width
         shorten: False
         text_size: (self.width, None)
         size: self.texture_size
@@ -98,7 +99,7 @@
         text: root.unlock_button_text
         size_hint: (0.8, 0.25)
         font_ratio: root.font_ratio
-        pos_hint: {"center_x":0.5,"center_y":0.45}
+        pos_hint: {"center_x":0.5, "center_y":0.45}
         disable_button: False if root.state == "locked" else True
         release_function: root.start_researching
 

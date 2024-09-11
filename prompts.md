@@ -50,3 +50,4 @@ portrait of a 30 years old (man:1.5), tanned skin, white T-shirt and brown jacke
 
 portrait of a girl doctor, happy, very (short: 1.5) pink hair, green eyes, green earrings, white doctor blouse and black shirt, (Your Name art style:1.3)
 
+portrait of a beautiful mean mature 50 years old woman pest, white blond straight medium hairs, make-up, dark eyes, black eyebrows, white slightly open shirt with red jacket, (Your Name art style:1.3), no background
