@@ -25,6 +25,7 @@ from lupa_libraries.custom_widgets import (
     CharacterInfoWithMainSportsLayout,
     CharacterSkillsLayout,
     SurroundedLabel,
+    OlympeCard,
     SkillsCard,
     MedalsCard,
     RecruitCard,

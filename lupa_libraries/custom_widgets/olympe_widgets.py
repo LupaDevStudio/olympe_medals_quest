@@ -49,8 +49,7 @@ from tools.graphics import (
     SKILL_HEIGHT,
     MARGIN,
     BUTTON_HEIGHT,
-    RADIUS_SMALL,
-    SCROLLVIEW_WIDTH
+    RADIUS_SMALL
 )
 from tools.path import (
     PATH_TITLE_FONT,

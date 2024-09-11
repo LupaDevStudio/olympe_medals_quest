@@ -29,7 +29,8 @@ from lupa_libraries import (
     SportLabelButton,
     SeparationLine,
     CharacterButtonWithIcon,
-    FramedImage
+    FramedImage,
+    OlympeCard
 )
 from tools.constants import (
     TEXT,
@@ -41,13 +42,14 @@ from tools.graphics import (
     FONTS_SIZES,
     COLORS,
     SCROLLVIEW_WIDTH,
-    SKILL_HEIGHT,
+    HEADER_HEIGHT,
     LARGE_LINE_WIDTH,
     BUTTON_LINE_WIDTH,
     MARGIN
 )
 from tools.data_structures import (
-    Athlete
+    Athlete,
+    COUNTRY_NAME
 )
 from tools.path import (
     PATH_TEXT_FONT,
@@ -156,13 +158,19 @@ class CompetitionResultsScreen(OlympeScreen):
 
             ### Information on the current athlete ###
 
-            relative_layout = RelativeLayout(
-                size_hint=(SCROLLVIEW_WIDTH, None),
-                height=self.font_ratio*SKILL_HEIGHT,
+            if athlete.nationality == COUNTRY_NAME:
+                background_color = COLORS.transparent_blue_olympe
+            else:
+                background_color = COLORS.transparent
+            relative_layout = OlympeCard(
+                size_hint=(1, None),
+                height=self.font_ratio*HEADER_HEIGHT,
+                background_color=background_color,
+                font_ratio=self.font_ratio
             )
             
             # Add a medal for the three first ones
-            results_width = 0.085*SCROLLVIEW_WIDTH**2*Window.size[0]
+            results_width = 0.085*(SCROLLVIEW_WIDTH*Window.size[0]-20*self.font_ratio)
             if result_athlete <= 3:
                 type_image = "gold" if result_athlete == 1 else "silver" if result_athlete == 2 else "bronze"
                 number_image = Image(
@@ -170,7 +178,8 @@ class CompetitionResultsScreen(OlympeScreen):
                     size_hint=(None, None),
                     height=results_width,
                     width=results_width,
-                    pos_hint={"x": 0, "center_y": 0.5},
+                    pos_hint={"center_y": 0.5},
+                    x=MARGIN*self.font_ratio
                 )
                 relative_layout.add_widget(number_image)
             # Just the position of the athlete
@@ -179,16 +188,17 @@ class CompetitionResultsScreen(OlympeScreen):
                     text=str(result_athlete),
                     size_hint=(None, 1),
                     width=results_width,
-                    pos_hint={"x": 0, "center_y": 0.5},
+                    pos_hint={"center_y": 0.5},
                     font_size=FONTS_SIZES.subtitle*self.font_ratio,
                     font_name=PATH_TEXT_FONT,
-                    color=COLORS.white
+                    color=COLORS.white,
+                    x=MARGIN*self.font_ratio
                 )
                 relative_layout.add_widget(number_label)
             
             # Image of the athlete
             
-            image_width = self.font_ratio*SKILL_HEIGHT
+            image_width = self.font_ratio*HEADER_HEIGHT*0.8
             athlete_image = CharacterButtonWithIcon(
                 image_source=athlete.image,
                 disable_button=True,
@@ -197,21 +207,22 @@ class CompetitionResultsScreen(OlympeScreen):
                 height=image_width,
                 width=image_width,
                 pos_hint={"center_y": 0.5},
-                x=results_width+MARGIN*self.font_ratio,
+                x=results_width+2*MARGIN*self.font_ratio,
                 line_width=BUTTON_LINE_WIDTH
             )
             relative_layout.add_widget(athlete_image)
 
             # Name of the athlete and country
 
-            flag_width = SCROLLVIEW_WIDTH**2*Window.size[0]*0.125
-            label_width = SCROLLVIEW_WIDTH**2*Window.size[0] - results_width - image_width - flag_width - MARGIN*3*self.font_ratio
+            flag_height = self.font_ratio*HEADER_HEIGHT*0.5
+            flag_width = 1.73*flag_height
+            label_width = SCROLLVIEW_WIDTH*Window.size[0] - results_width - image_width - flag_width - MARGIN*6*self.font_ratio - 20*self.font_ratio
             name_label = Label(
                 text=athlete.full_name + " - " + TEXT.countries[athlete.nationality],
                 size_hint=(None, 1),
                 width=label_width,
                 pos_hint={"center_y": 0.5},
-                x=results_width+image_width+MARGIN*2*self.font_ratio,
+                x=results_width+image_width+MARGIN*3*self.font_ratio,
                 font_size=FONTS_SIZES.label*self.font_ratio,
                 font_name=PATH_TEXT_FONT,
                 color=COLORS.white,
@@ -227,9 +238,10 @@ class CompetitionResultsScreen(OlympeScreen):
                 image_source=PATH_FLAGS_IMAGES+athlete.nationality+".png",
                 font_ratio=self.font_ratio,
                 size_hint=(None, None),
-                height=flag_width/1.73,
+                height=flag_height,
                 width=flag_width,
-                pos_hint={"right": 1, "center_y": 0.5}
+                pos_hint={"center_y": 0.5},
+                x=name_label.x+label_width+MARGIN*self.font_ratio
             )
             relative_layout.add_widget(flag_image)
 
