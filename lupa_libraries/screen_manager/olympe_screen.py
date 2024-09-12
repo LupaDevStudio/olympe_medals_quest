@@ -179,6 +179,12 @@ class OlympeScreen(ImprovedScreen):
         elif SCREEN_MONEY_RIGHT in self.dict_type_screen:
             self.money_amount = self.GAME.money
 
+    def set_label_text_width(self, widget, value):
+        """
+        Function called when creating the labels to set correctly their size.
+        """
+        widget.text_size = (value[0], None)
+
     def create_message_popup(self, code: str | None = None, confirm_function = lambda: 1 + 1, title: str | None = None, text: str | None = None):
         if text is None:
             text = TEXT.popup[code]["text"]

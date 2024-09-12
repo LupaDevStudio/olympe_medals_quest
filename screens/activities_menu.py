@@ -17,6 +17,7 @@ from kivy.properties import (
     BooleanProperty
 )
 from kivy.core.window import Window
+from kivy.uix.label import Label
 
 ### Local imports ###
 
@@ -56,7 +57,8 @@ from tools.olympe import (
     get_activity_name
 )
 from tools.path import (
-    PATH_CATEGORIES_ICONS
+    PATH_CATEGORIES_ICONS,
+    PATH_TEXT_FONT
 )
 
 #############
@@ -189,6 +191,21 @@ class ActivitiesMenuScreen(OlympeScreen):
             height=height,
             pos_hint={"center_x":0.5, "y": 0.025}
         )
+
+        # Add the label of description of the activity
+        description_label = Label(
+            text="TODO this is a very long description to test if the formatting of the label is working thank you !",
+            font_name=PATH_TEXT_FONT,
+            font_size=FONTS_SIZES.label * self.font_ratio,
+            size_hint=(SCROLLVIEW_WIDTH, None),
+            pos_hint={"center_x": 0.5},
+            height=height-HEADER_HEIGHT*self.font_ratio-2*MARGIN*self.font_ratio,
+            y=MARGIN*self.font_ratio,
+            halign="left",
+            valign="top"
+        )
+        description_label.bind(size=description_label.setter('text_size'))
+        self.activity_details_card.add_widget(description_label)
 
         self.add_widget(self.activity_details_card)
 
