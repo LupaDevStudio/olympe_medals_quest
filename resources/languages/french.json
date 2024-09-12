@@ -96,7 +96,7 @@
         "cancel_research_text": "Une recherche est déjà en cours, souhaitez-vous l'annuler pour rechercher @ ?"
     },
     "activities_menu": {
-        "title": "Activités"
+        "categories": "Catégories"
     },
     "medals": {
         "title": "Médailles",

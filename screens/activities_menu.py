@@ -21,13 +21,15 @@ from kivy.core.window import Window
 ### Local imports ###
 
 from lupa_libraries import (
-    OlympeScreen
+    OlympeScreen,
+    IconPressedButton
 )
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON
+    SCREEN_TITLE_ICON,
+    SHARED_DATA
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
@@ -37,6 +39,9 @@ from tools.graphics import (
 )
 from tools.data_structures import (
     Athlete
+)
+from tools.path import (
+    PATH_CATEGORIES_ICONS
 )
 
 #############
@@ -54,14 +59,50 @@ class ActivitiesMenuScreen(OlympeScreen):
         SCREEN_BACK_ARROW : "game",
         SCREEN_MONEY_RIGHT : True
     }
-    activities_menu_title = StringProperty()
+    categories_title = StringProperty()
+    activities_unlocked_title = StringProperty()
+    current_activity_title = StringProperty()
 
     def reload_language(self):
         super().reload_language()
         my_text = TEXT.activities_menu
-        self.activities_menu_title = my_text["title"]
+        self.categories_title = my_text["categories"]
+        self.activities_unlocked_title = ""
+        self.current_activity_title = ""
 
-    def fill_scrollview(self):
-        scrollview_layout = self.ids["scrollview_layout"]
+    def on_pre_enter(self, *args):
+        super().on_pre_enter(*args)
+        self.fill_categories_layout()
 
-        print("TODO fille scrollview")
+    def fill_categories_layout(self):
+        categories_layout = self.ids["categories_layout"]
+        width_button = (
+            Window.size[0]*SCROLLVIEW_WIDTH-6*MARGIN*self.font_ratio)/5
+
+        unlocked_activity_categories = self.GAME.unlocked_activity_categories
+        if SHARED_DATA.god_mode:
+            unlocked_activity_categories = [
+                "sports", "stats", "press", "job",
+                "secret", "break", "competition", "others"
+            ]
+        for category in unlocked_activity_categories:
+            category_button = IconPressedButton(
+                font_ratio=self.font_ratio,
+                size_hint=(None, None),
+                width=width_button,
+                height=width_button,
+                icon_source=PATH_CATEGORIES_ICONS+category+".png",
+                release_function=partial(self.fill_unlocked_activites_layout, category)
+            )
+            categories_layout.add_widget(category_button)
+
+    def fill_unlocked_activites_layout(self, category: str):
+        pass
+
+    def on_leave(self, *args):
+        super().on_leave(*args)
+
+        # Reset grid layout
+        list_widgets = self.ids.categories_layout.children[:]
+        for element in list_widgets:
+            self.ids.categories_layout.remove_widget(element)

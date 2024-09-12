@@ -1298,7 +1298,9 @@ class Game():
     @property
     def unlocked_activity_categories(self) -> list[str]:
         unlocked_activity_categories = []
+        print("UNLOCKED ACTIVITIES", self.unlocked_activities)
         for activity_id in self.unlocked_activities:
+            print(activity_id)
 
             # Special case for sports
             if "sports_" in activity_id:
@@ -1334,6 +1336,8 @@ class Game():
             return (self.year + NB_YEARS_BETWEEN_EDITION // 2) // NB_YEARS_BETWEEN_EDITION
 
     def __init__(self, dict_to_load: dict = {}) -> None:
+
+        print("DICT TO LOAD", dict_to_load)
 
         self.difficulty = dict_to_load.get("difficulty", "medium")
         self.total_time_played = dict_to_load.get("total_time_played", 0)
