@@ -1337,8 +1337,6 @@ class Game():
 
     def __init__(self, dict_to_load: dict = {}) -> None:
 
-        print("DICT TO LOAD", dict_to_load)
-
         self.difficulty = dict_to_load.get("difficulty", "medium")
         self.total_time_played = dict_to_load.get("total_time_played", 0)
         self.last_time_played = dict_to_load.get(
@@ -1392,6 +1390,18 @@ class Game():
         for athlete in self.retired_team:
             if athlete.id == athlete_id:
                 return athlete
+
+    def get_unlocked_activities_from_category(self, category: str) -> list[str]:
+        list_activities = []
+        for activity_id in self.unlocked_activities:
+            if "sports_" in activity_id:
+                activity_category = "sports"
+            else:
+                activity: Activity = ACTIVITIES[activity_id]
+                activity_category = activity.category
+            if activity_category == category:
+                list_activities.append(activity_id)
+        return list_activities
 
     def get_trimester_gained_total_money(self) -> int:
         trimester_payment = 0

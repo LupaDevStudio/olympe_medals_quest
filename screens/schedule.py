@@ -41,6 +41,9 @@ from tools.data_structures import (
     SPORTS,
     ACTIVITIES
 )
+from tools.olympe import (
+    get_activity_name
+)
 
 #############
 ### Class ###
@@ -107,23 +110,10 @@ class ScheduleScreen(OlympeScreen):
         self.activities_ids_list = self.athlete.current_planning
         self.reload_info()
 
-    def get_activity_name(self, full_activity_id: str) -> str:
-        if "sports_" in full_activity_id:
-            list_infos = full_activity_id.split("_") # "sports_2_name_training_4"
-            sport_id = list_infos[2]
-            level_activity = list_infos[4]
-            activity_name = TEXT.activities["sports_training"]["name"].replace(
-                "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
-                "[LEVEL]", str(level_activity))
-        else:
-            activity_name = TEXT.activities[full_activity_id]["name"]
-
-        return activity_name
-
     def update_activities_label(self, *args):
-        self.ids.first_activity.text = self.get_activity_name(self.activities_ids_list[0])
-        self.ids.second_activity.text = self.get_activity_name(self.activities_ids_list[1])
-        self.ids.third_activity.text = self.get_activity_name(self.activities_ids_list[2])
+        self.ids.first_activity.text = get_activity_name(self.activities_ids_list[0])
+        self.ids.second_activity.text = get_activity_name(self.activities_ids_list[1])
+        self.ids.third_activity.text = get_activity_name(self.activities_ids_list[2])
 
     def fill_stats_scrollview(self, athlete_skills):
         scrollview_layout = self.ids.stats_scrollview_layout
@@ -189,6 +179,7 @@ class ScheduleScreen(OlympeScreen):
                 level_activity = list_infos[3]
 
                 # Add only the sports related to the athlete
+                # TODO ici l'athlète peut s'entraîner dans un sport qu'on n'a pas débloqué
                 for sport_id in self.athlete.sports:
                     sport: Sport = SPORTS[sport_id]
                     if str(sport.category) == category_sport:
@@ -210,7 +201,7 @@ class ScheduleScreen(OlympeScreen):
             code_default_category=current_activity.category,
             all_unlocked_activities=code_values_activity,
             code_default_activity=current_activity_id,
-            get_activity_name_function=self.get_activity_name,
+            get_activity_name_function=get_activity_name,
             create_message_popup_function=self.create_message_popup
         )
         popup.open()

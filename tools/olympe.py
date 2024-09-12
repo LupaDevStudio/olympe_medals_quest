@@ -34,6 +34,7 @@ from tools.data_structures import (
     generate_learning_rates,
     Athlete,
     Game,
+    Sport,
     DEFAULT_STATS_DICT,
     DEFAULT_STAT_DICT,
     EVENTS_DICT,
@@ -121,6 +122,38 @@ def get_health_string(athlete: Athlete) -> str:
                 TEXT.general["trimester"].lower()
             
     return health
+
+def get_list_full_activity_ids(list_activities, list_sports) -> list[str]:
+    list_correct_activities = []
+    for activity_id in list_activities:
+        if "sports_" in activity_id:
+            list_infos = activity_id.split("_") # "sports_2_training_4"
+            category_sport = list_infos[1]
+            level_activity = list_infos[3]
+
+            # Add only the sports in list_sports
+            for sport_id in list_sports:
+                sport: Sport = SPORTS[sport_id]
+                if str(sport.category) == category_sport:
+                    list_correct_activities.append(
+                        f"sports_{category_sport}_{sport_id}_training_{level_activity}")
+        else:
+            list_correct_activities.append(activity_id)
+
+    return list_correct_activities
+
+def get_activity_name(full_activity_id: str) -> str:
+    if "sports_" in full_activity_id:
+        list_infos = full_activity_id.split("_") # "sports_2_name_training_4"
+        sport_id = list_infos[2]
+        level_activity = list_infos[4]
+        activity_name = TEXT.activities["sports_training"]["name"].replace(
+            "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
+            "[LEVEL]", str(level_activity))
+    else:
+        activity_name = TEXT.activities[full_activity_id]["name"]
+
+    return activity_name
 
 ##########################
 ### Athlete generation ###

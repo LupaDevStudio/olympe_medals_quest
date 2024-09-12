@@ -47,7 +47,8 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     SaveCard,
     StatBar,
     SeparationLine,
-    StatsLegend
+    StatsLegend,
+    LabelWithTutorial
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,
