@@ -75,9 +75,8 @@ class SportsMenuScreen(OlympeScreen):
         if SHARED_DATA.god_mode:
             unlock_sport_mode = True
 
-        # TODO uncomment this line
         self.sports_tree_content = SportsTreeContent(
-            # font_ratio=self.font_ratio,
+            font_ratio=self.font_ratio,
             unlock_sport_mode=unlock_sport_mode
         )
         scrollview_layout.add_widget(self.sports_tree_content)

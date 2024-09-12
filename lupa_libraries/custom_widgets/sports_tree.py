@@ -298,19 +298,21 @@ class SportsTreeContent(Widget):
                 if i != len(sport_classes) - 1:
                     if not (len(sport_classes[i]) != len(sport_classes[i + 1]) and j == len(sport_classes[i]) - 1):
                         right_link = SportCardLink(
-                            pos=(pos[0] + X_SIZE_SPORT_CARD /
-                                 2, pos[1] + Y_SIZE_SPORT_CARD),
+                            font_ratio=self.font_ratio,
+                            pos=(pos[0] + X_SIZE_SPORT_CARD*self.font_ratio /
+                                 2, pos[1] + Y_SIZE_SPORT_CARD*self.font_ratio),
                             size=(
-                                (X_SPACING_SPORT_CARDS + X_SIZE_SPORT_CARD) / 2, Y_SPACING_SPORT_CARDS)
+                                (X_SPACING_SPORT_CARDS + X_SIZE_SPORT_CARD)*self.font_ratio / 2, Y_SPACING_SPORT_CARDS*self.font_ratio)
                         )
                         self.add_widget(right_link)
                     if j != 0:
                         left_link = SportCardLink(
+                            font_ratio=self.font_ratio,
                             mode="left",
-                            pos=(pos[0] - X_SPACING_SPORT_CARDS /
-                                 2, pos[1] + Y_SIZE_SPORT_CARD),
+                            pos=(pos[0] - X_SPACING_SPORT_CARDS*self.font_ratio /
+                                 2, pos[1] + Y_SIZE_SPORT_CARD*self.font_ratio),
                             size=(
-                                (X_SPACING_SPORT_CARDS + X_SIZE_SPORT_CARD) / 2, Y_SPACING_SPORT_CARDS)
+                                (X_SPACING_SPORT_CARDS + X_SIZE_SPORT_CARD)*self.font_ratio / 2, Y_SPACING_SPORT_CARDS*self.font_ratio)
                         )
                         self.add_widget(left_link)
 
