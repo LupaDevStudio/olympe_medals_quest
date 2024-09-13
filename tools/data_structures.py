@@ -1302,9 +1302,7 @@ class Game():
     @property
     def unlocked_activity_categories(self) -> list[str]:
         unlocked_activity_categories = []
-        print("UNLOCKED ACTIVITIES", self.unlocked_activities)
         for activity_id in self.unlocked_activities:
-            print(activity_id)
 
             # Special case for sports
             if "sports_" in activity_id:

@@ -6,16 +6,13 @@ Module to create the schedule screen.
 ### Imports ###
 ###############
 
-### Python imports ###
-
-from functools import partial
-
 ### Kivy imports ###
 
 from kivy.properties import (
     StringProperty,
     NumericProperty,
-    ListProperty
+    ListProperty,
+    BooleanProperty
 )
 
 ### Local imports ###
@@ -70,6 +67,9 @@ class ScheduleScreen(OlympeScreen):
     injury_label = StringProperty()
     activities_ids_list = ListProperty([])
 
+    fatigue_unlocked = BooleanProperty(False)
+    injury_risk_unlocked = BooleanProperty(False)
+
     def reload_kwargs(self, dict_kwargs):
         self.athlete = dict_kwargs["athlete"]
         self.header_text = self.athlete.full_name
@@ -105,6 +105,9 @@ class ScheduleScreen(OlympeScreen):
 
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
+
+        self.fatigue_unlocked = "fatigue" in self.GAME.unlocked_modes
+        self.injury_risk_unlocked = "injury" in self.GAME.unlocked_modes
 
         self.bind(activities_ids_list=self.update_activities_label)
         self.activities_ids_list = self.athlete.current_planning

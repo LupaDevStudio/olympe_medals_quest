@@ -235,7 +235,7 @@ class CompetitionResultsScreen(OlympeScreen):
             # Image of the flag
 
             flag_image = FramedImage(
-                image_source=PATH_FLAGS_IMAGES+athlete.nationality+".png",
+                image_source=PATH_FLAGS_IMAGES+athlete.nationality+".jpg",
                 font_ratio=self.font_ratio,
                 size_hint=(None, None),
                 height=flag_height,

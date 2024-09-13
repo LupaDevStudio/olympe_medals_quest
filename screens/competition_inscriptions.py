@@ -96,6 +96,13 @@ class CompetitionInscriptionsScreen(OlympeScreen):
 
         if self.selected_sport_counter == len(self.list_sports) - 1:
             self.ids.next_button.text = self.validate_label
+            if self.spent_coins > self.GAME.money:
+                self.ids.next_button.disable_button = True
+            # Special case for the first FIGHT : the user must select the athlete
+            elif self.GAME.current_edition == 1 and len(self.GAME.selected_athletes_summer[self.GAME.first_sport]) == 0:
+                self.ids.next_button.disable_button = True
+            else:
+                self.ids.next_button.disable_button = False
         else:
             self.ids.next_button.text = self.next_label
 
@@ -252,6 +259,7 @@ class CompetitionInscriptionsScreen(OlympeScreen):
         # Rebuild scrollview
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
+        self.change_previous_next_buttons_text()
 
     def ask_redraw(self, widget):
         for athlete_id in self.athlete_folded_dict:
