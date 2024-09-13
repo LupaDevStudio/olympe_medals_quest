@@ -286,7 +286,7 @@ class Activity():
 
     id: str
     effects: list
-    category: str  # "sports", "stats", "press", "job", "secret", "break", "competition", "others"
+    category: str  # "sports", "stats", "press", "job", "secrets", "break", "competition", "others"
     all_trimester: bool
     price: int
     gain: int
@@ -1391,11 +1391,19 @@ class Game():
             if athlete.id == athlete_id:
                 return athlete
 
-    def get_unlocked_activities_from_category(self, category: str) -> list[str]:
+    def get_unlocked_activities_from_category(self, category: str, god_mode: bool = False) -> list[str]:
+        if god_mode:
+            all_activities = list(load_json_file(PATH_ACTIVITIES).keys())
+        else:
+            all_activities = self.unlocked_activities
         list_activities = []
-        for activity_id in self.unlocked_activities:
+        for activity_id in all_activities:
             if "sports_" in activity_id:
                 activity_category = "sports"
+            elif "competition_" in activity_id:
+                activity_category = "competition"
+            elif activity_id in ["start_new_sport", "transfer_sport"]:
+                activity_category = "others"
             else:
                 activity: Activity = ACTIVITIES[activity_id]
                 activity_category = activity.category

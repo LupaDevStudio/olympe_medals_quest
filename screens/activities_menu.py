@@ -31,6 +31,9 @@ from lupa_libraries.custom_widgets import (
     CustomScrollview,
     MyScrollViewLayout
 )
+from tools.basic_tools import (
+    load_json_file
+)
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
@@ -58,7 +61,8 @@ from tools.olympe import (
 )
 from tools.path import (
     PATH_CATEGORIES_ICONS,
-    PATH_TEXT_FONT
+    PATH_TEXT_FONT,
+    PATH_ACTIVITIES
 )
 
 #############
@@ -103,7 +107,7 @@ class ActivitiesMenuScreen(OlympeScreen):
         if SHARED_DATA.god_mode:
             unlocked_activity_categories = [
                 "sports", "stats", "press", "job",
-                "secret", "break", "competition", "others"
+                "secrets", "break", "competition", "others"
             ]
         for category in unlocked_activity_categories:
             category_button = IconPressedButton(
@@ -152,12 +156,12 @@ class ActivitiesMenuScreen(OlympeScreen):
         )
 
         # Add the elements in the scrollview
+        list_activities = self.GAME.get_unlocked_activities_from_category(
+            category=category,
+            god_mode=SHARED_DATA.god_mode)
         if SHARED_DATA.god_mode:
-            list_activities = list(ACTIVITIES.keys())
             list_sports = list(SPORTS.keys())
         else:
-            list_activities = self.GAME.get_unlocked_activities_from_category(
-                category=category)
             list_sports = self.GAME.unlocked_sports
         list_activities = get_list_full_activity_ids(
             list_activities=list_activities,

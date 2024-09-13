@@ -137,13 +137,23 @@ def get_list_full_activity_ids(list_activities, list_sports) -> list[str]:
                 if str(sport.category) == category_sport:
                     list_correct_activities.append(
                         f"sports_{category_sport}_{sport_id}_training_{level_activity}")
+        elif "competition_" in activity_id:
+            list_infos = activity_id.split("_") # "competition_world_1"
+            type_competition = list_infos[1]
+            category_sport = list_infos[2]
+
+            # Add only the sports in list_sports
+            for sport_id in list_sports:
+                sport: Sport = SPORTS[sport_id]
+                if str(sport.category) == category_sport:
+                    list_correct_activities.append(
+                        f"competition_{type_competition}_{sport_id}_{category_sport}")
         else:
             list_correct_activities.append(activity_id)
 
     return list_correct_activities
 
 def get_activity_name(full_activity_id: str) -> str:
-    print(full_activity_id) # PROBLEME : sports_1_cheese-rolling_training_training
     if "sports_" in full_activity_id:
         list_infos = full_activity_id.split("_") # "sports_2_name_training_4"
         sport_id = list_infos[2]
