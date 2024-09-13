@@ -143,13 +143,20 @@ def get_list_full_activity_ids(list_activities, list_sports) -> list[str]:
     return list_correct_activities
 
 def get_activity_name(full_activity_id: str) -> str:
+    print(full_activity_id) # PROBLEME : sports_1_cheese-rolling_training_training
     if "sports_" in full_activity_id:
         list_infos = full_activity_id.split("_") # "sports_2_name_training_4"
         sport_id = list_infos[2]
         level_activity = list_infos[4]
-        activity_name = TEXT.activities["sports_training"]["name"].replace(
-            "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
-            "[LEVEL]", str(level_activity))
+        activity_name = TEXT.activities[f"sports_training_{level_activity}"]["name"].replace(
+            "[SPORT]", TEXT.sports[sport_id]["name"])
+    elif "competition_" in full_activity_id:
+        list_infos = full_activity_id.split("_") # "competition_world_cheese-rolling_1"
+        type_competition = list_infos[1]
+        sport_id = list_infos[2]
+        category_sport = list_infos[3]
+        activity_name = TEXT.activities[f"competition_{type_competition}_{category_sport}"]["name"].replace(
+            "[SPORT]", TEXT.sports[sport_id]["name"])
     else:
         activity_name = TEXT.activities[full_activity_id]["name"]
 

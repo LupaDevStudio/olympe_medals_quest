@@ -365,152 +365,264 @@
     "activities": {
         "vacation": {
             "name": "Congés",
-            "description": "TODO"
+            "description": "Le moment idéal pour se reposer et accumuler des souvenirs d'évasion loin de tout entraînement sportif !"
         },
-        "sports_training": {
-            "name": "[SPORT_NAME] - Niv. [LEVEL]",
-            "description": "TODO"
+        "convalescence_1": {
+            "name": "Convalescence - Niveau 1",
+            "description": "Quand vous avez besoin d'une pause pour accélérer la guérison. Une petite touche de repos avec un prix raisonnable !"
         },
-        "stats_strength_1": {
-            "name": "Force - Niv. 1",
-            "description": "TODO"
+        "convalescence_2": {
+            "name": "Convalescence - Niveau 2",
+            "description": "Le repos complet guérissant toute maladie. Parfait pour quand vous avez besoin de vous remettre rapidement sur pied."
         },
-        "stats_strength_2": {
-            "name": "Force - Niv. 2",
-            "description": "TODO"
+        "massage": {
+            "name": "Massage",
+            "description": "Pour ceux qui veulent se détendre sans se ruiner. Un petit coup de pouce pour relâcher la tension et peut-être même faire disparaître les nœuds dans le dos."
         },
-        "stats_strength_3": {
-            "name": "Force - Niv. 3",
-            "description": "TODO"
+        "therapeutic_massage": {
+            "name": "Massage Thérapeutique",
+            "description": "Un massage qui fait plus que vous détendre : il vous aide à récupérer. C'est comme un petit miracle en plus d'un massage."
         },
-        "stats_strength_4": {
-            "name": "Force - Niv. 4",
-            "description": "TODO"
+        "reeducation": {
+            "name": "Rééducation",
+            "description": "Quand la blessure ne veut pas partir, il est temps de faire appel à la rééducation. Un retour à la normale, pour un prix démesuré néanmoins ; la santé à tout prix, n'est-ce-pas ?"
         },
-        "stats_strength_speed": {
-            "name": "Force & Vitesse",
-            "description": "TODO"
+        "interview": {
+            "name": "Interview",
+            "description": "Le moment où vous devez impressionner les médias et prouver que vous êtes le sportif idéal. Avec un peu de charme, vous pourriez même booster votre réputation, même si vous êtes un peu fatigué ou blessé !"
         },
-        "stats_strength_technique": {
-            "name": "Force & Technique",
-            "description": "TODO"
-        },
-        "stats_strength_precision": {
-            "name": "Force & Précision",
-            "description": "TODO"
-        },
-        "stats_speed_1": {
-            "name": "Vitesse - Niv. 1",
-            "description": "TODO"
-        },
-        "stats_speed_2": {
-            "name": "Vitesse - Niv. 2",
-            "description": "TODO"
-        },
-        "stats_speed_3": {
-            "name": "Vitesse - Niv. 3",
-            "description": "TODO"
-        },
-        "stats_speed_4": {
-            "name": "Vitesse - Niv. 4",
-            "description": "TODO"
-        },
-        "stats_speed_strength": {
-            "name": "Vitesse & Force",
-            "description": "TODO"
-        },
-        "stats_speed_technique": {
-            "name": "Vitesse & Technique",
-            "description": "TODO"
-        },
-        "stats_speed_precision": {
-            "name": "Vitesse & Précision",
-            "description": "TODO"
-        },
-        "stats_technique_1": {
-            "name": "Technique - Niv. 1",
-            "description": "TODO"
-        },
-        "stats_technique_2": {
-            "name": "Technique - Niv. 2",
-            "description": "TODO"
-        },
-        "stats_technique_3": {
-            "name": "Technique - Niv. 3",
-            "description": "TODO"
-        },
-        "stats_technique_4": {
-            "name": "Technique - Niv. 4",
-            "description": "TODO"
-        },
-        "stats_technique_strength": {
-            "name": "Technique & Force",
-            "description": "TODO"
-        },
-        "stats_technique_speed": {
-            "name": "Technique & Vitesse",
-            "description": "TODO"
-        },
-        "stats_technique_precision": {
-            "name": "Technique & Précision",
-            "description": "TODO"
-        },
-        "stats_precision_1": {
-            "name": "Précision - Niv. 1",
-            "description": "TODO"
-        },
-        "stats_precision_2": {
-            "name": "Précision - Niv. 2",
-            "description": "TODO"
-        },
-        "stats_precision_3": {
-            "name": "Précision - Niv. 3",
-            "description": "TODO"
-        },
-        "stats_precision_4": {
-            "name": "Précision - Niv. 4",
-            "description": "TODO"
-        },
-        "stats_precision_strength": {
-            "name": "Précision & Force",
-            "description": "TODO"
-        },
-        "stats_precision_speed": {
-            "name": "Précision & Vitesse",
-            "description": "TODO"
-        },
-        "stats_precision_technique": {
-            "name": "Précision & Technique",
-            "description": "TODO"
-        },
-        "stats_charm_1": {
-            "name": "Charme - Niv. 1",
-            "description": "TODO"
-        },
-        "stats_charm_2": {
-            "name": "Charme - Niv. 2",
-            "description": "TODO"
-        },
-        "stats_charm_3": {
-            "name": "Charme - Niv. 3",
-            "description": "TODO"
-        },
-        "stats_charm_4": {
-            "name": "Charme - Niv. 4",
-            "description": "TODO"
-        },
-        "start_new_sport": {
-            "name": "Apprendre [THE_SPORT]",
-            "description": "TODO"
-        },
-        "transfert_sport": {
-            "name": "Transfert - [SPORT]",
-            "description": "TODO"
+        "sponsor": {
+            "name": "Sponsor",
+            "description": "Le moment où vous aidez à attirer des sponsors pour votre équipe. Montrez votre meilleure réputation et votre charme pour convaincre les investisseurs, même si vous êtes un peu fatigué ou blessé."
         },
         "basic_job": {
             "name": "Serveur chez McDuck",
-            "description": "TODO"
-        }
+            "description": "Pour ceux qui veulent juste faire le boulot sans trop se casser la tête. Le rêve américain en version service rapide !"
+        },
+        "strength_job": {
+            "name": "Déménageur",
+            "description": "Un travail qui vous demande de montrer vos muscles. Idéal pour ceux qui aiment soulever des choses lourdes et se faire un peu d'argent !\nAccessible à partir du rang C en force."
+        },
+        "speed_job": {
+            "name": "Coursier",
+            "description": "Pour les amateurs de vitesse et de courses contre la montre. Courir comme le vent tout en remplissant votre porte-monnaie.\nAccessible à partir du rang C en vitesse."
+        },
+        "technique_job": {
+            "name": "Jardinier",
+            "description": "Si vous excellez dans la technique et que vous aimez résoudre des problèmes sportifs avec des solutions ingénieuses, ce poste est fait pour vous. Mettez à profit votre expertise technique et montrez votre flair pour la technologie verte et soyez récompensé pour vos talents naissants de paysagiste !\nAccessible à partir du rang C en technique."
+        },
+        "precision_job": {
+            "name": "Céramiste",
+            "description": "Mettez à profit votre œil de lynx et vos compétences de précision pour créer des œuvres d'art en céramique. Chaque pièce raffinée vous rapportera des récompenses tangibles.\nAccessible à partir du rang C en précision."
+        },
+        "charm_job_1": {
+            "name": "Hôte d'accueil",
+            "description": "Mettez votre charme à l'œuvre pour accueillir les visiteurs avec élégance et gagner de l'argent. Un excellent point de départ pour briller dans le monde du glamour, avec juste ce qu'il faut de sourire et de finesse.\nAccessible à partir du rang C en charme."
+        },
+        "charm_job_2": {
+            "name": "Guide touristique",
+            "description": "Élevez votre charme à un niveau supérieur tout en augmentant votre salaire. Utilisez vos talents de persuasion pour captiver les visiteurs et booster vos gains !\nAccessible à partir du rang A en charme."
+        },
+        "best_job": {
+            "name": "Assistant administratif",
+            "description": "Le poste de rêve où vous alliez compétences organisationnelles et brillance professionnelle. Soyez payé comme une superstar tout en mettant en ordre les affaires avec élégance. Le sommet de la carrière est à votre portée ! Mais, attendez, n'étiez-vous pas un athlète auparavant ?"
+        },
+        "tribune_1": {
+            "name": "Tribune - Niv. 1",
+            "description": "Exprimez vos idées et faites entendre votre voix pour promouvoir de nouveaux sports dans la compétition FIGHT. Même si vous êtes malade ou blessé, votre opinion compte !"
+        },
+        "tribune_2": {
+            "name": "Tribune - Niv. 2",
+            "description": "Passez au niveau supérieur avec des discours plus impactants pour introduire des sports de niveau 2 dans la compétition FIGHT. Votre voix porte encore plus loin et vos arguments sont plus convaincants !"
+        },
+        "cryotherapy_1": {
+            "name": "Cryothérapie - Niv. 1",
+            "description": "Un petit coup de froid pour réduire la fatigue. Vous ne deviendrez pas un bonhomme de neige, mais vous vous sentirez mieux !"
+        },
+        "cryotherapy_2": {
+            "name": "Cryothérapie - Niv. 2",
+            "description": "Plus de froid, plus d'efficacité. Préparez-vous à geler un peu pour une grande réduction de la fatigue."
+        },
+        "cryotherapy_3": {
+            "name": "Cryothérapie - Niv. 3",
+            "description": "Le grand froid ! Préparez-vous à une immersion glaciale pour éliminer toute trace de fatigue. Le froid n'a jamais été aussi rafraîchissant."
+        },
+        "competition_world_1": {
+            "name": "Compétition Mondiale - [SPORT]",
+            "description": "La compétition où vous affrontez les meilleurs du monde. À ce prix-là, c'est presque un voyage autour du globe !"
+        },
+        "competition_continental_2": {
+            "name": "Compétition Continentale - [SPORT]",
+            "description": "Défiez les talents de votre continent sans trop débourser. Parfait pour se faire un nom sur la scène internationale !"
+        },
+        "competition_world_2": {
+            "name": "Compétition Mondiale - [SPORT]",
+            "description": "Un pas de plus vers la gloire mondiale. Moins cher que votre dernier café, mais tout aussi intense !"
+        },
+        "competition_national_3": {
+            "name": "Compétition Nationale - [SPORT]",
+            "description": "Montrez vos compétences sur le territoire national à un prix qui ne vous ruinera pas. La reconnaissance nationale vous attend !"
+        },
+        "competition_continental_3": {
+            "name": "Compétition Continentale - [SPORT]",
+            "description": "Affrontez les meilleurs de votre continent et préparez-vous à une grande aventure. Le tout pour un prix tout à fait raisonnable !"
+        },
+        "competition_world_3": {
+            "name": "Compétition Mondiale - [SPORT]",
+            "description": "Le summum de la compétition mondiale. Préparez-vous à briller, et le prix est plus bas que ce que vous imaginez !"
+        },
+        "sports_training_1": {
+            "name": "[SPORT] - Niv. 1",
+            "description": "Commencez votre voyage sportif en [SPORT] avec un entraînement de base. Pas de quoi transpirer, mais un bon début pour s'améliorer !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "sports_training_2": {
+            "name": "[SPORT] - Niv. 2",
+            "description": "Un niveau supérieur d'entraînement pour les sportifs en herbe. Faites chauffer les muscles et préparez-vous à progresser !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+        },
+        "sports_training_3": {
+            "name": "[SPORT] - Niv. 3",
+            "description": "Augmentez l'intensité et sentez la différence. C'est là que les résultats commencent à se faire sentir (et les muscles à tirer) !\nCet entraînement n'aura pas d'effets avant le rang D."
+        },
+        "sports_training_4": {
+            "name": "[SPORT] - Niv. 4",
+            "description": "Le sommet de l'entraînement sportif en [SPORT] ! Préparez-vous à repousser vos limites et à ressentir le vrai défi sportif, moyennant un large investissement financier.\nCet entraînement n'aura pas d'effets avant le rang C."
+        },
+        "stats_strength_1": {
+            "name": "Force - Niv. 1",
+            "description": "Développez votre puissance musculaire de base. Le premier pas vers des bras plus forts !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_strength_2": {
+            "name": "Force - Niv. 2",
+            "description": "Augmentez votre force avec des entraînements plus intenses. Vous commencerez à soulever des objets plus lourds sans effort !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+        },
+        "stats_strength_3": {
+            "name": "Force - Niv. 3",
+            "description": "Force maximale en approche ! Préparez-vous à être le Hercules de votre groupe.\nCet entraînement n'aura pas d'effets avant le rang D."
+        },
+        "stats_strength_4": {
+            "name": "Force - Niv. 4",
+            "description": "Atteignez le sommet de la force physique. Vous pourriez soulever une voiture si vous le vouliez !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_strength_speed": {
+            "name": "Force & Vitesse",
+            "description": "Combinez puissance et rapidité pour devenir une machine de guerre. Parce que les muscles et la vitesse font bon ménage !"
+        },
+        "stats_strength_technique": {
+            "name": "Force & Technique",
+            "description": "Alliez la force brute et la finesse technique. Pour les athlètes qui veulent impressionner autant par leur puissance que par leur savoir-faire."
+        },
+        "stats_strength_precision": {
+            "name": "Force & Précision",
+            "description": "Combinez une force incroyable avec une précision chirurgicale. Parfait pour ceux qui veulent tout faire avec puissance et exactitude."
+        },
+        "stats_speed_1": {
+            "name": "Vitesse - Niv. 1",
+            "description": "Développez vos réflexes et votre rapidité de base. Le début de votre carrière de sprinteur !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_speed_2": {
+            "name": "Vitesse - Niv. 2",
+            "description": "Accélérez vos performances avec un entraînement de vitesse amélioré. Vous serez le premier à franchir la ligne d'arrivée !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+        },
+        "stats_speed_3": {
+            "name": "Vitesse - Niv. 3",
+            "description": "La vitesse prend une nouvelle dimension. Préparez-vous à battre tous les records !\nCet entraînement n'aura pas d'effets avant le rang D."
+        },
+        "stats_speed_4": {
+            "name": "Vitesse - Niv. 4",
+            "description": "Vitesse maximale ! Vous courrez plus vite que l'éclair. Soyez prêt pour les compétitions de haut niveau !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_speed_strength": {
+            "name": "Vitesse & Force",
+            "description": "Combinez rapidité et puissance pour une performance explosive. Vous serez aussi rapide qu'un guépard et aussi fort qu'un lion !"
+        },
+        "stats_speed_technique": {
+            "name": "Vitesse & Technique",
+            "description": "Mélangez vitesse et compétences techniques pour des performances exceptionnelles. Vous brillerez dans tous les domaines !"
+        },
+        "stats_speed_precision": {
+            "name": "Vitesse & Précision",
+            "description": "Vitesse et précision réunies pour une efficacité redoutable. Vous frapperez vite et juste !"
+        },
+        "stats_technique_1": {
+            "name": "Technique - Niv. 1",
+            "description": "Perfectionnez vos compétences techniques de base. Le premier pas vers devenir un expert dans votre domaine !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_technique_2": {
+            "name": "Technique - Niv. 2",
+            "description": "Augmentez vos compétences avec des techniques plus avancées. Le progrès est à portée de main !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+        },
+        "stats_technique_3": {
+            "name": "Technique - Niv. 3",
+            "description": "Atteignez des niveaux élevés de maîtrise technique. Vous serez le Picasso de votre sport !\nCet entraînement n'aura pas d'effets avant le rang D."
+        },
+        "stats_technique_4": {
+            "name": "Technique - Niv. 4",
+            "description": "La perfection technique est à vous. Vous aurez une maîtrise complète et impressionnante !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_technique_strength": {
+            "name": "Technique & Force",
+            "description": "Combinez une technique raffinée avec une force brute. Un duo parfait pour exceller dans toutes les situations !"
+        },
+        "stats_technique_speed": {
+            "name": "Technique & Vitesse",
+            "description": "Alliez rapidité et maîtrise technique pour des performances fulgurantes. La vitesse avec une touche d'élégance !"
+        },
+        "stats_technique_precision": {
+            "name": "Technique & Précision",
+            "description": "Technique parfaite et précision de haute volée. Vous serez aussi précis qu'un laser !"
+        },
+        "stats_precision_1": {
+            "name": "Précision - Niv. 1",
+            "description": "Affinez votre précision de base pour des tirs et des mouvements plus justes. Le début d'une visée parfaite !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_precision_2": {
+            "name": "Précision - Niv. 2",
+            "description": "Améliorez votre précision avec des techniques avancées. Vous toucherez la cible avec une aisance croissante !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A.\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+        },
+        "stats_precision_3": {
+            "name": "Précision - Niv. 3",
+            "description": "Perfectionnez votre précision jusqu'à atteindre presque la perfection. Préparez-vous à être le maître des détails !\nCet entraînement n'aura pas d'effets avant le rang D."
+        },
+        "stats_precision_4": {
+            "name": "Précision - Niv. 4",
+            "description": "Atteignez le summum de la précision. Vos gestes et tirs seront impeccables !\nCet entraînement n'aura pas d'effets avant le rang C."
+        },
+        "stats_precision_strength": {
+            "name": "Précision & Force",
+            "description": "Combinez une précision aiguisée avec une force remarquable. Le combo parfait pour des résultats exceptionnels !"
+        },
+        "stats_precision_speed": {
+            "name": "Précision & Vitesse",
+            "description": "Une précision de maître avec la rapidité d'un sprinteur. Vous frapperez vite et juste !"
+        },
+        "stats_precision_technique": {
+            "name": "Précision & Technique",
+            "description": "Combinez précision et technique pour un rendu impeccable. L'art de la précision avec le savoir-faire technique !"
+        },
+        "stats_charm_1": {
+            "name": "Charme - Niv. 1",
+            "description": "Mettez en avant votre charme de base. C'est le début pour séduire et impressionner !\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "stats_charm_2": {
+            "name": "Charme - Niv. 2",
+            "description": "Augmentez votre pouvoir de charme avec plus d'assurance. Vous deviendrez le centre de l'attention !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+        },
+        "stats_charm_3": {
+            "name": "Charme - Niv. 3",
+            "description": "Charme à son paroxysme. Vous avez ce qu'il faut pour envoûter tout le monde autour de vous !\nCet entraînement n'aura pas d'effets avant le rang D."
+        },
+        "stats_charm_4": {
+            "name": "Charme - Niv. 4",
+            "description": "Le charme ultime ! Vous êtes maintenant irrésistible, et tout le monde tombe sous votre emprise.\nCet entraînement n'aura plus d'effets à partir du rang B."
+        },
+        "start_new_sport": {
+            "name": "Apprendre [THE_SPORT]",
+            "description": "Lancez-vous dans une nouvelle aventure sportive. Préparez-vous à vous fatiguer et à risquer quelques blessures, mais la récompense est garantie !\nLe niveau dans nouveau sport appris sera basé sur le niveau de l'athlète dans les compétences liées au sport."
+        },
+        "transfer_sport": {
+            "name": "Transfert - [SPORT]",
+            "description": "Il est temps de monter dans les échelles du prestige sportif en découvrant un sport de niveau supérieur !\nPour apprendre un sport de niveau 2, l'athlète doit avoir des compétences dans l'un des deux sports enfants de niveau 1, et une partie de ces connaissances sera transférée : idéal pour ne pas recommencer depuis 0. Idem pour un sport de niveau 3 avec l'un des deux sports enfants de niveau 2."
+        }    
     },
     "activity_categories": {
         "competition": {
