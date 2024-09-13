@@ -29,7 +29,8 @@ from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON
+    SCREEN_TITLE_ICON,
+    USER_DATA
 )
 from tools.graphics import (
     SCROLLVIEW_WIDTH,
@@ -138,11 +139,12 @@ class SportsComplexScreen(OlympeScreen):
                 next_level_details = self.get_info_from_sport_complex_level(
                     sports_complex_level=next_level
                 )
+                price = SPORTS_COMPLEX_EVOLUTION_DICT[str(next_level)]["price"]
 
                 sports_complex_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
                     title_card=sports_complex_title,
-                    price=SPORTS_COMPLEX_EVOLUTION_DICT[str(next_level)]["price"],
+                    price=price,
                     button_text=TEXT.sports_complex["expand"],
                     image_source=PATH_BACKGROUNDS + f"sport_complex_{next_level}.jpg",
                     size_hint=(SCROLLVIEW_WIDTH, None),
@@ -150,7 +152,9 @@ class SportsComplexScreen(OlympeScreen):
                     current_level_title=TEXT.general["level"] + " " + str(sports_complex_level),
                     current_level_details=current_level_details,
                     next_level_title=TEXT.general["level"] + " " + str(next_level),
-                    next_level_details=next_level_details
+                    next_level_details=next_level_details,
+                    disable_buy_button=price>self.GAME.money,
+                    buy_function=partial(self.buy_room, "sports_complex")
                 )
 
             self.rooms_folded_dict["sports_complex"][1] = sports_complex_card
@@ -193,10 +197,11 @@ class SportsComplexScreen(OlympeScreen):
                 next_level_details = []
                 # TODO parcourir les activités et effets DANS UNE FONCTION
 
+                price = ROOMS_EVOLUTION_DICT[room_id][str(next_level)]["price"]
                 room_card = CompleteRoomCard(
                     font_ratio=self.font_ratio,
                     title_card=room_title,
-                    price=ROOMS_EVOLUTION_DICT[room_id][str(next_level)]["price"],
+                    price=price,
                     button_text=button_text,
                     image_source=room.image,
                     size_hint=(SCROLLVIEW_WIDTH, None),
@@ -205,7 +210,9 @@ class SportsComplexScreen(OlympeScreen):
                     current_level_details=current_level_details,
                     next_level_title=next_level_title,
                     next_level_details=next_level_details,
-                    room_details_function=partial(self.open_tutorial_popup_room, room_id)
+                    room_details_function=partial(self.open_tutorial_popup_room, room_id),
+                    disable_buy_button=price>self.GAME.money,
+                    buy_function=partial(self.buy_room, room_id)
                 )
 
             self.rooms_folded_dict[room_id][1] = room_card
@@ -218,6 +225,15 @@ class SportsComplexScreen(OlympeScreen):
                 break
         
         # Rebuild scrollview
+        self.ids.scrollview_layout.reset_scrollview()
+        self.fill_scrollview()
+
+    def buy_room(self, room_id: str):
+        self.GAME.buy_sports_complex(room_id=room_id)
+        USER_DATA.save_changes()
+
+        # Reset scrollview
+        self.reload_language()
         self.ids.scrollview_layout.reset_scrollview()
         self.fill_scrollview()
 

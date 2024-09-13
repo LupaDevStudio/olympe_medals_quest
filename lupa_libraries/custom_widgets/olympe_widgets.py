@@ -35,6 +35,9 @@ from tools.data_structures import (
     Athlete,
     convert_points_to_tier_rank
 )
+from tools.olympe import (
+    get_activity_name
+)
 from tools.graphics import (
     FONTS_SIZES,
     COLORS,
@@ -911,17 +914,8 @@ class PlanificationCard(RelativeLayout):
                 self.remove_widget(self.small_planification_card)
 
             list_activities_label = []
-            for activity_id in self.athlete.current_planning:
-                if "sports_" in activity_id:
-                    list_infos = activity_id.split("_") # "sports_2_name_training_4"
-                    sport_id = list_infos[2]
-                    level_activity = list_infos[4]
-                    activity_name = TEXT.activities["sports_training"]["name"].replace(
-                        "[SPORT_NAME]", TEXT.sports[sport_id]["name"]).replace(
-                        "[LEVEL]", str(level_activity))
-                    list_activities_label.append(activity_name)
-                else:
-                    list_activities_label.append(TEXT.activities[activity_id]["name"])
+            for full_activity_id in self.athlete.current_planning:
+                list_activities_label.append(get_activity_name(full_activity_id=full_activity_id))
 
             self.complete_planification_card = CompletePlanificationCard(
                 font_ratio=self.font_ratio,
@@ -1064,6 +1058,7 @@ class CompleteRoomCard(FloatLayout):
     font_color = ColorProperty(COLORS.white)
 
     buy_function = ObjectProperty(lambda: 1 + 1)
+    disable_buy_button = BooleanProperty(False)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 

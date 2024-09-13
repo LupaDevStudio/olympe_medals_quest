@@ -1172,7 +1172,11 @@ class SportsComplex():
             current_room: Room = self.rooms_bought[room_id]
             current_room.increase_level()
         else:
-            current_room = Room(id=room_id)
+            current_room = Room(
+                dict_to_load={
+                    "id": room_id
+                })
+            self.rooms_bought[room_id] = current_room
         return current_room
 
     def export_dict(self):
