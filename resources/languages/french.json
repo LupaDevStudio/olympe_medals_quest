@@ -401,27 +401,27 @@
         },
         "strength_job": {
             "name": "Déménageur",
-            "description": "Un travail qui vous demande de montrer vos muscles. Idéal pour ceux qui aiment soulever des choses lourdes et se faire un peu d'argent !\nAccessible à partir du rang C en force."
+            "description": "Un travail qui vous demande de montrer vos muscles. Idéal pour ceux qui aiment soulever des choses lourdes et se faire un peu d'argent !\n\nAccessible à partir du rang C en force."
         },
         "speed_job": {
             "name": "Coursier",
-            "description": "Pour les amateurs de vitesse et de courses contre la montre. Courir comme le vent tout en remplissant votre porte-monnaie.\nAccessible à partir du rang C en vitesse."
+            "description": "Pour les amateurs de vitesse et de courses contre la montre. Courir comme le vent tout en remplissant votre porte-monnaie.\n\nAccessible à partir du rang C en vitesse."
         },
         "technique_job": {
             "name": "Jardinier",
-            "description": "Si vous excellez dans la technique et que vous aimez résoudre des problèmes sportifs avec des solutions ingénieuses, ce poste est fait pour vous. Mettez à profit votre expertise technique et montrez votre flair pour la technologie verte et soyez récompensé pour vos talents naissants de paysagiste !\nAccessible à partir du rang C en technique."
+            "description": "Si vous excellez dans la technique et que vous aimez résoudre des problèmes sportifs avec des solutions ingénieuses, ce poste est fait pour vous. Mettez à profit votre expertise technique et montrez votre flair pour la technologie verte et soyez récompensé pour vos talents naissants de paysagiste !\n\nAccessible à partir du rang C en technique."
         },
         "precision_job": {
             "name": "Céramiste",
-            "description": "Mettez à profit votre œil de lynx et vos compétences de précision pour créer des œuvres d'art en céramique. Chaque pièce raffinée vous rapportera des récompenses tangibles.\nAccessible à partir du rang C en précision."
+            "description": "Mettez à profit votre œil de lynx et vos compétences de précision pour créer des œuvres d'art en céramique. Chaque pièce raffinée vous rapportera des récompenses tangibles.\n\nAccessible à partir du rang C en précision."
         },
         "charm_job_1": {
             "name": "Hôte d'accueil",
-            "description": "Mettez votre charme à l'œuvre pour accueillir les visiteurs avec élégance et gagner de l'argent. Un excellent point de départ pour briller dans le monde du glamour, avec juste ce qu'il faut de sourire et de finesse.\nAccessible à partir du rang C en charme."
+            "description": "Mettez votre charme à l'œuvre pour accueillir les visiteurs avec élégance et gagner de l'argent. Un excellent point de départ pour briller dans le monde du glamour, avec juste ce qu'il faut de sourire et de finesse.\n\nAccessible à partir du rang C en charme."
         },
         "charm_job_2": {
             "name": "Guide touristique",
-            "description": "Élevez votre charme à un niveau supérieur tout en augmentant votre salaire. Utilisez vos talents de persuasion pour captiver les visiteurs et booster vos gains !\nAccessible à partir du rang A en charme."
+            "description": "Élevez votre charme à un niveau supérieur tout en augmentant votre salaire. Utilisez vos talents de persuasion pour captiver les visiteurs et booster vos gains !\n\nAccessible à partir du rang A en charme."
         },
         "best_job": {
             "name": "Assistant administratif",
@@ -429,11 +429,11 @@
         },
         "tribune_1": {
             "name": "Tribune - Niv. 1",
-            "description": "Exprimez vos idées et faites entendre votre voix pour promouvoir de nouveaux sports dans la compétition FIGHT. Même si vous êtes malade ou blessé, votre opinion compte !"
+            "description": "Exprimez vos idées et faites entendre votre voix pour promouvoir de nouveaux sports dans la compétition du FIGHT. Même si vous êtes malade ou blessé, votre opinion compte !"
         },
         "tribune_2": {
             "name": "Tribune - Niv. 2",
-            "description": "Passez au niveau supérieur avec des discours plus impactants pour introduire des sports de niveau 2 dans la compétition FIGHT. Votre voix porte encore plus loin et vos arguments sont plus convaincants !"
+            "description": "Passez au niveau supérieur avec des discours plus impactants pour introduire des sports de niveau 2 dans la compétition du FIGHT. Votre voix porte encore plus loin et vos arguments sont plus convaincants !"
         },
         "cryotherapy_1": {
             "name": "Cryothérapie - Niv. 1",
@@ -473,35 +473,35 @@
         },
         "sports_training_1": {
             "name": "[SPORT] - Niv. 1",
-            "description": "Commencez votre voyage sportif en [SPORT] avec un entraînement de base. Pas de quoi transpirer, mais un bon début pour s'améliorer !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Commencez votre voyage sportif en [SPORT_LOWER] avec un entraînement de base. Pas de quoi beaucoup transpirer, mais un bon début pour découvrir la discipline !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "sports_training_2": {
             "name": "[SPORT] - Niv. 2",
-            "description": "Un niveau supérieur d'entraînement pour les sportifs en herbe. Faites chauffer les muscles et préparez-vous à progresser !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+            "description": "Un niveau supérieur d'entraînement pour les sportifs en herbe. Faites chauffer les muscles et préparez-vous à progresser au risque de quelques courbatures !\n\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
         },
         "sports_training_3": {
             "name": "[SPORT] - Niv. 3",
-            "description": "Augmentez l'intensité et sentez la différence. C'est là que les résultats commencent à se faire sentir (et les muscles à tirer) !\nCet entraînement n'aura pas d'effets avant le rang D."
+            "description": "Augmentez l'intensité et sentez la différence. C'est là que les résultats commencent à se faire sentir malgré les douleurs musculaires !\n\nCet entraînement n'aura pas d'effets avant le rang D."
         },
         "sports_training_4": {
             "name": "[SPORT] - Niv. 4",
-            "description": "Le sommet de l'entraînement sportif en [SPORT] ! Préparez-vous à repousser vos limites et à ressentir le vrai défi sportif, moyennant un large investissement financier.\nCet entraînement n'aura pas d'effets avant le rang C."
+            "description": "Le sommet de l'entraînement sportif en [SPORT_LOWER] ! Préparez-vous à repousser vos limites et à ressentir le vrai défi sportif, moyennant un large investissement financier.\n\nCet entraînement n'aura pas d'effets avant le rang C."
         },
         "stats_strength_1": {
             "name": "Force - Niv. 1",
-            "description": "Développez votre puissance musculaire de base. Le premier pas vers des bras plus forts !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Développez votre puissance musculaire de base. Le premier pas vers des bras plus forts !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_strength_2": {
             "name": "Force - Niv. 2",
-            "description": "Augmentez votre force avec des entraînements plus intenses. Vous commencerez à soulever des objets plus lourds sans effort !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+            "description": "Direction la salle de musculation ! Augmentez votre force avec des entraînements plus intenses. Vous commencerez à soulever des objets plus lourds sans effort !\n\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
         },
         "stats_strength_3": {
             "name": "Force - Niv. 3",
-            "description": "Force maximale en approche ! Préparez-vous à être le Hercules de votre groupe.\nCet entraînement n'aura pas d'effets avant le rang D."
+            "description": "Force maximale en approche ! Préparez-vous à être le Hercules de votre groupe.\n\nCet entraînement n'aura pas d'effets avant le rang D."
         },
         "stats_strength_4": {
             "name": "Force - Niv. 4",
-            "description": "Atteignez le sommet de la force physique. Vous pourriez soulever une voiture si vous le vouliez !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Atteignez le sommet de la force physique. Vous pourriez soulever une voiture si vous le vouliez !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_strength_speed": {
             "name": "Force & Vitesse",
@@ -517,19 +517,19 @@
         },
         "stats_speed_1": {
             "name": "Vitesse - Niv. 1",
-            "description": "Développez vos réflexes et votre rapidité de base. Le début de votre carrière de sprinteur !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Développez vos réflexes et votre rapidité de base. Le début de votre carrière de sprinteur !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_speed_2": {
             "name": "Vitesse - Niv. 2",
-            "description": "Accélérez vos performances avec un entraînement de vitesse amélioré. Vous serez le premier à franchir la ligne d'arrivée !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+            "description": "Direction la salle de cardio-training ! Accélérez vos performances avec un entraînement de vitesse amélioré. Vous serez le premier à franchir la ligne d'arrivée !\n\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
         },
         "stats_speed_3": {
             "name": "Vitesse - Niv. 3",
-            "description": "La vitesse prend une nouvelle dimension. Préparez-vous à battre tous les records !\nCet entraînement n'aura pas d'effets avant le rang D."
+            "description": "La vitesse prend une nouvelle dimension. Préparez-vous à battre tous les records !\n\nCet entraînement n'aura pas d'effets avant le rang D."
         },
         "stats_speed_4": {
             "name": "Vitesse - Niv. 4",
-            "description": "Vitesse maximale ! Vous courrez plus vite que l'éclair. Soyez prêt pour les compétitions de haut niveau !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Vitesse maximale ! Vous courrez plus vite que l'éclair. Soyez prêt pour les compétitions de haut niveau !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_speed_strength": {
             "name": "Vitesse & Force",
@@ -545,19 +545,19 @@
         },
         "stats_technique_1": {
             "name": "Technique - Niv. 1",
-            "description": "Perfectionnez vos compétences techniques de base. Le premier pas vers devenir un expert dans votre domaine !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Perfectionnez vos compétences techniques de base. Le premier pas vers devenir un expert dans votre domaine !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_technique_2": {
             "name": "Technique - Niv. 2",
-            "description": "Augmentez vos compétences avec des techniques plus avancées. Le progrès est à portée de main !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+            "description": "Direction la salle de fitness ! Augmentez vos compétences avec des techniques plus avancées. Le progrès est à portée de main !\n\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
         },
         "stats_technique_3": {
             "name": "Technique - Niv. 3",
-            "description": "Atteignez des niveaux élevés de maîtrise technique. Vous serez le Picasso de votre sport !\nCet entraînement n'aura pas d'effets avant le rang D."
+            "description": "Atteignez des niveaux élevés de maîtrise technique. Vous serez le Picasso de votre sport !\n\nCet entraînement n'aura pas d'effets avant le rang D."
         },
         "stats_technique_4": {
             "name": "Technique - Niv. 4",
-            "description": "La perfection technique est à vous. Vous aurez une maîtrise complète et impressionnante !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "La perfection technique est à vous. Vous aurez une maîtrise complète et impressionnante !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_technique_strength": {
             "name": "Technique & Force",
@@ -573,19 +573,19 @@
         },
         "stats_precision_1": {
             "name": "Précision - Niv. 1",
-            "description": "Affinez votre précision de base pour des tirs et des mouvements plus justes. Le début d'une visée parfaite !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Affinez votre précision de base pour des tirs et des mouvements plus justes. Le début d'une visée parfaite !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_precision_2": {
             "name": "Précision - Niv. 2",
-            "description": "Améliorez votre précision avec des techniques avancées. Vous toucherez la cible avec une aisance croissante !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A.\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+            "description": "Direction la salle de méditation ! Améliorez votre précision avec des techniques avancées. Vous toucherez la cible avec une aisance croissante !\n\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A.\n\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
         },
         "stats_precision_3": {
             "name": "Précision - Niv. 3",
-            "description": "Perfectionnez votre précision jusqu'à atteindre presque la perfection. Préparez-vous à être le maître des détails !\nCet entraînement n'aura pas d'effets avant le rang D."
+            "description": "Perfectionnez votre précision jusqu'à atteindre presque la perfection. Préparez-vous à être le maître des détails !\n\nCet entraînement n'aura pas d'effets avant le rang D."
         },
         "stats_precision_4": {
             "name": "Précision - Niv. 4",
-            "description": "Atteignez le summum de la précision. Vos gestes et tirs seront impeccables !\nCet entraînement n'aura pas d'effets avant le rang C."
+            "description": "Atteignez le summum de la précision. Vos gestes et tirs seront impeccables !\n\nCet entraînement n'aura pas d'effets avant le rang C."
         },
         "stats_precision_strength": {
             "name": "Précision & Force",
@@ -601,61 +601,61 @@
         },
         "stats_charm_1": {
             "name": "Charme - Niv. 1",
-            "description": "Mettez en avant votre charme de base. C'est le début pour séduire et impressionner !\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Mettez en avant votre charme de base. C'est le début pour séduire et impressionner !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "stats_charm_2": {
             "name": "Charme - Niv. 2",
-            "description": "Augmentez votre pouvoir de charme avec plus d'assurance. Vous deviendrez le centre de l'attention !\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
+            "description": "Direction le studio ! Augmentez votre pouvoir de charme avec plus d'assurance. Vous deviendrez le centre de l'attention !\n\nCet entraînement n'aura pas d'effets avant le rang E, et n'en aura plus à partir du rang A."
         },
         "stats_charm_3": {
             "name": "Charme - Niv. 3",
-            "description": "Charme à son paroxysme. Vous avez ce qu'il faut pour envoûter tout le monde autour de vous !\nCet entraînement n'aura pas d'effets avant le rang D."
+            "description": "Votre timbre, vos gestes et vos sourires ; voici les nouvelles manières à peaufiner pour accroître votre charme déjà inné !\n\nCet entraînement n'aura pas d'effets avant le rang D."
         },
         "stats_charm_4": {
             "name": "Charme - Niv. 4",
-            "description": "Le charme ultime ! Vous êtes maintenant irrésistible, et tout le monde tombe sous votre emprise.\nCet entraînement n'aura plus d'effets à partir du rang B."
+            "description": "Il est temps d'acquérir les dernières pratiques pour faire de vous l'athlète le plus charmant du plateau !\n\nCet entraînement n'aura plus d'effets à partir du rang B."
         },
         "start_new_sport": {
             "name": "Apprendre [THE_SPORT]",
-            "description": "Lancez-vous dans une nouvelle aventure sportive. Préparez-vous à vous fatiguer et à risquer quelques blessures, mais la récompense est garantie !\nLe niveau dans nouveau sport appris sera basé sur le niveau de l'athlète dans les compétences liées au sport."
+            "description": "Lancez-vous dans une nouvelle aventure sportive. Préparez-vous à vous fatiguer et à risquer quelques blessures, mais la récompense est garantie !\n\nLe niveau dans le nouveau sport appris sera basé sur le niveau de l'athlète dans les compétences liées au sport."
         },
         "transfer_sport": {
             "name": "Transfert - [SPORT]",
-            "description": "Il est temps de monter dans les échelles du prestige sportif en découvrant un sport de niveau supérieur !\nPour apprendre un sport de niveau 2, l'athlète doit avoir des compétences dans l'un des deux sports enfants de niveau 1, et une partie de ces connaissances sera transférée : idéal pour ne pas recommencer depuis 0. Idem pour un sport de niveau 3 avec l'un des deux sports enfants de niveau 2."
+            "description": "Il est temps de monter dans les échelles du prestige sportif en découvrant un sport de niveau supérieur !\n\nPour apprendre un sport de niveau 2, l'athlète doit avoir des compétences dans l'un des deux sports enfants de niveau 1, et une partie de ces connaissances sera transférée : idéal pour ne pas recommencer depuis 0. Idem pour un sport de niveau 3 avec l'un des deux sports enfants de niveau 2."
         }    
     },
     "activity_categories": {
         "competition": {
             "name": "Compétitions",
-            "description": "TODO"
+            "description": "Ensemble des activités qui permettent à l'athlète de s'inscrire pour de petites compétitions, nationales, continentales ou mondiales selon son niveau. Utile pour se faire un peu d'argent et de réputation, pourvu que la victoire soit vôtre."
         },
         "break": {
             "name": "Repos",
-            "description": "TODO"
+            "description": "Ensemble des activités reposantes que les athlètes peuvent pratiquer, allant des vacances à la plage jusqu'aux apaisants massages, tout en passant par la case hôpital ou les bains glacés."
         },
         "press": {
             "name": "Journalisme",
-            "description": "TODO"
+            "description": "Ensemble des activités liées à la presse, qui permettent de mettre à profit le charme et la réputation de l'athlète pour décrocher de beaux sponsors ou exercer un lobbying honorable."
         },
         "sports": {
             "name": "Entraînement sportif",
-            "description": "TODO"
+            "description": "Ensemble des activités qui permettent à l'athlète de progresser dans la maîtrise d'un sport, ainsi que dans les compétences qui lui sont liées dans une moindre mesure."
         },
         "job": {
             "name": "Métiers",
-            "description": "TODO"
+            "description": "Ensemble des activités rémunératrices qui permettent à l'athlète de mettre à profit son temps et ses compétences en travaillant pour rapporter un peu d'argent à l'équipe."
         },
         "stats": {
             "name": "Entraînement des compétences",
-            "description": "TODO"
+            "description": "Ensemble des activités qui permettent à l'athlète de progresser significativement dans la maîtrise d'une compétence particulière, telle que la force, la vitesse, la technique, la précision et le charme."
         },
         "secrets": {
             "name": "Affaires secrètes",
-            "description": "TODO"
+            "description": "Ensemble des activités secrètes organisées par Narcisse pour avantager l'équipe Elysienne, qu'importe le prix et l'honneur."
         },
         "others": {
             "name": "Autres",
-            "description": "TODO"
+            "description": "Ensemble des autres activités, telles que l'apprentissage d'un nouveau sport."
         }
     },
     "tutorial": {},

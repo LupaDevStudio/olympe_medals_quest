@@ -36,7 +36,7 @@ from tools.data_structures import (
     convert_points_to_tier_rank
 )
 from tools.olympe import (
-    get_activity_name
+    get_activity_name_or_description
 )
 from tools.graphics import (
     FONTS_SIZES,
@@ -915,7 +915,7 @@ class PlanificationCard(RelativeLayout):
 
             list_activities_label = []
             for full_activity_id in self.athlete.current_planning:
-                list_activities_label.append(get_activity_name(full_activity_id=full_activity_id))
+                list_activities_label.append(get_activity_name_or_description(full_activity_id=full_activity_id))
 
             self.complete_planification_card = CompletePlanificationCard(
                 font_ratio=self.font_ratio,

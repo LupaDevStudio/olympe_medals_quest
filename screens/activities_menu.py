@@ -57,7 +57,7 @@ from tools.data_structures import (
 )
 from tools.olympe import (
     get_list_full_activity_ids,
-    get_activity_name
+    get_activity_name_or_description
 )
 from tools.path import (
     PATH_CATEGORIES_ICONS,
@@ -170,7 +170,7 @@ class ActivitiesMenuScreen(OlympeScreen):
         for full_activity_id in list_activities:
             activity_label = LabelWithTutorial(
                 font_ratio=self.font_ratio,
-                text=get_activity_name(full_activity_id=full_activity_id),
+                text=get_activity_name_or_description(full_activity_id=full_activity_id),
                 size_hint=(1, None),
                 height=LABEL_HEIGHT*self.font_ratio,
                 release_function=partial(self.show_activities_details, full_activity_id),
@@ -189,7 +189,7 @@ class ActivitiesMenuScreen(OlympeScreen):
         height = self.ids.categories_card.height*0.75
         self.activity_details_card = OlympeCard(
             header_mode=True,
-            header_text=get_activity_name(full_activity_id=full_activity_id),
+            header_text=get_activity_name_or_description(full_activity_id=full_activity_id),
             font_ratio=self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
             height=height,

@@ -39,7 +39,8 @@ from tools.data_structures import (
     ACTIVITIES
 )
 from tools.olympe import (
-    get_activity_name
+    get_activity_name_or_description,
+    get_list_full_activity_ids
 )
 
 #############
@@ -114,9 +115,9 @@ class ScheduleScreen(OlympeScreen):
         self.reload_info()
 
     def update_activities_label(self, *args):
-        self.ids.first_activity.text = get_activity_name(self.activities_ids_list[0])
-        self.ids.second_activity.text = get_activity_name(self.activities_ids_list[1])
-        self.ids.third_activity.text = get_activity_name(self.activities_ids_list[2])
+        self.ids.first_activity.text = get_activity_name_or_description(self.activities_ids_list[0])
+        self.ids.second_activity.text = get_activity_name_or_description(self.activities_ids_list[1])
+        self.ids.third_activity.text = get_activity_name_or_description(self.activities_ids_list[2])
 
     def fill_stats_scrollview(self, athlete_skills):
         scrollview_layout = self.ids.stats_scrollview_layout
@@ -174,22 +175,10 @@ class ScheduleScreen(OlympeScreen):
         current_activity: Activity = ACTIVITIES[self.athlete.current_planning[number_activity]]
         current_activity_id = current_activity.id
 
-        code_values_activity = []
-        for activity_id in self.GAME.unlocked_activities:
-            if "sports_" in activity_id:
-                list_infos = activity_id.split("_") # "sports_2_training_4"
-                category_sport = list_infos[1]
-                level_activity = list_infos[3]
-
-                # Add only the sports related to the athlete
-                # TODO ici l'athlète peut s'entraîner dans un sport qu'on n'a pas débloqué
-                for sport_id in self.athlete.sports:
-                    sport: Sport = SPORTS[sport_id]
-                    if str(sport.category) == category_sport:
-                        code_values_activity.append(
-                            f"sports_{category_sport}_{sport_id}_training_{level_activity}")
-            else:
-                code_values_activity.append(activity_id)
+        list_full_ids_activities = get_list_full_activity_ids(
+            list_activities=self.GAME.unlocked_activities,
+            list_sports=self.athlete.sports
+        )
 
         popup = OlympePlanificationPopup(
             title=self.athlete.full_name,
@@ -202,9 +191,8 @@ class ScheduleScreen(OlympeScreen):
             number_activity=number_activity,
             code_values_category=self.GAME.unlocked_activity_categories,
             code_default_category=current_activity.category,
-            all_unlocked_activities=code_values_activity,
+            all_unlocked_activities=list_full_ids_activities,
             code_default_activity=current_activity_id,
-            get_activity_name_function=get_activity_name,
             create_message_popup_function=self.create_message_popup
         )
         popup.open()
