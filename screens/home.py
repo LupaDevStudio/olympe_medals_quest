@@ -26,6 +26,9 @@ from tools.constants import (
     DICT_LANGUAGE_NAME_TO_CODE,
     DICT_LANGUAGE_CODE_TO_NAME
 )
+from tools import (
+    music_mixer
+)
 
 #############
 ### Class ###
@@ -55,6 +58,10 @@ class HomeScreen(OlympeScreen):
                 default_value=DICT_LANGUAGE_CODE_TO_NAME[TEXT.language],
                 values=list(DICT_LANGUAGE_NAME_TO_CODE.keys()),
                 confirm_function=self.change_language_and_go_to_save)
+
+        # Launch the music of the game title
+        elif music_mixer.musics["game_title"].state == "stop":
+            music_mixer.play("game_title", loop=True)
 
     def reload_language(self):
         super().reload_language()

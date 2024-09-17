@@ -179,6 +179,12 @@ class OlympeScreen(ImprovedScreen):
         elif SCREEN_MONEY_RIGHT in self.dict_type_screen:
             self.money_amount = self.GAME.money
 
+    def set_label_text_width(self, widget, value):
+        """
+        Function called when creating the labels to set correctly their size.
+        """
+        widget.text_size = (value[0], None)
+
     def create_message_popup(self, code: str | None = None, confirm_function = lambda: 1 + 1, title: str | None = None, text: str | None = None):
         if text is None:
             text = TEXT.popup[code]["text"]
@@ -201,8 +207,10 @@ class OlympeScreen(ImprovedScreen):
         )
         popup.open()
 
-    def create_yes_no_popup(self, code: str, confirm_function = lambda: 1 + 1, cancel_function = lambda: 1 + 1):
-        text = TEXT.popup[code]["text"]
+    def create_yes_no_popup(self, code: str | None = None, title: str | None = None, text: str | None = None, confirm_function = lambda: 1 + 1, cancel_function = lambda: 1 + 1):
+        if code is not None:
+            text = TEXT.popup[code]["text"]
+            title = TEXT.popup[code]["title"]
         if len(text) > 450:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.8)
         elif len(text) > 300:
@@ -210,7 +218,7 @@ class OlympeScreen(ImprovedScreen):
         else:
             popup_size_hint = (SCROLLVIEW_WIDTH, 0.4)
         popup = OlympeYesNoPopup(
-            title=TEXT.popup[code]["title"],
+            title=title,
             text=text,
             font_ratio=self.font_ratio,
             path_background=self.back_image_path,

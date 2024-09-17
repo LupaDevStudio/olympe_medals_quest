@@ -58,6 +58,9 @@ from tools.data_structures import (
     SPORTS,
     ACTIVITIES
 )
+from tools.olympe import (
+    get_activity_name_or_description
+)
 from lupa_libraries.custom_widgets import (
     OlympeCard,
     SeparationLine,
@@ -234,7 +237,6 @@ class OlympePlanificationPopup(OlympePopup):
     code_values_activity = ListProperty() # code values of the activities
     values_activity = ListProperty() # name values of the activities
 
-    get_activity_name_function = ObjectProperty(lambda : 1 + 1) # function to get the name of the activity given its id
     create_message_popup_function = ObjectProperty(lambda : 1 + 1) # function to open a message popup like in the Olympe screen
 
     ### Button options ###
@@ -256,7 +258,7 @@ class OlympePlanificationPopup(OlympePopup):
         for id in self.code_values_category:
             self.values_category.append(TEXT.activity_categories[id]["name"])
 
-        self.default_activity = self.get_activity_name_function(
+        self.default_activity = get_activity_name_or_description(
             full_activity_id=self.code_default_activity)
         self.build_values_activity()
         self.choose_activity(activity=self.default_activity)
@@ -275,7 +277,7 @@ class OlympePlanificationPopup(OlympePopup):
             if activity.category == self.code_default_category:
                 self.code_values_activity.append(activity_id)
                 self.values_activity.append(
-                    self.get_activity_name_function(full_activity_id=activity_id))
+                    get_activity_name_or_description(full_activity_id=activity_id))
 
     def update_cost(self):
         self.money_amount = abs(self.gain)
@@ -303,14 +305,12 @@ class OlympePlanificationPopup(OlympePopup):
 
     def open_details_activity(self):
         activity_index = self.values_activity.index(self.ids.activity_spinner.text)
-        activity_id: str = self.code_values_activity[activity_index]
-        if "sports_" in activity_id:
-            text = TEXT.activities["sports_training"]["description"]
-        else:
-            text = TEXT.activities[activity_id]["description"]
+        full_activity_id: str = self.code_values_activity[activity_index]
         self.create_message_popup_function(
             title=self.ids.activity_spinner.text,
-            text=text
+            text=get_activity_name_or_description(
+                full_activity_id=full_activity_id,
+                mode="description")
         )
 
     def choose_category(self, category: str):

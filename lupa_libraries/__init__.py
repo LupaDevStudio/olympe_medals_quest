@@ -25,13 +25,13 @@ from lupa_libraries.custom_widgets import (
     CharacterInfoWithMainSportsLayout,
     CharacterSkillsLayout,
     SurroundedLabel,
+    OlympeCard,
     SkillsCard,
     MedalsCard,
-    CompleteRecruitCard,
+    RecruitCard,
     CompleteInscriptionCard,
     SmallInscriptionCard,
-    CompletePlanificationCard,
-    SmallPlanificationCard,
+    PlanificationCard,
     SportLabelButton,
     SmallRoomCard,
     CompleteRoomCard,
@@ -46,7 +46,9 @@ from lupa_libraries.custom_widgets import (
     OlympePlanificationPopup,
     OlympeAthletePopup,
     SeparationLine,
-    StatsLegend
+    StatsLegend,
+    SportsTreeContent,
+    LabelWithTutorial
 )
 
 ### Dialog generator ###

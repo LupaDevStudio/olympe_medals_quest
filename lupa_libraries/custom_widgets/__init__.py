@@ -40,15 +40,15 @@ from lupa_libraries.custom_widgets.olympe_widgets import (
     CharacterSkillsLayout,
     MedalsCard,
     SkillsCard,
-    CompleteRecruitCard,
+    RecruitCard,
     CompleteInscriptionCard,
     SmallInscriptionCard,
-    CompletePlanificationCard,
-    SmallPlanificationCard,
+    PlanificationCard,
     SaveCard,
     StatBar,
     SeparationLine,
-    StatsLegend
+    StatsLegend,
+    LabelWithTutorial
 )
 from lupa_libraries.custom_widgets.custom_scrollview import (
     CustomScrollview,

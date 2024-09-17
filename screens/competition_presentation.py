@@ -67,7 +67,7 @@ class CompetitionPresentationScreen(OlympeScreen):
         super().on_enter(*args)
 
         # Launch the music of the FIGHT
-        music_mixer.play("fight")
+        music_mixer.play("fight", loop=True)
 
     def go_to_next_frame(self, *args):
         self.dialog_frame_counter += 1

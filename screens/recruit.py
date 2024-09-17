@@ -21,8 +21,7 @@ from kivy.uix.label import Label
 
 from lupa_libraries import (
     OlympeScreen,
-    CharacterInfoWithMainSportsLayout,
-    CompleteRecruitCard
+    RecruitCard
 )
 from tools.constants import (
     TEXT,
@@ -84,23 +83,55 @@ class RecruitScreen(OlympeScreen):
             self.recruit_title = str(number_athletes_current) + " / " + str(
                 self.GAME.max_athletes) + my_text["athletes"]
 
+    def add_no_athlete_to_recruit_label(self, scrollview_layout):
+
+        label = Label(
+            text=TEXT.recruit["no_athlete"],
+            font_size=FONTS_SIZES.label * self.font_ratio,
+            font_name=PATH_TEXT_FONT,
+            color=COLORS.white,
+            size_hint=(0.9, None),
+            height=1.5*LABEL_HEIGHT*self.font_ratio,
+            halign="left",
+            valign="middle"
+        )
+        label.bind(size=label.setter('text_size'))
+        scrollview_layout.add_widget(label)
+
+    def get_information_recruit_card(self, athlete: Athlete):
+
+        if self.folded_dict[athlete.id][0]:
+            athlete_skills = athlete.get_best_sports()
+            height = self.font_ratio * (
+                BIG_HEADER_HEIGHT + len(athlete_skills) * SKILL_HEIGHT + MARGIN*2)
+
+        else:
+            stats_dict = athlete.stats
+            sports_dict = athlete.sports
+            athlete_skills = stats_dict
+            athlete_skills.update(sports_dict)
+            if len(athlete_skills) > 0:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+            else:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*3 + BUTTON_HEIGHT)
+
+        return height
+
+    def update_recruit_card(self, athlete: Athlete):
+
+        height = self.get_information_recruit_card(athlete=athlete)
+
+        self.folded_dict[athlete.id][1].height = height
+        self.folded_dict[athlete.id][1].is_folded = self.folded_dict[athlete.id][0]
+
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
         # No athlete to recruit
         if len(self.GAME.recrutable_athletes) == 0:
-            label = Label(
-                text=TEXT.recruit["no_athlete"],
-                font_size=FONTS_SIZES.label * self.font_ratio,
-                font_name=PATH_TEXT_FONT,
-                color=COLORS.white,
-                size_hint=(0.9, None),
-                height=1.5*LABEL_HEIGHT*self.font_ratio,
-                halign="left",
-                valign="middle"
-            )
-            label.bind(size=label.setter('text_size'))
-            scrollview_layout.add_widget(label)
+            self.add_no_athlete_to_recruit_label(scrollview_layout=scrollview_layout)
 
         athlete: Athlete
         for athlete in self.GAME.recrutable_athletes:
@@ -108,60 +139,24 @@ class RecruitScreen(OlympeScreen):
             if athlete.id not in self.folded_dict:
                 self.folded_dict[athlete.id] = [True, None]
 
-            if self.folded_dict[athlete.id][0]:
-                athlete_skills = athlete.get_best_sports()
-                height = self.font_ratio * (
-                    BIG_HEADER_HEIGHT + len(athlete_skills) * SKILL_HEIGHT + MARGIN*2) 
+            # Display reputation or not
+            reputation_unlocked = "reputation" in self.GAME.unlocked_modes
+            if SHARED_DATA.god_mode:
+                reputation_unlocked = True
 
-                character_card = CharacterInfoWithMainSportsLayout(
-                    image_source=athlete.image,
-                    is_hurt=athlete.is_hurt,
-                    title_card=athlete.first_name + "\n" + athlete.name,
-                    salary=athlete.salary,
-                    skills_dict=athlete_skills,
-                    font_ratio=self.font_ratio,
-                    size_hint=(0.9, None),
-                    height=height,
-                    foldable_mode=True
-                )
+            # Get the height of the widget
+            height = self.get_information_recruit_card(athlete=athlete)
 
-            else:
-
-                stats_dict = athlete.stats
-                sports_dict = athlete.sports
-                athlete_skills = stats_dict
-                athlete_skills.update(sports_dict)
-                if len(athlete_skills) > 0:
-                    height = self.font_ratio * (
-                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
-                else:
-                    height = self.font_ratio * (
-                        HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*3 + BUTTON_HEIGHT)
-
-                # Sort reverse
-                athlete_skills = dict(reversed(athlete_skills.items()))
-                
-                # Display reputation or not
-                reputation_unlocked = "reputation" in self.GAME.unlocked_modes
-                if SHARED_DATA.god_mode:
-                    reputation_unlocked = True
-
-                character_card = CompleteRecruitCard(
-                    image_source=athlete.image,
-                    size_hint=(SCROLLVIEW_WIDTH, None),
-                    height=height,
-                    font_ratio=self.font_ratio,
-                    skills_dict=athlete_skills,
-                    title_card=athlete.full_name,
-                    salary=athlete.salary,
-                    age=TEXT.general["age"].replace("@", str(athlete.age)),
-                    reputation=TEXT.general["reputation"].replace(
-                        "@", str(int(athlete.reputation))),
-                    recruit_price=athlete.recruit_price,
-                    reputation_unlocked=reputation_unlocked,
-                    disable_button=not(self.GAME.can_recruit_athlete(athlete=athlete)),
-                    recruit_release_function=partial(self.ask_recruit_athlete, athlete)
-                )
+            character_card = RecruitCard(
+                athlete=athlete,
+                size_hint=(SCROLLVIEW_WIDTH, None),
+                height=height,
+                reputation_unlocked=reputation_unlocked,
+                is_folded=self.folded_dict[athlete.id][0],
+                font_ratio=self.font_ratio,
+                recruit_release_function=partial(self.ask_recruit_athlete, athlete),
+                can_recruit_athlete=self.GAME.can_recruit_athlete(athlete=athlete)
+            )
 
             self.folded_dict[athlete.id][1] = character_card
             scrollview_layout.add_widget(character_card)
@@ -170,11 +165,9 @@ class RecruitScreen(OlympeScreen):
         for athlete_id in self.folded_dict:
             if widget == self.folded_dict[athlete_id][1]:
                 self.folded_dict[athlete_id][0] = not self.folded_dict[athlete_id][0]
+                athlete: Athlete = self.GAME.get_athlete_from_id(athlete_id=athlete_id)
+                self.update_recruit_card(athlete=athlete)
                 break
-
-        # Reset scrollview
-        self.ids.scrollview_layout.reset_scrollview()
-        self.fill_scrollview()
 
     def ask_recruit_athlete(self, athlete: Athlete):
         self.create_yes_no_popup(

@@ -46,6 +46,7 @@ FONTS_SIZES = FontSize()
 
 class Colors():
     def __init__(self) -> None:
+        self.transparent_blue_olympe = (36 / 255, 122 / 255, 145 / 255, 0.5)
         self.blue_olympe = (36 / 255, 122 / 255, 145 / 255, 1)
         self.light_blue_olympe = (63 / 255, 158 / 255, 183 / 255, 1)
         self.blue_pressed_olympe = (22 / 255, 74 / 255, 87 / 255, 1)
@@ -125,7 +126,7 @@ RADIUS_SMALL = 4
 ### Scrollview ###
 
 SCROLLVIEW_WIDTH = 0.94
-SCROLL_VIEW_SPACING_VERTICAL = 20
+SCROLL_VIEW_SPACING_VERTICAL = 10
 
 ### Outlines ###
 

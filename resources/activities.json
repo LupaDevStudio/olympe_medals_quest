@@ -62,31 +62,31 @@
     },
     "strength_job": {
         "condition": 30,
-        "gain": 2000
+        "gain": 2500
     },
     "speed_job": {
         "condition": 30,
-        "gain": 2000
+        "gain": 2500
     },
     "technique_job": {
         "condition": 30,
-        "gain": 2000
+        "gain": 2500
     },
     "precision_job": {
         "condition": 30,
-        "gain": 2000
+        "gain": 2500
     },
     "charm_job_1": {
         "condition": 30,
-        "gain": 2000
+        "gain": 2500
     },
     "charm_job_2": {
         "condition": 50,
         "level_job": 2,
-        "gain": 3000
+        "gain": 5000
     },
     "best_job": {
-        "gain": 3000
+        "gain": 5000
     },
     "tribune_1": {
         "can_be_done_when_ill": true,

@@ -1,0 +1,258 @@
+{
+    "musics": {
+        "game": {
+            "title": "Challenging Victory",
+            "author": "Musictown",
+            "link": "https://pixabay.com/fr/music/titre-principal-challenging-victory-full-mix-117952/"
+        },
+        "game_title": {
+            "title": "Background inspiring",
+            "author": "Dmytro Kuvalin",
+            "link": "https://pixabay.com/music/corporate-background-inspiring-207551/"
+        },
+        "olympe": {
+            "title": "Corporate Rhythm",
+            "author": "Roman Senyk",
+            "link": "https://pixabay.com/fr/music/entreprise-corporate-rhythm-140895/"
+        },
+        "fight": {
+            "title": "Award",
+            "author": "SoundGalleryByDmitryTaras",
+            "link": "https://pixabay.com/music/main-title-award-adventure-epic-inspiring-cinematic-orchestra-214102/"
+        },
+        "fight_ceremony": {
+            "title": "Award Ceremony Nomination",
+            "author": "SoundGalleryByDmitryTaras",
+            "link": "https://pixabay.com/fr/music/titre-principal-award-ceremony-nomination-solemn-winner-triumphant-victory-123485/"
+        },
+        "ariane": {
+            "title": "Ambiant Documentary",
+            "author": "Yurii Semchyshyn",
+            "link": "https://pixabay.com/fr/music/ambiant-documentary-11052/"
+        },
+        "catch_it": {
+            "title": "Catch it",
+            "author": "Yurii Semchyshyn",
+            "link": "https://pixabay.com/fr/music/optimiste-catch-it-117676/"
+        },
+        "canteen": {
+            "title": "Ragtime Piano",
+            "author": "Trygve Larsen",
+            "link": "https://pixabay.com/fr/music/piano-solo-ragtime-piano-southern-rag-medley-2-by-john-w-boone-1909-112100/"
+        }
+    },
+    "icons": {
+        "achievements": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/trophy"
+        },
+        "activities_menu": {
+            "author": "Handicon",
+            "link": "https://www.flaticon.com/free-icons/routine"
+        },
+        "calendar": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/calendar"
+        },
+        "delete": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/delete"
+        },
+        "detailed_view": {
+            "author": "Shashank Singh",
+            "link": "https://www.flaticon.com/free-icons/checklist"
+        },
+        "grid_view": {
+            "author": "GOFOX",
+            "link": "https://www.flaticon.com/free-icons/list"
+        },
+        "hurt": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/red-cross"
+        },
+        "idea": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/idea"
+        },
+        "left_arrow": {
+            "author": "Pixel perfect",
+            "link": "https://www.flaticon.com/free-icons/send"
+        },
+        "level_up": {
+            "author": "Kiranshastry",
+            "link": "https://www.flaticon.com/free-icons/up-arrow"
+        },
+        "medals": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/medal"
+        },
+        "recruit": {
+            "author": "Saepul Nahwan",
+            "link": "https://www.flaticon.com/free-icons/recruitment"
+        },
+        "right_arrow": {
+            "author": "Pixel perfect",
+            "link": "https://www.flaticon.com/free-icons/send"
+        },
+        "settings": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/settings"
+        },
+        "shop": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/smart-cart"
+        },
+        "skip": {
+            "author": "Gajah Mada",
+            "link": "https://www.flaticon.com/free-icons/skip"
+        },
+        "sports_complex": {
+            "author": "Futuer",
+            "link": "https://www.flaticon.com/free-icons/stadium"
+        },
+        "sports_menu": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/sport"
+        },
+        "team": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/people"
+        },
+        "tutorial": {
+            "author": "Chanut",
+            "link": "https://www.flaticon.com/free-icons/info"
+        },
+        "categories/press": {
+            "author": "Design Circle",
+            "link": "https://www.flaticon.com/free-icons/press-release"
+        },
+        "categories/job": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/new-job"
+        },
+        "categories/break": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/beach"
+        },
+        "categories/secrets": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/secret"
+        },
+        "categories/competition": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/sports-and-competition"
+        },
+        "categories/others": {
+            "author": "RIkas Dzihab",
+            "link": "https://www.flaticon.com/free-icons/extra-time"
+        },
+        "categories/sports": {
+            "author": "Good Ware",
+            "link": "https://www.flaticon.com/free-icons/sport"
+        },
+        "categories/stats": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/gym"
+        },
+        "sports/100m": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/shoes"
+        },
+        "sports/acrobatic-bow": {
+            "author": "Yaicon",
+            "link": "https://www.flaticon.com/free-icons/bow"
+        },
+        "sports/aqua-jogging": {
+            "author": "Muhammad_Usman",
+            "link": "https://www.flaticon.com/free-icons/aqua-jogging"
+        },
+        "sports/archery": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/bow"
+        },
+        "sports/boxing": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/boxing"
+        },
+        "sports/buoy-racing": {
+            "author": "iconeveryting",
+            "link": "https://www.flaticon.com/free-icons/rubber-duck"
+        },
+        "sports/cheese-rolling": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/coopers-hill-cheese-rolling"
+        },
+        "sports/dance": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/aerobics"
+        },
+        "sports/donut-throwing": {
+            "author": "Fajrul Fitrianto",
+            "link": "https://www.flaticon.com/free-icons/food-and-restaurant"
+        },
+        "sports/escalation": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/climbing-wall"
+        },
+        "sports/fencing": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/fencing"
+        },
+        "sports/gymnastics": {
+            "author": "Futuer",
+            "link": "https://www.flaticon.com/free-icons/gymnastics"
+        },
+        "sports/high-jump": {
+            "author": "AbtoCreative",
+            "link": "https://www.flaticon.com/free-icons/jump"
+        },
+        "sports/hopscotch": {
+            "author": "Leremy",
+            "link": "https://www.flaticon.com/free-icons/hopscotch"
+        },
+        "sports/iron-toe": {
+            "author": "Futuer",
+            "link": "https://www.flaticon.com/free-icons/toe"
+        },
+        "sports/javelin-throwing": {
+            "author": "AbtoCreative",
+            "link": "https://www.flaticon.com/free-icons/javelin"
+        },
+        "sports/jump-boxing": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/jump"
+        },
+        "sports/mermaid-swimming": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/mermaid"
+        },
+        "sports/parkour": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/parkour"
+        },
+        "sports/slackline-gym": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/slackline"
+        },
+        "sports/swim-100m": {
+            "author": "Icon Box",
+            "link": "https://www.flaticon.com/free-icons/swimming"
+        },
+        "sports/treadmill-choregraphy": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/gym"
+        },
+        "sports/tree-throwing": {
+            "author": "Three musketeers",
+            "link": "https://www.flaticon.com/free-icons/discus-throw"
+        },
+        "sports/umbrella-fight": {
+            "author": "Graphix's Art",
+            "link": "https://www.flaticon.com/free-icons/umbrella-close"
+        },
+        "sports/zipline-bow": {
+            "author": "Freepik",
+            "link": "https://www.flaticon.com/free-icons/zipline"
+        }
+    }
+}

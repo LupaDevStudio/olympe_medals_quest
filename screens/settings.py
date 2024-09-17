@@ -38,6 +38,10 @@ from tools.graphics import (
     SKILL_HEIGHT,
     MARGIN
 )
+from tools import (
+    sound_mixer,
+    music_mixer
+)
 
 #############
 ### Class ###
@@ -147,6 +151,10 @@ class SettingsScreen(OlympeScreen):
                 self.add_widget(current_bar)
 
     def rebuild_configuration_bars(self):
+        # Update the volume of the music and sounds effects
+        music_mixer.change_volume(USER_DATA.settings["music_volume"])
+        sound_mixer.change_volume(USER_DATA.settings["sound_volume"])
+
         # Remove the bars
         for widget in self.list_bars:
             self.remove_widget(widget)

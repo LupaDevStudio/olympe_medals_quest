@@ -32,7 +32,11 @@ from tools.constants import (
 )
 from tools.data_structures import (
     Medal,
+    Athlete,
     convert_points_to_tier_rank
+)
+from tools.olympe import (
+    get_activity_name_or_description
 )
 from tools.graphics import (
     FONTS_SIZES,
@@ -466,6 +470,8 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
+    ask_redraw_function = ObjectProperty(None)
+
     def __init__(self, **kw):
         super().__init__(**kw)
 
@@ -482,11 +488,13 @@ class CharacterInfoWithMainSportsLayout(RelativeLayout):
         self.add_widget(character_skills_layout)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
-
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 class MedalsCard(RelativeLayout):
 
@@ -583,11 +591,15 @@ class SkillsCard(RelativeLayout):
     def __init__(self, **kw):
         super().__init__(**kw)
 
+        self.character_skills_layout = None
+        self.bind(skills_dict=self.update_skills_dict)
+        self.update_skills_dict()
+
+    def update_skills_dict(self, *args):
         if not self.is_folded:
             total_height = SKILL_HEIGHT * \
                 len(self.skills_dict) * self.font_ratio
-
-            character_skills_layout = CharacterSkillsLayout(
+            self.character_skills_layout = CharacterSkillsLayout(
                 skills_dict=self.skills_dict,
                 font_ratio=self.font_ratio,
                 pos_hint={"x": 0.05},
@@ -595,7 +607,10 @@ class SkillsCard(RelativeLayout):
                 size_hint=(0.9, None),
                 height=total_height
             )
-            self.add_widget(character_skills_layout)
+            self.add_widget(self.character_skills_layout)
+        else:
+            if self.character_skills_layout is not None:
+                self.remove_widget(self.character_skills_layout)
 
     def ask_redraw(self):
         current_screen_name = self.get_root_window().children[0].current
@@ -607,6 +622,93 @@ class SkillsCard(RelativeLayout):
 ### Recrutement widgets ###
 ###########################
 
+class RecruitCard(RelativeLayout):
+
+    athlete: Athlete = ObjectProperty(None)
+    reputation_unlocked = BooleanProperty(True)
+    can_recruit_athlete = BooleanProperty(True)
+    recruit_release_function = ObjectProperty(lambda: 1 + 1)
+
+    is_folded = BooleanProperty(True)
+    font_ratio = NumericProperty(1)
+
+    complete_recruit_card = None
+    reduced_recruit_card = None
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.bind(is_folded=self.update_card)
+        self.bind(athlete=self.update_card)
+        self.bind(can_recruit_athlete=self.update_card)
+        self.update_card()
+
+    def update_card(self, *args):
+        # Reduced card when folded
+        if self.is_folded:
+            if self.complete_recruit_card is not None:
+                self.remove_widget(self.complete_recruit_card)
+            
+            athlete_skills = self.athlete.get_best_sports()
+            height = self.font_ratio * (
+                BIG_HEADER_HEIGHT + len(athlete_skills) * SKILL_HEIGHT + MARGIN*2)
+            self.reduced_recruit_card = CharacterInfoWithMainSportsLayout(
+                    image_source=self.athlete.image,
+                    is_hurt=self.athlete.is_hurt,
+                    title_card=self.athlete.first_name + "\n" + self.athlete.name,
+                    salary=self.athlete.salary,
+                    skills_dict=athlete_skills,
+                    font_ratio=self.font_ratio,
+                    size_hint=(1, None),
+                    height=height,
+                    foldable_mode=True,
+                    ask_redraw_function=self.ask_redraw
+                )
+            self.add_widget(self.reduced_recruit_card)
+        
+        # Complete card when not folded
+        else:
+            if self.reduced_recruit_card is not None:
+                self.remove_widget(self.reduced_recruit_card)
+
+            stats_dict = self.athlete.stats
+            sports_dict = self.athlete.sports
+            athlete_skills = stats_dict
+            athlete_skills.update(sports_dict)
+            if len(athlete_skills) > 0:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*4 + BUTTON_HEIGHT + SKILL_HEIGHT * len(athlete_skills))
+            else:
+                height = self.font_ratio * (
+                    HEADER_HEIGHT + CHARACTER_HEIGHT + MARGIN*3 + BUTTON_HEIGHT)
+
+            # Sort reverse
+            athlete_skills = dict(reversed(athlete_skills.items()))
+
+            self.complete_recruit_card = CompleteRecruitCard(
+                image_source=self.athlete.image,
+                size_hint=(1, None),
+                height=height,
+                font_ratio=self.font_ratio,
+                skills_dict=athlete_skills,
+                title_card=self.athlete.full_name,
+                salary=self.athlete.salary,
+                age=TEXT.general["age"].replace("@", str(self.athlete.age)),
+                reputation=TEXT.general["reputation"].replace(
+                    "@", str(int(self.athlete.reputation))),
+                recruit_price=self.athlete.recruit_price,
+                reputation_unlocked=self.reputation_unlocked,
+                disable_button=not(self.can_recruit_athlete),
+                recruit_release_function=self.recruit_release_function,
+                ask_redraw_function=self.ask_redraw
+            )
+            self.add_widget(self.complete_recruit_card)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
+        screen.ask_redraw(self)
 
 class CompleteRecruitCard(RelativeLayout):
 
@@ -641,6 +743,8 @@ class CompleteRecruitCard(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 
+    ask_redraw_function = ObjectProperty(None)
+
     def __init__(self, **kw):
         super().__init__(**kw)
 
@@ -657,10 +761,13 @@ class CompleteRecruitCard(RelativeLayout):
         self.add_widget(character_skills_layout)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 ###########################
 ### Inscription widgets ###
@@ -761,6 +868,77 @@ class SmallInscriptionCard(RelativeLayout):
 #############################
 
 
+class PlanificationCard(RelativeLayout):
+
+    athlete: Athlete = ObjectProperty(None)
+    planification_unlocked = BooleanProperty(False)
+    planification_release_function = ObjectProperty(lambda: 1 + 1)
+
+    is_folded = BooleanProperty(True)
+    font_ratio = NumericProperty(1)
+
+    complete_planification_card = None
+    small_planification_card = None
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.bind(is_folded=self.update_card)
+        self.bind(athlete=self.update_card)
+        self.update_card()
+
+    def update_card(self, *args):
+        trimester_gain = self.athlete.get_trimester_gained_money()
+
+        # Reduced card when folded
+        if self.is_folded:
+            if self.complete_planification_card is not None:
+                self.remove_widget(self.complete_planification_card)
+            
+            self.small_planification_card = SmallPlanificationCard(
+                font_ratio=self.font_ratio,
+                size_hint=(1, 1),
+                header_height=BIG_HEADER_HEIGHT,
+                title_card=self.athlete.first_name + "\n" + self.athlete.name,
+                image_source=self.athlete.image,
+                is_hurt=self.athlete.is_hurt,
+                total_price=abs(trimester_gain),
+                minus_mode=trimester_gain < 0,
+                ask_redraw_function=self.ask_redraw
+            )
+            self.add_widget(self.small_planification_card)
+        
+        # Complete card when not folded
+        else:
+            if self.small_planification_card is not None:
+                self.remove_widget(self.small_planification_card)
+
+            list_activities_label = []
+            for full_activity_id in self.athlete.current_planning:
+                list_activities_label.append(get_activity_name_or_description(full_activity_id=full_activity_id))
+
+            self.complete_planification_card = CompletePlanificationCard(
+                font_ratio=self.font_ratio,
+                size_hint=(1, 1),
+                title_card=self.athlete.full_name,
+                image_source=self.athlete.image,
+                is_hurt=self.athlete.is_hurt,
+                total_price=abs(trimester_gain),
+                minus_mode=trimester_gain < 0,
+                planning_text=TEXT.planification["planning"],
+                list_activities=list_activities_label,
+                release_function=self.planification_release_function,
+                planification_unlocked=self.planification_unlocked,
+                ask_redraw_function=self.ask_redraw
+            )
+            self.add_widget(self.complete_planification_card)
+
+    def ask_redraw(self):
+        current_screen_name = self.get_root_window().children[0].current
+        screen = self.get_root_window().children[0].get_screen(
+            current_screen_name)
+        screen.ask_redraw(self)
+
 class CompletePlanificationCard(RelativeLayout):
 
     ### Information on the athlete ###
@@ -790,12 +968,16 @@ class CompletePlanificationCard(RelativeLayout):
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
     release_function = ObjectProperty(lambda: 1 + 1)
+    ask_redraw_function = ObjectProperty(None)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 
 class SmallPlanificationCard(RelativeLayout):
@@ -822,12 +1004,16 @@ class SmallPlanificationCard(RelativeLayout):
     header_height = NumericProperty(BIG_HEADER_HEIGHT)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
+    ask_redraw_function = ObjectProperty(None)
 
     def ask_redraw(self):
-        current_screen_name = self.get_root_window().children[0].current
-        screen = self.get_root_window().children[0].get_screen(
-            current_screen_name)
-        screen.ask_redraw(self)
+        if self.ask_redraw_function is not None:
+            self.ask_redraw_function()
+        else:
+            current_screen_name = self.get_root_window().children[0].current
+            screen = self.get_root_window().children[0].get_screen(
+                current_screen_name)
+            screen.ask_redraw(self)
 
 #####################
 ### Rooms widgets ###
@@ -872,6 +1058,7 @@ class CompleteRoomCard(FloatLayout):
     font_color = ColorProperty(COLORS.white)
 
     buy_function = ObjectProperty(lambda: 1 + 1)
+    disable_buy_button = BooleanProperty(False)
     line_width = NumericProperty(BUTTON_LINE_WIDTH)
     font_ratio = NumericProperty(1)
 

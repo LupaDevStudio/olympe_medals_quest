@@ -13,31 +13,21 @@ from functools import partial
 ### Kivy imports ###
 
 from kivy.properties import (
-    StringProperty,
-    BooleanProperty
+    StringProperty
 )
-from kivy.core.window import Window
 
 ### Local imports ###
 
 from lupa_libraries import (
-    OlympeScreen
+    OlympeScreen,
+    SportsTreeContent
 )
 from tools.constants import (
     TEXT,
     SCREEN_BACK_ARROW,
     SCREEN_MONEY_RIGHT,
-    SCREEN_TITLE_ICON
-)
-from tools.graphics import (
-    SCROLLVIEW_WIDTH,
-    BIG_HEADER_HEIGHT,
-    SKILL_HEIGHT,
-    MARGIN,
-    COLORS
-)
-from tools.data_structures import (
-    Athlete
+    SCREEN_TITLE_ICON,
+    SHARED_DATA
 )
 
 #############
@@ -76,9 +66,17 @@ class SportsMenuScreen(OlympeScreen):
     def on_pre_enter(self, *args):
         super().on_pre_enter(*args)
 
-        self.ids.sport_tree.build_tree(self.GAME.sports_unlocking_progress)
+        self.sports_tree_content.build_tree(self.GAME.sports_unlocking_progress)
 
     def fill_scrollview(self):
         scrollview_layout = self.ids["scrollview_layout"]
 
-        print("TODO fill scrollview")
+        unlock_sport_mode = "unlock_sports" in self.GAME.unlocked_modes
+        if SHARED_DATA.god_mode:
+            unlock_sport_mode = True
+
+        self.sports_tree_content = SportsTreeContent(
+            font_ratio=self.font_ratio,
+            unlock_sport_mode=unlock_sport_mode
+        )
+        scrollview_layout.add_widget(self.sports_tree_content)

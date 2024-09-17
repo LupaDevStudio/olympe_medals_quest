@@ -34,9 +34,16 @@ from tools.data_structures import (
     generate_learning_rates,
     Athlete,
     Game,
+    Sport,
     DEFAULT_STATS_DICT,
     DEFAULT_STAT_DICT,
-    EVENTS_DICT
+    EVENTS_DICT,
+    MIN_LEVEL_ATHLETE,
+    MIN_LEVEL_SPECIALIST,
+    MIN_LEVEL_BI_SPECIALIST,
+    SPORTS,
+    MAX_REPUTATION,
+    COUNTRY_NAME
 )
 from tools.path import (
     PATH_COUNTRIES,
@@ -49,7 +56,6 @@ from tools.path import (
 
 ### Countries ###
 
-COUNTRY_NAME = "our_country"
 countries_dict = load_json_file(PATH_COUNTRIES)
 
 ### First names and names ###
@@ -77,20 +83,29 @@ for key in first_names_dict:
         for name in names_dict[key]:
             names_dict[COUNTRY_NAME].append(name)
 
-### Salary and recruit prices ###
-
-BASE_SALARY = 1000
-ARITHMETIC_FACTOR_SALARY = 10
-GEOMETRIC_FACTOR_SALARY = 2
-
 #################
 ### Functions ###
 #################
 
 
-def compute_salary(athlete: Athlete) -> int:
-    score_athlete = athlete.global_score
-    salary = BASE_SALARY + (ARITHMETIC_FACTOR_SALARY * score_athlete) ** GEOMETRIC_FACTOR_SALARY
+def compute_salary(athlete: Athlete, game_difficulty: Literal["easy", "medium", "difficult"]) -> int:
+    # Take into account the difficulty of the game
+    if game_difficulty == "easy":
+        base_salary = 500
+        arithmetic_factor_salary = 9
+        geometric_factor_salary = 1.9
+    elif game_difficulty == "medium":
+        base_salary = 1000
+        arithmetic_factor_salary = 10
+        geometric_factor_salary = 2
+    else:
+        base_salary = 1500
+        arithmetic_factor_salary = 11
+        geometric_factor_salary = 2.1
+
+    score_athlete = athlete.global_score_for_salary
+    salary = base_salary + ((arithmetic_factor_salary * score_athlete) ** geometric_factor_salary)*1000
+
     return int(salary)
 
 def get_health_string(athlete: Athlete) -> str:
@@ -108,6 +123,59 @@ def get_health_string(athlete: Athlete) -> str:
             
     return health
 
+def get_list_full_activity_ids(list_activities, list_sports) -> list[str]:
+    list_correct_activities = []
+    for activity_id in list_activities:
+        if "sports_" in activity_id:
+            list_infos = activity_id.split("_") # "sports_2_training_4"
+            category_sport = list_infos[1]
+            level_activity = list_infos[3]
+
+            # Add only the sports in list_sports
+            for sport_id in list_sports:
+                sport: Sport = SPORTS[sport_id]
+                if str(sport.category) == category_sport:
+                    list_correct_activities.append(
+                        f"sports_{category_sport}_{sport_id}_training_{level_activity}")
+        elif "competition_" in activity_id:
+            list_infos = activity_id.split("_") # "competition_world_1"
+            type_competition = list_infos[1]
+            category_sport = list_infos[2]
+
+            # Add only the sports in list_sports
+            for sport_id in list_sports:
+                sport: Sport = SPORTS[sport_id]
+                if str(sport.category) == category_sport:
+                    list_correct_activities.append(
+                        f"competition_{type_competition}_{sport_id}_{category_sport}")
+        else:
+            list_correct_activities.append(activity_id)
+
+    return list_correct_activities
+
+def get_activity_name_or_description(full_activity_id: str, mode: Literal["name", "description"] = "name") -> str:
+    if "sports_" in full_activity_id:
+        list_infos = full_activity_id.split("_") # "sports_2_name_training_4"
+        sport_id = list_infos[2]
+        level_activity = list_infos[4]
+        text = TEXT.activities[
+            f"sports_training_{level_activity}"][mode].replace(
+            "[SPORT]", TEXT.sports[sport_id]["name"]).replace(
+            "[SPORT_LOWER]", TEXT.sports[sport_id]["name"].lower())
+    elif "competition_" in full_activity_id:
+        list_infos = full_activity_id.split("_") # "competition_world_cheese-rolling_1"
+        type_competition = list_infos[1]
+        sport_id = list_infos[2]
+        category_sport = list_infos[3]
+        text = TEXT.activities[
+            f"competition_{type_competition}_{category_sport}"][mode].replace(
+            "[SPORT]", TEXT.sports[sport_id]["name"]).replace(
+            "[SPORT_LOWER]", TEXT.sports[sport_id]["name"].lower())
+    else:
+        text = TEXT.activities[full_activity_id][mode]
+
+    return text
+
 ##########################
 ### Athlete generation ###
 ##########################
@@ -121,18 +189,39 @@ def generate_age() -> int:
     return age[0]
 
 
-def generate_stats(level) -> dict:
-    stats = copy.deepcopy(DEFAULT_STATS_DICT)
-    for key in stats:
-        # Choose randomly the learning rates (talent = flams)
-        stats[key]["learning_rate"] = generate_learning_rates()
+def generate_stats_sports(main_sport: str, second_sport: str | None, level: float, profile: Literal["homogeneous", "specialist", "bi-specialist"]) -> dict:
+    """
+    Generate the dict of stats and sports for an athlete, given its type of profile.
+    
+    Parameters
+    ----------
+    main_sport : str
+        Key of the main sport of the athlete.
+    second_sport : str | None
+        Key of the second sport of the athlete, if it exists.
+    level : float
+        Level of the athlete, comprised between 0 and 1.
+    profile : Literal["homogeneous", "specialist", "bi-specialist"
+        Type of the profile of the athlete.
+        Homogeneous means the athlete is good/bad in all skills.
+        Specialist means the athlete is good in the skills related to its main sport, and bad in the others.
+        Bi-specialist means the athlete is good in the skills related to its main and second sports, and bad in the others.
+    
+    Returns
+    -------
+    dict, dict
+        Dict of stats and dict of sports.
+    """
 
-        # Choose randomly the stats
-        # TODO
-    return stats
+    # Set the bounds for the random generation of points for the skills
+    b_homogeneous = min(level+0.25*MIN_LEVEL_ATHLETE, 1)
+    a_homogeneous = max(level-1.5*MIN_LEVEL_ATHLETE, 0)
+    b_specialist = min(level+0.5*MIN_LEVEL_ATHLETE, 1)
+    a_specialist = max(level, 0)
+    b_non_specialist = min(level-MIN_LEVEL_ATHLETE, 1)
+    a_non_specialist = max(level-2*MIN_LEVEL_ATHLETE, 0)
 
-
-def generate_sports(main_sport: str, second_sport: str | None, level) -> dict:
+    ### Sports ###
 
     sports_dict = {
         main_sport: copy.deepcopy(DEFAULT_STAT_DICT)
@@ -142,20 +231,71 @@ def generate_sports(main_sport: str, second_sport: str | None, level) -> dict:
 
     # Choose randomly the learning rates for the both sports
     sports_dict[main_sport]["learning_rate"] = generate_learning_rates(
-        double_proba=0.2, simple_proba=0.5)
+        double_proba=0.06, simple_proba=0.25)
     if second_sport is not None:
         sports_dict[second_sport]["learning_rate"] = generate_learning_rates()
 
-    # Choose randomly the values (points) according to level
-    # TODO
+    # Choose randomly the values (points) according to level and type of profile
+    if profile == "homogeneous":
+        sports_dict[main_sport]["points"] = round((rd.random()*(
+            b_homogeneous-a_homogeneous)+a_homogeneous)*70, 3)
+        if second_sport is not None:
+            sports_dict[second_sport]["points"] = round((rd.random()*(
+                b_homogeneous-a_homogeneous)+a_homogeneous)*70, 3)
+    elif profile == "specialist":
+        sports_dict[main_sport]["points"] = round((rd.random()*(
+            b_specialist-a_specialist)+a_specialist)*70, 3)
+        # Second sport non specialist
+        if second_sport is not None:
+            sports_dict[second_sport]["points"] = round((rd.random()*(
+                b_non_specialist-a_non_specialist)+a_non_specialist)*70, 3)
+    elif profile == "bi-specialist":
+        sports_dict[main_sport]["points"] = round((rd.random()*(
+            b_specialist-a_specialist)+a_specialist)*70, 3)
+        if second_sport is not None:
+            sports_dict[second_sport]["points"] = round((rd.random()*(
+                b_specialist-a_specialist)+a_specialist)*70, 3)
 
-    return sports_dict
+    ### Stats ###
 
+    stats_related_to_main_sport = SPORTS[main_sport].stats
+    if second_sport is not None:
+        stats_related_to_second_sport = SPORTS[second_sport].stats
+
+    stats_dict = copy.deepcopy(DEFAULT_STATS_DICT)
+    for key in stats_dict:
+        # Choose randomly the learning rates (talent = flams)
+        stats_dict[key]["learning_rate"] = generate_learning_rates()
+
+        # Choose randomly the stats according to the type of profile
+
+        # If the stat is related to the second sport for the bi-specialist profile
+        if second_sport is not None and profile == "bi-specialist" and key in stats_related_to_second_sport:
+            stats_dict[key]["points"] = round((rd.random()*(
+                b_specialist-a_specialist)+a_specialist)*70, 3)
+        
+        # If the stat is related to the first sport for the specialists profiles
+        elif profile in ["specialist", "bi-specialist"] and key in stats_related_to_main_sport:
+            stats_dict[key]["points"] = round((rd.random()*(
+                b_specialist-a_specialist)+a_specialist)*70, 3)
+        
+        # If the stat is not related to any sport for specialists profiles
+        elif profile in ["specialist", "bi-specialist"]:
+            stats_dict[key]["points"] = round((rd.random()*(
+                b_non_specialist-a_non_specialist)+a_non_specialist)*70, 3)
+        
+        # If the profile is homogeneous
+        else:
+            stats_dict[key]["points"] = round((rd.random()*(
+                b_homogeneous-a_homogeneous)+a_homogeneous)*70, 3)
+
+    return stats_dict, sports_dict
 
 def generate_reputation(charm_dict: dict) -> int:
     charm = charm_dict["points"]
-    basis_reputation = charm * 100 / 70
-    random_number = rd.random() * 5
+    # Maximum 250 points of reputation (to avoid very high salaries at the beginning)
+    basis_reputation = 0.25 * charm * MAX_REPUTATION / 70
+    random_number = rd.random() * MAX_REPUTATION * 0.05
     plus_mode = rd.randint(0, 1) == 1
     if plus_mode:
         reputation = basis_reputation + random_number
@@ -163,36 +303,44 @@ def generate_reputation(charm_dict: dict) -> int:
         reputation = basis_reputation - random_number
     if reputation < 0:
         return 0
-    elif reputation > 100:
-        return 100
+    elif reputation > MAX_REPUTATION:
+        return MAX_REPUTATION
     return reputation
 
-def generate_recruit_price(salary: int, level: int) -> int:
+def generate_recruit_price(salary: int, level: float, game_difficulty: Literal["easy", "medium", "difficult"]) -> int:
+    # Basis of the recruit price
+    if game_difficulty == "easy":
+        basis_factor = 8
+    elif game_difficulty == "medium":
+        basis_factor = 10
+    else:
+        basis_factor = 12
+    
     # Random margin between -10.000 and 10.000 depending on level
     multiplying_factor = 10
-    if level == 2:
-        multiplying_factor = 50
-    elif level == 3:
-        multiplying_factor = 100
-    elif level == 4:
-        multiplying_factor = 500
-    elif level == 5:
+    if level > 0.8:
         multiplying_factor = 1000
-    random_margin = rd.randint(-10, 10)
+    elif level > 0.6:
+        multiplying_factor = 500
+    elif level > 0.4:
+        multiplying_factor = 100
+    elif level > 0.2:
+        multiplying_factor = 50
+    random_margin = rd.randint(-50, 50)
 
-    recruit_price = salary * 10 + random_margin * multiplying_factor
+    recruit_price = salary * basis_factor + random_margin * multiplying_factor
     if recruit_price <= 0:
-        recruit_price = salary * 10
+        recruit_price = salary * basis_factor
 
     return int(recruit_price)
 
 def generate_athlete(
         GAME: Game,
-        country: str = "our_country",
+        country: str = COUNTRY_NAME,
         age: int | None = None,
         time_for_recruit: int | None = None,
         recruit_price: int | None = None,
-        max_level: int | None = None, # between 1 and 10
+        salary: int | None = None,
         main_sport: str = "random",
         second_sport: str | None = "random",
         gender: Literal["male", "female"] | None = None,
@@ -212,26 +360,48 @@ def generate_athlete(
     if time_for_recruit is None:
         time_for_recruit = rd.randint(2, 4)
 
-    if max_level is None:
-        max_level = GAME.compute_average_level()
+    ### Level and profile ###
 
-    level = rd.randint(1, max_level)
+    # Choose the level
+    max_level = GAME.compute_average_level()
+    a = max(MIN_LEVEL_ATHLETE, (max_level-MIN_LEVEL_ATHLETE))
+    b = min(max_level, 1)
+    level = rd.random()*(b-a) + a
 
-    ### Stats ###
+    # Change the level of the athlete depending on the difficulty of the game / country
+    if country == COUNTRY_NAME:
+        if GAME.difficulty == "easy":
+            level = min(level*1.05, 1)
+        elif GAME.difficulty == "difficult":
+            level *= 0.95
+    else:
+        # TODO change accordingly to the strength of the country
+        level = level
 
-    stats = generate_stats(level)
+    # Choose the profile of the athlete
+    list_profiles = ["homogeneous"]
+    if level > MIN_LEVEL_SPECIALIST:
+        list_profiles.append("specialist")
+    if level > MIN_LEVEL_BI_SPECIALIST:
+        list_profiles.append("bi-specialist")
+    profile = rd.choice(list_profiles)
 
-    ### Sports ###
+    ### Stats and sports ###
 
     if main_sport == "random":
         # Main sport among those unlocked
         main_sport = rd.choice(GAME.unlocked_sports)
     if second_sport == "random":
         # Second sport among all sports of the current category or less
-        list_second_sports = GAME.get_all_sports_from_current_category()
+        list_second_sports = GAME.get_all_sports_from_current_category_or_less()
         list_second_sports.remove(main_sport)
         second_sport = rd.choice(list_second_sports)
-    sports = generate_sports(main_sport, second_sport, level)
+    
+    stats, sports = generate_stats_sports(
+        main_sport=main_sport,
+        second_sport=second_sport,
+        level=level,
+        profile=profile)
 
     ### Reputation ###
 
@@ -247,6 +417,7 @@ def generate_athlete(
 
     dict_to_load = {
         "first_name": first_name,
+        "nationality": country,
         "name": name,
         "age": age,
         "time_for_recruit": time_for_recruit,
@@ -265,16 +436,21 @@ def generate_athlete(
 
     ### Costs ###
 
-    # Salary
-    salary = compute_salary(athlete=athlete)
-    athlete.set_salary(salary=salary)
+    # Generate the salary and the recruit price only for the athletes of our country
+    if country == COUNTRY_NAME:
 
-    # Recruit price
-    if recruit_price is None:
-        recruit_price = generate_recruit_price(
-            salary=salary,
-            level=level)
-    athlete.set_recruit_price(recruit_price=recruit_price)
+        # Salary
+        if salary is None:
+            salary = compute_salary(athlete=athlete, game_difficulty=GAME.difficulty)
+        athlete.set_salary(salary=salary)
+
+        # Recruit price
+        if recruit_price is None:
+            recruit_price = generate_recruit_price(
+                salary=salary,
+                level=level,
+                game_difficulty=GAME.difficulty)
+        athlete.set_recruit_price(recruit_price=recruit_price)
 
     return athlete
 
@@ -282,6 +458,7 @@ def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
 
     # Woman athlete at the beginning
     gender = "female"
+
     portrait = Portrait(
         gender=gender,
         hairs_behind_face=True,
@@ -296,12 +473,13 @@ def generate_and_add_first_athlete(GAME: Game, main_sport: str) -> None:
         GAME=GAME,
         age=rd.randint(16, 22),
         recruit_price=0,
+        salary=3500,
         main_sport=main_sport,
         second_sport=None,
-        max_level=1,
         gender=gender,
         portrait=portrait
     )
+
     GAME.update_recrutable_athletes(new_athletes_list=[first_athlete])
     GAME.recruit_athlete(GAME.recrutable_athletes[0])
     USER_DATA.save_changes()
@@ -442,7 +620,7 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
     # Update the salaries at the beginning of the year
     if "salary_augmentation" in GAME.unlocked_modes and GAME.trimester == 1:
         for athlete in GAME.team:
-            new_salary = compute_salary(athlete=athlete)
+            new_salary = compute_salary(athlete=athlete, game_difficulty=GAME.difficulty)
             athlete.set_salary(salary=new_salary)
 
     # Update the list of notifications
@@ -451,27 +629,3 @@ def launch_new_phase(GAME: Game, mode_new_phase: str | None = None) -> str:
     USER_DATA.save_changes()
 
     return main_action
-
-#################
-### Main code ###
-#################
-
-
-# if __name__ == "__main__":
-#     dict_age = {}
-
-#     DEBUG_AGE = False
-#     if DEBUG_AGE:
-#         for country in range(10000):
-#             athlete = generate_athlete()
-#             if athlete.age not in dict_age:
-#                 dict_age[athlete.age] = 1
-#             else:
-#                 dict_age[athlete.age] += 1
-#         x = list(dict_age.keys())
-#         y = list(dict_age.values())
-#         plt.bar(x, y)
-#         plt.xlabel('Âge')
-#         plt.ylabel('Fréquence')
-#         plt.title('Fréquence des âges')
-#         plt.show()

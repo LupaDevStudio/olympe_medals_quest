@@ -53,5 +53,15 @@
         "name": "Narcisse",
         "title": "TITRE",
         "voice": "masculine_voice_medium"
+    },
+    "daphne": {
+        "name": "Daphne",
+        "title": "TITRE",
+        "voice": "feminine_voice_light"
+    },
+    "midas": {
+        "name": "Midas",
+        "title": "TITRE",
+        "voice": "masculine_voice_heavy"
     }
 }

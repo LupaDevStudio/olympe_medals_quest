@@ -50,6 +50,7 @@
             pos_hint: {"x": 0.05}
             height: first_activity.height
             y: 6*MARGIN*root.font_ratio + 3*first_activity.height
+            opacity: 1 if root.fatigue_unlocked else 0
 
         SurroundedLabel:
             text: root.injury_label
@@ -58,6 +59,7 @@
             pos_hint: {"x": 0.525}
             height: fatigue.height
             y: fatigue.y
+            opacity: 1 if root.injury_risk_unlocked else 0
 
         ### Activities ###
 

@@ -174,7 +174,7 @@
             ],
             "text": "Madame la présidente ?",
             "background": "office",
-            "music": "corporate-rhythm",
+            "music": "olympe",
             "volume": 1
         },
         {
@@ -574,7 +574,7 @@
         {
             "character": "olympe",
             "expression": "neutral",
-            "text": "Phil, arrête de bâiller ; je compte sur toi pour mener [NAME_ATHLETE] à la victoire et décrocher une belle médaille. Quant à Hector, je te charge d'aider au mieux Phil dans ce rôle grâce à toutes tes connaissances.",
+            "text": "Phil, arrête de bâiller ; je compte sur toi pour mener [NAME_ATHLETE] à la victoire et décrocher une belle médaille. Quant à toi, Hector, je te charge d'aider au mieux Phil dans ce rôle grâce à toutes tes connaissances.",
             "background": "sports_complex"
         },
         {
