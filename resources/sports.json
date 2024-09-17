@@ -35,7 +35,7 @@
         "stats": ["technique"],
         "requirements": []
     },
-    "jelly-wall-climbing": {
+    "ladder-race": {
         "stats": ["technique"],
         "requirements": []
     },
@@ -73,11 +73,11 @@
     },
     "arc-escalation": {
         "stats": ["technique", "precision"],
-        "requirements": ["zipline-bow", "jelly-wall-climbing"]
+        "requirements": ["zipline-bow", "ladder-race"]
     },
     "parkour": {
         "stats": ["speed", "technique"],
-        "requirements": ["jelly-wall-climbing", "cheese-rolling"]
+        "requirements": ["ladder-race", "cheese-rolling"]
     },
     "swim-100m": {
         "stats": ["strength", "speed", "precision"],

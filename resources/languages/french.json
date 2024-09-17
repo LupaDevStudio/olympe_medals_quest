@@ -174,11 +174,11 @@
             "a_name": "du tir à l'arc en tyrolienne",
             "description": "Où le tir à l'arc rencontre l'adrénaline. Visez les cibles tout en dévalant une tyrolienne. C'est Robin des Bois qui rencontre Tarzan, avec une touche de technique."
         },
-        "jelly-wall-climbing": {
-            "name": "Escalade de Mur de Gelée",
-            "the_name": "l'escalade de mur de gelée",
-            "a_name": "de l'escalade de mur de gelée",
-            "description": "Grimpez des murs recouverts de gelée tremblante qui rend chaque ascension aussi glissante que périlleuse. C'est comme escalader un dessert géant, mais prudence à ne pas le dévorer trop tôt !"
+        "ladder-race": {
+            "name": "Course d'Échelle",
+            "the_name": "la course d'échelle",
+            "a_name": "de la course d'échelle",
+            "description": "Défiez vos compétences d'escalade dans cette course effrénée où vous devez monter des échelles instables aux barreaux parfois vacillants. Soyez agile pour atteindre le sommet avant vos adversaires !"
         },
         "aqua-jogging": {
             "name": "Aqua Jogging",
