@@ -127,7 +127,7 @@ class ActivitiesMenuScreen(OlympeScreen):
             self.remove_widget(self.activity_details_card)
 
         # Build the olympe card with the scrollview
-        height = Window.size[1]*(0.95-TOP_BAR_HEIGHT) - self.ids.categories_card.height*1.75 - \
+        height = Window.size[1]*(0.95-TOP_BAR_HEIGHT) - self.ids.categories_card.height*1.85 - \
             2*MARGIN*self.font_ratio
         pos_y = self.ids.categories_card.y - MARGIN*self.font_ratio - height
         self.activities_card = OlympeCard(
@@ -186,7 +186,7 @@ class ActivitiesMenuScreen(OlympeScreen):
         if self.activity_details_card is not None:
             self.remove_widget(self.activity_details_card)
 
-        height = self.ids.categories_card.height*0.75
+        height = self.ids.categories_card.height*0.85
         self.activity_details_card = OlympeCard(
             header_mode=True,
             header_text=get_activity_name_or_description(full_activity_id=full_activity_id),
@@ -198,7 +198,10 @@ class ActivitiesMenuScreen(OlympeScreen):
 
         # Add the label of description of the activity
         description_label = Label(
-            text="TODO this is a very long description to test if the formatting of the label is working thank you !",
+            text=get_activity_name_or_description(
+                full_activity_id=full_activity_id,
+                mode="description"
+            ),
             font_name=PATH_TEXT_FONT,
             font_size=FONTS_SIZES.label * self.font_ratio,
             size_hint=(SCROLLVIEW_WIDTH, None),
