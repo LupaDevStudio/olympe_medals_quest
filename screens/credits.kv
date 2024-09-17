@@ -1,0 +1,12 @@
+#:kivy 2.2.1
+
+<CreditsScreen>:
+
+    RelativeLayout:
+        id: relative_layout
+        canvas.before:
+            Color:
+                rgba: COLORS.transparent_black
+            Rectangle:
+                pos: self.pos
+                size: self.size

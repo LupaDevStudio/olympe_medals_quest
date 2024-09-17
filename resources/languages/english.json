@@ -174,11 +174,11 @@
             "a_name": "zipline bow",
             "description": "Where archery meets adrenaline. Hit targets while zooming down a zipline. It's Robin Hood meets Tarzan, with a splash of bullseye."
         },
-        "jelly-wall-climbing": {
-            "name": "Jelly Wall Climbing",
-            "the_name": "jelly wall climbing",
-            "a_name": "jelly wall climbing",
-            "description": "Climb walls covered in wobbly jelly that makes every ascent as slippery as it is perilous. It's like scaling a giant dessert, but beware not to devour it too soon!"
+        "ladder-race": {
+            "name": "Ladder Race",
+            "the_name": "the ladder race",
+            "a_name": "of the ladder race",
+            "description": "Test your climbing skills in this frantic race where you must ascend unstable ladders with sometimes wobbly rungs. Be agile to reach the top before your competitors!"
         },
         "aqua-jogging": {
             "name": "Aqua Jogging",

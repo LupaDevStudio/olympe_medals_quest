@@ -202,7 +202,7 @@ class SettingsScreen(OlympeScreen):
         print("TODO create the achievements screen")
 
     def launch_credits(self):
-        print("TODO launch the generic")
+        self.go_to_next_screen(screen_name="credits")
 
     def launch_tutorial(self):
         print("TODO launch the tutorial")

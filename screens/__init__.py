@@ -25,6 +25,7 @@ from screens.activities_menu import ActivitiesMenuScreen
 from screens.medals import MedalsScreen
 from screens.schedule import ScheduleScreen
 from screens.save import SaveScreen
+from screens.credits import CreditsScreen
 
 ### Reference dict to create the screens ###
 
@@ -45,5 +46,6 @@ SCREENS_DICT = {
     "activities_menu": ActivitiesMenuScreen,
     "medals": MedalsScreen,
     "schedule": ScheduleScreen,
-    "save": SaveScreen
+    "save": SaveScreen,
+    "credits": CreditsScreen
 }
