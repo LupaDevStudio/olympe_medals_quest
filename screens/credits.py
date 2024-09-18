@@ -9,6 +9,7 @@ Module to create the credits screen.
 ### Python imports ###
 
 from typing import Literal
+import os
 
 ### Kivy imports ###
 
@@ -25,7 +26,8 @@ from lupa_libraries import (
     OlympeScreen
 )
 from tools.path import (
-    PATH_BACKGROUNDS
+    PATH_BACKGROUNDS,
+    PATH_CHARACTERS_IMAGES
 )
 from tools.constants import (
     TEXT,
@@ -59,7 +61,7 @@ class CreditsScreen(OlympeScreen):
         if self.mode == "normal":
             background_image = PATH_BACKGROUNDS + "office.jpg"
         elif self.mode == "ariane":
-            background_image = PATH_BACKGROUNDS + "ariane_ending.jpg"
+            background_image = PATH_BACKGROUNDS + "ariane_ending.png"
         else:
             background_image = PATH_BACKGROUNDS + "olympe_ending.jpg"
         self.set_back_image_path(back_image_path=background_image)
@@ -73,6 +75,11 @@ class CreditsScreen(OlympeScreen):
         ### Title ###
 
         self.credits_label = f"[size={int(FONTS_SIZES.title*self.font_ratio)}]" + my_text["title"] + "[/size]" + "\n\n\n\n\n\n"
+
+        ### Lupa ###
+
+        self.credits_label += f"[size={int(FONTS_SIZES.subtitle*self.font_ratio)}]" + my_text["lupa"] + "[/size]" + "\n\n"
+        self.credits_label += my_text["lupa_text"] + "\n\n\n\n"
 
         ### Licenses ###
 
@@ -115,7 +122,6 @@ class CreditsScreen(OlympeScreen):
             author = CREDITS_DICT["musics"][music]["author"]
             self.credits_label += f"[size={int(FONTS_SIZES.label*self.font_ratio)}]" + title_in_game + "[/size]\n" + title + "\n" + author + "\n\n"
         self.credits_label += "\n\n"
-        # TODO rajouter la musique du générique dans les crédits
 
         ### Sounds effects ###
 
@@ -126,11 +132,6 @@ class CreditsScreen(OlympeScreen):
 
         self.credits_label += f"[size={int(FONTS_SIZES.subtitle*self.font_ratio)}]" + my_text["voices"] + "[/size]" + "\n\n"
         self.credits_label += my_text["voices_text"] + "\n\n\n\n"
-
-        ### Lupa ###
-
-        self.credits_label += f"[size={int(FONTS_SIZES.subtitle*self.font_ratio)}]" + my_text["lupa"] + "[/size]" + "\n\n"
-        self.credits_label += my_text["lupa_text"] + "\n\n\n\n"
 
         ### Testing ###
 
@@ -148,10 +149,15 @@ class CreditsScreen(OlympeScreen):
     def launch_generic(self):
         
         scrolling_label = self.ids.scrolling_label
-
         anim = Animation(y=Window.size[1]+10*self.font_ratio, duration=81)
         anim.start(scrolling_label)
         anim.on_complete = self.finish_animation
+
+        list_characters = [d for d in os.listdir(PATH_CHARACTERS_IMAGES) if os.path.isdir(os.path.join(PATH_CHARACTERS_IMAGES, d))]
+        for character in list_characters:
+            character_image = self.ids[character]
+            anim = Animation(y=Window.size[1]+10*self.font_ratio+scrolling_label.height+character_image.y, duration=81)
+            anim.start(character_image)
 
     def finish_animation(self, *args):
         self.ids.thanks_for_playing_label.opacity = 1

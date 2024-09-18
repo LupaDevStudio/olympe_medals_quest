@@ -92,6 +92,8 @@
     },
     "credits": {
         "title": "Olympe's Medals Quest",
+        "lupa": "LupaDevStudio",
+        "lupa_text": "Agathe\nPaul\nNathaël\nLaure",
         "licenses": "Licenses",
         "licenses_text": "Kivy, la meilleure bibliothèque graphique en Python\n\nOxanium, notre police préférée créée par Severin Meyer\n\nStable Diffusion et d'autres outils d'IA génératives pour créer les personnages et les décors\n\nTalking Head Anime, créé par Pramook Khungurn, pour changer les expressions faciales des personnages",
         "images": "Images",
@@ -106,10 +108,8 @@
         "musics": "Musiques",
         "voices": "Doublages",
         "voices_text": "Merci aux lignes de code chantantes qui ont donné vie à nos chers personnages !\n\nOlympe\nPhil\nHector\nAriane\nNarcisse\nDiane\nSimon\nThérèse\nAtlas\nMidas\nDaphnée",
-        "lupa": "LupaDevStudio",
-        "lupa_text": "Agathe\nPaul\nNathaël\nLaure",
         "testing": "Testeurs",
-        "testing_text": "Merci beaucoup pour votre aide et soutien !\n\nAgathe\nAlexis\nAlicia\nDiane\nDmitry\nElies\nGuillaume\nGwladys\nHélène\nJeanne\n\nJoseph\nLorraine\nMarie\nMarion\nViviane",
+        "testing_text": "Merci beaucoup pour votre aide et soutien !\n\nAgathe\nAlexis\nAlicia\nDiane\nDmitry\nElies\nGuillaume\nGwladys\nHélène\nJeanne\nJoseph\nLorraine\nMarie\nMarion\nViviane",
         "conclusion": "Merci d'avoir joué !"
     },
     "sports_menu": {
