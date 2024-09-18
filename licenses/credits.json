@@ -1,44 +1,58 @@
 {
     "musics": {
         "game": {
+            "game_title": {
+                "title_in_game": "Title screen",
+                "title": "Background inspiring",
+                "author": "Dmytro Kuvalin",
+                "link": "https://pixabay.com/music/corporate-background-inspiring-207551/"
+            },
+            "title_in_game": "Main music",
             "title": "Challenging Victory",
             "author": "Musictown",
             "link": "https://pixabay.com/fr/music/titre-principal-challenging-victory-full-mix-117952/"
         },
-        "game_title": {
-            "title": "Background inspiring",
-            "author": "Dmytro Kuvalin",
-            "link": "https://pixabay.com/music/corporate-background-inspiring-207551/"
-        },
         "olympe": {
+            "title_in_game": "Olympe's theme",
             "title": "Corporate Rhythm",
             "author": "Roman Senyk",
             "link": "https://pixabay.com/fr/music/entreprise-corporate-rhythm-140895/"
         },
-        "fight": {
-            "title": "Award",
-            "author": "SoundGalleryByDmitryTaras",
-            "link": "https://pixabay.com/music/main-title-award-adventure-epic-inspiring-cinematic-orchestra-214102/"
-        },
-        "fight_ceremony": {
-            "title": "Award Ceremony Nomination",
-            "author": "SoundGalleryByDmitryTaras",
-            "link": "https://pixabay.com/fr/music/titre-principal-award-ceremony-nomination-solemn-winner-triumphant-victory-123485/"
-        },
         "ariane": {
+            "title_in_game": "Ariane's theme",
             "title": "Ambiant Documentary",
             "author": "Yurii Semchyshyn",
             "link": "https://pixabay.com/fr/music/ambiant-documentary-11052/"
         },
         "catch_it": {
+            "title_in_game": "Midas's theme",
             "title": "Catch it",
             "author": "Yurii Semchyshyn",
             "link": "https://pixabay.com/fr/music/optimiste-catch-it-117676/"
         },
         "canteen": {
+            "title_in_game": "Theresa's theme",
             "title": "Ragtime Piano",
             "author": "Trygve Larsen",
             "link": "https://pixabay.com/fr/music/piano-solo-ragtime-piano-southern-rag-medley-2-by-john-w-boone-1909-112100/"
+        },
+        "fight_ceremony": {
+            "title_in_game": "FIGHT's ceremony",
+            "title": "Award Ceremony Nomination",
+            "author": "SoundGalleryByDmitryTaras",
+            "link": "https://pixabay.com/fr/music/titre-principal-award-ceremony-nomination-solemn-winner-triumphant-victory-123485/"
+        },
+        "fight": {
+            "title_in_game": "FIGHT's theme",
+            "title": "Award",
+            "author": "SoundGalleryByDmitryTaras",
+            "link": "https://pixabay.com/music/main-title-award-adventure-epic-inspiring-cinematic-orchestra-214102/"
+        },
+        "generic": {
+            "title_in_game": "Generic",
+            "title": "Unlimited motivation",
+            "author": "Sergio Prosvirini",
+            "link": "https://pixabay.com/users/top-flow-28521292/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=158250"
         }
     },
     "icons": {
@@ -257,6 +271,76 @@
         "sports/zipline-bow": {
             "author": "Freepik",
             "link": "https://www.flaticon.com/free-icons/zipline"
+        }
+    },
+    "images": {
+        "canteen": {
+            "author": "Victoria",
+            "link": "https://pixabay.com/users/vika_glitter-6314823/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=4696555"
+        },
+        "charm_room": {
+            "author": "A65 Design",
+            "link": "https://unsplash.com/@huutin23?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "conference_room": {
+            "author": "Pexels",
+            "link": "https://pixabay.com/users/pexels-2286921/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2181994"
+        },
+        "cryotherapy_room": {
+            "author": "Freepik",
+            "link": "https://www.freepik.com/free-ai-image/water-anime-style_94467068.htm#fromView=search&page=2&position=23&uuid=5d0da5f5-ee03-46ba-ada6-699196865883"
+        },
+        "hospital": {
+            "author": "Martha Dominguez de Gouveia",
+            "link": "https://unsplash.com/@mdominguezfoto?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "job_room": {
+            "author": "S O C I A L . C U T",
+            "link": "https://unsplash.com/@socialcut?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "massage_room": {
+            "author": "Atikah Akhtar",
+            "link": "https://unsplash.com/@atikahakhtar?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "multisports_room": {
+            "author": "Craig Lovelidge",
+            "link": "https://unsplash.com/fr/@craigology?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "polyvalente_room": {
+            "author": "John Price",
+            "link": "https://unsplash.com/@johnprice?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "secret_affairs_room": {
+            "author": "Matheus Natan",
+            "link": "https://www.pexels.com/photo/black-padded-leather-office-chairs-2976970/"
+        },
+        "sports_complex_2": {
+            "author": "Freepik",
+            "link": "https://fr.freepik.com/photos-gratuite/nature-morte-equipement-gymnastique_4729812.htm#fromView=search&page=1&position=48&uuid=1d144738-c540-45ca-9698-b5480f757522"
+        },
+        "sports_complex_3": {
+            "author": "Samuel Girven",
+            "link": "https://unsplash.com/fr/@samuelgirven?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "sports_complex_4": {
+            "author": "Mark Bertulfo",
+            "link": "https://unsplash.com/fr/@markbertulfo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "sports_complex_5": {
+            "author": "J AHMED SAIT",
+            "link": "https://unsplash.com/fr/@jasait?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "stadium": {
+            "author": "Pablo Cordero",
+            "link": "https://www.pexels.com/photo/green-and-blue-soccer-field-3845970/"
+        },
+        "strength_room": {
+            "author": "Mark Bertulfo",
+            "link": "https://unsplash.com/fr/@markbertulfo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
+        },
+        "technique_room": {
+            "author": "Point3D Commercial Imaging Ltd.",
+            "link": "https://unsplash.com/fr/@3dottawa?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
         }
     }
 }

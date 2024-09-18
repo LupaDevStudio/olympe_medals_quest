@@ -90,6 +90,28 @@
         "credits": "Crédits",
         "see_credits": "Voir générique"
     },
+    "credits": {
+        "title": "Olympe's Medals Quest",
+        "licenses": "Licenses",
+        "licenses_text": "Kivy, la meilleure bibliothèque graphique en Python\n\nOxanium, notre police préférée créée par Severin Meyer\n\nStable Diffusion et d'autres outils d'IA génératives pour créer les personnages et les décors\n\nTalking Head Anime, créé par Pramook Khungurn, pour changer les expressions faciales des personnages",
+        "images": "Images",
+        "sports_complex_2": "Complexe sportif 2",
+        "sports_complex_3": "Complexe sportif 3",
+        "sports_complex_4": "Complexe sportif 4",
+        "sports_complex_5": "Complexe sportif 5",
+        "stadium": "Stade pour la cérémonie du FIGHT",
+        "icons": "Icônes",
+        "sound_effects": "Effets sonores",
+        "sound_effects_text": "La Sonothèque créée par Joseph Sardin",
+        "musics": "Musiques",
+        "voices": "Doublages",
+        "voices_text": "Merci aux lignes de code chantantes qui ont donné vie à nos chers personnages !\n\nOlympe\nPhil\nHector\nAriane\nNarcisse\nDiane\nSimon\nThérèse\nAtlas\nMidas\nDaphnée",
+        "lupa": "LupaDevStudio",
+        "lupa_text": "Agathe\nPaul\nNathaël\nLaure",
+        "testing": "Testeurs",
+        "testing_text": "Merci beaucoup pour votre aide et soutien !\n\nAgathe\nAlexis\nAlicia\nDiane\nDmitry\nElies\nGuillaume\nGwladys\nHélène\nJeanne\n\nJoseph\nLorraine\nMarie\nMarion\nViviane",
+        "conclusion": "Merci d'avoir joué !"
+    },
     "sports_menu": {
         "title": "Sports",
         "cancel_research_title": "Annuler la recherche en cours",

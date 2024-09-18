@@ -10,3 +10,28 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+
+        Label:
+            id: scrolling_label
+            text: root.credits_label
+            pos_hint: {"center_x": 0.5}
+            y: -self.height
+            font_size: FONTS_SIZES.small_label*root.font_ratio
+            color: COLORS.white
+            font_name: PATH_TEXT_FONT
+            markup: True
+            size_hint: (0.8, None)
+            size: self.texture_size
+            text_size: (self.width, None)
+            halign: "center"
+            valign: "middle"
+
+        Label:
+            id: thanks_for_playing_label
+            text: root.thanks_for_playing
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            size_hint: (1, 1)
+            font_size: FONTS_SIZES.subtitle*root.font_ratio
+            color: COLORS.white
+            font_name: PATH_TEXT_FONT
+            opacity: 0
