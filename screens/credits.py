@@ -147,16 +147,18 @@ class CreditsScreen(OlympeScreen):
         self.launch_generic()
         
     def launch_generic(self):
+
+        anim_duration = 81 # 81
         
         scrolling_label = self.ids.scrolling_label
-        anim = Animation(y=Window.size[1]+10*self.font_ratio, duration=81)
+        anim = Animation(y=Window.size[1]+10*self.font_ratio, duration=anim_duration)
         anim.start(scrolling_label)
         anim.on_complete = self.finish_animation
 
         list_characters = [d for d in os.listdir(PATH_CHARACTERS_IMAGES) if os.path.isdir(os.path.join(PATH_CHARACTERS_IMAGES, d))]
         for character in list_characters:
             character_image = self.ids[character]
-            anim = Animation(y=Window.size[1]+10*self.font_ratio+scrolling_label.height+character_image.y, duration=81)
+            anim = Animation(y=Window.size[1]+10*self.font_ratio+scrolling_label.height+character_image.y, duration=anim_duration)
             anim.start(character_image)
 
     def finish_animation(self, *args):
