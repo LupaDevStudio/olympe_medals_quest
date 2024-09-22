@@ -52,6 +52,7 @@ class Text():
         self.team = data["team"]
         self.athlete = data["athlete"]
         self.settings = data["settings"]
+        self.credits = data["credits"]
         self.sports_menu = data["sports_menu"]
         self.activities_menu = data["activities_menu"]
         self.competition_results = data["competition_results"]

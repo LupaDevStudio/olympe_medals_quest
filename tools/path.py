@@ -72,3 +72,7 @@ PATH_LANGUAGE = PATH_RESOURCES + "languages/"
 # Path for the fonts
 PATH_TEXT_FONT = PATH_FONTS + "Oxanium-Bold.ttf"
 PATH_TITLE_FONT = PATH_FONTS + "Oxanium-ExtraBold.ttf"
+
+# Path for the credits
+PATH_LICENSES_FOLDER = "licenses/"
+PATH_CREDITS = PATH_LICENSES_FOLDER + "credits.json"

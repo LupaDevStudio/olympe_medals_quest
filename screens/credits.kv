@@ -10,3 +10,116 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
+
+        Label:
+            id: scrolling_label
+            text: root.credits_label
+            pos_hint: {"center_x": 0.5}
+            y: -self.height
+            font_size: FONTS_SIZES.small_label*root.font_ratio
+            color: COLORS.white
+            font_name: PATH_TEXT_FONT
+            markup: True
+            size_hint: (0.8, None)
+            size: self.texture_size
+            text_size: (self.width, None)
+            halign: "center"
+            valign: "middle"
+
+        Label:
+            id: thanks_for_playing_label
+            text: root.thanks_for_playing
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            size_hint: (1, 1)
+            font_size: FONTS_SIZES.subtitle*root.font_ratio
+            color: COLORS.white
+            font_name: PATH_TEXT_FONT
+            opacity: 0
+
+        Image:
+            id: olympe
+            source: PATH_CHARACTERS_IMAGES + "frame_olympe.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"x": 0.05}
+            y: scrolling_label.height*(-1+0.93)
+
+        Image:
+            id: phil
+            source: PATH_CHARACTERS_IMAGES + "frame_phil.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"right": 0.95}
+            y: scrolling_label.height*(-1+0.78)
+
+        Image:
+            id: hector
+            source: PATH_CHARACTERS_IMAGES + "frame_hector.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"x": 0.05}
+            y: scrolling_label.height*(-1+0.715)
+
+        Image:
+            id: ariane
+            source: PATH_CHARACTERS_IMAGES + "frame_ariane.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"right": 0.95}
+            y: scrolling_label.height*(-1+0.63)
+
+        Image:
+            id: narcisse
+            source: PATH_CHARACTERS_IMAGES + "frame_narcisse.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"x": 0.05}
+            y: scrolling_label.height*(-1+0.52)
+
+        Image:
+            id: diana
+            source: PATH_CHARACTERS_IMAGES + "frame_diana.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"right": 0.95}
+            y: scrolling_label.height*(-1+0.475)
+
+        Image:
+            id: simon
+            source: PATH_CHARACTERS_IMAGES + "frame_simon.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"x": 0.05}
+            y: scrolling_label.height*(-1+0.41)
+
+        Image:
+            id: theresa
+            source: PATH_CHARACTERS_IMAGES + "frame_theresa.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"right": 0.95}
+            y: scrolling_label.height*(-1+0.35)
+
+        Image:
+            id: atlas
+            source: PATH_CHARACTERS_IMAGES + "frame_atlas.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"x": 0.05}
+            y: scrolling_label.height*(-1+0.3)
+
+        Image:
+            id: midas
+            source: PATH_CHARACTERS_IMAGES + "frame_midas.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"right": 0.95}
+            y: scrolling_label.height*(-1+0.11)
+
+        Image:
+            id: daphne
+            source: PATH_CHARACTERS_IMAGES + "frame_daphne.jpg"
+            size_hint: (0.25, None)
+            height: self.width
+            pos_hint: {"x": 0.05}
+            y: scrolling_label.height*(-1+0.02)

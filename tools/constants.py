@@ -20,7 +20,8 @@ import os
 from tools.path import (
     PATH_USER_DATA,
     PATH_LANGUAGE,
-    PATH_TALKING_SPEED_DICT
+    PATH_TALKING_SPEED_DICT,
+    PATH_CREDITS
 )
 from tools.basic_tools import (
     save_json_file,
@@ -127,3 +128,7 @@ SCREEN_TITLE_ICON = "title_icon"
 SCREEN_MONEY_RIGHT = "money_right"
 SCREEN_SPEND_MONEY_RIGHT = "spend_money_right"
 SCREEN_BACK_ARROW = "back_arrow"
+
+### Credits ###
+
+CREDITS_DICT = load_json_file(PATH_CREDITS)
